@@ -1,6 +1,6 @@
 {
-  "started": "2026-08-27T14:21:35.554112+00:00",
-  "finished": "2026-08-27T14:21:55.625721+00:00",
+  "started": "2026-08-27T14:19:52.861062+00:00",
+  "finished": "2026-08-27T14:20:13.026004+00:00",
   "exit_code": 0,
   "verdict": "PASS",
   "note": "",
@@ -89,7 +89,7 @@
   "console_errors": [],
   "failed_http_responses": [],
   "websockets_opened": [
-    "ws://127.0.0.1:3000/?token=3hNg5vg2cbfa",
+    "ws://127.0.0.1:3000/?token=4Bl6BzBjEt4a",
     "ws://127.0.0.1:8000/api/v1/dashboard/live",
     "ws://127.0.0.1:8000/api/v1/dashboard/live",
     "ws://127.0.0.1:8000/api/v1/dashboard/live"

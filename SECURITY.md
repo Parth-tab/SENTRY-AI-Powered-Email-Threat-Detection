@@ -17,20 +17,24 @@ SENTRY is an evidentiary forensic intelligence platform that intentionally inges
 Every API response from SENTRY includes mandatory security headers:
 - `X-Content-Type-Options: nosniff`: Prevents MIME-type sniffing.
 - `X-Frame-Options: DENY`: Prevents UI redressing / clickjacking attacks.
-- `X-XSS-Protection: 1; mode=block`: Activates browser XSS filtering.
+- `X-XSS-Protection: 0`: Disables deprecated/vulnerable browser XSS reflection filters in favor of strict CSP (OWASP ASVS guidance).
 - `Strict-Transport-Security: max-age=31536000; includeSubDomains`: Mandates HTTPS transport.
 - `Referrer-Policy: strict-origin-when-cross-origin`: Restricts cross-origin referrer leakage.
 - `Content-Security-Policy`: Disallows untrusted external script sources.
 
-### C. Rate Limiting & Anti-DDoS Protection
+### C. Secret Key & Environment Isolation
+- **Demo Appliance Mode:** Uses fixed default keys to ensure deterministic offline execution and automated test reproducibility.
+- **Production Mode Guard:** System validates `ENVIRONMENT == "production"` at startup and enforces that `SECRET_KEY` must be a high-entropy cryptographically random string injected via environment variables, failing fast on startup otherwise.
+
+### D. Rate Limiting & Anti-DDoS Protection
 - **Token Bucket Limiter (`SlowAPI`)**: Enforces rate limiting per IP address on public endpoints (120 req/min burst limits).
 - **Request Size Guard**: Rejects incoming request payloads $>25\text{ MB}$ with `HTTP 413 Request Entity Too Large`.
 
-### D. Cryptographic Evidence Integrity (RFC 3227)
+### E. Cryptographic Evidence Integrity (RFC 3227)
 - **Immutable SHA-256 Digest**: Computed upon initial raw byte receipt.
 - **Sequential Hash-Chaining**: Every enrichment (Header Forensics, GeoIP, Domain Intel, Threat Feeds, Verdict) is linked sequentially via SHA-256 hashes. Any database tampering immediately invalidates verification checks.
 
-### E. File Upload Validation
+### F. File Upload Validation
 - Restricts multipart uploads strictly to RFC 5322 MIME formats (`.eml`, `.msg`, `.mbox`, `.txt`).
 - Rejects binary executables (`.exe`, `.dll`, `.sh`, `.elf`) at the perimeter with `HTTP 400 Bad Request`.
 

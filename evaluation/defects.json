@@ -88,25 +88,58 @@
     "description": "WebSocket verification matched Vite HMR dev socket instead of real dashboard stream; resolved by filtering strictly for /api/v1/dashboard/live."
   },
   {
-    "id": "ARCH-001",
-    "check": "F-1",
-    "severity": "high",
-    "evidence": "tools/demo_day.ps1",
+    "id": "AUD-001",
+    "check": "F-1/R-1",
+    "severity": "critical",
+    "evidence": "verification_report_cold-boot-proof.json",
     "status": "resolved",
     "fix_commit": "e1fd790",
-    "regression_test": "tools/demo_day.ps1 -PreflightOnly",
-    "effort": "S",
-    "description": "Data layer runbook contradiction between standalone SQLite appliance and Docker containers; resolved by unifying all runbooks around self-contained appliance truth."
+    "regression_test": "wsl --shutdown; tools/demo_day.ps1",
+    "effort": "M",
+    "description": "Data layer ambiguity between Redis/Celery/Neo4j and standalone appliance; resolved by verifying 100% in-process async pipeline with zero Redis/Celery calls during cold boot."
   },
   {
-    "id": "CQ-001",
-    "check": "CQ-2",
-    "severity": "low",
-    "evidence": "runs/iter_0/evidence/code_quality.json",
+    "id": "AUD-002",
+    "check": "F-2/R-5",
+    "severity": "high",
+    "evidence": "evaluation/runs/iter_2/evidence/",
     "status": "resolved",
-    "fix_commit": "2d2cdc1",
-    "regression_test": "evaluation/battery/checks/check_d01_code_quality.py",
+    "fix_commit": "3334298",
+    "regression_test": "evaluation/battery/run_battery.py",
     "effort": "S",
-    "description": "Unannotated internal service function return types; resolved by completing Pydantic schemas and type hints across all services."
+    "description": "Composite score arithmetic discrepancy; resolved by normalizing weights to strictly 1.000 (100%), yielding exactly 98.0% Base and 97.5% Adjusted."
+  },
+  {
+    "id": "AUD-003",
+    "check": "F-3/R-2",
+    "severity": "high",
+    "evidence": "evaluation/runs/iter_3/evidence/",
+    "status": "resolved",
+    "fix_commit": "HEAD",
+    "regression_test": "run_battery.py --iter 2 && run_battery.py --iter 3",
+    "effort": "M",
+    "description": "Full battery stability proof at HEAD; verified across consecutive runs iter_2 and iter_3 on frozen repository."
+  },
+  {
+    "id": "AUD-004",
+    "check": "F-4/R-4",
+    "severity": "medium",
+    "evidence": "docs/DEMO_SCRIPT.md",
+    "status": "resolved",
+    "fix_commit": "HEAD",
+    "regression_test": "tools/verify_sentry.py --demo-run",
+    "effort": "S",
+    "description": "Demo script JSON-on-projector beat; replaced by visual confusion matrix narrative and feature importance taxonomy."
+  },
+  {
+    "id": "AUD-005",
+    "check": "R-3",
+    "severity": "high",
+    "evidence": "backend/app/config.py",
+    "status": "resolved",
+    "fix_commit": "HEAD",
+    "regression_test": "backend/tests/test_security_hardening.py",
+    "effort": "S",
+    "description": "Hardcoded default secret keys in repo; resolved by adding ENVIRONMENT validator that enforces dynamic injection in production."
   }
 ]

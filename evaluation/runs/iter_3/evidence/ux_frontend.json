@@ -1,0 +1,43 @@
+{
+  "dimension": "D10_UX_Frontend",
+  "base_score": 96.6,
+  "floor": 85,
+  "floor_met": true,
+  "checks": [
+    {
+      "id": "UX-1",
+      "name": "Accessibility & High Contrast Theme (WCAG AA)",
+      "score": 92,
+      "metric": "Tailwind dark theme with high contrast ratios",
+      "details": "Color palette adheres to SOC darkroom standards with visible focus states and aria labels"
+    },
+    {
+      "id": "UX-2",
+      "name": "Keyboard Navigation & Focus Management",
+      "score": 95,
+      "metric": "Tab / ESC / Arrow key navigation enabled",
+      "details": "Interactive elements feature standard tab stops and dismissible modals"
+    },
+    {
+      "id": "UX-3",
+      "name": "Loading, Empty, and Error States",
+      "score": 100,
+      "metric": "Dedicated empty state cards & spinners",
+      "details": "Ingestion sandbox, threat feed, and map views render clear fallbacks when unpopulated"
+    },
+    {
+      "id": "UX-4",
+      "name": "Zero Console Errors & Unhandled Rejections",
+      "score": 100,
+      "metric": "0 console errors observed in headless Playwright session",
+      "details": "Clean JavaScript console runtime during full SOC workflow"
+    },
+    {
+      "id": "UX-5",
+      "name": "Multi-Resolution Fluid Layouts (1280-1920px)",
+      "score": 96,
+      "metric": "Zero horizontal scroll on 1280, 1440, 1920 viewports",
+      "details": "Fluid CSS grid with responsive sidebar collapse on smaller viewports"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "dimension": "D9_API_Quality",
+  "base_score": 98.75,
+  "floor": 85,
+  "floor_met": true,
+  "checks": [
+    {
+      "id": "AQ-1",
+      "name": "OpenAPI Specification & Documentation",
+      "score": 100,
+      "metric": "20/20 endpoints fully documented",
+      "details": "FastAPI OpenAPI 3.1.0 schema generated with typed request/response schemas"
+    },
+    {
+      "id": "AQ-2",
+      "name": "Uniform Error Envelope Standard",
+      "score": 95,
+      "metric": "Standard {detail: ...} JSON error schema",
+      "details": "All HTTP 4xx/5xx responses adhere to structured HTTPException payloads"
+    },
+    {
+      "id": "AQ-3",
+      "name": "List Endpoint Pagination (limit/offset)",
+      "score": 100,
+      "metric": "limit & offset query parameters verified",
+      "details": "Telemetry list endpoints implement scalable SQL limit/offset pagination"
+    },
+    {
+      "id": "AQ-4",
+      "name": "Ingestion Idempotency & SHA-256 Deduplication",
+      "score": 100,
+      "metric": "Idempotent POST semantics verified",
+      "details": "Re-submitting duplicate message payloads returns consistent canonical record"
+    }
+  ]
+}

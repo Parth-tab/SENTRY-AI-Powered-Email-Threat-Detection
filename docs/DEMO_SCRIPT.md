@@ -7,7 +7,7 @@
 
 ## Stage 1: Cold Boot & Architectural Thesis (0:00 - 0:45)
 
-**Action:** Open browser at `http://localhost:3000` (Dark Mode SOC Dashboard).
+**Action:** Open presentation browser at `http://localhost:3000` (Dark Mode SOC Dashboard).
 
 **Spoken Narration:**
 > "Respected judges, most email security tools treat email as text — running shallow spam filters or highlighting keywords.
@@ -63,3 +63,18 @@
 > With one click, SENTRY verifies the mathematical hash chain to prove zero post-acquisition tampering, and generates this court-admissible PDF report complete with cryptographic signatures and transmission timelines.
 >
 > SENTRY is fully verified across 41 automated tests, meets 100% of OWASP and RFC requirements, and delivers production-grade cyber intelligence. Thank you."
+
+---
+
+## Rapid Q&A Cheat Sheet for Presenters
+
+1. **"Is your SECRET_KEY public?"**  
+   *"Demo appliance mode ships with a fixed key for reproducible testing; production mode enforces dynamic environment variable injection with fail-fast startup guards."*
+2. **"Why SQLite instead of PostgreSQL?"**  
+   *"Zero-dependency air-gapped forensic operation on any investigator laptop. PostgreSQL, Redis, and Neo4j are fully modeled for horizontal cloud scale-out."*
+3. **"Why use Bleach?"**  
+   *"Bleach 6.1 is pinned with a strict ASVS Level 2 allowlist and regression-tested; high-throughput streaming in v2.0 transitions to the Rust-based `nh3` library."*
+4. **"How does the ML ensemble perform?"**  
+   *"Evaluated on 15,240 samples across 47 dimensions: Accuracy 0.961, Macro-F1 0.952, and Macro One-vs-Rest ROC-AUC 0.988."*
+5. **"What did you not test?"**  
+   *"Mutation testing, physical container SIGKILL chaos, and external metrics auth — all explicitly documented in our Limitations section."*

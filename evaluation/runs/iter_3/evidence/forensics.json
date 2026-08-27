@@ -36,7 +36,7 @@
       "id": "FI-5",
       "name": "Court-Admissible PDF & Machine-Readable Export",
       "score": 100,
-      "metric": "Generated 4262 bytes PDF report",
+      "metric": "Generated 4259 bytes PDF report",
       "details": "ReportLab forensic PDF engine exports court-admissible evidence dossier"
     }
   ]

@@ -8,14 +8,14 @@
       "id": "PF-1",
       "name": "Pipeline Latency p95 (<300ms)",
       "score": 100,
-      "metric": "p95 = 5.36 ms",
-      "details": "20-sample micro-benchmark: avg=2.74ms, p95=5.36ms"
+      "metric": "p95 = 5.21 ms",
+      "details": "20-sample micro-benchmark: avg=3.13ms, p95=5.21ms"
     },
     {
       "id": "PF-2",
       "name": "Bulk Pipeline Ingestion Throughput",
       "score": 100,
-      "metric": "470.8 emails/sec (0.11s for 50 items)",
+      "metric": "432.8 emails/sec (0.12s for 50 items)",
       "details": "High-throughput asynchronous batch ingestion capability"
     },
     {

@@ -29,7 +29,7 @@
       "id": "ML-4",
       "name": "Single-Email Inference Latency (<2.0s)",
       "score": 100,
-      "metric": "Inference time: 1.90 ms",
+      "metric": "Inference time: 1.83 ms",
       "details": "Sub-200ms lightweight feature extraction and decision forest inference"
     },
     {
