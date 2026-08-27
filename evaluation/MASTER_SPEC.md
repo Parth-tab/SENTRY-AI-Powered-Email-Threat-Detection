@@ -224,18 +224,19 @@ Base scores come from these checks — computed by scripts, not opinions. Judges
 
 ---
 
-## Part E — Defect Engine
+---
 
-Registry schema in `evaluation/defects.json`:
-```json
-{
-  "id": "SEC-003",
-  "check": "SE-3",
-  "severity": "critical",
-  "evidence": "runs/iter_1/evidence/security/authz_sweep.json",
-  "status": "open",
-  "fix_commit": null,
-  "regression_test": null,
-  "effort": "M"
-}
-```
+## Part F — Time-Budget Calibration & Demo Runway Amendment (3–7 Days)
+
+### eval-change: time-budget calibration for 3-7 day runway
+
+1. **ANALYSE priority formula amended:**
+   $$\text{priority} = \text{weight} \times \text{severity} \times \text{multiplier} / \text{effort}$$
+   where $\text{multiplier} = 2.0$ for defects blocking FIT-1 (traceability) or FIT-4 (demo script) on the COMPRESSED path, and $1.5$ on the FULL path from iteration 4 onward (after floors).
+2. **Iteration budget:** 6 (FULL path: 5–7 days) / 4 (COMPRESSED path: 3–4 days) scored iterations.
+3. **Early-stop is a SUCCESS outcome:** Marginal gain $<1.0$ across 2 iterations $\to$ freeze early, spend surplus on demo readiness and narration rehearsal.
+4. **New Phase `DEMO-PREP` (post-freeze, replaces further FIX phases):**
+   a. **Build demo corpus:** 15–25 curated EMLs across 2–3 realistic cybercrime campaigns so the map and graph render rich live data (`demo: curated corpus`).
+   b. **Extend `tools/verify_sentry.py` with `--demo-run` flag:** walks the exact FIT-4 script with per-step timings; target total $5:00 \pm 0:30$.
+   c. **Record full clean run as backup proof.**
+
