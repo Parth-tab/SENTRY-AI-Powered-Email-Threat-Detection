@@ -301,14 +301,14 @@ async def run_browser_checks(report, ui_url):
             report.add("ui.threat_feed_populated", "FAIL", repr(exc)[:300])
 
 
-        # -- Scene 3: email detail opens on click --------------------------
-        # eval-change: two-gate check.  Gate 1: click an Investigate button
-        # (prefer the labelled button over a raw row click so the intent is
-        # unambiguous).  Gate 2: wait for the modal overlay div (fixed inset-0
-        # z-50) to be attached — this is the EmailDetailModal's backdrop and
-        # cannot pre-exist on the dashboard.  Only then check DETAIL_MARKER.
-        # Previously DETAIL_MARKER matched authentication chips already visible
-        # on feed rows (SPF/DKIM/DMARC text), making the check vacuously green.
+        # -- Scene 3: email detail opens on click + a11y focus trap verification ---
+        # eval-change: three-gate check.
+        # Gate 1: click explicit "Investigate" button.
+        # Gate 2: wait for modal overlay (div.fixed.inset-0.z-50) & DETAIL_MARKER.
+        # Gate 3: behavioral keyboard a11y test (UX-003/UX-004) — Tab multiple times
+        #         and verify document.activeElement remains strictly inside modal overlay;
+        #         Shift+Tab once and verify containment; press Escape and verify
+        #         clean modal dismissal.
         try:
             # Prefer the explicit "Investigate" button; fall back to row click.
             investigate_btn = page.locator(
@@ -318,6 +318,7 @@ async def run_browser_checks(report, ui_url):
                 investigate_btn = page.locator(
                     'tr:has-text("CRITICAL"), tr:has-text("HIGH"), tr:has-text("CLEAN")'
                 ).first
+            await investigate_btn.focus()
             await investigate_btn.click(timeout=10_000)
             # Gate 1: modal overlay must be present (unique to open modal)
             modal_overlay = page.locator("div.fixed.inset-0.z-50")
@@ -327,15 +328,30 @@ async def run_browser_checks(report, ui_url):
                 state="visible", timeout=10_000)
             await page.screenshot(path=str(SHOT_DIR / "02_email_detail.png"),
                                   full_page=True)
-            report.add("ui.email_detail_opens", "PASS")
 
-            # Close detail modal
-            close_btn = page.locator('button:has-text("✕"), button:has(svg.lucide-x)')
-            if await close_btn.count() > 0:
-                await close_btn.first.click(timeout=3_000)
-            else:
-                await page.keyboard.press("Escape")
+            # Gate 3: Behavioral WCAG 2.1 SC 2.1.2 Tab containment check
+            for _ in range(8):
+                await page.keyboard.press("Tab")
+                is_contained = await page.evaluate(
+                    "() => document.activeElement ? document.querySelector('div.fixed.inset-0.z-50').contains(document.activeElement) : false"
+                )
+                if not is_contained:
+                    raise AssertionError("Focus escaped modal overlay during Tab navigation")
+
+            # Behavioral Shift+Tab reverse cycle check
+            await page.keyboard.press("Shift+Tab")
+            is_contained_rev = await page.evaluate(
+                "() => document.activeElement ? document.querySelector('div.fixed.inset-0.z-50').contains(document.activeElement) : false"
+            )
+            if not is_contained_rev:
+                raise AssertionError("Focus escaped modal overlay during Shift+Tab navigation")
+
+            # Dismiss modal via Escape and verify overlay detachment
+            await page.keyboard.press("Escape")
+            await modal_overlay.first.wait_for(state="detached", timeout=5_000)
             await asyncio.sleep(0.5)
+
+            report.add("ui.email_detail_opens", "PASS")
         except Exception as exc:
             await page.screenshot(path=str(SHOT_DIR / "02_email_detail_FAIL.png"),
                                   full_page=True)
