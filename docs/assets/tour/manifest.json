@@ -1,0 +1,69 @@
+{
+  "started": "2026-08-27T15:45:05.798489+00:00",
+  "shots": [
+    {
+      "name": "01-dashboard",
+      "file": "01-dashboard.png",
+      "status": "PASS",
+      "caption_hint": "SOC dashboard: metric cards, live alert feed, severity badges",
+      "detail": ""
+    },
+    {
+      "name": "02-forensic-analyzer",
+      "file": "02-forensic-analyzer.png",
+      "status": "PASS",
+      "caption_hint": "Split-screen analyzer: preserved email vs. dissection",
+      "detail": ""
+    },
+    {
+      "name": "03-authentication-forensics",
+      "file": "03-authentication-forensics.png",
+      "status": "PASS",
+      "caption_hint": "SPF/DKIM/DMARC verdict matrix and origin geolocation",
+      "detail": ""
+    },
+    {
+      "name": "04-attack-language",
+      "file": "04-attack-language.png",
+      "status": "PASS",
+      "caption_hint": "3-layer ensemble triangulation and linguistic feature breakdown",
+      "detail": ""
+    },
+    {
+      "name": "05-relay-map",
+      "file": "05-relay-map.png",
+      "status": "PASS",
+      "caption_hint": "Multi-hop transmission map, origin highlighted",
+      "detail": ""
+    },
+    {
+      "name": "06-campaign-graph",
+      "file": "06-campaign-graph.png",
+      "status": "PASS",
+      "caption_hint": "Correlation graph: emails, domains, IPs, campaign cluster",
+      "detail": ""
+    },
+    {
+      "name": "07-chain-integrity",
+      "file": "07-chain-integrity.png",
+      "status": "PASS",
+      "caption_hint": "Hash-chain verification result, live in UI",
+      "detail": ""
+    },
+    {
+      "name": "08-forensic-report",
+      "file": "08-forensic-report.png",
+      "status": "PASS",
+      "caption_hint": "Exported PDF dossier saved to repo",
+      "detail": ""
+    },
+    {
+      "name": "08-forensic-report",
+      "file": "08-forensic-report.png",
+      "status": "PASS",
+      "caption_hint": "Report/export UI after dossier generation",
+      "detail": ""
+    }
+  ],
+  "console_errors": []
+}

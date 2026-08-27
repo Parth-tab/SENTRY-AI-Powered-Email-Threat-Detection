@@ -13,6 +13,10 @@
 
 ![SOC Dashboard](docs/assets/dashboard.png)
 
+**New here?** Take the **[Guided Tour](docs/FEATURE_TOUR.md)** — one
+malicious email followed from arrival to courtroom, with verified
+screenshots of every subsystem.
+
 Built for **AICTE Smart India Hackathon 2025 — Problem Statement ID 26106**
 (AI-Powered Email Threat Detection, GeoLocation and Forensic Intelligence
 Platform). Finalist-grade delivery: 12-dimension audited, air-gap proven,
