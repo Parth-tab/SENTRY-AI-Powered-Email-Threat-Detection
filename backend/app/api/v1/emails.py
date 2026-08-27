@@ -362,43 +362,43 @@ async def get_email_forensic_report(
 ):
     """Returns structured JSON forensic intelligence report."""
     data = await get_email_details(email_id, db)
-    email_rec = data["email"]
-    analysis = data["analysis"]
-    evidence = data["evidence"]
+    email_rec = data["email"] or {}
+    analysis = data["analysis"] or {}
+    evidence = data["evidence"] or {}
 
     return {
         "report_id": f"REP-{email_id[:8].upper()}",
         "generated_at": datetime.utcnow().isoformat() + "Z",
-        "email_id": email_rec.id,
-        "overall_threat_score": analysis.overall_threat_score if analysis else 0.0,
-        "threat_level": analysis.threat_level if analysis else "LOW",
+        "email_id": email_rec.get("id"),
+        "overall_threat_score": analysis.get("overall_threat_score", 0.0),
+        "threat_level": analysis.get("threat_level", "LOW"),
         "classification": {
-            "primary": analysis.primary_classification if analysis else "legitimate",
-            "confidence": analysis.classification_confidence if analysis else 0.0,
-            "model_contributions": analysis.model_contributions if analysis else {}
+            "primary": analysis.get("primary_classification", "legitimate"),
+            "confidence": analysis.get("classification_confidence", 0.0),
+            "model_contributions": analysis.get("model_contributions", {})
         },
         "authentication": {
-            "spf": analysis.auth_spf if analysis else {},
-            "dkim": analysis.auth_dkim if analysis else {},
-            "dmarc": analysis.auth_dmarc if analysis else {}
+            "spf": analysis.get("auth_spf", {}),
+            "dkim": analysis.get("auth_dkim", {}),
+            "dmarc": analysis.get("auth_dmarc", {})
         },
         "header_analysis": {
-            "anomalies": analysis.header_anomalies if analysis else [],
-            "relay_hops": analysis.relay_hops_count if analysis else 0,
-            "earliest_reliable_hop": analysis.earliest_reliable_hop if analysis else {}
+            "anomalies": analysis.get("header_anomalies", []),
+            "relay_hops": analysis.get("relay_hops_count", 0),
+            "earliest_reliable_hop": analysis.get("earliest_reliable_hop", {})
         },
-        "content_analysis": analysis.content_analysis if analysis else {},
-        "domain_intel": analysis.domain_intel if analysis else {},
-        "origin_assessment": analysis.origin_assessment if analysis else {},
-        "attribution": analysis.attribution_assessment if analysis else {},
-        "threat_intel": analysis.threat_intel_matches if analysis else {},
+        "content_analysis": analysis.get("content_analysis", {}),
+        "domain_intel": analysis.get("domain_intel", {}),
+        "origin_assessment": analysis.get("origin_assessment", {}),
+        "attribution": analysis.get("attribution_assessment", {}),
+        "threat_intel": analysis.get("threat_intel_matches", {}),
         "evidence": {
-            "sha256": email_rec.sha256_hash,
-            "chain_of_custody_id": evidence.chain_of_custody_id if evidence else "",
-            "preserved_at": evidence.created_at.isoformat() if evidence else "",
-            "chain_entries_count": len(evidence.chain_entries) if evidence else 0
+            "sha256": email_rec.get("sha256_hash", ""),
+            "chain_of_custody_id": evidence.get("chain_of_custody_id", ""),
+            "preserved_at": evidence.get("created_at", ""),
+            "chain_entries_count": len(evidence.get("chain_entries", []))
         },
-        "recommendations": analysis.recommendations if analysis else []
+        "recommendations": analysis.get("recommendations", [])
     }
 
 @router.get("/{email_id}/report/pdf")
@@ -408,33 +408,33 @@ async def download_pdf_report(
 ):
     """Generates and downloads the official court-admissible PDF forensic report."""
     data = await get_email_details(email_id, db)
-    email_rec = data["email"]
-    analysis = data["analysis"]
-    evidence = data["evidence"]
+    email_rec = data["email"] or {}
+    analysis = data["analysis"] or {}
+    evidence = data["evidence"] or {}
 
     email_dict = {
-        "subject": email_rec.subject,
-        "from_raw": email_rec.sender,
-        "recipient": email_rec.recipient,
-        "message_id": email_rec.message_id,
-        "sha256_hash": email_rec.sha256_hash
+        "subject": email_rec.get("subject", ""),
+        "from_raw": email_rec.get("sender", ""),
+        "recipient": email_rec.get("recipient", ""),
+        "message_id": email_rec.get("message_id", ""),
+        "sha256_hash": email_rec.get("sha256_hash", "")
     }
     analysis_dict = {
-        "overall_threat_score": analysis.overall_threat_score if analysis else 0.0,
-        "threat_level": analysis.threat_level if analysis else "LOW",
-        "primary_classification": analysis.primary_classification if analysis else "legitimate",
-        "auth_spf": analysis.auth_spf if analysis else {},
-        "auth_dkim": analysis.auth_dkim if analysis else {},
-        "auth_dmarc": analysis.auth_dmarc if analysis else {},
-        "origin_assessment": analysis.origin_assessment if analysis else {},
-        "attribution_assessment": analysis.attribution_assessment if analysis else {},
-        "domain_intel": analysis.domain_intel if analysis else {},
-        "content_analysis": analysis.content_analysis if analysis else {},
-        "recommendations": analysis.recommendations if analysis else []
+        "overall_threat_score": analysis.get("overall_threat_score", 0.0),
+        "threat_level": analysis.get("threat_level", "LOW"),
+        "primary_classification": analysis.get("primary_classification", "legitimate"),
+        "auth_spf": analysis.get("auth_spf", {}),
+        "auth_dkim": analysis.get("auth_dkim", {}),
+        "auth_dmarc": analysis.get("auth_dmarc", {}),
+        "origin_assessment": analysis.get("origin_assessment", {}),
+        "attribution_assessment": analysis.get("attribution_assessment", {}),
+        "domain_intel": analysis.get("domain_intel", {}),
+        "content_analysis": analysis.get("content_analysis", {}),
+        "recommendations": analysis.get("recommendations", [])
     }
     evidence_dict = {
-        "chain_of_custody_id": evidence.chain_of_custody_id if evidence else "COC-001",
-        "chain_entries": evidence.chain_entries if evidence else []
+        "chain_of_custody_id": evidence.get("chain_of_custody_id", "COC-001"),
+        "chain_entries": evidence.get("chain_entries", [])
     }
 
     pdf_bytes = ReportingService.generate_pdf_report(email_dict, analysis_dict, evidence_dict)
