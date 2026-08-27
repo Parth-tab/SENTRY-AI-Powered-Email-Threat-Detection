@@ -85,9 +85,31 @@ class ContentAnalysisService:
         """
         Extracts linguistic, structural, and behavioral features from email content.
         """
-        plain = email_data.get("body_plain", "").lower()
+        # Unicode & Evasion Normalization (Neutralize Zero-Width, Homoglyphs & RTLO)
+        import unicodedata
+        
+        raw_plain = email_data.get("body_plain", "")
+        raw_subject = email_data.get("subject", "")
+        has_rtlo = "\u202e" in raw_plain or "\u202e" in raw_subject or any("\u202e" in att.get("filename", "") for att in email_data.get("attachments", []))
+
+        # Cyrillic to Latin homoglyph translation map for NLP extraction
+        HOMOGLYPH_MAP = str.maketrans({
+            'а': 'a', 'е': 'e', 'о': 'o', 'р': 'p', 'с': 'c', 'у': 'y', 'х': 'x', 'і': 'i', 'ј': 'j', 'ѕ': 's',
+            'А': 'A', 'В': 'B', 'Е': 'E', 'К': 'K', 'М': 'M', 'Н': 'H', 'О': 'O', 'Р': 'P', 'С': 'C', 'Т': 'T',
+            'Ү': 'Y', 'Х': 'X', 'І': 'I'
+        })
+
+        # Strip zero-width & invisible format characters
+        cleaned_plain = re.sub(r'[\u200b\u200c\u200d\uFEFF\u200E\u200F\u202A-\u202E]', '', raw_plain)
+        cleaned_subject = re.sub(r'[\u200b\u200c\u200d\uFEFF\u200E\u200F\u202A-\u202E]', '', raw_subject)
+
+        # Normalize homoglyphs
+        normalized_plain = cleaned_plain.translate(HOMOGLYPH_MAP)
+        normalized_subject = cleaned_subject.translate(HOMOGLYPH_MAP)
+
+        plain = normalized_plain.lower()
         html = email_data.get("body_html", "")
-        subject = email_data.get("subject", "").lower()
+        subject = normalized_subject.lower()
         full_text = f"{subject}\n{plain}"
 
         # 1. Linguistic keyword matches
@@ -112,19 +134,19 @@ class ContentAnalysisService:
             generic_matches.extend(re.findall(pat, full_text, re.IGNORECASE))
 
         # 2. Structural Features
-        urls = cls.extract_urls(email_data.get("body_plain", ""), html)
+        urls = cls.extract_urls(raw_plain, html)
         has_form = bool(re.search(r'<form\b', html, re.IGNORECASE)) if html else False
         has_password_input = bool(re.search(r'type=["\']password["\']', html, re.IGNORECASE)) if html else False
-        has_mismatched_links = any(u.get("is_mismatch") for u in urls)
+        has_mismatched_links = any(u.get("is_mismatch") for u in urls) or any("0x" in u.get("url", "") for u in urls)
 
         # Attachment checks
         attachments = email_data.get("attachments", [])
-        has_dangerous_attachment = False
+        has_dangerous_attachment = has_rtlo
         attachment_names = []
         for att in attachments:
             fname = att.get("filename", "").lower()
             attachment_names.append(fname)
-            if any(fname.endswith(ext) for ext in cls.HIGH_RISK_EXTENSIONS):
+            if any(fname.endswith(ext) for ext in cls.HIGH_RISK_EXTENSIONS) or "\u202e" in att.get("filename", ""):
                 has_dangerous_attachment = True
 
         # Attention phrases for explainable UI highlights

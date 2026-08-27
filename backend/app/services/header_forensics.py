@@ -241,6 +241,12 @@ class HeaderForensicsService:
             inner_email = re.search(r'[\w\.-]+@[\w\.-]+', display_name)
             if inner_email and inner_email.group(0).lower() != sender_email.lower():
                 anomalies.append("display_name_contains_fake_email")
+        
+        # Check for Executive title spoofing from free email services (BEC indicator)
+        exec_titles = ["ceo", "cfo", "coo", "chief", "president", "director", "executive", "officer", "vice president"]
+        freemails = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "aol.com", "proton.me", "mail.com"]
+        if any(title in display_name.lower() for title in exec_titles) and sender_domain in freemails:
+            anomalies.append("freemail_executive_impersonation")
 
         # 2. Return-Path Mismatch
         return_path = str(headers.get("Return-Path", "")).strip("<>")

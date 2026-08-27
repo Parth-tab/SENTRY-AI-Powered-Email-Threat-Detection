@@ -133,3 +133,30 @@ INFO:     connection open
 INFO:     127.0.0.1:53230 - "GET /api/v1/emails/20baf534-9ff5-47cc-9718-6eb2921bd150 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:56205 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
 INFO:     127.0.0.1:56205 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     Started server process [18820]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:58146 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63189 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:63190 - "POST /api/v1/samples/seed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63191 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63192 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63193 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63194 - "GET /api/v1/campaigns HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54458 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:53589 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:51293 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51293 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55873 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55873 - "GET /api/v1/emails/20baf534-9ff5-47cc-9718-6eb2921bd150 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51293 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51293 - "GET /api/v1/emails/20baf534-9ff5-47cc-9718-6eb2921bd150 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64476 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:51293 - "GET /api/v1/emails/20baf534-9ff5-47cc-9718-6eb2921bd150 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64269 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64269 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK

@@ -4,8 +4,8 @@
     "check": "ML-5",
     "severity": "high",
     "evidence": "runs/iter_0/evidence/ml_rigor.json",
-    "status": "open",
-    "fix_commit": null,
+    "status": "resolved",
+    "fix_commit": "phase-3",
     "regression_test": "evaluation/battery/checks/check_d08_ml_rigor.py",
     "effort": "M"
   },

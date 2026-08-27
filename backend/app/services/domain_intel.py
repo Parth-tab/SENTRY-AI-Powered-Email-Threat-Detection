@@ -48,25 +48,43 @@ class DomainIntelService:
 
     @classmethod
     def normalize_homoglyphs(cls, domain: str) -> str:
-        """Translates known homoglyphs and typosquatting character substitutions."""
+        """Translates known homoglyphs, diacritics, and typosquatting character substitutions."""
+        import unicodedata
         normalized = domain.lower()
         for char, target in cls.HOMOGLYPH_MAP.items():
             normalized = normalized.replace(char, target)
-        return normalized
+        # Strip diacritics (e.g. ö -> o, é -> e)
+        nfkd = unicodedata.normalize('NFKD', normalized)
+        ascii_norm = nfkd.encode('ASCII', 'ignore').decode('utf-8')
+        return ascii_norm or normalized
 
     @classmethod
     def check_lookalike(cls, domain: str) -> Dict[str, Any]:
         """
-        Checks if a domain is a lookalike, typosquat, or brand impersonation target.
+        Checks if a domain is a lookalike, typosquat, punycode IDN spoof, or brand impersonation target.
         """
         if not domain:
             return {"is_lookalike": False, "impersonated_brand": None, "confidence": 0.0, "reason": None}
 
         clean_domain = domain.lower().strip()
+
+        # Punycode / IDN internationalized domain decoding
+        decoded_domain = clean_domain
+        is_punycode = False
+        if "xn--" in clean_domain:
+            is_punycode = True
+            try:
+                decoded_domain = clean_domain.encode("ascii").decode("idna")
+            except Exception:
+                decoded_domain = clean_domain
+
         # Remove subdomain prefix for base domain comparison
         parts = clean_domain.split(".")
         base_domain = ".".join(parts[-2:]) if len(parts) >= 2 else clean_domain
         base_name = parts[-2] if len(parts) >= 2 else parts[0]
+
+        dec_parts = decoded_domain.split(".")
+        dec_base_name = dec_parts[-2] if len(dec_parts) >= 2 else dec_parts[0]
 
         brands = cls._load_brands()
 
@@ -102,31 +120,19 @@ class DomainIntelService:
                         }
 
             # Check 2: Levenshtein Distance against legitimate domains
+            norm_name = cls.normalize_homoglyphs(dec_base_name)
             for legit in legit_domains:
                 legit_base = legit.split(".")[0]
-                dist = cls.levenshtein_distance(base_name, legit_base)
+                dist = cls.levenshtein_distance(norm_name, legit_base)
                 
-                # Close edit distance (e.g. paypa1 vs paypal: dist 1)
-                if 1 <= dist <= 2 and len(base_name) >= 4:
+                # Close edit distance (e.g. paypa1 vs paypal: dist 1, agogle vs google: dist 2)
+                if (1 <= dist <= 2 or norm_name == legit_base) and len(norm_name) >= 4:
                     return {
                         "is_lookalike": True,
                         "impersonated_brand": brand_name,
                         "legitimate_domain": legit,
-                        "confidence": 0.90,
-                        "reason": f"Typosquatting variant of '{legit}' (Levenshtein distance: {dist})"
-                    }
-
-            # Check 3: Homoglyph normalization match
-            norm_name = cls.normalize_homoglyphs(base_name)
-            for legit in legit_domains:
-                legit_base = legit.split(".")[0]
-                if norm_name == legit_base and base_name != legit_base:
-                    return {
-                        "is_lookalike": True,
-                        "impersonated_brand": brand_name,
-                        "legitimate_domain": legit,
-                        "confidence": 0.98,
-                        "reason": f"Homoglyph substitution detected targeting '{legit}'"
+                        "confidence": 0.95 if not is_punycode else 0.98,
+                        "reason": f"Typosquatting/IDN variant of '{legit}' (distance: {dist})" if not is_punycode else f"Punycode/IDN spoof targeting '{legit}'"
                     }
 
         return {"is_lookalike": False, "impersonated_brand": None, "confidence": 0.0, "reason": None}

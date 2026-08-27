@@ -40,30 +40,35 @@ class ThreatClassifier:
             rule_score += 0.50
             rule_reasons.append("External threat intelligence feeds confirm known malicious IOC")
 
-        # Tor origin + domain lookalike / urgency = guaranteed phishing
-        if anon.get("tor_exit_node") and (domain_res.get("is_lookalike") or content_res.get("credential_score", 0) > 0.2):
-            rule_score += 0.60
-            rule_reasons.append("Tor exit node origin combined with credential harvesting payload")
-
-        # BEC Executive impersonation + Financial action
-        if content_res.get("authority_score", 0) > 0.4 and content_res.get("financial_score", 0) > 0.4:
-            rule_score += 0.55
-            rule_reasons.append("Executive leadership impersonation paired with urgent financial action request (BEC)")
-
-        # SPF/DKIM/DMARC hard spoofing
-        if auth.get("is_spoofed") or auth.get("dmarc", {}).get("result") == "fail":
-            rule_score += 0.40
-            rule_reasons.append("DMARC alignment failure with unauthorized sender infrastructure")
-
-        # Deceptive link href mismatch
-        if content_res.get("has_mismatched_links"):
-            rule_score += 0.45
-            rule_reasons.append("Phishing link obfuscation (anchor text domain differs from target href)")
+        # Tor origin
+        if anon.get("tor_exit_node"):
+            rule_score += 0.50
+            rule_reasons.append("Tor exit node origin infrastructure")
 
         # Lookalike domain
         if domain_res.get("is_lookalike"):
-            rule_score += 0.45
+            rule_score += 0.55
             rule_reasons.append(f"Typosquatting/Lookalike domain targeting {domain_res.get('impersonated_brand')}")
+
+        # Dangerous attachment / RTLO evasion
+        if content_res.get("has_dangerous_attachment"):
+            rule_score += 0.50
+            rule_reasons.append("Dangerous attachment extension or Unicode RTLO obfuscation detected")
+
+        # Freemail executive impersonation (BEC indicator)
+        if "freemail_executive_impersonation" in anomalies:
+            rule_score += 0.50
+            rule_reasons.append("Executive title impersonation sent from public freemail provider (BEC)")
+
+        # Timestamp sequence anomaly / clock skew forgery
+        if any("timestamp" in a or "clock_skew" in a for a in anomalies):
+            rule_score += 0.35
+            rule_reasons.append("Relay chain timestamp forgery or clock skew anomaly detected")
+
+        # Urgent financial request
+        if content_res.get("urgency_score", 0) >= 0.35 and content_res.get("financial_score", 0) >= 0.35:
+            rule_score += 0.45
+            rule_reasons.append("Urgent financial remittance or wire action requested")
 
         rule_score = min(1.0, rule_score)
 
@@ -106,9 +111,9 @@ class ThreatClassifier:
         # -------------------------------------------------------------
         # Ensemble Blending
         # -------------------------------------------------------------
-        if rule_score > 0.7:
+        if rule_score >= 0.50:
             # If deterministic rules fired hard, prioritize rule engine
-            overall_threat_score = 0.50 * rule_score + 0.30 * ml_score + 0.20 * transformer_score
+            overall_threat_score = 0.55 * rule_score + 0.25 * ml_score + 0.20 * transformer_score
         else:
             overall_threat_score = 0.30 * rule_score + 0.50 * ml_score + 0.20 * transformer_score
 
@@ -125,16 +130,16 @@ class ThreatClassifier:
             threat_level = "LOW"
 
         # Determine Primary Classification
-        if content_res.get("financial_score", 0) > 0.4 and content_res.get("authority_score", 0) > 0.3:
+        if (content_res.get("financial_score", 0) > 0.3 and (content_res.get("authority_score", 0) > 0.3 or content_res.get("urgency_score", 0) > 0.3)) or "freemail_executive_impersonation" in anomalies:
             primary_classification = "bec"
             cls_confidence = 0.94
-        elif domain_res.get("is_lookalike") or content_res.get("credential_score", 0) > 0.3 or content_res.get("has_mismatched_links"):
+        elif domain_res.get("is_lookalike") or content_res.get("credential_score", 0) > 0.3 or content_res.get("has_mismatched_links") or content_res.get("has_dangerous_attachment"):
             primary_classification = "phishing"
             cls_confidence = 0.92
         elif "display_name_contains_fake_email" in anomalies or "return_path_domain_mismatch" in anomalies:
             primary_classification = "impersonation"
             cls_confidence = 0.88
-        elif overall_threat_score > 0.40:
+        elif overall_threat_score >= 0.40 or len(anomalies) > 0:
             primary_classification = "suspicious"
             cls_confidence = 0.75
         else:

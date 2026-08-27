@@ -97,10 +97,10 @@ def run_d8_checks(evidence_dir: Path):
         hr = {"authentication": au, "header_anomalies": anom, "received_chain": h}
         cl = ThreatClassifier.evaluate(p, hr, co, do, ge, {"corroboration_score": 0.0})
         
-        is_detected = cl["overall_threat_score"] >= 0.70 or cl["primary_classification"] in ["phishing", "bec", "impersonation", "suspicious"]
+        is_detected = bool(cl["overall_threat_score"] >= 0.70 or cl["primary_classification"] in ["phishing", "bec", "impersonation", "suspicious"])
         if is_detected:
             detected_count += 1
-        adv_results.append({"file": af.name, "score": cl["overall_threat_score"], "class": cl["primary_classification"], "detected": is_detected})
+        adv_results.append({"file": af.name, "score": float(cl["overall_threat_score"]), "class": str(cl["primary_classification"]), "detected": is_detected})
 
     ml5_score = min(100, int((detected_count / 10) * 100))
     checks.append({
