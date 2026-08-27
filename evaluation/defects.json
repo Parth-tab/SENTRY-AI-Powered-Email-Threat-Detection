@@ -1,13 +1,102 @@
 [
   {
+    "id": "SEC-001",
+    "check": "SE-1",
+    "severity": "critical",
+    "evidence": "runs/iter_0/evidence/security.json",
+    "status": "resolved",
+    "fix_commit": "c7fb638",
+    "regression_test": "backend/tests/test_security_hardening.py::test_xss_email_body_sanitization",
+    "effort": "M",
+    "description": "Raw HTML email bodies unescaped in DOM, exposing XSS injection vectors; resolved via Bleach 6.1 allowlist sanitization."
+  },
+  {
+    "id": "SEC-002",
+    "check": "SE-2",
+    "severity": "high",
+    "evidence": "runs/iter_0/evidence/security.json",
+    "status": "resolved",
+    "fix_commit": "c7fb638",
+    "regression_test": "backend/tests/test_security_hardening.py::test_security_headers_present",
+    "effort": "S",
+    "description": "Missing OWASP security headers on API responses; resolved by injecting CSP, HSTS, X-Frame-Options: DENY, and X-Content-Type-Options."
+  },
+  {
+    "id": "SEC-003",
+    "check": "SE-4",
+    "severity": "medium",
+    "evidence": "runs/iter_0/evidence/security.json",
+    "status": "resolved",
+    "fix_commit": "c7fb638",
+    "regression_test": "backend/tests/test_security_hardening.py::test_unsupported_file_upload_rejected",
+    "effort": "S",
+    "description": "Unrestricted file upload extensions on /api/v1/emails/upload; resolved by enforcing RFC 5322 MIME type and extension allowlist."
+  },
+  {
     "id": "ML-001",
     "check": "ML-5",
     "severity": "high",
     "evidence": "runs/iter_0/evidence/ml_rigor.json",
     "status": "resolved",
-    "fix_commit": "phase-3",
+    "fix_commit": "423f514",
     "regression_test": "evaluation/battery/checks/check_d08_ml_rigor.py",
-    "effort": "M"
+    "effort": "M",
+    "description": "Adversarial evasion bypasses (zero-width spaces, Cyrillic homoglyphs, RTLO); resolved via Unicode normalization and homoglyph mapping."
+  },
+  {
+    "id": "OBS-001",
+    "check": "PR-3",
+    "severity": "high",
+    "evidence": "runs/iter_0/evidence/production.json",
+    "status": "resolved",
+    "fix_commit": "f09a3f3",
+    "regression_test": "backend/tests/test_observability.py::test_prometheus_metrics_endpoint",
+    "effort": "M",
+    "description": "Lack of standardized telemetry exposition; resolved by implementing Prometheus /metrics RED exporter."
+  },
+  {
+    "id": "OBS-002",
+    "check": "PR-2",
+    "severity": "medium",
+    "evidence": "runs/iter_0/evidence/production.json",
+    "status": "resolved",
+    "fix_commit": "f09a3f3",
+    "regression_test": "backend/tests/test_observability.py::test_deep_health_check_endpoint",
+    "effort": "S",
+    "description": "Absence of subsystem-level deep health diagnostics; resolved by creating /health/deep database, vault, and ML probes."
+  },
+  {
+    "id": "CICD-001",
+    "check": "PR-4",
+    "severity": "medium",
+    "evidence": "runs/iter_0/evidence/production.json",
+    "status": "resolved",
+    "fix_commit": "761ae40",
+    "regression_test": ".github/workflows/ci.yml",
+    "effort": "M",
+    "description": "Missing automated continuous integration pipeline; resolved by implementing GitHub Actions matrix workflows."
+  },
+  {
+    "id": "WS-001",
+    "check": "ui.websocket_live_connected",
+    "severity": "critical",
+    "evidence": "verification_report_test-ws.json",
+    "status": "resolved",
+    "fix_commit": "c65ebf5",
+    "regression_test": "tools/verify_sentry.py",
+    "effort": "S",
+    "description": "WebSocket verification matched Vite HMR dev socket instead of real dashboard stream; resolved by filtering strictly for /api/v1/dashboard/live."
+  },
+  {
+    "id": "ARCH-001",
+    "check": "F-1",
+    "severity": "high",
+    "evidence": "tools/demo_day.ps1",
+    "status": "resolved",
+    "fix_commit": "e1fd790",
+    "regression_test": "tools/demo_day.ps1 -PreflightOnly",
+    "effort": "S",
+    "description": "Data layer runbook contradiction between standalone SQLite appliance and Docker containers; resolved by unifying all runbooks around self-contained appliance truth."
   },
   {
     "id": "CQ-001",
@@ -15,8 +104,9 @@
     "severity": "low",
     "evidence": "runs/iter_0/evidence/code_quality.json",
     "status": "resolved",
-    "fix_commit": "phase-6",
+    "fix_commit": "2d2cdc1",
     "regression_test": "evaluation/battery/checks/check_d01_code_quality.py",
-    "effort": "S"
+    "effort": "S",
+    "description": "Unannotated internal service function return types; resolved by completing Pydantic schemas and type hints across all services."
   }
 ]

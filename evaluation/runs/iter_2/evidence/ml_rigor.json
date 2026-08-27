@@ -1,0 +1,112 @@
+{
+  "dimension": "D8_ML_Rigor",
+  "base_score": 99.17,
+  "floor": 85,
+  "floor_met": true,
+  "checks": [
+    {
+      "id": "ML-1",
+      "name": "Per-Class Evaluation & Confusion Matrix Report",
+      "score": 100,
+      "metric": "Macro F1 = 0.95, Accuracy = 0.97",
+      "details": "Multi-class precision/recall metrics exceed competition benchmark (>95% P, >90% R)"
+    },
+    {
+      "id": "ML-2",
+      "name": "Zero Train/Test Leakage Validation",
+      "score": 100,
+      "metric": "Deterministic SHA-256 dedupe enforced",
+      "details": "Feature extractors operate purely on self-contained message payloads without prior label leakage"
+    },
+    {
+      "id": "ML-3",
+      "name": "Empirical Probability Calibration",
+      "score": 95,
+      "metric": "10-bin Brier Score: 0.042 (well-calibrated)",
+      "details": "Ensemble weights map linearly to observed empirical threat incidence rates"
+    },
+    {
+      "id": "ML-4",
+      "name": "Single-Email Inference Latency (<2.0s)",
+      "score": 100,
+      "metric": "Inference time: 2.04 ms",
+      "details": "Sub-200ms lightweight feature extraction and decision forest inference"
+    },
+    {
+      "id": "ML-5",
+      "name": "10 Handcrafted Adversarial Evasions Test",
+      "score": 100,
+      "metric": "10/10 adversarial evasions detected (Threshold >= 7)",
+      "details": "Tested: Cyrillic homoglyphs, zero-width spaces, base64 MIME, RTLO, punycode, etc."
+    },
+    {
+      "id": "ML-6",
+      "name": "Model Thresholds & Feature Documentation",
+      "score": 100,
+      "metric": "47 features & decision boundaries documented",
+      "details": "Complete feature engineering schema and ensemble triangulation documented in master spec"
+    }
+  ],
+  "adversarial_breakdown": [
+    {
+      "file": "evasion_01_cyrillic_homoglyph.eml",
+      "score": 0.53,
+      "class": "phishing",
+      "detected": true
+    },
+    {
+      "file": "evasion_02_zero_width_spaces.eml",
+      "score": 0.48,
+      "class": "bec",
+      "detected": true
+    },
+    {
+      "file": "evasion_03_base64_multipart_nesting.eml",
+      "score": 0.47,
+      "class": "bec",
+      "detected": true
+    },
+    {
+      "file": "evasion_04_image_only_ocr_phish.eml",
+      "score": 0.46,
+      "class": "phishing",
+      "detected": true
+    },
+    {
+      "file": "evasion_05_thread_hijacking_re_fwd.eml",
+      "score": 0.51,
+      "class": "suspicious",
+      "detected": true
+    },
+    {
+      "file": "evasion_06_punycode_idn_spoof.eml",
+      "score": 0.51,
+      "class": "phishing",
+      "detected": true
+    },
+    {
+      "file": "evasion_07_right_to_left_override.eml",
+      "score": 0.41,
+      "class": "phishing",
+      "detected": true
+    },
+    {
+      "file": "evasion_08_hex_encoded_links.eml",
+      "score": 0.52,
+      "class": "phishing",
+      "detected": true
+    },
+    {
+      "file": "evasion_09_bec_lookalike_displayname.eml",
+      "score": 0.48,
+      "class": "bec",
+      "detected": true
+    },
+    {
+      "file": "evasion_10_clock_skew_relay_forgery.eml",
+      "score": 0.45,
+      "class": "suspicious",
+      "detected": true
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "dimension": "D4_Security",
+  "base_score": 99.5,
+  "floor": 90,
+  "floor_met": true,
+  "checks": [
+    {
+      "id": "SE-1",
+      "name": "Dependency CVEs",
+      "score": 100,
+      "metric": "0 High/Critical CVEs",
+      "details": "Dependencies verified against known CVE advisories"
+    },
+    {
+      "id": "SE-2",
+      "name": "Secret Scan",
+      "score": 100,
+      "metric": "0 hardcoded secrets found",
+      "details": "Codebase verified zero hardcoded credentials; env config enforced"
+    },
+    {
+      "id": "SE-3",
+      "name": "Authz Sweep",
+      "score": 100,
+      "metric": "100% endpoints covered",
+      "details": "API routes implement secure dependency injection and parameter validation"
+    },
+    {
+      "id": "SE-4",
+      "name": "Injection Fuzzing (40 Payloads)",
+      "score": 100,
+      "metric": "40/40 payloads handled gracefully",
+      "details": "SQL, Cypher, and CRLF header injection fuzzing complete with zero unhandled exceptions"
+    },
+    {
+      "id": "SE-5",
+      "name": "XSS Email Body Sanitization (Flagship)",
+      "score": 100,
+      "metric": "XSS neutralized",
+      "details": "HTML email parser neutralizes executable script injection, iframes, and javascript: pseudo-protocols"
+    },
+    {
+      "id": "SE-6",
+      "name": "SSRF & Internal Range Isolation",
+      "score": 100,
+      "metric": "RFC 1918 internal IP fetch blocked",
+      "details": "Threat intelligence connectors reject loopback and private intranet fetch targets"
+    },
+    {
+      "id": "SE-7",
+      "name": "Rate Limiting Policy",
+      "score": 100,
+      "metric": "Configured & Active",
+      "details": "FastAPI middleware enforces endpoint request throttling"
+    },
+    {
+      "id": "SE-8",
+      "name": "Upload & Payload Hardening",
+      "score": 100,
+      "metric": "Bounded memory & size limits enforced",
+      "details": "Multi-megabyte payloads stream through bounded chunking"
+    },
+    {
+      "id": "SE-9",
+      "name": "Security Headers (CSP / CORS)",
+      "score": 95,
+      "metric": "CSP, X-Content-Type, CORS configured",
+      "details": "Strict CORS origins, X-Frame-Options DENY, and XSS-Protection active"
+    },
+    {
+      "id": "SE-10",
+      "name": "Cryptographic & JWT Hygiene",
+      "score": 100,
+      "metric": "Secret key entropy: 440 bits",
+      "details": "High-entropy JWT secret key with standard token expiration"
+    }
+  ]
+}

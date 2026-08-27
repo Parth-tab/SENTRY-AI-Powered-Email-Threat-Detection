@@ -1,0 +1,43 @@
+{
+  "dimension": "D7_Forensic_Integrity",
+  "base_score": 100.0,
+  "floor": 90,
+  "floor_met": true,
+  "checks": [
+    {
+      "id": "FI-1",
+      "name": "RFC 3227 Hash Chain Tamper Detection",
+      "score": 100,
+      "metric": "Tamper detected: PASS",
+      "details": "Sequential SHA-256 hash chaining mathematics validated: any alteration breaks hash verification"
+    },
+    {
+      "id": "FI-2",
+      "name": "Chain-of-Custody Transition Metadata Audit",
+      "score": 100,
+      "metric": "3/3 steps compliant with RFC 3227 metadata schema",
+      "details": "Every forensic state transition records immutable actor, timestamp, action, and code version"
+    },
+    {
+      "id": "FI-3",
+      "name": "Raw Ingestion Byte Immutability",
+      "score": 100,
+      "metric": "SHA-256 match: 0a18dcb3cf34f809...",
+      "details": "Ingestion engine computes exact cryptographic digest preserving raw byte stream"
+    },
+    {
+      "id": "FI-4",
+      "name": "Report Findings Determinism",
+      "score": 100,
+      "metric": "100% deterministic repeatability",
+      "details": "Identical email artifacts yield strictly identical forensic extractions"
+    },
+    {
+      "id": "FI-5",
+      "name": "Court-Admissible PDF & Machine-Readable Export",
+      "score": 100,
+      "metric": "Generated 4257 bytes PDF report",
+      "details": "ReportLab forensic PDF engine exports court-admissible evidence dossier"
+    }
+  ]
+}

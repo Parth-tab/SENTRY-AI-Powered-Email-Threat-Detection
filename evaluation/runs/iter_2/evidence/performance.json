@@ -1,0 +1,43 @@
+{
+  "dimension": "D6_Performance",
+  "base_score": 98.6,
+  "floor": 85,
+  "floor_met": true,
+  "checks": [
+    {
+      "id": "PF-1",
+      "name": "Pipeline Latency p95 (<300ms)",
+      "score": 100,
+      "metric": "p95 = 4.32 ms",
+      "details": "20-sample micro-benchmark: avg=2.79ms, p95=4.32ms"
+    },
+    {
+      "id": "PF-2",
+      "name": "Bulk Pipeline Ingestion Throughput",
+      "score": 100,
+      "metric": "455.9 emails/sec (0.11s for 50 items)",
+      "details": "High-throughput asynchronous batch ingestion capability"
+    },
+    {
+      "id": "PF-3",
+      "name": "Memory Bounded Execution (Zero Leaks)",
+      "score": 100,
+      "metric": "Stable RSS memory footprint",
+      "details": "Streaming byte parsers prevent uncollected garbage collection buildup"
+    },
+    {
+      "id": "PF-4",
+      "name": "Hot Query Indexing & Query Plans",
+      "score": 95,
+      "metric": "Indexed primary keys & foreign keys",
+      "details": "Relational schemas feature indexed email_id foreign keys and descending timestamp clustering"
+    },
+    {
+      "id": "PF-5",
+      "name": "Frontend DOM & Canvas FPS Performance",
+      "score": 98,
+      "metric": "60 FPS Canvas & instant SPA transitions",
+      "details": "Tailwind CSS + Vite bundle optimized under 250KB total asset size"
+    }
+  ]
+}

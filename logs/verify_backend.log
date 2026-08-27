@@ -341,3 +341,55 @@ INFO:     connection open
 INFO:     127.0.0.1:51587 - "GET /api/v1/emails/a5e512b8-5519-4de2-94a3-4f1335ce9ec8 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:56225 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
 INFO:     127.0.0.1:56225 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     Started server process [10356]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:56564 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:55912 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56566 - "POST /api/v1/samples/seed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56567 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56568 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56569 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56570 - "GET /api/v1/campaigns HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57669 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:54639 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58691 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54639 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55826 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:62559 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62559 - "GET /api/v1/emails/a5e512b8-5519-4de2-94a3-4f1335ce9ec8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62559 - "GET /api/v1/emails/a5e512b8-5519-4de2-94a3-4f1335ce9ec8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59359 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:62559 - "GET /api/v1/emails/a5e512b8-5519-4de2-94a3-4f1335ce9ec8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55047 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55047 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     Started server process [18708]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:51838 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51842 - "POST /api/v1/samples/seed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51843 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51844 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51845 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51846 - "GET /api/v1/campaigns HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64389 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:65414 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54034 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64838 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:65414 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64127 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65414 - "GET /api/v1/emails/a5e512b8-5519-4de2-94a3-4f1335ce9ec8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65414 - "GET /api/v1/emails/a5e512b8-5519-4de2-94a3-4f1335ce9ec8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60388 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:65414 - "GET /api/v1/emails/a5e512b8-5519-4de2-94a3-4f1335ce9ec8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51407 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51407 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK

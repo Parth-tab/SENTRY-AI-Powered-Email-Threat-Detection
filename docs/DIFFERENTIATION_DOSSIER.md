@@ -25,7 +25,7 @@ Most hackathon teams approach Problem Statement 26106 as a generic NLP text clas
 | 2. Chronological multi-hop Received parser isolating the earliest reliable public relay hop.      |
 | 3. De-anonymization radar identifying Tor exit nodes, VPN subnets, and bulletproof ASNs.          |
 | 4. Triangulated 3-layer ML ensemble (Heuristic rules + 47-feature GBDT + Linguistic attention).   |
-| 5. Multi-entity Neo4j knowledge graph attributing disparate emails into cybercrime syndicates.    |
+| 5. Multi-entity knowledge graph attributing disparate emails into cybercrime syndicates.          |
 | 6. RFC 3227 mathematical hash chain ($H_0 \to H_n$) generating court-admissible PDF dossiers.     |
 +---------------------------------------------------------------------------------------------------+
 ```
@@ -39,11 +39,11 @@ Most hackathon teams approach Problem Statement 26106 as a generic NLP text clas
 | **Header Parsing** | Simple regex on `From:` and `Subject:` | Multi-hop chronological `Received` state-machine respecting RFC 5321 | Exposes true attacker origin, bypassing internal corporate relay artifacts. |
 | **Origin Geolocation** | GeoIP lookup on the single IP found in header | Earliest public hop filtering + Tor / VPN / Datacenter ASN classification | Eliminates false origin attribution to victim MX servers. |
 | **Domain Intelligence**| Substring matching | IDN Punycode decoding (`xn--...`), Cyrillic homoglyph translation, Levenshtein edit distance | Neutralizes sophisticated typosquatting and visual lookalike spoofing. |
-| **Adversarial Defenses**| Vulnerable to bypass | Strips zero-width characters (`\u200b`), detects RTLO (`\u202e`), parses hex-encoded URLs | Robust against the 10 most common evasion techniques used by APTs. |
-| **Campaign Correlation**| None | Neo4j / NetworkX graph clustering across ASNs, domains, and templates | Enables proactive syndicate-level takedowns rather than reactive email filtering. |
+| **Adversarial Defenses**| Vulnerable to bypass | Strips zero-width characters (`\u200b`), detects RTLO (`\u202e`), parses hex-encoded URLs | Robust against the 10 most common evasion techniques used by APTs (9/10 detected). |
+| **Campaign Correlation**| None | Multi-entity knowledge graph clustering across ASNs, domains, and templates | Enables proactive syndicate-level takedowns rather than reactive email filtering. |
 | **Legal Admissibility** | Screenshots | RFC 3227 cryptographic SHA-256 hash chain with automated tamper verification | Legally defensible in a court of law; complies with NIST SP 800-86 standards. |
 | **Observability** | `print()` statements | Native Prometheus `/metrics` exporter, distributed `X-Correlation-ID` tracing, `/health/deep` | Production SRE-grade telemetry ready for enterprise SOC deployment. |
-| **Verification Rigor** | Manual clicking | 41 automated pytest cases (85% coverage) + 12-dimension GAUNTLET tribunal harness (97.9%) | Provable mathematical stability with zero regressions. |
+| **Verification Rigor** | Manual clicking | 41 automated pytest cases (85% coverage) + 12-dimension GAUNTLET tribunal harness (98.2% Base / 97.5% Adjusted) | Provable mathematical stability with zero regressions. |
 
 ---
 
@@ -55,8 +55,12 @@ Most hackathon teams approach Problem Statement 26106 as a generic NLP text clas
 
 ### Question 2: "How do you handle zero-day adversarial text evasions?"
 **SENTRY Defense:**  
-> "SENTRY does not rely solely on vocabulary keywords. Our 3-layer architecture triangulates deterministic infrastructure markers (Tor exit nodes, ASN reputation, DMARC alignment) with continuous structural features and attention vectors. Even if an attacker uses zero-width spaces or homoglyphs to mask the word 'Password', their unaligned DMARC record, Tor exit IP, and lookalike domain edit distance trigger CRITICAL alerts."
+> "SENTRY does not rely solely on vocabulary keywords. Our 3-layer architecture triangulates deterministic infrastructure markers (Tor exit nodes, ASN reputation, DMARC alignment) with continuous structural features and attention vectors. Even if an attacker uses zero-width spaces or homoglyphs to mask keywords, their unaligned DMARC record, Tor exit IP, and lookalike domain edit distance trigger CRITICAL alerts."
 
 ### Question 3: "Is your PDF report legally admissible as digital evidence?"
 **SENTRY Defense:**  
 > "Yes. SENTRY implements NIST SP 800-86 and RFC 3227 guidelines. Upon ingestion, the exact binary payload is hashed with SHA-256 to form the Genesis Block $H_0$ in an immutable vault. Every subsequent transformation and analytical finding is appended to a cryptographic hash chain. Any modification to the database or report breaks the sequential mathematical hash, which our automated `/api/v1/evidence/verify` endpoint verifies in real-time."
+
+### Question 4: "Why use Bleach vs. newer HTML sanitizers?"
+**SENTRY Defense:**  
+> "We currently use Bleach 6.1.0 configured with a locked-down, strict tag and protocol allowlist (OWASP ASVS Level 2 compliance). For high-throughput enterprise streaming in version 2.0, our architectural roadmap transitions to `nh3` (the Python binding for Rust's Ammonia library) for zero-copy performance."
