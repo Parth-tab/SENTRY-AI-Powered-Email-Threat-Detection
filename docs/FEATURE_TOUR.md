@@ -52,8 +52,10 @@ The **right column** opens with the **Classification Ensemble Triangulation
   domains, IP ranges, and structural IOC patterns.
 - **Gradient Boosting (47 Engineered Features):** 100% — tabular model over
   header entropy, sender-domain age, relay anomalies, and lexical features.
-- **Linguistic Attention (Urgency & Impersonation):** 92% — transformer heuristic
-  flagging account-suspension pressure language and impersonated brand voice.
+- **Linguistic Attention (Urgency & Impersonation):** 92% — NLP feature-scoring
+  heuristic (weighted urgency, financial-pressure, authority-impersonation, and
+  credential-harvesting signal scores) flagging account-suspension pressure
+  language and impersonated brand voice.
 
 These three signals are not averaged — they are triangulated. Agreement across
 orthogonal detection axes (rules + statistics + language) is what earns the

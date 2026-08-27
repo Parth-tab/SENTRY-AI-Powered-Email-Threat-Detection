@@ -97,7 +97,10 @@ class ThreatClassifier:
         ml_score = min(1.0, max(0.02, ml_score))
 
         # -------------------------------------------------------------
-        # Layer 3: Transformer Attention Score (Linguistic Focus)
+        # Layer 3: Linguistic Feature-Scoring Attention
+        # NLP heuristic: weighted combination of urgency, credential, and
+        # financial signal scores — no neural runtime dependency.
+        # Roadmap: DistilBERT fine-tuning is an offline research track.
         # -------------------------------------------------------------
         transformer_score = min(
             1.0,

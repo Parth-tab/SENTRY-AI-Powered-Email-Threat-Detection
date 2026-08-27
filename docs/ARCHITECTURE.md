@@ -43,7 +43,7 @@ flowchart TD
     subgraph "3-Layer ML Classifier Triangulation"
         E --> F1[Layer 1: Deterministic Heuristics]
         E --> F2[Layer 2: Calibrated XGBoost GBDT]
-        E --> F3[Layer 3: Transformer Attention Score]
+        E --> F3[Layer 3: Linguistic Attention Score]
         F1 --> G[Ensemble Blending Engine]
         F2 --> G
         F3 --> G
@@ -69,7 +69,7 @@ Every analyzed artifact in SENTRY is cryptographically sealed from the milliseco
 ### B. 3-Layer Triangulated ML Ensemble
 - **Layer 1 (Deterministic Heuristic Rules):** 100% precision perimeter filters for known Tor exit nodes, SPF/DKIM hard fails, lookalike bank domains, and active IOC matches.
 - **Layer 2 (Calibrated Gradient Boosted Trees):** 47 continuous and categorical dimensions (Linguistic, Structural, Header Forensics, Authentication, Domain Intel, Geo-Origin).
-- **Layer 3 (Transformer Linguistic Attention):** Contextual intent extraction focusing on urgency manipulation, credential harvesting lures, and BEC wire transfer syntax.
+- **Layer 3 (Linguistic Feature-Scoring Attention):** NLP heuristic layer computing weighted urgency, financial-pressure, authority-impersonation, and credential-harvesting signal scores for contextual intent extraction — no neural runtime dependency; executes in <1ms. Roadmap: DistilBERT fine-tuning as an offline research track.
 - **Validation Rigor:** Evaluated on 15,240-sample benchmark dataset achieving Accuracy (0.961), Macro-F1 (0.952), and Macro One-vs-Rest (OvR) ROC-AUC (0.988).
 
 ### C. Multi-Entity Campaign Knowledge Graph
