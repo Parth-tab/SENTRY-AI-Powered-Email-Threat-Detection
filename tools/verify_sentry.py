@@ -89,7 +89,9 @@ class Report:
 
 def archive_report(args):
     if args.label and REPORT_PATH.exists():
-        dest = REPO_ROOT / f"verification_report_{args.label}.json"
+        artifacts_dir = REPO_ROOT / "evaluation" / "artifacts"
+        artifacts_dir.mkdir(parents=True, exist_ok=True)
+        dest = artifacts_dir / f"verification_report_{args.label}.json"
         dest.write_text(REPORT_PATH.read_text(encoding="utf-8"), encoding="utf-8")
         print(f"Archived: {dest}")
 
