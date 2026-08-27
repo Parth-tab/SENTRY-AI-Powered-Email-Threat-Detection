@@ -14,8 +14,8 @@
     "check": "CQ-2",
     "severity": "low",
     "evidence": "runs/iter_0/evidence/code_quality.json",
-    "status": "open",
-    "fix_commit": null,
+    "status": "resolved",
+    "fix_commit": "phase-6",
     "regression_test": "evaluation/battery/checks/check_d01_code_quality.py",
     "effort": "S"
   }

@@ -1,6 +1,6 @@
 {
-  "started": "2026-08-27T12:12:54.360104+00:00",
-  "finished": "2026-08-27T12:13:14.641030+00:00",
+  "started": "2026-08-27T13:39:47.261163+00:00",
+  "finished": "2026-08-27T13:40:07.406197+00:00",
   "exit_code": 0,
   "verdict": "PASS",
   "note": "",
@@ -73,7 +73,7 @@
     {
       "name": "ui.websocket_live_connected",
       "status": "PASS",
-      "detail": "ws://127.0.0.1:3000/?token=MPyCl149IqG1"
+      "detail": "ws://127.0.0.1:3000/?token=aMZjmSfEa1il"
     },
     {
       "name": "ui.console_clean",
@@ -89,7 +89,7 @@
   "console_errors": [],
   "failed_http_responses": [],
   "websockets_opened": [
-    "ws://127.0.0.1:3000/?token=MPyCl149IqG1",
+    "ws://127.0.0.1:3000/?token=aMZjmSfEa1il",
     "ws://127.0.0.1:8000/api/v1/dashboard/live",
     "ws://127.0.0.1:8000/api/v1/dashboard/live",
     "ws://127.0.0.1:8000/api/v1/dashboard/live"
