@@ -33,3 +33,15 @@ async def test_dashboard_stats_endpoint(client):
     assert "total_emails_analyzed" in data
     assert "threat_distribution" in data
     assert "active_campaigns_count" in data
+
+@pytest.mark.asyncio
+async def test_seed_endpoint_idempotency(client):
+    # First seed call
+    res1 = await client.post("/api/v1/samples/seed")
+    assert res1.status_code in [200, 201]
+    
+    # Second seed call must not duplicate records
+    res2 = await client.post("/api/v1/samples/seed")
+    assert res2.status_code == 200
+    data2 = res2.json()
+    assert len(data2.get("seeded_email_ids", [])) == 0, "Second seed call must create 0 duplicate records"
