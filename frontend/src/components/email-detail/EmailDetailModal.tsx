@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   X,
   ShieldAlert,
@@ -35,12 +35,15 @@ export const EmailDetailModal: React.FC<EmailDetailModalProps> = ({
   const { email, analysis, evidence } = emailDetail;
   const [activeTab, setActiveTab] = useState<"clean" | "raw_body" | "headers">("clean");
   const [copiedIoc, setCopiedIoc] = useState<string | null>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
+  // Keyboard dismiss (existing) + initial focus for keyboard accessibility (UX-003)
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", handleKeyDown);
+    modalRef.current?.focus();
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
@@ -60,7 +63,14 @@ export const EmailDetailModal: React.FC<EmailDetailModalProps> = ({
   const threatColor = getScoreColor(analysis.overall_threat_score);
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div
+      ref={modalRef}
+      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Email Forensic Analysis — ${email.subject}`}
+      tabIndex={-1}
+    >
       <div className="bg-[#121215] border border-[#27272A] rounded-2xl w-full max-w-7xl h-[90vh] flex flex-col shadow-2xl overflow-hidden">
         {/* Modal Top Header */}
         <div className="h-14 border-b border-[#27272A] px-6 flex items-center justify-between bg-[#18181B]">
