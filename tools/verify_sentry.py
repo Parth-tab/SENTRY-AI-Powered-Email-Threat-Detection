@@ -192,6 +192,10 @@ class Stack:
         if front is None:
             raise RuntimeError("frontend package.json not found; "
                                "adjust FRONTEND_CANDIDATES")
+        if not (front / "node_modules").exists():
+            print("  installing frontend dependencies (npm install)...")
+            npm_cmd = ["cmd", "/c", "npm", "install"] if IS_WINDOWS else ["npm", "install"]
+            subprocess.run(npm_cmd, cwd=front, check=True)
         env = os.environ.copy()
         env["VITE_API_URL"] = f"http://127.0.0.1:{self.api_port}"
         env["VITE_WS_URL"] = (f"ws://127.0.0.1:{self.api_port}"
