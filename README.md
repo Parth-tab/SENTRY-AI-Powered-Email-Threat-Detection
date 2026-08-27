@@ -6,7 +6,7 @@
 > correlates attacks into campaigns, and produces a chain-of-custody forensic
 > report that stands up to review.
 
-[![CI](https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection-GeoLocation-Forensic-Intelligence-Platform/actions/workflows/ci.yml/badge.svg)](https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection-GeoLocation-Forensic-Intelligence-Platform/actions)
+[![CI](https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection/actions/workflows/ci.yml/badge.svg)](https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection/actions)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Verified: GAUNTLET 97.5/100](https://img.shields.io/badge/GAUNTLET-97.5%2F100-8b5cf6)](evaluation/final_report.md)
@@ -40,8 +40,8 @@ evidentiary-grade output.
 **Prerequisites:** Python 3.11+, Node 18+
 
 ```bash
-git clone https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection-GeoLocation-Forensic-Intelligence-Platform.git
-cd SENTRY-AI-Powered-Email-Threat-Detection-GeoLocation-Forensic-Intelligence-Platform
+git clone https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection.git
+cd SENTRY-AI-Powered-Email-Threat-Detection
 
 # 1. Backend Setup
 cd backend
