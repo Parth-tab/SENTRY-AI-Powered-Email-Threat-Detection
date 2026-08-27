@@ -31,12 +31,13 @@ SENTRY is an AI-powered email threat detection, geolocation, and forensic intell
 
 ---
 
-## 2. Immediate Pending Items (GitHub Web UI Checklist)
+## 2. GitHub Storefront & Security Checklist (All Completed)
 
-1. **Social Preview Image**: Upload `docs/assets/tour/05-relay-map.png` in **Repository Settings → General → Social preview**.
-2. **Branch Protection**: Enable on `main` requiring CI status checks (`build-and-test`) before merge.
-3. **Protected Tags**: Add rule for `demo-freeze-*` and `v1.0.*`.
-4. **Security**: Enable Secret Scanning and Dependabot in **Settings → Code security and analysis**, allowlisting the documented demo key in `SECURITY.md`.
+1. **Token Hygiene**: Rotated and revoked temporary PAT tokens; audit log verified clean.
+2. **Social Preview Image**: Uploaded `docs/assets/tour/05-relay-map.png` to **Repository Settings → General → Social preview**.
+3. **Branch Protection**: Enabled on `main` requiring CI status checks (`build-and-test`) before merge.
+4. **Protected Tags**: Added protection rules for `demo-freeze-*` and `v1.0.*`.
+5. **Security**: Secret Scanning and Dependabot active under **Settings → Code security and analysis**.
 
 ---
 
