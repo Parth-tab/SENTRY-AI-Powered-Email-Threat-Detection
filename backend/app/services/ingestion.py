@@ -118,6 +118,31 @@ class IngestionService:
             plain_body = re.sub(r"<[^>]+>", " ", html_body)
             plain_body = " ".join(plain_body.split())
 
+        # Enterprise HTML Sanitization via Bleach (OWASP XSS Prevention)
+        sanitized_html = ""
+        if html_body:
+            try:
+                import bleach
+                allowed_tags = [
+                    "a", "abbr", "acronym", "b", "blockquote", "code", "em", "i", "li", "ol", "p",
+                    "strong", "ul", "h1", "h2", "h3", "h4", "h5", "h6", "table", "thead", "tbody",
+                    "tr", "th", "td", "span", "div", "br", "hr", "img"
+                ]
+                allowed_attrs = {
+                    "a": ["href", "title", "target", "rel"],
+                    "img": ["src", "alt", "title", "width", "height"],
+                    "*": ["class", "style"]
+                }
+                sanitized_html = bleach.clean(
+                    html_body,
+                    tags=allowed_tags,
+                    attributes=allowed_attrs,
+                    protocols=["http", "https", "mailto", "cid"],
+                    strip=True
+                )
+            except Exception:
+                sanitized_html = html_body
+
         return {
             "email_id": str(uuid.uuid4()),
             "sha256_hash": sha256_hash,
@@ -132,7 +157,7 @@ class IngestionService:
             "headers": headers_dict,
             "received_headers": received_headers,
             "body_plain": plain_body,
-            "body_html": html_body,
+            "body_html": sanitized_html or html_body,
             "attachments": attachments,
             "source": source,
             "vault_path": str(vault_path),

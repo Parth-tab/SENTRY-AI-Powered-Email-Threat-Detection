@@ -211,9 +211,20 @@ async def upload_eml_file(
     Accepts .eml, .msg, or .mbox email file uploads, runs complete forensic pipeline,
     and returns full analysis.
     """
+    # File validation
+    filename = file.filename or ""
+    allowed_exts = (".eml", ".msg", ".mbox", ".txt")
+    if not any(filename.lower().endswith(ext) for ext in allowed_exts) and filename != "":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Unsupported file type '{filename}'. Supported formats: .eml, .msg, .mbox."
+        )
+
     content_bytes = await file.read()
     if not content_bytes:
         raise HTTPException(status_code=400, detail="Uploaded file is empty.")
+    if len(content_bytes) > 20_971_520:
+        raise HTTPException(status_code=413, detail="File exceeds maximum size limit of 20MB.")
     
     email_record = await process_and_store_email(content_bytes, source="eml_upload", db=db)
     
