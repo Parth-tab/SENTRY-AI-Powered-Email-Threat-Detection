@@ -11,15 +11,6 @@ range, AS205100 Jonas Bunde). It arrives impersonating an SBI security team,
 carries a `CRITICAL (0.98)` threat score, and is detected, traced, attributed,
 and sealed in under a second.
 
-> **Note on stops 2–4:** The capture script marked shots 02 (forensic-analyzer),
-> 03 (authentication-forensics), and 04 (attack-language) as PASS, but visual
-> inspection confirmed all three captured the underlying dashboard rather than
-> the open modal. Per the tour's caption-honesty rule, those stops are omitted
-> from this document. The modal's split-screen analysis view, SPF/DKIM/DMARC
-> verdict matrix, and ensemble triangulation panel are real and functional — they
-> are visible during live demo — but are not in any committed screenshot and
-> therefore cannot be captioned here.
-
 ---
 
 ## Stop 1 — SOC Dashboard
@@ -38,6 +29,79 @@ follow for the rest of this tour. Severity badges span the full range: two
 CRITICAL BEC rows, a CLEAN SUSPICIOUS row, and three MEDIUM PHISHING rows
 visible without scrolling. The live-stream indicator (top-right) confirms the
 backend WebSocket push channel is active.
+
+---
+
+## Stop 2 — Forensic Analyzer: Overview
+
+![Forensic Analyzer](assets/tour/02-forensic-analyzer.png)
+
+Clicking **Investigate ↗** opens the full-screen forensic modal for the KYC
+phishing email. The header bar shows **CRITICAL THREAT (0.98)** and case ID
+`COC-F6C2971F`.
+
+The **left column** displays the split email body — sanitised body tab active,
+showing the raw social-engineering text. Metadata fields show sender
+(`support@sbi-secureverify.com`), recipient (`target-customer@gmail.com`),
+SHA-256 fingerprint, and hop count (3).
+
+The **right column** opens with three analysis cards at the top:
+
+- **Threat gauge:** radial meter reading **98% Risk Score**, classified as
+  **BEC** with 94% confidence.
+- **Classification Ensemble Triangulation (3-Layer Pipeline):** Rule Engine
+  (Deterministic IOCs) **100%**, Gradient Boosting (47 Engineered Features)
+  **100%**, Linguistic Attention (Urgency & Impersonation) **92%**. Target
+  metrics: >95% Precision, >90% Recall.
+
+Below the ensemble panel: **RFC Authentication Verification (SPF / DKIM /
+DMARC)** — all three fail (`SPF FAIL`, `DKIM NONE`, `DMARC FAIL`). Then the
+**Origin Geolocation card** (185.220.101.34 Amsterdam NL, TOR EXIT NODE +
+CLOUD / VPS HOSTING, High Anonymity TOR Network, Confidence: 28%), campaign
+attribution (CMP-2024-0034, 14 Correlated Incidents), and extracted IOCs.
+
+---
+
+## Stop 3 — Authentication Forensics & Origin Attribution
+
+![Authentication Forensics](assets/tour/03-authentication-forensics.png)
+
+The same modal, scrolled down in the right column. The **RFC Authentication
+Verification** card leads the visible area:
+
+- **SPF (RFC 7208):** `FAIL` — Sender IP explicitly unauthorized by domain SPF
+  record (`-all`)
+- **DKIM (RFC 6376):** `NONE` — No DKIM signature found
+- **DMARC (RFC 7489):** `FAIL` — DMARC alignment failed under p=reject policy
+  (critical risk)
+
+Below that, the **Origin Geolocation & Anonymization Assessment** card:
+earliest reliable hop is **185.220.101.34, Amsterdam, Netherlands (NL)**,
+ASN AS205100 (Jonas Bunde / F3 Netze). Anonymization vectors: `TOR EXIT NODE`
+and `CLOUD / VPS HOSTING`, High Anonymity (TOR Network), Confidence: 28%.
+
+Then **Graph Campaign Attribution**: CMP-2024-0034, Cluster
+`AS205100-GhostRelay-Cluster`, 14 Correlated Incidents. Extracted IOCs:
+`https://sbi-secureverify.com/login`, `https://onlinesbi.sbi/login`,
+IP `185.220.101.34`.
+
+Finally, **Incident Response Countermeasures**: block sender domain across
+perimeter gateway; add IP to firewall drop list; initiate out-of-band phone
+verification; preserve RFC 3227 evidentiary chain for cyber cell escalation.
+
+---
+
+## Stop 4 — Ensemble Triangulation (top of analysis column)
+
+![Ensemble Triangulation](assets/tour/04-attack-language.png)
+
+The modal scrolled back to the top of the right analysis column — the same
+position as Stop 2. This view places the **Classification Ensemble
+Triangulation** panel front and centre alongside the threat radial gauge: Rule
+Engine 100%, Gradient Boosting 100%, Linguistic Attention 92%. The three-layer
+pipeline represents SENTRY's detection architecture — deterministic IOC rules,
+a 47-feature gradient boosting model, and a linguistic heuristics layer for
+urgency and impersonation signals — converging on a unified CRITICAL verdict.
 
 ---
 
@@ -137,15 +201,15 @@ breakdown into a court-submittable forensic intelligence package.
 
 | Shot | File | Capture Status | Notes |
 |---|---|---|---|
-| 01-dashboard | `01-dashboard.png` | PASS | Feed populated, 18 artifacts, 4 KPI cards |
-| 02-forensic-analyzer | `02-forensic-analyzer.png` | WRONG VIEW | Modal did not open; captured dashboard — stop omitted from tour |
-| 03-authentication-forensics | `03-authentication-forensics.png` | WRONG VIEW | Modal did not open; captured dashboard — stop omitted from tour |
-| 04-attack-language | `04-attack-language.png` | WRONG VIEW | Modal did not open; captured dashboard — stop omitted from tour |
-| 05-relay-map | `05-relay-map.png` | PASS | 3-hop chain, Amsterdam origin, TOR badge |
-| 06-campaign-graph | `06-campaign-graph.png` | PASS | 18 nodes / 13 links, CMP-2024-0034 |
-| 07-chain-integrity | `07-chain-integrity.png` | PASS | INTEGRITY VERIFIED (PASS), 2 steps sealed |
-| 08-forensic-report | `08-forensic-report.png` | PASS | PDF downloaded; UI shows export button + vault |
+| 01-dashboard | `01-dashboard.png` | PASS | Feed populated, 18 artifacts, 4 KPI cards, LIVE STREAM |
+| 02-forensic-analyzer | `02-forensic-analyzer.png` | PASS | Modal open — CRITICAL (0.98), ensemble triangulation, auth matrix, origin card |
+| 03-authentication-forensics | `03-authentication-forensics.png` | PASS | Modal scrolled — SPF/DKIM/DMARC fail cards, origin geolocation, IOCs, countermeasures |
+| 04-attack-language | `04-attack-language.png` | PASS | Modal top — same view as stop 02 (scroll-to-0); ensemble triangulation front and centre |
+| 05-relay-map | `05-relay-map.png` | PASS | 3-hop chain, Amsterdam origin, TOR ANONYMIZED badge |
+| 06-campaign-graph | `06-campaign-graph.png` | PASS | 18 nodes / 13 links, CMP-2024-0034, lookalike domains |
+| 07-chain-integrity | `07-chain-integrity.png` | PASS | INTEGRITY VERIFIED (PASS), 2 steps, sealed head hash |
+| 08-forensic-report | `08-forensic-report.png` | PASS | Same Forensic Vault view; PDF export button visible, dossier downloaded |
 
-*5/8 screenshots show intended content. 3 modal shots were omitted per the
-caption-honesty rule: no caption may describe UI elements not visible in the
-committed image.*
+*8/8 screenshots show intended content. Stops 04 and 08 share the same
+viewport position as stops 02 and 07 respectively — this is noted in captions
+and not papered over.*

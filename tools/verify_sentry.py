@@ -298,26 +298,47 @@ async def run_browser_checks(report, ui_url):
                                   full_page=True)
             report.add("ui.threat_feed_populated", "FAIL", repr(exc)[:300])
 
+
         # -- Scene 3: email detail opens on click --------------------------
+        # eval-change: two-gate check.  Gate 1: click an Investigate button
+        # (prefer the labelled button over a raw row click so the intent is
+        # unambiguous).  Gate 2: wait for the modal overlay div (fixed inset-0
+        # z-50) to be attached — this is the EmailDetailModal's backdrop and
+        # cannot pre-exist on the dashboard.  Only then check DETAIL_MARKER.
+        # Previously DETAIL_MARKER matched authentication chips already visible
+        # on feed rows (SPF/DKIM/DMARC text), making the check vacuously green.
         try:
-            # Click row or Investigate button
-            investigate_btn = page.locator('button:has-text("Investigate"), tr:has-text("CRITICAL"), tr:has-text("HIGH"), tr:has-text("CLEAN")').first
+            # Prefer the explicit "Investigate" button; fall back to row click.
+            investigate_btn = page.locator(
+                'button:has-text("Investigate")'
+            ).first
+            if await investigate_btn.count() == 0:
+                investigate_btn = page.locator(
+                    'tr:has-text("CRITICAL"), tr:has-text("HIGH"), tr:has-text("CLEAN")'
+                ).first
             await investigate_btn.click(timeout=10_000)
+            # Gate 1: modal overlay must be present (unique to open modal)
+            modal_overlay = page.locator("div.fixed.inset-0.z-50")
+            await modal_overlay.first.wait_for(state="attached", timeout=15_000)
+            # Gate 2: DETAIL_MARKER text visible inside the now-confirmed modal
             await page.get_by_text(DETAIL_MARKER).first.wait_for(
-                state="visible", timeout=15_000)
+                state="visible", timeout=10_000)
             await page.screenshot(path=str(SHOT_DIR / "02_email_detail.png"),
                                   full_page=True)
             report.add("ui.email_detail_opens", "PASS")
 
-            # Close detail modal if open
+            # Close detail modal
             close_btn = page.locator('button:has-text("✕"), button:has(svg.lucide-x)')
             if await close_btn.count() > 0:
                 await close_btn.first.click(timeout=3_000)
-                await asyncio.sleep(0.5)
+            else:
+                await page.keyboard.press("Escape")
+            await asyncio.sleep(0.5)
         except Exception as exc:
             await page.screenshot(path=str(SHOT_DIR / "02_email_detail_FAIL.png"),
                                   full_page=True)
             report.add("ui.email_detail_opens", "FAIL", repr(exc)[:300])
+
 
         # -- Scenes 4 & 5: map + graph canvases render ---------------------
         async def canvas_scene(name, nav_re, shot):

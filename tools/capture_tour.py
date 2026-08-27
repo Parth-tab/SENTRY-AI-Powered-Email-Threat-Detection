@@ -5,7 +5,7 @@ Reuses the golden harness machinery (boot, markers, cleanup) under the same
 laws: no foreground servers, ports 8000/3000 only, every wait timed, global
 watchdog, cleanup guaranteed. Does NOT modify verify_sentry.py.
 
-Run:   E:\SENTRY\.venv\Scripts\python tools\capture_tour.py --start
+Run:   E:/SENTRY/.venv/Scripts/python tools/capture_tour.py --start
 Out:   docs/assets/tour/*.png, docs/assets/tour/manifest.json,
        docs/assets/tour/08-forensic-report.pdf (if export fires)
 """
@@ -81,13 +81,26 @@ async def nav_click(page, pattern):
 
 
 async def open_first_alert(page, ui):
+    """Navigate to dashboard, settle websocket, open the EmailDetailModal.
+
+    Mirrors the harness exactly: 3s settle after feed rows appear, then click
+    the Investigate button (not a raw row click which lands on severity text).
+    Gate on the modal overlay (div.fixed.inset-0.z-50) before returning — this
+    is the only element that proves the modal is mounted and not just text on
+    the dashboard.
+    """
     await page.goto(ui, timeout=30_000)
     await page.get_by_text(DASHBOARD_MARKER).first.wait_for(
         state="visible", timeout=20_000)
-    await page.get_by_text(FEED_ROW_TEXT).first.click(timeout=15_000)
-    await page.get_by_text(DETAIL_MARKER).first.wait_for(
-        state="visible", timeout=15_000)
-    await asyncio.sleep(1)
+    await page.get_by_text(FEED_ROW_TEXT).first.wait_for(
+        state="visible", timeout=20_000)
+    await asyncio.sleep(3)                           # websocket settle, mirrors harness
+    # Click the first Investigate button explicitly
+    await page.locator('button:has-text("Investigate")').first.click(timeout=10_000)
+    # Gate: modal overlay must be attached before we shoot
+    await page.locator("div.fixed.inset-0.z-50").first.wait_for(
+        state="attached", timeout=15_000)
+    await asyncio.sleep(1.5)                         # React render settle
 
 
 async def run_tour(page, tour, ui):
