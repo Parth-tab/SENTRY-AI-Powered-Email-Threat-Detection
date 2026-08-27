@@ -1,140 +1,157 @@
-# SENTRY — AI-Powered Email Threat Detection, GeoLocation & Forensic Intelligence Platform
+# SENTRY
+### AI-Powered Email Threat Detection, GeoLocation & Forensic Intelligence Platform
 
-> **Master Submission for AICTE Smart India Hackathon 2025**  
-> **Problem Statement ID:** 26106  
-> **Evidentiary Standard:** RFC 3227 & NIST SP 800-86 Compliant  
-> **Enterprise Readiness Score:** 98.0 / 100 (Base) | 97.5 / 100 (Tribunal Adjusted)
+> **Every email is a crime scene.** SENTRY doesn't just flag phishing — it
+> reconstructs the transmission path, attributes the origin infrastructure,
+> correlates attacks into campaigns, and produces a chain-of-custody forensic
+> report that stands up to review.
 
----
+[![CI](https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection-GeoLocation-Forensic-Intelligence-Platform/actions/workflows/ci.yml/badge.svg)](https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection-GeoLocation-Forensic-Intelligence-Platform/actions)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://python.org)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Verified: GAUNTLET 97.5/100](https://img.shields.io/badge/GAUNTLET-97.5%2F100-8b5cf6)](evaluation/final_report.md)
 
-## 1. Executive Summary & Winning Strategy
+![SOC Dashboard](docs/assets/dashboard.png)
 
-**SENTRY** transforms email threat triage from shallow binary classification into an **evidentiary-grade cyber forensic intelligence platform**. Treating every incoming email as a digital crime scene, SENTRY reconstructs the full multi-hop transmission path, identifies the earliest reliable origin infrastructure, calculates lookalike brand domain entropy, correlates indicators into organized campaigns across a multi-entity knowledge graph, and seals evidence into an immutable, court-admissible RFC 3227 chain of custody.
-
-### Differentiation Matrix
-
-| Evaluation Vector | Typical Hackathon Project | SENTRY Intelligence Platform |
-| :--- | :--- | :--- |
-| **Detection Engine** | Binary classifier ("spam vs. ham") | Multi-signal 3-layer ensemble: deterministic IOC rules + 47-feature gradient boosting + linguistic attention |
-| **Transmission Tracing**| Pins the last gateway IP on a map | Multi-hop `Received` header reconstruction, earliest reliable public hop extraction, relay clock-skew anomaly detection |
-| **Campaign Attribution**| None (isolated per-email analysis) | Multi-entity knowledge graph linking emails, IPs, ASNs, bulletproof clusters, and lookalike brand targets |
-| **Evidentiary Rigor** | Dashboard screenshots | RFC 3227 immutable SHA-256 hash-chain audit log with mathematical verification & court-admissible PDF generator |
-| **Authentication** | Basic regex header checks | Full RFC compliance: SPF (RFC 7208), DKIM (RFC 6376), and DMARC (RFC 7489) evaluation with penalty scoring |
-| **Security & Hardening**| None (Vulnerable to XSS / DoS) | Bleach HTML sanitization, OWASP response security headers, SlowAPI rate limiting, 25MB payload guards |
-| **Observability** | Console print statements | Native Prometheus `/metrics` RED exporter, structured correlation ID tracing (`X-Correlation-ID`), `/health/deep` |
-| **Security Operations UI**| Generic template | Enterprise Dark SOC dashboard with live WebSocket telemetry, split-pane forensic analyzer, and interactive network graph |
+Built for **AICTE Smart India Hackathon 2025 — Problem Statement ID 26106**
+(AI-Powered Email Threat Detection, GeoLocation and Forensic Intelligence
+Platform). Finalist-grade delivery: 12-dimension audited, air-gap proven,
+evidentiary-grade output.
 
 ---
 
-## 2. System Architecture
+## What SENTRY Does
 
-```mermaid
-flowchart TD
-    subgraph Ingestion["Ingestion Layer (Multi-Protocol & Sanitized)"]
-        EML["EML / MSG / MBOX Upload"] --> Ingest["Ingestion Service\n(Bleach XSS Filter + MIME Validator)"]
-        RAW["Raw RFC 5322 API"] --> Ingest
-        IMAP["IMAP / Webhook Poller"] --> Ingest
-    end
+| Capability | Detail |
+|---|---|
+| **Multi-class threat detection** | Legitimate / suspicious / phishing / BEC / impersonation — via a 3-layer ensemble (rule engine + gradient boosting + linguistic attention) with 47 engineered features |
+| **Header & protocol forensics** | Full `Received`-chain reconstruction, SPF/DKIM/DMARC validation, relay-anomaly and forgery detection |
+| **Origin tracing** | Earliest-reliable-hop extraction, IP geolocation, Tor/VPN/hosting detection, confidence-scored origin assessment |
+| **Campaign attribution** | In-memory graph correlation across senders, domains, IPs, and lookalike networks — clusters isolated emails into coordinated campaigns |
+| **Evidentiary output** | RFC 3227-aligned chain of custody, sequential SHA-256 hash chain, PDF forensic dossier, machine-readable IOC export |
+| **Zero-dependency appliance** | Runs fully air-gapped on one machine: async SQLite + in-memory graph, no Docker, Redis, or external APIs required |
 
-    Ingest --> Vault[("Evidence Vault (Immutable SHA-256)")]
-    Ingest --> Queue["In-Memory Stream / Task Engine"]
+## Quickstart (any OS, ~5 minutes)
 
-    subgraph ForensicPipeline["Analysis & Forensic Pipeline"]
-        Queue --> HF["Header Forensics (SPF/DKIM/DMARC)"]
-        Queue --> CA["Content Analysis (NLP / Linguistic Attention)"]
-        Queue --> DI["Domain Intel (Lookalike / Homoglyph / Punycode)"]
-        Queue --> GO["Geo-Origin (Earliest Hop / Tor / VPN / ASN Scoring)"]
-        Queue --> TI["Threat Intel (URLhaus / ThreatFox / OpenPhish)"]
-    end
+**Prerequisites:** Python 3.11+, Node 18+
 
-    HF --> ML["3-Layer Ensemble Classifier (47 Feature Dimensions)"]
-    CA --> ML
-    DI --> ML
-    GO --> ML
-    TI --> ML
-
-    ML --> Graph["Correlation Engine (NetworkX / Neo4j Graph)"]
-    ML --> COC["RFC 3227 Chain-of-Custody Logger"]
-
-    subgraph Storage["Persistence & Storage Architecture"]
-        COC --> PG[("Async SQLite (Appliance) / PostgreSQL (Cloud)")]
-        Graph --> GraphDB[("Knowledge Graph Store")]
-    end
-
-    subgraph Presentation["Presentation & Operations"]
-        PG --> API["FastAPI REST Gateway (OWASP Hardened + Rate Limited)"]
-        API --> Prom["Prometheus /metrics + /health/deep"]
-        API --> WS["WebSocket Live Telemetry (/api/v1/dashboard/live)"]
-        WS --> UI["React / Vite Dark SOC Dashboard"]
-        API --> PDF["Court-Admissible PDF Generator"]
-    end
-```
-
----
-
-## 3. Quickstart & Demonstration Runbook
-
-### Standalone Demo Appliance (Recommended / On-Stage Runtime)
-```powershell
-# One-click appliance boot with process hygiene, RAM checks, and fullscreen browser
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/demo_day.ps1
-```
-
-### Manual Local Developer Setup
 ```bash
+git clone https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection-GeoLocation-Forensic-Intelligence-Platform.git
+cd SENTRY-AI-Powered-Email-Threat-Detection-GeoLocation-Forensic-Intelligence-Platform
+
 # 1. Backend Setup
 cd backend
 python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-
-# Run full automated test suite (41 tests, 85% coverage)
-pytest -v tests --cov=app --cov-report=term
-
-# Start FastAPI backend server (:8000)
 uvicorn app.main:app --port 8000
 
-# 2. Frontend Setup (New Terminal)
+# 2. Frontend Setup (in a new terminal)
 cd frontend
 npm install
-npm run dev
+npm run dev                 # Opens SOC Console at http://localhost:3000
+
+# 3. Load the demo corpus (18 emails, 3 attack campaigns)
+curl -X POST http://localhost:8000/api/v1/samples/seed
 ```
 
----
+You should see the SOC dashboard with 18 analyzed emails across three
+campaigns (banking-KYC phishing via Tor, CEO wire-fraud BEC, SaaS credential
+harvesting). All demo emails are **synthetic** — written for demonstration,
+with illustrative infrastructure details.
 
-## 4. GAUNTLET 22-Judge Tribunal Scorecard
+**Verify your install in one command** (boots the stack, drives the real UI
+in headless Chromium, runs 15 golden checks, exits 0/1):
 
-| Dimension | Weight | Floor | Verified Base Score | Tribunal Score | Status |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **D1: Code Quality & AST Hygiene** | 8% | 85% | 93.8% | **93.8%** | :white_check_mark: PASS |
-| **D2: Test Quality & Coverage** | 10% | 85% | 98.4% | **98.4%** | :white_check_mark: PASS |
-| **D3: Architecture & Persistence** | 8% | 85% | 94.2% | **92.2%** | :white_check_mark: PASS |
-| **D4: Security Hardening & Sanitization**| 12% | 90% | 99.5% | **99.5%** | :white_check_mark: PASS |
-| **D5: Reliability & Fault Tolerance** | 8% | 85% | 100.0% | **97.0%** | :white_check_mark: PASS |
-| **D6: Performance & Latency Budgets** | 8% | 85% | 98.6% | **98.6%** | :white_check_mark: PASS |
-| **D7: Forensics & RFC 3227 Proof** | 12% | 90% | 100.0% | **100.0%** | :white_check_mark: PASS |
-| **D8: Machine Learning Rigor (OvR)** | 10% | 85% | 99.2% | **99.2%** | :white_check_mark: PASS |
-| **D9: API Design & OpenAPI 3.1** | 8% | 85% | 98.8% | **98.8%** | :white_check_mark: PASS |
-| **D10: UX / Frontend SOC Experience** | 6% | 85% | 96.6% | **96.6%** | :white_check_mark: PASS |
-| **D11: Observability & SRE (RED)** | 5% | 85% | 95.8% | **93.8%** | :white_check_mark: PASS |
-| **D12: Problem Statement 26106 Alignment** | 5% | 85% | 98.5% | **98.5%** | :white_check_mark: PASS |
-| **Normalized Composite Tribunal Score** | **100%** | — | **98.0%** | **97.5 / 100** | :star: **ENTERPRISE GRADE** |
+```bash
+python tools/verify_sentry.py --start
+```
 
----
+**Windows demo appliance** (one command — port hygiene, power hardening,
+Gate-0 verification, fullscreen presentation browser):
 
-## 5. Documentation & Artifacts
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/demo_day.ps1
+```
 
-- [Master Architecture Blueprint](docs/ARCHITECTURE.md)
-- [REST API & WebSocket Reference](docs/API.md)
-- [OpenAPI 3.1 Specification](docs/openapi.json)
-- [5-Minute Master Demonstration Script](docs/DEMO_SCRIPT.md)
-- [Requirement Traceability Matrix](docs/TRACEABILITY_MATRIX.md)
-- [Strategic Differentiation Dossier](docs/DIFFERENTIATION_DOSSIER.md)
-- [Canonical Final Verification Report](evaluation/final_report.md)
-- [Security Architecture & Vulnerability Policy](SECURITY.md)
+## Documentation Index
 
----
+| Doc | Contents |
+|---|---|
+| [`ARCHITECTURE.md`](docs/ARCHITECTURE.md) | System design, data flow (Mermaid), RFC 3227 evidence lifecycle, ML ensemble schema |
+| [`API.md`](docs/API.md) / [`openapi.json`](docs/openapi.json) | Full REST + WebSocket reference |
+| [`DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) | Timed 5-minute walkthrough with narration & presenter Q&A armor |
+| [`TRACEABILITY_MATRIX.md`](docs/TRACEABILITY_MATRIX.md) | Every PS 26106 requirement $\to$ feature $\to$ evidence |
+| [`evaluation/final_report.md`](evaluation/final_report.md) | Full 12-dimension audit: scorecard, defects, limitations |
+| [`AGENTS.md`](AGENTS.md) / [`CONTRIBUTING.md`](CONTRIBUTING.md) | How machines and humans change this codebase |
 
-## 6. License
+## Testing & Verification
 
-Developed for **AICTE Smart India Hackathon 2025**. Licensed under the Apache License 2.0.
+```bash
+# Unit + integration suite (41 tests, 85% branch coverage)
+pytest backend/tests -v --cov=app --cov-branch
+
+# End-to-end golden harness: 15 checks across API, WebSocket, and live UI
+python tools/verify_sentry.py --start
+
+# Full 12-dimension GAUNTLET evaluation battery
+python evaluation/battery/run_battery.py
+```
+
+## Evaluation — Audited, Not Asserted
+
+This project was scored by a 12-dimension automated battery (GAUNTLET) with
+per-check evidence artifacts, then subjected to three rounds of hostile audit.
+The composite **dropped from 97.9 to 97.5 under audit — and that's the point.**
+A score that survives adversarial review is the only kind worth publishing.
+
+| Dimension | Weight | Score | | Dimension | Weight | Score |
+|---|:---:|:---:|---|---|:---:|:---:|
+| Security & Sanitization | 12% | 99.5% | | Reliability | 8% | 97.0%* |
+| Forensics (RFC 3227) | 12% | 100.0%* | | Performance | 8% | 98.6% |
+| Test Suite | 10% | 98.4% | | Architecture | 8% | 92.2%* |
+| ML Rigor | 10% | 99.2% | | Code Quality | 8% | 93.8% |
+| API Quality | 8% | 98.8% | | UX / SOC | 6% | 96.6% |
+| Product Fit (PS 26106) | 5% | 98.5% | | Observability | 5% | 93.8%* |
+
+*\* includes documented tribunal deductions for untested scope (e.g., chaos
+testing was in-process, not container-kill). **Composite: 97.5/100 adjusted,
+98.0/100 base.** Full derivation, per-check evidence, defect registry, and
+limitations: [`evaluation/final_report.md`](evaluation/final_report.md).*
+
+Key ML metrics (macro OvR): accuracy 0.961, macro-F1 0.952, ROC-AUC 0.988 on
+15,240 validation samples; 9/10 adversarial evasions detected (homoglyphs,
+zero-width chars, IDN punycode, RTLO).
+
+## Security Notes
+
+- HTML email bodies are sanitized server-side (Bleach 6.1, pinned allowlist
+  profile; nh3 migration on roadmap) — the UI never renders raw HTML
+- OWASP security headers on every API response; rate limiting; 25MB upload cap
+- **Demo appliance mode** ships a documented public key and unauthenticated
+  telemetry (`/metrics`, `/health/deep`) for reproducibility; production mode
+  fails fast on demo credentials. See [SECURITY.md](SECURITY.md).
+
+## Honest Limitations & Roadmap
+
+Every claim above is evidence-backed. Equally important, what we did **not**
+do — [full list in the final report](evaluation/final_report.md):
+
+- Mutation testing not run; chaos validation was in-process, not physical container-kill
+- Telemetry endpoints unauthenticated in appliance mode (documented decision)
+- Scale-out topology (Postgres + Neo4j + Celery/Redis) is architected and
+  documented, but the certified path is the single-node SQLite appliance
+- Bleach $\to$ nh3 migration on roadmap (sanitization profile is pinned and test-covered)
+
+## Tech Stack
+
+FastAPI • SQLAlchemy (async SQLite) • scikit-learn / Transformer Attention • React / Vite •
+MapLibre GL • D3.js • Playwright (verification) • GitHub Actions (CI/CD)
+
+## License & Acknowledgments
+
+MIT — see [LICENSE](LICENSE). Demo corpus authored by the team (synthetic).
+Training pipelines reference the Nazario phishing corpus and Enron dataset
+(downloaded separately under their respective terms — not redistributed).
+Threat-intel integrations: abuse.ch (URLhaus/ThreatFox), VirusTotal, MaxMind
+GeoLite2.

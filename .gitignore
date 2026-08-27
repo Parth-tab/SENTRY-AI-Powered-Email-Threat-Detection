@@ -66,5 +66,10 @@ Thumbs.db
 # Skill Reference Cache
 .skills_ref/
 
-# Demo Appliance Browser Profile
+# Demo Appliance & Runtime Artifacts
 .demo-profile/
+sentry.db
+backend/sentry.db
+logs/
+verification_report.json
+.ruff_cache/

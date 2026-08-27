@@ -6,13 +6,17 @@ OpenAPI Specification Export: [`docs/openapi.json`](openapi.json)
 
 ---
 
-## 1. Authentication & Common Headers
+## 1. Authentication & Security Posture
 
-All API responses include standard enterprise headers:
-- `X-Correlation-ID`: Unique distributed tracing request identifier.
-- `X-Content-Type-Options: nosniff`
-- `X-Frame-Options: DENY`
-- `Strict-Transport-Security: max-age=31536000; includeSubDomains`
+- **Demo Appliance Mode (Default):** For frictionless evaluation and reproducibility, endpoints run unauthenticated on local ports (`:8000`).
+- **Production Mode:** Enforces `ENVIRONMENT=production` validation, requiring bearer token authorization on API routes and network-isolated metrics interfaces (`:9090`).
+- **Standard Enterprise Response Headers:**
+  - `X-Correlation-ID`: Unique distributed tracing request identifier.
+  - `X-Content-Type-Options: nosniff`
+  - `X-Frame-Options: DENY`
+  - `X-XSS-Protection: 0`
+  - `Strict-Transport-Security: max-age=31536000; includeSubDomains`
+  - `Content-Security-Policy: default-src 'self'`
 
 ---
 
@@ -91,7 +95,7 @@ Cryptographically re-computes and verifies the sequential SHA-256 hash chain to 
 ## 5. Machine Learning & Model Transparency
 
 ### `GET /api/v1/model/metrics`
-Returns formal multi-class model metrics (Accuracy: 0.961, Macro-F1: 0.952, ROC-AUC: 0.988), $5\times 5$ confusion matrix, 10-bin probability calibration curve, and ranked top feature importances.
+Returns formal multi-class model metrics (Accuracy: 0.961, Macro-F1: 0.952, Macro OvR ROC-AUC: 0.988), $5\times 5$ confusion matrix, 10-bin probability calibration curve, and ranked top feature importances.
 
 ### `GET /api/v1/model/features`
 Returns the 47-dimension feature vector taxonomy extracted by SENTRY.

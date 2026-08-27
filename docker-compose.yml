@@ -1,3 +1,7 @@
+# SENTRY Enterprise Distributed Topology (Optional Scale-Out Deployment)
+# Note: SENTRY runs standalone air-gapped by default using async SQLite + in-memory graph.
+# Use this compose file only when deploying the multi-node distributed enterprise cluster.
+
 services:
   postgres:
     image: postgres:16-alpine
