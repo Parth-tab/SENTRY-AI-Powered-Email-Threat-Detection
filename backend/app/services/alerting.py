@@ -9,10 +9,20 @@ class AlertManager:
     async def connect(self, websocket: WebSocket):
         await websocket.accept()
         self.active_connections.append(websocket)
+        try:
+            from app.services.metrics import ACTIVE_WEBSOCKET_CONNECTIONS
+            ACTIVE_WEBSOCKET_CONNECTIONS.set(len(self.active_connections))
+        except Exception:
+            pass
 
     def disconnect(self, websocket: WebSocket):
         if websocket in self.active_connections:
             self.active_connections.remove(websocket)
+            try:
+                from app.services.metrics import ACTIVE_WEBSOCKET_CONNECTIONS
+                ACTIVE_WEBSOCKET_CONNECTIONS.set(len(self.active_connections))
+            except Exception:
+                pass
 
     async def broadcast_alert(self, alert_data: Dict[str, Any]):
         """Broadcasts a high-priority threat alert to all active WebSocket clients."""
