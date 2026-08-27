@@ -111,10 +111,16 @@ Hi Engineering Team, Here is your monthly summary of architecture updates and qu
       </div>
 
       {activeMode === "file" ? (
-        <div className="border-2 border-dashed border-[#3F3F46] hover:border-rose-500/50 rounded-lg p-6 text-center transition-colors bg-[#121215]/50 flex flex-col items-center justify-center">
+        <div
+          className="border-2 border-dashed border-[#3F3F46] hover:border-rose-500/50 rounded-lg p-6 text-center transition-colors bg-[#121215]/50 flex flex-col items-center justify-center"
+          aria-describedby="dropzone-helper-text"
+        >
           <UploadCloud className="w-9 h-9 text-zinc-400 mb-2" />
           <p className="text-xs text-zinc-300 font-medium">Drag and drop email files (.eml, .msg, .mbox)</p>
           <p className="text-[11px] text-zinc-500 mt-1 mb-3">Multi-hop Received-header parser & RFC 3227 vault storage</p>
+          <p id="dropzone-helper-text" className="sr-only">
+            Upload RFC 5322 EML, MSG, or MBOX files for automated forensic triage and hash chain sealing
+          </p>
           <label className="cursor-pointer px-4 py-2 rounded-lg bg-rose-500 hover:bg-rose-600 active:bg-rose-700 text-white text-xs font-semibold shadow-md shadow-rose-500/20 transition-all flex items-center space-x-2">
             {isLoading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
             <span>Browse Local Files</span>
@@ -123,6 +129,7 @@ Hi Engineering Team, Here is your monthly summary of architecture updates and qu
               accept=".eml,.msg,.mbox,.txt"
               onChange={handleFileUpload}
               disabled={isLoading}
+              aria-describedby="dropzone-helper-text"
               className="hidden"
             />
           </label>
