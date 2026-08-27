@@ -36,6 +36,14 @@ export const EmailDetailModal: React.FC<EmailDetailModalProps> = ({
   const [activeTab, setActiveTab] = useState<"clean" | "raw_body" | "headers">("clean");
   const [copiedIoc, setCopiedIoc] = useState<string | null>(null);
 
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   const copyToClipboard = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
     setCopiedIoc(id);

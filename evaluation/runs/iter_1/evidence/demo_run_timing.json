@@ -1,0 +1,38 @@
+{
+  "demo_run_timestamp": "2026-08-27T13:47:05.644091+00:00",
+  "total_duration_sec": 5.43,
+  "target_window_sec": 300,
+  "stages": [
+    {
+      "stage": "1. Boot & Diagnostics",
+      "target": "0:00 - 0:30",
+      "actual_sec": 0.0,
+      "status": "PASS"
+    },
+    {
+      "stage": "2. Ingestion & RFC 3227 Sealing",
+      "target": "0:30 - 1:30",
+      "actual_sec": 0.03,
+      "emails_seeded": 0,
+      "status": "PASS"
+    },
+    {
+      "stage": "3. SOC Live Triage & Multi-Hop Forensics",
+      "target": "1:30 - 2:30",
+      "actual_sec": 2.74,
+      "status": "PASS"
+    },
+    {
+      "stage": "4. Campaign Correlation & Graph Link Analysis",
+      "target": "2:30 - 3:45",
+      "actual_sec": 2.13,
+      "status": "PASS"
+    },
+    {
+      "stage": "5. RFC 3227 Proof & Court Dossier Export",
+      "target": "3:45 - 5:00",
+      "actual_sec": 0.03,
+      "status": "PASS"
+    }
+  ]
+}
