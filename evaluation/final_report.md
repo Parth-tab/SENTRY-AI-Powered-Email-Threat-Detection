@@ -57,7 +57,7 @@ To verify zero hidden external daemon dependencies, a clean cold-boot test was e
 1. `wsl --shutdown` executed; `netstat -ano | findstr ":6379 :7687 :5432"` verified **100% empty** (zero listening ports for Redis, Neo4j, or Postgres).
 2. Static code analysis (`findstr`) proved zero asynchronous Celery `.delay()` or `send_task()` calls in the runtime analysis pipeline.
 3. Cold-boot verification (`verify_sentry.py --start --label cold-boot-proof`) passed **15/15 green with 18 items populated and WebSocket live streaming verified**.
-4. Artifact: [`verification_report_demo-freeze-v2.json`](../verification_report_demo-freeze-v2.json).
+4. Artifacts: [`verification_report_cold-boot-proof.json`](../verification_report_cold-boot-proof.json) and [`verification_report_demo-freeze-v2.json`](../verification_report_demo-freeze-v2.json).
 
 ---
 

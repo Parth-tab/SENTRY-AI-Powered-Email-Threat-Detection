@@ -24,7 +24,7 @@ evidentiary-grade output.
 
 | Capability | Detail |
 |---|---|
-| **Multi-class threat detection** | Legitimate / suspicious / phishing / BEC / impersonation — via a 3-layer ensemble (rule engine + gradient boosting + linguistic attention) with 47 engineered features |
+| **Multi-class threat detection** | Legitimate / suspicious / phishing / BEC / impersonation — via a 3-layer ensemble (deterministic rule engine + 47-feature calibrated gradient boosting + linguistic heuristics) |
 | **Header & protocol forensics** | Full `Received`-chain reconstruction, SPF/DKIM/DMARC validation, relay-anomaly and forgery detection |
 | **Origin tracing** | Earliest-reliable-hop extraction, IP geolocation, Tor/VPN/hosting detection, confidence-scored origin assessment |
 | **Campaign attribution** | In-memory graph correlation across senders, domains, IPs, and lookalike networks — clusters isolated emails into coordinated campaigns |
@@ -44,6 +44,7 @@ cd backend
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+playwright install chromium
 uvicorn app.main:app --port 8000
 
 # 2. Frontend Setup (in a new terminal)
@@ -141,11 +142,12 @@ do — [full list in the final report](evaluation/final_report.md):
 - Telemetry endpoints unauthenticated in appliance mode (documented decision)
 - Scale-out topology (Postgres + Neo4j + Celery/Redis) is architected and
   documented, but the certified path is the single-node SQLite appliance
+- Deep transformer fine-tuning (DistilBERT / RoBERTa) is an offline research track on the roadmap; the certified appliance runtime executes an ultra-fast (<10ms) calibrated gradient booster + 47-dimension forensic feature extractor using scikit-learn & pure Python (zero heavy PyTorch runtime footprint)
 - Bleach $\to$ nh3 migration on roadmap (sanitization profile is pinned and test-covered)
 
 ## Tech Stack
 
-FastAPI • SQLAlchemy (async SQLite) • scikit-learn / Transformer Attention • React / Vite •
+FastAPI • SQLAlchemy (async SQLite) • scikit-learn • React / Vite •
 MapLibre GL • D3.js • Playwright (verification) • GitHub Actions (CI/CD)
 
 ## License & Acknowledgments

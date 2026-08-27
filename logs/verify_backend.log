@@ -659,3 +659,36 @@ INFO:     127.0.0.1:57031 - "WebSocket /api/v1/dashboard/live" [accepted]
 INFO:     connection open
 INFO:     127.0.0.1:60566 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
 INFO:     127.0.0.1:60566 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     Started server process [1064]
+INFO:     Waiting for application startup.
+E:\SENTRY\.venv\Lib\site-packages\bleach\sanitizer.py:166: NoCssSanitizerWarning: 'style' attribute specified, but css_sanitizer not set.
+  warnings.warn(
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:64517 - "GET /health HTTP/1.1" 200 OK
+E:\SENTRY\.venv\Lib\site-packages\bleach\sanitizer.py:166: NoCssSanitizerWarning: 'style' attribute specified, but css_sanitizer not set.
+  warnings.warn(
+INFO:     127.0.0.1:64522 - "POST /api/v1/samples/seed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64523 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64524 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64525 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64526 - "GET /api/v1/campaigns HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49673 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:54135 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:58996 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:53270 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:52669 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50601 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55265 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52669 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55265 - "GET /api/v1/emails/f6c2971f-35ea-49d6-8651-f056f228ed3f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55265 - "GET /api/v1/emails/f6c2971f-35ea-49d6-8651-f056f228ed3f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52446 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:55265 - "GET /api/v1/emails/f6c2971f-35ea-49d6-8651-f056f228ed3f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53695 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53695 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
