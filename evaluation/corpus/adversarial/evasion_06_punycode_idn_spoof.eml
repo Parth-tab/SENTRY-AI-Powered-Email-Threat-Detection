@@ -1,0 +1,7 @@
+From: "Google Workspace Security" <admin@xn--gogle-qqa.com>
+To: admin@victim.com
+Subject: Critical Security Advisory: Admin Console Compromise
+Date: Tue, 16 Jan 2024 14:00:00 +0000
+Received: from [185.220.101.5] by mx.victim.com with SMTP; Tue, 16 Jan 2024 14:00:05 +0000
+
+Unauthorized sign-in detected. Sign in immediately at https://xn--gogle-qqa.com/admin to revoke rogue access tokens.

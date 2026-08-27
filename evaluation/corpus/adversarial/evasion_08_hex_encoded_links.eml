@@ -1,0 +1,7 @@
+From: PayPal Billing Support <service@paypal-security-auth.com>
+To: user@victim.com
+Subject: Unauthorized Transaction of $899.99 Reported
+Date: Tue, 16 Jan 2024 16:00:00 +0000
+Received: from [185.220.101.34] by mx.victim.com with SMTP; Tue, 16 Jan 2024 16:00:05 +0000
+
+Cancel this transaction within 12 hours at http://0xb9dc6505/dispute to ensure immediate funds restoration.

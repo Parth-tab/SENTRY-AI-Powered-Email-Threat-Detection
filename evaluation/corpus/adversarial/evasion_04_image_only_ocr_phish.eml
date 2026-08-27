@@ -1,0 +1,12 @@
+From: DocuSign Notification <service@docusign-docs-secure.net>
+To: target@victim.com
+Subject: Please DocuSign: Financial Escrow Agreement
+Date: Tue, 16 Jan 2024 12:00:00 +0000
+Content-Type: text/html; charset="UTF-8"
+Received: from [185.220.101.34] by mx.victim.com with SMTP; Tue, 16 Jan 2024 12:00:05 +0000
+
+<html>
+<body>
+<a href="https://docusign-docs-secure.net/auth"><img src="https://docusign-docs-secure.net/banner.png" alt="Document Review Needed" /></a>
+</body>
+</html>

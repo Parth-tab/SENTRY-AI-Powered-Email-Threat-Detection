@@ -1,0 +1,20 @@
+From: Corporate Accounts <finance@corp-escrow.com>
+To: cfo@victim.com
+Subject: Invoice #88921 Attached
+Date: Tue, 16 Jan 2024 11:00:00 +0000
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="BOUNDARY1"
+Received: from relay.cloudhost.net ([45.33.32.156]) by mx.victim.com with ESMTP; Tue, 16 Jan 2024 11:00:05 +0000
+
+--BOUNDARY1
+Content-Type: multipart/alternative; boundary="BOUNDARY2"
+
+--BOUNDARY2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+UGxlYXNlIHJldmlldyB0aGUgdXJnZW50IHdpcmUgdHJhbnNmZXIgcmVxdWVzdCBmb3IgJDE0Miw1
+MDAgYXR0YWNoZWQu
+
+--BOUNDARY2--
+--BOUNDARY1--

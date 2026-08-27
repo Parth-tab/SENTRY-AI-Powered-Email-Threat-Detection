@@ -1,0 +1,8 @@
+From: IT Helpdesk <support@it-services-desk.com>
+To: user@victim.com
+Subject: Mandatory System Password Rotation Notice
+Date: Mon, 15 Jan 2024 08:00:00 +0000
+Received: from forged.relay.com ([185.220.101.5]) by intermediate.net with ESMTP; Sun, 20 Jan 2030 18:00:00 +0000
+Received: from intermediate.net by mx.victim.com with ESMTP; Mon, 15 Jan 2024 08:00:05 +0000
+
+Your corporate Active Directory password will expire today. Update credentials immediately.

