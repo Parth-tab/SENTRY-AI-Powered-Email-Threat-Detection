@@ -65,3 +65,6 @@ Thumbs.db
 
 # Skill Reference Cache
 .skills_ref/
+
+# Demo Appliance Browser Profile
+.demo-profile/

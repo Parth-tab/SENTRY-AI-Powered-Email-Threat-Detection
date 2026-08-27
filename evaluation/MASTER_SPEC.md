@@ -240,3 +240,13 @@ Base scores come from these checks — computed by scripts, not opinions. Judges
    b. **Extend `tools/verify_sentry.py` with `--demo-run` flag:** walks the exact FIT-4 script with per-step timings; target total $5:00 \pm 0:30$.
    c. **Record full clean run as backup proof.**
 
+### eval-change: demo-day appliance hardening (same-device demo)
+
+DEMO-PREP phase gains:
+  a. `tools/demo_day.ps1` — appliance boot script; Gate 0 failure aborts presentation mode. All rehearsals execute through this script.
+  b. `docs/DEMO_SCRIPT.md` — FIT-4 script with per-step timings, validated via a `--demo-run` pass through this boot path.
+  c. Offline-first policy: demo corpus pre-analyzed; live-submission segment must succeed with networking disabled (air-gapped demonstration mode).
+  d. Backup video recorded via screen capture during rehearsal #2, stored on device, USB, and secondary device.
+  e. WebSocket check tightened (`dashboard/live` filter) — verified that the live alert stream genuinely connects.
+
+
