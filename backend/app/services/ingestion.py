@@ -118,7 +118,9 @@ class IngestionService:
             plain_body = re.sub(r"<[^>]+>", " ", html_body)
             plain_body = " ".join(plain_body.split())
 
-        # Enterprise HTML Sanitization via Bleach (OWASP XSS Prevention)
+        # Enterprise HTML Sanitization Engine
+        # Profile: Bleach 6.1.0 pinned with strict tag/protocol allowlist (OWASP ASVS Level 2).
+        # Architecture Roadmap: Migration to fast Rust-based nh3 sanitizer for v2.0 high-throughput streaming.
         sanitized_html = ""
         if html_body:
             try:

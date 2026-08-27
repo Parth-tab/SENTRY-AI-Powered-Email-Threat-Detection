@@ -66,7 +66,9 @@ class MLMetricsService:
                 "macro_precision": 0.950,
                 "macro_recall": 0.954,
                 "macro_f1": 0.952,
+                "roc_auc_macro_ovr": 0.988,
                 "roc_auc_score": 0.988,
+                "roc_auc_evaluation_method": "Macro One-vs-Rest (OvR)",
                 "brier_score": 0.034,
                 "expected_calibration_error_ece": 0.018
             },

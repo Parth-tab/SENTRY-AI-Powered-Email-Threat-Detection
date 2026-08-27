@@ -46,7 +46,7 @@ class CorrelationEngine:
             "threat_level": "CRITICAL",
             "actor_sophistication": "high",
             "infrastructure_cluster": {
-                "name": "CloudFlare-FastFlux-Cluster",
+                "name": "Cloudflare-Proxied-Bulletproof-Cluster",
                 "provider": "Cloudflare Reverse Proxy & Bulletproof NGINX Relays",
                 "first_seen": "2024-01-08T11:15:00Z",
                 "email_count": 11

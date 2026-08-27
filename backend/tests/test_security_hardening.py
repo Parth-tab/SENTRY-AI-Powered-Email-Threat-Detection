@@ -44,7 +44,7 @@ async def test_security_headers_present():
         headers = response.headers
         assert headers.get("x-content-type-options") == "nosniff"
         assert headers.get("x-frame-options") == "DENY"
-        assert headers.get("x-xss-protection") == "1; mode=block"
+        assert headers.get("x-xss-protection") == "0"
         assert "strict-transport-security" in headers
         assert "content-security-policy" in headers
         assert "referrer-policy" in headers
