@@ -23,36 +23,36 @@ SENTRY is an evidentiary-grade cyber forensic intelligence platform that treats 
 
 ```mermaid
 flowchart TD
-    A[Raw Ingestion\nRFC 5322 EML / MSG / MBOX] --> B[Ingestion & Vault Engine\nSHA-256 Digest + Bleach Sanitization]
-    B --> C[RFC 3227 Hash Chain\nGenesis Block Creation]
+    A["Raw Ingestion<br/>RFC 5322 EML / MSG / MBOX"] --> B["Ingestion & Vault Engine<br/>SHA-256 Digest + Bleach Sanitization"]
+    B --> C["RFC 3227 Hash Chain<br/>Genesis Block Creation"]
     
     subgraph "Forensic Deep Analysis Pipeline"
-        C --> D1[Header Forensics Engine\nReceived Hop Chronology, SPF/DKIM/DMARC]
-        C --> D2[Geo-Origin Engine\nEarliest Hop Trace, Tor/VPN/ASN Fingerprint]
-        C --> D3[Domain Intelligence\nLevenshtein, Punycode, Homoglyphs]
-        C --> D4[Content NLP & Attention\nUrgency, Credential & Financial Vectors]
-        C --> D5[Threat Intel Feeds\nURLhaus, ThreatFox, OpenPhish]
+        C --> D1["Header Forensics Engine<br/>Received Hop Chronology, SPF/DKIM/DMARC"]
+        C --> D2["Geo-Origin Engine<br/>Earliest Hop Trace, Tor/VPN/ASN Fingerprint"]
+        C --> D3["Domain Intelligence<br/>Levenshtein, Punycode, Homoglyphs"]
+        C --> D4["Content NLP & Attention<br/>Urgency, Credential & Financial Vectors"]
+        C --> D5["Threat Intel Feeds<br/>URLhaus, ThreatFox, OpenPhish"]
     end
 
-    D1 --> E[47-Dimension Feature Vector]
+    D1 --> E["47-Dimension Feature Vector"]
     D2 --> E
     D3 --> E
     D4 --> E
     D5 --> E
 
     subgraph "3-Layer ML Classifier Triangulation"
-        E --> F1[Layer 1: Deterministic Heuristics]
-        E --> F2[Layer 2: Calibrated XGBoost GBDT]
-        E --> F3[Layer 3: Linguistic Attention Score]
-        F1 --> G[Ensemble Blending Engine]
+        E --> F1["Layer 1: Deterministic Heuristics"]
+        E --> F2["Layer 2: Calibrated XGBoost GBDT"]
+        E --> F3["Layer 3: Linguistic Attention Score"]
+        F1 --> G["Ensemble Blending Engine"]
         F2 --> G
         F3 --> G
     end
 
-    G --> H[Threat Verdict\nScore: 0.0-1.0 | Level: CRITICAL/HIGH/MED/LOW]
-    H --> I[Correlation & Knowledge Graph\nNetworkX / Neo4j Campaign Clustering]
-    H --> J[Court-Admissible PDF Report\nReportLab RFC 3227 Cryptographic Proof]
-    H --> K[Real-Time SOC Broadcast\nWebSocket Token-Bucket Telemetry]
+    G --> H["Threat Verdict<br/>Score: 0.0-1.0 • Level: CRITICAL/HIGH/MED/LOW"]
+    H --> I["Correlation & Knowledge Graph<br/>NetworkX / Neo4j Campaign Clustering"]
+    H --> J["Court-Admissible PDF Report<br/>ReportLab RFC 3227 Cryptographic Proof"]
+    H --> K["Real-Time SOC Broadcast<br/>WebSocket Token-Bucket Telemetry"]
 ```
 
 ---
