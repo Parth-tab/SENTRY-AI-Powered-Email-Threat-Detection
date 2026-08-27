@@ -21,7 +21,7 @@ After ANY change: run the harness before drawing any conclusion.
 4. The certified runtime is the air-gapped appliance: async SQLite +
    in-memory graph. Redis/Neo4j/Celery code paths exist for the documented
    scale-out topology but are NOT in the live path (proven by
-   `verification_report_demo-freeze-v2.json`). Do not add daemon dependencies
+   `evaluation/artifacts/verification_report_demo-freeze-v2.json`). Do not add daemon dependencies
    to the live path without an `eval-change:` commit and human sign-off.
 
 ## Change protocol
@@ -35,7 +35,7 @@ After ANY change: run the harness before drawing any conclusion.
 4. Fix the app, never the test. Battery/evaluation changes require an
    `eval-change:` commit with written rationale, and may only be made MORE
    strict, never less.
-5. State lives on disk (`evaluation/defects.json`, `verification_report_*.json`,
+5. State lives on disk (`evaluation/defects.json`, `evaluation/artifacts/verification_report_*.json`,
    `git log`), not in conversation memory. After compaction, restore context
    from disk — do not re-probe the running system in loops.
 
