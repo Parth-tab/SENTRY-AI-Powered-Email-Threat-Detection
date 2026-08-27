@@ -331,12 +331,12 @@ async def run_browser_checks(report, ui_url):
         await canvas_scene("ui.graph_canvas_renders", GRAPH_NAV, "04_graph.png")
 
         # -- Scene 6: WebSocket live feed connected ------------------------
-        live = [u for u in report.ws_opened if u.startswith("ws")]
+        live = [u for u in report.ws_opened if "dashboard/live" in u and u.startswith("ws")]
         if live:
             report.add("ui.websocket_live_connected", "PASS", live[0])
         else:
             report.add("ui.websocket_live_connected", "FAIL",
-                       "UI opened no websocket -- check VITE_WS_URL wiring")
+                       f"UI opened no dashboard/live websocket (opened: {report.ws_opened}) -- check VITE_WS_URL wiring")
 
         # -- Scene 7: console + network hygiene ----------------------------
         real_errors = [e for e in report.console_errors

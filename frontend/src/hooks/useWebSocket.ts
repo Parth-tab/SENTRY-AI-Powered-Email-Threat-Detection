@@ -1,6 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 
-const WS_URL = import.meta.env.VITE_WS_URL || "ws://localhost:8000/api/v1/dashboard/live";
+function getWebSocketUrl(): string {
+  if (import.meta.env.VITE_WS_URL) return import.meta.env.VITE_WS_URL;
+  if (typeof window !== "undefined") {
+    const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
+    const host = window.location.hostname || "127.0.0.1";
+    return `${proto}//${host}:8000/api/v1/dashboard/live`;
+  }
+  return "ws://127.0.0.1:8000/api/v1/dashboard/live";
+}
 
 export function useWebSocket(onNewAlert?: (alert: any) => void, onEmailAnalyzed?: (data: any) => void) {
   const [isConnected, setIsConnected] = useState(false);
@@ -13,7 +21,8 @@ export function useWebSocket(onNewAlert?: (alert: any) => void, onEmailAnalyzed?
 
     const connect = () => {
       try {
-        ws = new WebSocket(WS_URL);
+        const url = getWebSocketUrl();
+        ws = new WebSocket(url);
         wsRef.current = ws;
 
         ws.onopen = () => {
