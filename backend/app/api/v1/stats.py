@@ -82,7 +82,15 @@ async def seed_sample_emails(db: AsyncSession = Depends(get_db)):
     Ingests and processes all sample EML files (Legitimate, Phishing Tor, BEC Wire Fraud)
     to instantly populate live dashboard telemetry.
     """
-    sample_dir = Path(__file__).resolve().parent.parent.parent.parent / "sample_emails"
+    # Search possible sample directories (local dev, docker container, root)
+    possible_dirs = [
+        Path(__file__).resolve().parent.parent.parent.parent.parent / "sample_emails",
+        Path(__file__).resolve().parent.parent.parent.parent / "sample_emails",
+        Path("/app/sample_emails"),
+        Path("sample_emails"),
+        Path("E:/SENTRY/sample_emails")
+    ]
+    sample_dir = next((d for d in possible_dirs if d.exists()), possible_dirs[0])
     seeded_ids = []
 
     sample_files = [

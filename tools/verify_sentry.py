@@ -1,0 +1,449 @@
+#!/usr/bin/env python3
+"""SENTRY end-to-end verification harness.
+
+One command that boots the stack (--start), seeds sample data, drives the
+real UI in headless Chromium, asserts on DOM + API + WebSocket + console,
+captures screenshots and telemetry, writes verification_report.json, and
+exits with a code the agent can branch on.
+
+Exit codes:
+    0 = all checks passed
+    1 = one or more checks failed (see report)
+    2 = global watchdog timeout (partial report still written)
+    3 = setup error (stack did not boot)
+"""
+
+import argparse
+import asyncio
+import json
+import os
+import re
+import signal
+import subprocess
+import sys
+import time
+import urllib.error
+import urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+LOG_DIR = REPO_ROOT / "logs"
+SHOT_DIR = REPO_ROOT / "screenshots" / "verify"
+REPORT_PATH = REPO_ROOT / "verification_report.json"
+FRONTEND_CANDIDATES = [REPO_ROOT / "frontend", REPO_ROOT]
+IS_WINDOWS = os.name == "nt"
+
+# --- DOM markers. Adjust HERE (only here) if a selector misses. -----------
+DASHBOARD_MARKER = re.compile(r"SOC|Threat|Dashboard|SENTRY", re.I)
+FEED_ROW_TEXT    = re.compile(r"CRITICAL|HIGH|MEDIUM|LOW|CLEAN", re.I)
+DETAIL_MARKER    = re.compile(r"Threat Score|Authentication|Origin|SPF|DKIM|DMARC|Risk Score", re.I)
+MAP_NAV          = re.compile(r"Map|Relay|Trace|Origin", re.I)
+GRAPH_NAV        = re.compile(r"Campaign|Graph|Network", re.I)
+CONSOLE_NOISE    = ("favicon", "sourcemap", "react devtools", "download the react")
+
+
+class Report:
+    def __init__(self):
+        self.started = datetime.now(timezone.utc).isoformat()
+        self.checks = []
+        self.console_errors = []
+        self.failed_responses = []
+        self.ws_opened = []
+
+    def add(self, name, status, detail=""):
+        self.checks.append({"name": name, "status": status,
+                            "detail": str(detail)[:2000]})
+        print(f"  [{status:^7}] {name}" + (f" -- {detail}" if detail else ""))
+
+    @property
+    def ok(self):
+        return all(c["status"] == "PASS" for c in self.checks)
+
+    def counts(self):
+        return {s: sum(1 for c in self.checks if c["status"] == s)
+                for s in ("PASS", "FAIL", "TIMEOUT")}
+
+    def save(self, exit_code, note=""):
+        payload = {
+            "started": self.started,
+            "finished": datetime.now(timezone.utc).isoformat(),
+            "exit_code": exit_code,
+            "verdict": "PASS" if exit_code == 0 else "FAIL",
+            "note": note,
+            "counts": self.counts(),
+            "checks": self.checks,
+            "console_errors": self.console_errors[:50],
+            "failed_http_responses": self.failed_responses[:50],
+            "websockets_opened": self.ws_opened,
+            "screenshots": sorted(str(p.relative_to(REPO_ROOT))
+                                  for p in SHOT_DIR.glob("*.png")),
+        }
+        REPORT_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+        print(f"\nReport: {REPORT_PATH}")
+        print(f"Shots:  {SHOT_DIR}\\")
+        return payload
+
+
+# ---------------------------------------------------------------- helpers --
+
+def archive_report(args):
+    if args.label and REPORT_PATH.exists():
+        dest = REPO_ROOT / f"verification_report_{args.label}.json"
+        dest.write_text(REPORT_PATH.read_text(encoding="utf-8"), encoding="utf-8")
+        print(f"Archived: {dest}")
+
+
+def http_ok(url, timeout=5):
+    try:
+        with urllib.request.urlopen(url, timeout=timeout) as r:
+            return r.status == 200
+    except Exception:
+        return False
+
+
+def http_json(method, url, timeout=15):
+    req = urllib.request.Request(
+        url, data=b"" if method == "POST" else None, method=method)
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        raw = r.read().decode("utf-8", "replace")
+        return r.status, (json.loads(raw) if raw else None)
+
+
+def wait_http(url, timeout_s):
+    deadline = time.monotonic() + timeout_s
+    while time.monotonic() < deadline:
+        if http_ok(url):
+            return True
+        time.sleep(1.0)
+    return False
+
+
+def kill_listeners(port):
+    """Free a port by killing its listeners (Windows). Prints what it killed."""
+    if not IS_WINDOWS:
+        return
+    ps = ("Get-NetTCPConnection -LocalPort {p} -State Listen -ErrorAction "
+          "SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique"
+          ).format(p=port)
+    out = subprocess.run(["powershell", "-NoProfile", "-Command", ps],
+                         capture_output=True, text=True).stdout
+    for proc_id in filter(None, (line.strip() for line in out.splitlines())):
+        print(f"  cleanup: killing PID {proc_id} on port {port}")
+        subprocess.run(["taskkill", "/T", "/F", "/PID", proc_id],
+                       capture_output=True)
+
+
+def kill_tree(proc):
+    if proc.poll() is not None:
+        return
+    try:
+        if IS_WINDOWS:
+            subprocess.run(["taskkill", "/T", "/F", "/PID", str(proc.pid)],
+                           capture_output=True)
+        else:
+            os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
+    except Exception:
+        try:
+            proc.kill()
+        except Exception:
+            pass
+
+
+def log_tail(path, lines=15):
+    try:
+        return "".join(path.read_text(errors="replace").splitlines(True)[-lines:])
+    except Exception:
+        return f"(no log at {path})"
+
+
+# ------------------------------------------------------------------- stack --
+
+class Stack:
+    """Owns exactly the processes it spawns. Never kills anything else."""
+
+    def __init__(self, api_port, ui_port):
+        self.api_port, self.ui_port = api_port, ui_port
+        self.procs, self._log_handles = [], []
+
+    def _spawn(self, cmd, cwd, env=None, log_name="verify.log"):
+        LOG_DIR.mkdir(exist_ok=True)
+        log = open(LOG_DIR / log_name, "ab")
+        self._log_handles.append(log)
+        kwargs = {"cwd": str(cwd), "stdout": log, "stderr": subprocess.STDOUT}
+        if IS_WINDOWS:
+            kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
+        else:
+            kwargs["start_new_session"] = True
+        self.procs.append(subprocess.Popen(cmd, env=env, **kwargs))
+
+    def start_backend(self):
+        # Deliberately NO --reload: reloader restarts corrupt verification.
+        self._spawn(
+            [sys.executable, "-m", "uvicorn", "app.main:app",
+             "--app-dir", "backend", "--host", "127.0.0.1",
+             "--port", str(self.api_port)],
+            cwd=REPO_ROOT, log_name="verify_backend.log")
+        print(f"  backend spawned on :{self.api_port} (log: logs/verify_backend.log)")
+
+    def start_frontend(self):
+        front = next((d for d in FRONTEND_CANDIDATES
+                      if (d / "package.json").exists()), None)
+        if front is None:
+            raise RuntimeError("frontend package.json not found; "
+                               "adjust FRONTEND_CANDIDATES")
+        env = os.environ.copy()
+        env["VITE_API_URL"] = f"http://127.0.0.1:{self.api_port}"
+        env["VITE_WS_URL"] = (f"ws://127.0.0.1:{self.api_port}"
+                              f"/api/v1/dashboard/live")
+        cmd = (["cmd", "/c", "npx", "vite"] if IS_WINDOWS else ["npx", "vite"])
+        # --strictPort: a conflict FAILS here instead of drifting ports.
+        cmd += ["--port", str(self.ui_port), "--strictPort"]
+        self._spawn(cmd, cwd=front, env=env, log_name="verify_frontend.log")
+        print(f"  frontend spawned on :{self.ui_port} (log: logs/verify_frontend.log)")
+
+    def shutdown(self):
+        for p in self.procs:
+            kill_tree(p)
+        for h in self._log_handles:
+            try:
+                h.close()
+            except Exception:
+                pass
+
+
+# --------------------------------------------------------------- API checks --
+
+def run_api_checks(report, api_base):
+    specs = [
+        ("api.health",           "GET",  "/health",                  False),
+        ("api.emails_list",      "GET",  "/api/v1/emails",           True),
+        ("api.dashboard_stats",  "GET",  "/api/v1/dashboard/stats",  False),
+        ("api.campaigns",        "GET",  "/api/v1/campaigns",        False),
+    ]
+    for name, method, path, needs_items in specs:
+        try:
+            status, body = http_json(method, api_base + path)
+            if status != 200:
+                report.add(name, "FAIL", f"HTTP {status}")
+                continue
+            if needs_items:
+                n = len(body) if isinstance(body, list) else len(
+                    body.get("items", body.get("emails", [])) or [])
+                if n == 0:
+                    report.add(name, "FAIL",
+                               "200 OK but zero items -- seed did not take")
+                    continue
+                report.add(name, "PASS", f"{n} items")
+            else:
+                report.add(name, "PASS")
+        except Exception as exc:
+            report.add(name, "FAIL", repr(exc)[:200])
+
+
+# ------------------------------------------------------------ browser checks --
+
+async def run_browser_checks(report, ui_url):
+    from playwright.async_api import async_playwright
+
+    async with async_playwright() as pw:
+        browser = await pw.chromium.launch(headless=True)
+        page = await browser.new_page(viewport={"width": 1600, "height": 900})
+        page.on("console", lambda m: report.console_errors.append(m.text)
+                if m.type == "error" else None)
+        page.on("response", lambda r: report.failed_responses.append(
+            f"{r.status} {r.url}") if r.status >= 400 else None)
+        page.on("websocket", lambda ws: report.ws_opened.append(ws.url))
+
+        # -- Scene 1: dashboard renders ------------------------------------
+        try:
+            await page.goto(ui_url, timeout=30_000)
+            await page.get_by_text(DASHBOARD_MARKER).first.wait_for(
+                state="visible", timeout=20_000)
+            await page.screenshot(path=str(SHOT_DIR / "01_dashboard.png"),
+                                  full_page=True)
+            report.add("ui.dashboard_renders", "PASS", ui_url)
+        except Exception as exc:
+            await page.screenshot(path=str(SHOT_DIR / "01_dashboard_FAIL.png"),
+                                  full_page=True)
+            report.add("ui.dashboard_renders", "FAIL", repr(exc)[:300])
+
+        # -- Scene 2: threat feed is populated -----------------------------
+        await asyncio.sleep(3)  # allow WebSocket live data to land
+        try:
+            rows = await page.get_by_text(FEED_ROW_TEXT).count()
+            if rows >= 1:
+                report.add("ui.threat_feed_populated", "PASS",
+                           f"{rows} severity-tagged elements")
+            else:
+                report.add("ui.threat_feed_populated", "FAIL",
+                           "no CRITICAL/HIGH/MEDIUM text -- seed or feed broken")
+        except Exception as exc:
+            await page.screenshot(path=str(SHOT_DIR / "02_threat_feed_FAIL.png"),
+                                  full_page=True)
+            report.add("ui.threat_feed_populated", "FAIL", repr(exc)[:300])
+
+        # -- Scene 3: email detail opens on click --------------------------
+        try:
+            # Click row or Investigate button
+            investigate_btn = page.locator('button:has-text("Investigate"), tr:has-text("CRITICAL"), tr:has-text("HIGH"), tr:has-text("CLEAN")').first
+            await investigate_btn.click(timeout=10_000)
+            await page.get_by_text(DETAIL_MARKER).first.wait_for(
+                state="visible", timeout=15_000)
+            await page.screenshot(path=str(SHOT_DIR / "02_email_detail.png"),
+                                  full_page=True)
+            report.add("ui.email_detail_opens", "PASS")
+
+            # Close detail modal if open
+            close_btn = page.locator('button:has-text("✕"), button:has(svg.lucide-x)')
+            if await close_btn.count() > 0:
+                await close_btn.first.click(timeout=3_000)
+                await asyncio.sleep(0.5)
+        except Exception as exc:
+            await page.screenshot(path=str(SHOT_DIR / "02_email_detail_FAIL.png"),
+                                  full_page=True)
+            report.add("ui.email_detail_opens", "FAIL", repr(exc)[:300])
+
+        # -- Scenes 4 & 5: map + graph canvases render ---------------------
+        async def canvas_scene(name, nav_re, shot):
+            clicked = False
+            for loc in (page.get_by_role("link", name=nav_re),
+                        page.get_by_role("button", name=nav_re),
+                        page.get_by_text(nav_re)):
+                try:
+                    await loc.first.click(timeout=5_000)
+                    clicked = True
+                    break
+                except Exception:
+                    continue
+            try:
+                await page.locator("canvas, svg").first.wait_for(
+                    state="attached", timeout=15_000)
+                await page.screenshot(path=str(SHOT_DIR / shot),
+                                      full_page=True)
+                report.add(name, "PASS", f"nav_clicked={clicked}")
+            except Exception as exc:
+                await page.screenshot(path=str(SHOT_DIR / shot.replace(
+                    ".png", "_FAIL.png")), full_page=True)
+                report.add(name, "FAIL", f"nav_clicked={clicked} {exc!r}"[:300])
+
+        await canvas_scene("ui.map_canvas_renders", MAP_NAV, "03_map.png")
+        await canvas_scene("ui.graph_canvas_renders", GRAPH_NAV, "04_graph.png")
+
+        # -- Scene 6: WebSocket live feed connected ------------------------
+        live = [u for u in report.ws_opened if u.startswith("ws")]
+        if live:
+            report.add("ui.websocket_live_connected", "PASS", live[0])
+        else:
+            report.add("ui.websocket_live_connected", "FAIL",
+                       "UI opened no websocket -- check VITE_WS_URL wiring")
+
+        # -- Scene 7: console + network hygiene ----------------------------
+        real_errors = [e for e in report.console_errors
+                       if not any(n in e.lower() for n in CONSOLE_NOISE)]
+        if real_errors:
+            report.add("ui.console_clean", "FAIL",
+                       f"{len(real_errors)} errors; first: {real_errors[0][:200]}")
+        else:
+            report.add("ui.console_clean", "PASS")
+
+        if report.failed_responses:
+            report.add("ui.no_http_errors", "FAIL",
+                       "; ".join(report.failed_responses[:5]))
+        else:
+            report.add("ui.no_http_errors", "PASS")
+
+        await browser.close()
+
+
+# --------------------------------------------------------------------- main --
+
+async def main_async(args, report):
+    api_base = f"http://127.0.0.1:{args.api_port}"
+    ui_url = f"http://127.0.0.1:{args.ui_port}"
+    stack = None
+    try:
+        if args.start:
+            kill_listeners(args.api_port)   # ONE PORT POLICY: take ownership
+            kill_listeners(args.ui_port)
+            stack = Stack(args.api_port, args.ui_port)
+            stack.start_backend()
+            if not await asyncio.to_thread(wait_http, api_base + "/health", 90):
+                report.add("setup.backend_up", "FAIL",
+                           log_tail(LOG_DIR / "verify_backend.log"))
+                return 3
+            report.add("setup.backend_up", "PASS", api_base)
+            stack.start_frontend()
+            if not await asyncio.to_thread(wait_http, ui_url, 90):
+                report.add("setup.frontend_up", "FAIL",
+                           log_tail(LOG_DIR / "verify_frontend.log"))
+                return 3
+            report.add("setup.frontend_up", "PASS", ui_url)
+        else:
+            if not http_ok(api_base + "/health") or not http_ok(ui_url):
+                print("Stack not reachable. Pass --start, or boot it first.")
+                return 3
+
+        # Seed (idempotent by design; 409 = already seeded is a pass)
+        try:
+            status, _ = http_json("POST", api_base + "/api/v1/samples/seed")
+            report.add("api.seed",
+                       "PASS" if status in (200, 201, 409) else "FAIL",
+                       f"HTTP {status}")
+        except urllib.error.HTTPError as exc:
+            report.add("api.seed", "PASS" if exc.code == 409 else "FAIL",
+                       f"HTTP {exc.code}")
+        except Exception as exc:
+            report.add("api.seed", "FAIL", repr(exc)[:200])
+
+        run_api_checks(report, api_base)
+        await run_browser_checks(report, ui_url)
+        return 0 if report.ok else 1
+
+    finally:
+        if stack is not None and not args.keep_servers:
+            print("  cleanup: shutting down spawned stack")
+            stack.shutdown()
+
+
+def main():
+    parser = argparse.ArgumentParser(description="SENTRY verification harness")
+    parser.add_argument("--start", action="store_true",
+                        help="boot backend+frontend, verify, tear down")
+    parser.add_argument("--api-port", type=int, default=8000)
+    parser.add_argument("--ui-port", type=int, default=3000)
+    parser.add_argument("--timeout", type=int, default=240,
+                        help="global watchdog seconds (default 240)")
+    parser.add_argument("--keep-servers", action="store_true",
+                        help="leave spawned servers running afterwards")
+    parser.add_argument("--label", default=None,
+                        help="archive a copy of the report as verification_report_<label>.json")
+    args = parser.parse_args()
+
+    SHOT_DIR.mkdir(parents=True, exist_ok=True)
+    report = Report()
+    print(f"SENTRY verification -- api :{args.api_port}  ui :{args.ui_port}"
+          f"  watchdog {args.timeout}s\n")
+
+    try:
+        code = asyncio.run(asyncio.wait_for(main_async(args, report),
+                                            timeout=args.timeout))
+        report.save(code)
+        archive_report(args)
+        c = report.counts()
+        print(f"\nVerdict: {'PASS' if code == 0 else 'FAIL'} "
+              f"(pass={c['PASS']} fail={c['FAIL']} timeout={c['TIMEOUT']})")
+        return code
+    except asyncio.TimeoutError:
+        print(f"\n!! GLOBAL WATCHDOG FIRED ({args.timeout}s) -- partial report")
+        report.save(2, "global watchdog timeout")
+        archive_report(args)
+        return 2
+    except KeyboardInterrupt:
+        report.save(2, "interrupted by user")
+        archive_report(args)
+        return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())

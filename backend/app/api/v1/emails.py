@@ -350,9 +350,9 @@ async def get_email_details(
     evidence = res_evidence.scalar_one_or_none()
 
     return {
-        "email": email_rec,
-        "analysis": analysis,
-        "evidence": evidence
+        "email": model_to_dict(email_rec),
+        "analysis": model_to_dict(analysis),
+        "evidence": model_to_dict(evidence)
     }
 
 @router.get("/{email_id}/report")
