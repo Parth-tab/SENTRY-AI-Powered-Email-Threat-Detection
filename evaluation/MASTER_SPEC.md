@@ -5,7 +5,7 @@
 The loop state lives entirely on disk. Any Antigravity session can die and be replaced; nothing is lost.
 
 ```
-E:\SENTRY\evaluation\
+evaluation/
   MASTER_SPEC.md           save THIS document here (git-versioned)
   state.json               {phase, iteration, composite_history[], status}
   battery\
