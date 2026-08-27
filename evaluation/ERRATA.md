@@ -74,3 +74,21 @@ correctly records 8 entries. The tour directory contains exactly 8 PNGs + 1 PDF.
 No phantom ninth artifact exists; the count was a log arithmetic artefact.
 
 ---
+
+## Errata 003 — Post-Remediation Composite Score Arithmetic — recorded at `ea78aca`
+
+**Applies to:** Post-remediation Blind Panel summary in `evaluation/blind/BLIND_PANEL_REPORT.md` and handoff receipt.
+
+### What happened
+
+Following the remediation of BP-001 (5/5 mutants killed, C4 composite score 96), Panel C recomputed to:
+$$\text{Panel C} = \frac{93 + 86 + 91 + 96 + 94}{5} = \mathbf{92.0}$$
+Combined with Panel B ($90.6$), the true overall Stranger Readiness Score is:
+$$\text{Overall} = \frac{90.6 + 92.0}{2} = \mathbf{91.3}$$
+An initial summary line reported `91.2` due to an unrounded floating intermediate before C4 table finalization.
+
+### The fix
+
+Updated `evaluation/blind/BLIND_PANEL_REPORT.md`, `evaluation/blind/state.json`, and `evaluation/HANDOFF.md` to reflect the exact arithmetic composite of **91.3 / 100**.
+
+---

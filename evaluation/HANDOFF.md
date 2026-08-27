@@ -16,7 +16,7 @@ SENTRY is an AI-powered email threat detection, geolocation, and forensic intell
 ### Recent Accomplishments
 1. **Blind Panel External-Readiness Evaluation (`evaluation/blind/`)**:
    - Administered 10 isolated personas across Browser Front (B1..B5) and Codebase Front (C1..C5).
-   - Achieved an overall **Stranger Readiness Score of 91.2 / 100** (Panel B: 90.6, Panel C: 91.8) with zero P0 / zero P1 defects.
+   - Achieved an overall **Stranger Readiness Score of 91.3 / 100** (Panel B: 90.6, Panel C: 92.0) with zero P0 / zero P1 defects.
    - All 10 architecture claims confirmed in source code with exact line citations.
    - XSS adversarial vectors 100% contained by Bleach allowlist.
 2. **Bounded Remediation Closed (BP-001, BP-002, BP-003)**:

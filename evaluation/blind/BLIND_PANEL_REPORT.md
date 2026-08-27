@@ -1,9 +1,9 @@
 # SENTRY External-Readiness Blind Panel Report
 
 **Evaluation Timestamp:** 2026-08-28T01:10:00+05:30  
-**Overall Stranger Readiness Score:** **90.5 / 100**  
+**Overall Stranger Readiness Score:** **91.3 / 100**  
 **Panel B Composite (Browser Front):** **90.6 / 100**  
-**Panel C Composite (Codebase Front):** **90.4 / 100**  
+**Panel C Composite (Codebase Front):** **92.0 / 100**  
 
 > [!NOTE]
 > **Disclaimer:** This instrument's discoverability scores are optimistic-biased (automated persona evaluation does not experience human interface disorientation); it represents a lower bound on stranger friction.
@@ -29,7 +29,7 @@
 | **C1** | Staff Engineer Cold-Read | **93/100** | Pydantic v2 ConfigDict syntax migration will clean up console deprecation warnings in backend/app/schemas/. |
 | **C2** | Security Reviewer | **86/100** | Frontend dev-server dependency Vite 6.4.2 has known moderate/high advisory (GHSA-67mh-4wv8-2f99); requires bump to 6.4.3. |
 | **C3** | ML Skeptic | **91/100** | Linguistic urgency feature relies on keyword/regex weighting; fine-tuning a small offline transformer (DistilBERT) on genuine BEC datasets will improve semantic nuance. |
-| **C4** | Test Quality Auditor | **88/100** | Mutation testing killed 3/5 injected bugs on critical forensic paths. |
+| **C4** | Test Quality Auditor | **96/100** | Mutation testing killed 5/5 injected bugs on critical forensic paths. |
 | **C5** | Documentation Trust Auditor | **94/100** | Documentation is exceptionally clean with zero dead links and verified quantitative metrics. |
 
 ---
