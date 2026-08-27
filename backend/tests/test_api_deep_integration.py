@@ -1,9 +1,11 @@
 import pytest
 from httpx import AsyncClient, ASGITransport
 from app.main import app
+from app.db.database import init_db
 
 @pytest.mark.asyncio
 async def test_full_api_suite():
+    await init_db()
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         # 1. Health check

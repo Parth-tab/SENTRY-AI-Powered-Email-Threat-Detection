@@ -547,3 +547,82 @@ INFO:     connection open
 INFO:     127.0.0.1:51715 - "GET /api/v1/emails/befce8cc-299b-4092-baca-84bcbaf48ffc HTTP/1.1" 200 OK
 INFO:     127.0.0.1:55797 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
 INFO:     127.0.0.1:55797 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     Started server process [19508]
+INFO:     Waiting for application startup.
+E:\SENTRY\.venv\Lib\site-packages\bleach\sanitizer.py:166: NoCssSanitizerWarning: 'style' attribute specified, but css_sanitizer not set.
+  warnings.warn(
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:52665 - "GET /health HTTP/1.1" 200 OK
+E:\SENTRY\.venv\Lib\site-packages\bleach\sanitizer.py:166: NoCssSanitizerWarning: 'style' attribute specified, but css_sanitizer not set.
+  warnings.warn(
+INFO:     127.0.0.1:52667 - "POST /api/v1/samples/seed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52668 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52669 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52670 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52671 - "GET /api/v1/campaigns HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57443 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:58094 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53232 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57303 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:52085 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58094 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53232 - "GET /api/v1/emails/f6c2971f-35ea-49d6-8651-f056f228ed3f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53232 - "GET /api/v1/emails/f6c2971f-35ea-49d6-8651-f056f228ed3f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58796 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:56757 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:53232 - "GET /api/v1/emails/f6c2971f-35ea-49d6-8651-f056f228ed3f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65066 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:52949 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52949 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59172 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59172 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59025 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59172 - "GET /api/v1/emails/f6c2971f-35ea-49d6-8651-f056f228ed3f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59025 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59025 - "GET /api/v1/emails/f6c2971f-35ea-49d6-8651-f056f228ed3f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52591 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:58389 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:58390 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58392 - "POST /api/v1/samples/seed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58394 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     Started server process [20072]
+INFO:     Waiting for application startup.
+E:\SENTRY\.venv\Lib\site-packages\bleach\sanitizer.py:166: NoCssSanitizerWarning: 'style' attribute specified, but css_sanitizer not set.
+  warnings.warn(
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:59385 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:59386 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60871 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+E:\SENTRY\.venv\Lib\site-packages\bleach\sanitizer.py:166: NoCssSanitizerWarning: 'style' attribute specified, but css_sanitizer not set.
+  warnings.warn(
+INFO:     127.0.0.1:60872 - "POST /api/v1/samples/seed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60873 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60874 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60875 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60876 - "GET /api/v1/campaigns HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53339 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:53253 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:57831 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64908 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57831 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64908 - "GET /api/v1/emails/f6c2971f-35ea-49d6-8651-f056f228ed3f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59721 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59721 - "GET /api/v1/emails/f6c2971f-35ea-49d6-8651-f056f228ed3f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51739 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:59721 - "GET /api/v1/emails/f6c2971f-35ea-49d6-8651-f056f228ed3f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64477 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64477 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK

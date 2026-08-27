@@ -11,9 +11,9 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "demo"
     DEBUG: bool = True
 
-    # Databases: SQLite (aiosqlite) in Standalone Appliance Mode; Postgres in Production Cloud Mode
-    DATABASE_URL: str = "sqlite+aiosqlite:///./sentry.db"
-    SYNC_DATABASE_URL: str = "sqlite:///./sentry.db"
+    # Databases: SQLite (aiosqlite) anchored to backend/sentry.db; Postgres in Production Cloud Mode
+    DATABASE_URL: str = f"sqlite+aiosqlite:///{BASE_DIR.as_posix()}/sentry.db"
+    SYNC_DATABASE_URL: str = f"sqlite:///{BASE_DIR.as_posix()}/sentry.db"
     
     # Message Queue & Cache (Optional distributed workers)
     REDIS_URL: str = "redis://localhost:6379/0"

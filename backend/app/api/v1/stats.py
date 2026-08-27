@@ -2,7 +2,8 @@ from pathlib import Path
 from typing import Dict, Any, List
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, desc
+from sqlalchemy import select, func, desc, or_, and_
+from app.services.ingestion import IngestionService
 
 from app.db.database import get_db
 from app.db.models import EmailRecord, AnalysisResult, Alert
@@ -98,9 +99,20 @@ async def seed_sample_emails(db: AsyncSession = Depends(get_db)):
         for filepath in sorted(sample_dir.glob("*.eml")):
             try:
                 content_bytes = filepath.read_bytes()
-                from app.services.ingestion import IngestionService
-                sha = IngestionService.compute_sha256(content_bytes)
-                existing = await db.execute(select(EmailRecord).where(EmailRecord.sha256_hash == sha))
+                parsed = IngestionService.parse_raw_email(content_bytes, source=f"demo_seed_{filepath.stem}")
+                sha = parsed.get("sha256_hash")
+                msg_id = parsed.get("message_id")
+                subj = parsed.get("subject")
+                sender = parsed.get("sender")
+
+                # Multi-vector deduplication: match by SHA-256 digest, Message-ID, or Subject+Sender
+                conditions = [EmailRecord.sha256_hash == sha]
+                if msg_id:
+                    conditions.append(EmailRecord.message_id == msg_id)
+                if subj and sender:
+                    conditions.append(and_(EmailRecord.subject == subj, EmailRecord.sender == sender))
+
+                existing = await db.execute(select(EmailRecord).where(or_(*conditions)))
                 if not existing.scalar_one_or_none():
                     rec = await process_and_store_email(content_bytes, source=f"demo_seed_{filepath.stem}", db=db)
                     seeded_ids.append(rec.id)
