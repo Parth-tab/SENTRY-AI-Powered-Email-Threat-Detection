@@ -1,0 +1,155 @@
+name: SENTRY Enterprise CI Pipeline
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend-ci:
+    name: Backend CI (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libpq-dev
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+          pip install ruff pip-audit
+
+      - name: Code Quality & Lint Audit (Ruff)
+        run: |
+          ruff check backend/app/ --exit-non-zero-on-fix || true
+
+      - name: Security Vulnerability Audit (pip-audit)
+        run: |
+          pip-audit --desc on || true
+
+      - name: Run Backend Pytest Suite with Coverage (>80%)
+        run: |
+          cd backend
+          python -m pytest tests/ -v --cov=app --cov-report=term --cov-report=xml --cov-fail-under=80
+
+      - name: Upload Test Coverage Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage-py${{ matrix.python-version }}
+          path: backend/coverage.xml
+
+  frontend-ci:
+    name: Frontend CI (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: frontend/package.json
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Build Production SPA Bundle
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Verify Build Artifacts
+        run: |
+          test -f frontend/dist/index.html || exit 1
+
+  docker-containers:
+    name: Docker Multi-Stage Container Verification
+    runs-on: ubuntu-latest
+    needs: [backend-ci, frontend-ci]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Backend Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: false
+          tags: sentry-backend:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build Frontend Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: false
+          tags: sentry-frontend:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  gauntlet-evaluation:
+    name: GAUNTLET 12-Dimension Evaluation Battery
+    runs-on: ubuntu-latest
+    needs: [backend-ci]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+
+      - name: Run 12-Dimension Battery Checks
+        run: |
+          python evaluation/battery/run_battery.py || true
+
+      - name: Upload Evaluation Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gauntlet-evaluation-report
+          path: evaluation/runs/
