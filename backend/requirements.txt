@@ -28,3 +28,4 @@ passlib[bcrypt]>=1.7.4
 geoip2>=4.8.0
 websockets>=12.0
 prometheus-client>=0.20.0
+playwright>=1.42.0

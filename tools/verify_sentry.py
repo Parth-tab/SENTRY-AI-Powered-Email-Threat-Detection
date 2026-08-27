@@ -248,10 +248,21 @@ def run_api_checks(report, api_base):
 # ------------------------------------------------------------ browser checks --
 
 async def run_browser_checks(report, ui_url):
-    from playwright.async_api import async_playwright
+    try:
+        from playwright.async_api import async_playwright
+    except ImportError:
+        print("  installing playwright & chromium...")
+        subprocess.run([sys.executable, "-m", "pip", "install", "playwright>=1.42.0"], check=True)
+        subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
+        from playwright.async_api import async_playwright
 
     async with async_playwright() as pw:
-        browser = await pw.chromium.launch(headless=True)
+        try:
+            browser = await pw.chromium.launch(headless=True)
+        except Exception:
+            print("  installing chromium browser binary via playwright...")
+            subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
+            browser = await pw.chromium.launch(headless=True)
         page = await browser.new_page(viewport={"width": 1600, "height": 900})
         page.on("console", lambda m: report.console_errors.append(m.text)
                 if m.type == "error" else None)

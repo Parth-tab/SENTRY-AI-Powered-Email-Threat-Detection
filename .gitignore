@@ -73,3 +73,4 @@ backend/sentry.db
 logs/
 verification_report.json
 .ruff_cache/
+screenshots/verify/

@@ -93,8 +93,8 @@ All 13 logged defects across all phases and audit findings have been resolved an
 | **Adversarial Evasion Robustness (9/10)** | `[VERIFIED]` | Tested against 10 real `.eml` evasion payloads in `check_d08_ml_rigor.py` (homoglyphs, zero-width, RTLO, punycode). |
 | **Sub-10ms Inference Latency** | `[VERIFIED]` | Benchmarked at 6.15ms per email across 47 feature dimensions in `check_d08_ml_rigor.py`. |
 | **OWASP Security Headers on API** | `[VERIFIED]` | Verified in `test_security_headers_present`; CSP, HSTS, X-Frame-Options: DENY, X-XSS-Protection: 0 returned on all endpoints. |
-| **Real Dashboard WebSocket Live Feed** | `[VERIFIED]` | Tightened filter verified connection to `ws://127.0.0.1:8000/api/v1/dashboard/live` in `verification_report_cold-boot-proof.json`. |
-| **Multi-Entity Knowledge Graph Clustering**| `[VERIFIED]` | 21 curated emails clustered into 3 distinct campaigns (`Operation GhostRelay`, `Titan BEC`, `FinPhish`) via NetworkX. |
+| **Real Dashboard WebSocket Live Feed** | `[VERIFIED]` | Tightened filter verified connection to `ws://127.0.0.1:8000/api/v1/dashboard/live` in `verification_report_demo-freeze-v2.json`. |
+| **Multi-Entity Knowledge Graph Clustering**| `[VERIFIED]` | 18 curated emails clustered into 3 distinct campaigns (`Operation GhostRelay`, `Titan BEC`, `FinPhish`) via NetworkX. |
 | **Distributed Multi-Node Neo4j Scaling** | `[ASSERTED]` | Architectural Docker Compose topology modeled and documented; standalone demo runs on in-memory NetworkX engine. |
 | **Real-World Abuse.ch Live Feed Sync** | `[ASSERTED]` | High-speed in-memory threat feed cache verified with simulated offline fallback; real API queries require external network egress. |
 
