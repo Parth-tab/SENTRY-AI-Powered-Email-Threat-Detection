@@ -45,20 +45,27 @@ showing the raw social-engineering text. Metadata fields show sender
 (`support@sbi-secureverify.com`), recipient (`target-customer@gmail.com`),
 SHA-256 fingerprint, and hop count (3).
 
-The **right column** opens with three analysis cards at the top:
+The **right column** opens with the **Classification Ensemble Triangulation
+(3-Layer Pipeline)** alongside the radial threat gauge:
 
-- **Threat gauge:** radial meter reading **98% Risk Score**, classified as
-  **BEC** with 94% confidence.
-- **Classification Ensemble Triangulation (3-Layer Pipeline):** Rule Engine
-  (Deterministic IOCs) **100%**, Gradient Boosting (47 Engineered Features)
-  **100%**, Linguistic Attention (Urgency & Impersonation) **92%**. Target
-  metrics: >95% Precision, >90% Recall.
+- **Rule Engine (Deterministic IOCs):** 100% — hard rule matches on known-bad
+  domains, IP ranges, and structural IOC patterns.
+- **Gradient Boosting (47 Engineered Features):** 100% — tabular model over
+  header entropy, sender-domain age, relay anomalies, and lexical features.
+- **Linguistic Attention (Urgency & Impersonation):** 92% — transformer heuristic
+  flagging account-suspension pressure language and impersonated brand voice.
+
+These three signals are not averaged — they are triangulated. Agreement across
+orthogonal detection axes (rules + statistics + language) is what earns the
+CRITICAL classification and drives it above the 0.95 threshold. Target metrics
+are >95% Precision, >90% Recall. The threat gauge reads **98% Risk Score**,
+classified as **BEC**, 94% confidence.
 
 Below the ensemble panel: **RFC Authentication Verification (SPF / DKIM /
 DMARC)** — all three fail (`SPF FAIL`, `DKIM NONE`, `DMARC FAIL`). Then the
 **Origin Geolocation card** (185.220.101.34 Amsterdam NL, TOR EXIT NODE +
-CLOUD / VPS HOSTING, High Anonymity TOR Network, Confidence: 28%), campaign
-attribution (CMP-2024-0034, 14 Correlated Incidents), and extracted IOCs.
+CLOUD / VPS HOSTING, High Anonymity TOR Network), campaign attribution
+(CMP-2024-0034, 14 Correlated Incidents), and extracted IOCs.
 
 ---
 
@@ -91,21 +98,7 @@ verification; preserve RFC 3227 evidentiary chain for cyber cell escalation.
 
 ---
 
-## Stop 4 — Ensemble Triangulation (top of analysis column)
-
-![Ensemble Triangulation](assets/tour/04-attack-language.png)
-
-The modal scrolled back to the top of the right analysis column — the same
-position as Stop 2. This view places the **Classification Ensemble
-Triangulation** panel front and centre alongside the threat radial gauge: Rule
-Engine 100%, Gradient Boosting 100%, Linguistic Attention 92%. The three-layer
-pipeline represents SENTRY's detection architecture — deterministic IOC rules,
-a 47-feature gradient boosting model, and a linguistic heuristics layer for
-urgency and impersonation signals — converging on a unified CRITICAL verdict.
-
----
-
-## Stop 5 — Relay World Map
+## Stop 4 — Relay World Map
 
 ![Relay World Map](assets/tour/05-relay-map.png)
 
@@ -130,7 +123,7 @@ verifiable sender hop.
 
 ---
 
-## Stop 6 — Campaign Graph
+## Stop 5 — Campaign Graph
 
 ![Campaign Graph](assets/tour/06-campaign-graph.png)
 
@@ -146,14 +139,14 @@ lookalike domains radiate outward: `onlinesbi-kyc-update.com` and
 Bank of India** and **HDFC Bank** (dark-blue brand nodes). Two orange IP nodes
 share `HOSTED_BY` and `USES_INFRASTRUCTURE` edges: **194.26.29.117 (RU)** and
 **185.220.101.5 (NL)**. The green ASN node **AS205100 (Jonas Bunde / ...)** —
-the same Tor exit provider seen in Stop 5 — is linked as the shared
+the same Tor exit provider seen in Stop 4 — is linked as the shared
 infrastructure. The graph makes visible what the email stream hides: three
 independently arriving emails share sender infrastructure and target the same
 financial brands, proving a coordinated campaign.
 
 ---
 
-## Stop 7 — Hash-Chain Integrity Verification
+## Stop 6 — Hash-Chain Integrity Verification
 
 ![Chain-of-Custody Integrity Verification](assets/tour/07-chain-integrity.png)
 
@@ -183,11 +176,11 @@ NIST SP 800-86 Forensic Integration, ISO/IEC 27037 Digital Evidence Handling.
 
 ---
 
-## Stop 8 — PDF Forensic Dossier Export
+## Stop 7 — PDF Forensic Dossier Export
 
 ![PDF Forensic Dossier Export](assets/tour/08-forensic-report.png)
 
-The same Forensic Vault view as Stop 7, confirming the export context. The
+The same Forensic Vault view as Stop 6, confirming the export context. The
 **"Download PDF Forensic Report"** button (top-right, red background) is
 visible and was activated during this capture run — the PDF dossier was
 downloaded to `docs/assets/tour/08-forensic-report.pdf` and committed
@@ -199,17 +192,17 @@ breakdown into a court-submittable forensic intelligence package.
 
 ## Shot Manifest
 
-| Shot | File | Capture Status | Notes |
+| Stop | File | Capture Status | Notes |
 |---|---|---|---|
 | 01-dashboard | `01-dashboard.png` | PASS | Feed populated, 18 artifacts, 4 KPI cards, LIVE STREAM |
-| 02-forensic-analyzer | `02-forensic-analyzer.png` | PASS | Modal open — CRITICAL (0.98), ensemble triangulation, auth matrix, origin card |
+| 02-forensic-analyzer | `02-forensic-analyzer.png` | PASS | Modal open — CRITICAL (0.98), ensemble triangulation (100/100/92%), auth matrix, origin card |
 | 03-authentication-forensics | `03-authentication-forensics.png` | PASS | Modal scrolled — SPF/DKIM/DMARC fail cards, origin geolocation, IOCs, countermeasures |
-| 04-attack-language | `04-attack-language.png` | PASS | Modal top — same view as stop 02 (scroll-to-0); ensemble triangulation front and centre |
-| 05-relay-map | `05-relay-map.png` | PASS | 3-hop chain, Amsterdam origin, TOR ANONYMIZED badge |
-| 06-campaign-graph | `06-campaign-graph.png` | PASS | 18 nodes / 13 links, CMP-2024-0034, lookalike domains |
-| 07-chain-integrity | `07-chain-integrity.png` | PASS | INTEGRITY VERIFIED (PASS), 2 steps, sealed head hash |
-| 08-forensic-report | `08-forensic-report.png` | PASS | Same Forensic Vault view; PDF export button visible, dossier downloaded |
+| 04-relay-map | `05-relay-map.png` | PASS | 3-hop chain, Amsterdam origin, TOR ANONYMIZED badge |
+| 05-campaign-graph | `06-campaign-graph.png` | PASS | 18 nodes / 13 links, CMP-2024-0034, lookalike domains |
+| 06-chain-integrity | `07-chain-integrity.png` | PASS | INTEGRITY VERIFIED (PASS), 2 steps, sealed head hash |
+| 07-forensic-report | `08-forensic-report.png` | PASS | Same Forensic Vault view as stop 06; PDF export button visible, dossier committed |
 
-*8/8 screenshots show intended content. Stops 04 and 08 share the same
-viewport position as stops 02 and 07 respectively — this is noted in captions
-and not papered over.*
+*7/7 stops show distinct content. Stop 07 shares the same viewport as stop 06
+— both are the Forensic Vault; stop 07 documents the PDF export action. File
+names in the `04-attack-language.png` / `05-relay-map.png` series reflect the
+original 8-stop capture run; the tour narrates 7 of those 8 committed assets.*

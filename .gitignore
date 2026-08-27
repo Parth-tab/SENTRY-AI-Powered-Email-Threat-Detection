@@ -74,3 +74,6 @@ logs/
 verification_report.json
 .ruff_cache/
 screenshots/verify/
+# Discriminator scratch — audit instrument, not source
+tools/_discriminator.py
+tools/discriminator_shots/

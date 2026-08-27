@@ -141,5 +141,17 @@
     "regression_test": "backend/tests/test_security_hardening.py",
     "effort": "S",
     "description": "Hardcoded default secret keys in repo; resolved by adding ENVIRONMENT validator that enforces dynamic injection in production."
+  },
+  {
+    "id": "UX-003",
+    "check": "ui.email_detail_opens",
+    "severity": "low",
+    "evidence": "tools/_discriminator.py — modal=0 against [role=dialog],dialog,.modal,[data-modal]; confirmed via EmailDetailModal.tsx line 176",
+    "status": "open",
+    "fix_commit": null,
+    "target_version": "v1.0.1",
+    "regression_test": "axe-core pass on modal (roadmap — not yet in battery)",
+    "effort": "S",
+    "description": "EmailDetailModal (div.fixed.inset-0.z-50) lacks role='dialog', aria-modal='true', and verified focus management. Discovered when the discriminator's [role=dialog] selector returned 0, correctly measuring a semantic gap rather than failing. The modal is fully functional (machine-verified at e0b6dcd); the defect is accessibility-only. Fix: add role='dialog' aria-modal='true' aria-label='Email Forensic Analysis' to the overlay div; add focus trap. Battery gap: D10 UX checks were DOM/text-based with no axe-core pass — add to roadmap. Does not gate v1.0.0 release (a11y was not a scored floor)."
   }
 ]
