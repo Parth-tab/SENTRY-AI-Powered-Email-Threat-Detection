@@ -39,6 +39,23 @@ class CorrelationEngine:
             "first_seen": "2024-01-05T14:30:00Z",
             "last_seen": "2024-01-14T18:12:00Z",
             "total_emails": 8
+        },
+        "CMP-2024-0089": {
+            "name": "FinPhish Global Cloud Harvester",
+            "description": "Cross-tenant OAuth token and Microsoft 365 / DocuSign credential phishing campaign with deceptive hyperlink redirection.",
+            "threat_level": "CRITICAL",
+            "actor_sophistication": "high",
+            "infrastructure_cluster": {
+                "name": "CloudFlare-FastFlux-Cluster",
+                "provider": "Cloudflare Reverse Proxy & Bulletproof NGINX Relays",
+                "first_seen": "2024-01-08T11:15:00Z",
+                "email_count": 11
+            },
+            "asns": ["AS13335", "AS15169"],
+            "domains": ["docusign-secure-review.com", "office365-security-portal.net", "workspace-auth-verify.com"],
+            "first_seen": "2024-01-08T11:15:00Z",
+            "last_seen": "2024-01-15T09:40:00Z",
+            "total_emails": 11
         }
     }
 
@@ -145,8 +162,8 @@ class CorrelationEngine:
         is_tor = origin_data.get("anonymization", {}).get("tor_exit_node", False)
         impersonated_brand = domain_data.get("impersonated_brand")
 
-        # Check against GhostRelay Campaign (CMP-2024-0034)
-        if (asn == "AS205100" or is_tor or sender_domain in cls._campaigns["CMP-2024-0034"]["domains"] or impersonated_brand == "State Bank of India"):
+        # 1. Check against GhostRelay Campaign (CMP-2024-0034)
+        if (asn in ["AS205100", "AS51852"] or is_tor or sender_domain in cls._campaigns["CMP-2024-0034"]["domains"] or impersonated_brand in ["State Bank of India", "HDFC Bank", "ICICI Bank"]):
             camp = cls._campaigns["CMP-2024-0034"]
             return {
                 "campaign_id": "CMP-2024-0034",
@@ -162,8 +179,8 @@ class CorrelationEngine:
                 "assessment": "Organized credential harvesting campaign targeting Indian banking customers via Tor/bulletproof infrastructure."
             }
 
-        # Check against Executive BEC Syndicate (CMP-2024-0012)
-        if (content_data.get("financial_score", 0.0) > 0.4 and content_data.get("authority_score", 0.0) > 0.3):
+        # 2. Check against Executive BEC Syndicate (CMP-2024-0012)
+        if (content_data.get("financial_score", 0.0) > 0.35 and content_data.get("authority_score", 0.0) > 0.3):
             camp = cls._campaigns["CMP-2024-0012"]
             return {
                 "campaign_id": "CMP-2024-0012",
@@ -177,6 +194,23 @@ class CorrelationEngine:
                 },
                 "actor_sophistication": "high",
                 "assessment": "Targeted Business Email Compromise (BEC) wire transfer fraud syndicate impersonating executive leadership."
+            }
+
+        # 3. Check against FinPhish Global Cloud Harvester (CMP-2024-0089)
+        if (content_data.get("has_mismatched_links") or content_data.get("credential_score", 0.0) > 0.35 or impersonated_brand in ["Microsoft 365", "Google Workspace", "DocuSign", "PayPal"]):
+            camp = cls._campaigns["CMP-2024-0089"]
+            return {
+                "campaign_id": "CMP-2024-0089",
+                "campaign_confidence": 0.85,
+                "related_emails": 11,
+                "infrastructure_cluster": {
+                    "name": camp["infrastructure_cluster"]["name"],
+                    "provider": camp["infrastructure_cluster"]["provider"],
+                    "first_seen": camp["first_seen"],
+                    "email_count": 11
+                },
+                "actor_sophistication": "high",
+                "assessment": "Global SaaS OAuth credential and document lure phishing syndicate."
             }
 
         return {

@@ -93,26 +93,22 @@ async def seed_sample_emails(db: AsyncSession = Depends(get_db)):
     sample_dir = next((d for d in possible_dirs if d.exists()), possible_dirs[0])
     seeded_ids = []
 
-    sample_files = [
-        ("sbi_phishing_tor_relay.eml", "sample_seed_phishing"),
-        ("bec_executive_wire_fraud.eml", "sample_seed_bec"),
-        ("legitimate_workplace.eml", "sample_seed_legit")
-    ]
-
-    for filename, source_tag in sample_files:
-        filepath = sample_dir / filename
-        if filepath.exists():
-            content_bytes = filepath.read_bytes()
-            # Check if already seeded by sha256 to avoid duplicates
-            from app.services.ingestion import IngestionService
-            sha = IngestionService.compute_sha256(content_bytes)
-            existing = await db.execute(select(EmailRecord).where(EmailRecord.sha256_hash == sha))
-            if not existing.scalar_one_or_none():
-                rec = await process_and_store_email(content_bytes, source=source_tag, db=db)
-                seeded_ids.append(rec.id)
+    # Ingest and process all available .eml files in sample_dir
+    if sample_dir.exists():
+        for filepath in sorted(sample_dir.glob("*.eml")):
+            try:
+                content_bytes = filepath.read_bytes()
+                from app.services.ingestion import IngestionService
+                sha = IngestionService.compute_sha256(content_bytes)
+                existing = await db.execute(select(EmailRecord).where(EmailRecord.sha256_hash == sha))
+                if not existing.scalar_one_or_none():
+                    rec = await process_and_store_email(content_bytes, source=f"demo_seed_{filepath.stem}", db=db)
+                    seeded_ids.append(rec.id)
+            except Exception as e:
+                continue
 
     return {
         "status": "success",
-        "message": f"Successfully seeded {len(seeded_ids)} sample threat scenarios.",
+        "message": f"Successfully seeded {len(seeded_ids)} curated threat scenarios into live telemetry.",
         "seeded_email_ids": seeded_ids
     }

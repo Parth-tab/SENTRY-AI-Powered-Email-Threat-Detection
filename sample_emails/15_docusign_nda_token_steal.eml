@@ -1,0 +1,17 @@
+From: DocuSign Signature Service <service@docusign-secure-review.com>
+To: legal.counsel@enterprise.com
+Subject: Please DocuSign: Mutual Non-Disclosure Agreement & Partnership Termsheet.pdf
+Date: Mon, 15 Jan 2024 09:12:00 +0000
+Message-ID: <20240115091200.7723.smtp@docusign-secure-review.com>
+Received: from mx.enterprise.com (10.0.0.1) by mail.enterprise.com; Mon, 15 Jan 2024 09:12:05 +0000
+Received: from mail.cloudflare-relay-proxy.net (104.21.45.12) by mx.enterprise.com with ESMTP; Mon, 15 Jan 2024 09:12:02 +0000
+Authentication-Results: mx.enterprise.com; spf=softfail; dkim=none; dmarc=fail
+Content-Type: text/html; charset="utf-8"
+
+<div style="font-family: Arial, sans-serif;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/DocuSign_logo.svg/320px-DocuSign_logo.svg.png" width="120" />
+  <h3>DocuSign Electronic Signature Notification</h3>
+  <p>Robert Sterling sent you a document to review and sign before 5:00 PM GMT.</p>
+  <p><a href="http://docusign-secure-review.com/oauth/authorize?scope=offline_access" style="background:#2563EB;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;">REVIEW DOCUMENT</a></p>
+  <p><small>Powered by DocuSign Cloud Enterprise Infrastructure.</small></p>
+</div>

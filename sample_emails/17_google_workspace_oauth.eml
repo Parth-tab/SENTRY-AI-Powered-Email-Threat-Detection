@@ -1,0 +1,13 @@
+From: Google Workspace Security <no-reply@workspace-auth-verify.com>
+To: admin.sec@startuphub.io
+Subject: Security Notice: Review Third-Party Access Request for Google Drive
+Date: Mon, 15 Jan 2024 10:30:00 +0000
+Message-ID: <20240115103000.9941.smtp@workspace-auth-verify.com>
+Received: from mx.startuphub.io (10.0.0.1) by mail.startuphub.io; Mon, 15 Jan 2024 10:30:05 +0000
+Received: from edge-fastflux.net (104.21.89.201) by mx.startuphub.io with ESMTP; Mon, 15 Jan 2024 10:30:02 +0000
+Authentication-Results: mx.startuphub.io; spf=fail; dkim=none; dmarc=fail
+Content-Type: text/html; charset="utf-8"
+
+<p>A new third-party application "DocuSync Integration Pro" was granted full read/write permission to your Google Drive and Gmail messages.</p>
+<p>If you did not authorize this access, revoke permissions immediately:</p>
+<p><a href="http://workspace-auth-verify.com/security/revoke">https://myaccount.google.com/permissions</a></p>

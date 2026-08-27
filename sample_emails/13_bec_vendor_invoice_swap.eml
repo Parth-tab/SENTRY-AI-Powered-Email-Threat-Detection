@@ -1,0 +1,21 @@
+From: Accounts Receivable <billing@acme-cloudsystems-corp.com>
+To: accounts.payable@enterprise-client.com
+Subject: URGENT: Updated Banking Coordinates for Invoice #INV-2024-8841 ($184,500.00)
+Date: Mon, 15 Jan 2024 10:00:00 -0500
+Message-ID: <20240115100000.4412.mail@acme-cloudsystems-corp.com>
+Received: from mx.enterprise-client.com (10.0.0.1) by mail.enterprise-client.com; Mon, 15 Jan 2024 10:00:05 -0500
+Received: from relay02.vpnsubnets.com (198.51.100.99) by mx.enterprise-client.com with ESMTP; Mon, 15 Jan 2024 10:00:02 -0500
+Authentication-Results: mx.enterprise-client.com; spf=fail; dkim=none; dmarc=fail
+Content-Type: text/plain; charset="utf-8"
+
+Attention Accounts Payable,
+
+Please note our company bank accounts have been migrated to HSBC Premier Corporate Banking.
+Please disburse payment for overdue invoice #INV-2024-8841 ($184,500.00) to the following coordinates today:
+
+IBAN: GB29HBUK40127684920192
+BIC/SWIFT: HBUKGB41XXX
+Beneficiary: ACME Cloud Systems Overseas Ltd
+
+Thank you,
+Finance Operations Team

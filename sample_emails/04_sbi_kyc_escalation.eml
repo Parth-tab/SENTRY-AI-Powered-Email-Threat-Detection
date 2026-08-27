@@ -1,0 +1,15 @@
+From: SBI NetBanking Care <alerts@onlinesbi-kyc-update.com>
+To: victim.user@corporate.in
+Subject: Final Notice: Immediate SBI YONO Access Termination Warning
+Date: Mon, 15 Jan 2024 11:15:00 +0530
+Message-ID: <20240115111500.8372.qmail@onlinesbi-kyc-update.com>
+Received: from mx.corporate.in (10.0.0.1) by mail.corporate.in; Mon, 15 Jan 2024 11:15:05 +0530
+Received: from relay01.f3netze.de (185.220.101.5) by mx.corporate.in with ESMTP; Mon, 15 Jan 2024 11:15:02 +0530
+Received: from authenticated-user (185.220.101.5) by relay01.f3netze.de; Mon, 15 Jan 2024 11:15:00 +0530
+Authentication-Results: mx.corporate.in; spf=softfail (sender IP 185.220.101.5); dkim=none; dmarc=fail
+Content-Type: text/html; charset="utf-8"
+
+<p>Dear State Bank of India Customer,</p>
+<p>Your SBI YONO online netbanking privileges are scheduled for immediate suspension within 12 hours due to pending mandatory KYC documentation under RBI mandate 2024.</p>
+<p>Please update your Aadhaar and PAN card details immediately via our secure server: <a href="http://sbi-secureverify.com/portal/login">https://www.onlinesbi.sbi/kyc-update</a></p>
+<p>Failure to comply will result in permanent account freezing.</p>
