@@ -1,0 +1,15 @@
+{
+  "hosting_asns": {
+    "AS16509": {"name": "Amazon.com, Inc. (AWS)", "type": "cloud_provider", "risk_weight": 0.7},
+    "AS14618": {"name": "Amazon.com, Inc. (AWS)", "type": "cloud_provider", "risk_weight": 0.7},
+    "AS15169": {"name": "Google LLC (GCP)", "type": "cloud_provider", "risk_weight": 0.7},
+    "AS8075": {"name": "Microsoft Corporation (Azure)", "type": "cloud_provider", "risk_weight": 0.7},
+    "AS14061": {"name": "DigitalOcean, LLC", "type": "vps_provider", "risk_weight": 0.75},
+    "AS16276": {"name": "OVH SAS", "type": "dedicated_hosting", "risk_weight": 0.75},
+    "AS24940": {"name": "Hetzner Online GmbH", "type": "dedicated_hosting", "risk_weight": 0.75},
+    "AS63949": {"name": "Linode, LLC (Akamai)", "type": "cloud_provider", "risk_weight": 0.75},
+    "AS205100": {"name": "Jonas Bunde / F3 Netze (Bulletproof/Proxy)", "type": "bulletproof_hosting", "risk_weight": 0.95},
+    "AS9009": {"name": "M247 Ltd", "type": "hosting_vpn", "risk_weight": 0.85},
+    "AS51852": {"name": "Private Layer INC", "type": "bulletproof_hosting", "risk_weight": 0.9}
+  }
+}

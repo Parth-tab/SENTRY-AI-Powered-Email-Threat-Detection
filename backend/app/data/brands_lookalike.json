@@ -1,0 +1,49 @@
+{
+  "target_brands": [
+    {
+      "name": "State Bank of India",
+      "legitimate_domains": ["sbi.co.in", "onlinesbi.sbi", "statebankofindia.com"],
+      "keywords": ["sbi", "onlinesbi", "state bank", "yono"]
+    },
+    {
+      "name": "HDFC Bank",
+      "legitimate_domains": ["hdfcbank.com", "hdfc.com"],
+      "keywords": ["hdfc", "netbanking", "hdfcbank"]
+    },
+    {
+      "name": "ICICI Bank",
+      "legitimate_domains": ["icicibank.com", "icici.com"],
+      "keywords": ["icici", "imobile", "icicibank"]
+    },
+    {
+      "name": "Reserve Bank of India",
+      "legitimate_domains": ["rbi.org.in"],
+      "keywords": ["rbi", "reserve bank", "governor rbi"]
+    },
+    {
+      "name": "Google / Workspace",
+      "legitimate_domains": ["google.com", "gmail.com", "accounts.google.com"],
+      "keywords": ["google", "gmail", "workspace", "drive", "docs"]
+    },
+    {
+      "name": "Microsoft / Office 365",
+      "legitimate_domains": ["microsoft.com", "office.com", "outlook.com", "live.com"],
+      "keywords": ["microsoft", "office365", "outlook", "onedrive", "azure"]
+    },
+    {
+      "name": "PayPal",
+      "legitimate_domains": ["paypal.com", "paypal-communication.com"],
+      "keywords": ["paypal", "invoice", "payment dispute"]
+    },
+    {
+      "name": "Apple",
+      "legitimate_domains": ["apple.com", "icloud.com"],
+      "keywords": ["apple", "icloud", "appleid"]
+    },
+    {
+      "name": "DocuSign",
+      "legitimate_domains": ["docusign.com", "docusign.net"],
+      "keywords": ["docusign", "document signature", "sign document"]
+    }
+  ]
+}

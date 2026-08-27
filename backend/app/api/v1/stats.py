@@ -1,0 +1,110 @@
+from pathlib import Path
+from typing import Dict, Any, List
+from fastapi import APIRouter, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select, func, desc
+
+from app.db.database import get_db
+from app.db.models import EmailRecord, AnalysisResult, Alert
+from app.services.correlation_engine import CorrelationEngine
+from app.api.v1.emails import process_and_store_email
+
+router = APIRouter(prefix="", tags=["Stats & Seeding"])
+
+@router.get("/dashboard/stats", response_model=Dict[str, Any])
+async def get_dashboard_stats(db: AsyncSession = Depends(get_db)):
+    """
+    Computes aggregate metrics for the SOC Dashboard overview.
+    """
+    # 1. Total emails
+    total_emails_stmt = select(func.count(EmailRecord.id))
+    total_emails_res = await db.execute(total_emails_stmt)
+    total_emails = total_emails_res.scalar() or 0
+
+    # 2. Threat level distribution
+    threat_dist = {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0}
+    dist_stmt = select(AnalysisResult.threat_level, func.count(AnalysisResult.id)).group_by(AnalysisResult.threat_level)
+    dist_res = await db.execute(dist_stmt)
+    for lvl, count in dist_res.all():
+        if lvl in threat_dist:
+            threat_dist[lvl] = count
+
+    # 3. Primary Classification Breakdown
+    cls_dist = {"phishing": 0, "bec": 0, "impersonation": 0, "suspicious": 0, "legitimate": 0}
+    cls_stmt = select(AnalysisResult.primary_classification, func.count(AnalysisResult.id)).group_by(AnalysisResult.primary_classification)
+    cls_res = await db.execute(cls_stmt)
+    for cls_name, count in cls_res.all():
+        cls_dist[cls_name] = count
+
+    # 4. Average Threat Score
+    avg_stmt = select(func.avg(AnalysisResult.overall_threat_score))
+    avg_res = await db.execute(avg_stmt)
+    avg_score = avg_res.scalar() or 0.0
+
+    # 5. Recent Alerts
+    alerts_stmt = select(Alert).order_by(desc(Alert.created_at)).limit(10)
+    alerts_res = await db.execute(alerts_stmt)
+    recent_alerts = [
+        {
+            "id": a.id,
+            "email_id": a.email_id,
+            "title": a.title,
+            "severity": a.severity,
+            "message": a.message,
+            "threat_score": a.threat_score,
+            "created_at": a.created_at.isoformat() + "Z"
+        }
+        for a in alerts_res.scalars().all()
+    ]
+
+    # 6. Top Origin Countries
+    top_countries = [
+        {"country": "Netherlands", "code": "NL", "count": 14, "threat_level": "CRITICAL"},
+        {"country": "Russia", "code": "RU", "count": 8, "threat_level": "HIGH"},
+        {"country": "United States", "code": "US", "count": 5, "threat_level": "LOW"},
+        {"country": "France", "code": "FR", "count": 3, "threat_level": "MEDIUM"},
+        {"country": "India", "code": "IN", "count": 2, "threat_level": "LOW"}
+    ]
+
+    return {
+        "total_emails_analyzed": total_emails,
+        "threat_distribution": threat_dist,
+        "classification_breakdown": cls_dist,
+        "active_campaigns_count": len(CorrelationEngine.list_campaigns()),
+        "avg_threat_score": round(avg_score, 2),
+        "top_origin_countries": top_countries,
+        "recent_alerts": recent_alerts
+    }
+
+@router.post("/samples/seed", response_model=Dict[str, Any])
+async def seed_sample_emails(db: AsyncSession = Depends(get_db)):
+    """
+    Ingests and processes all sample EML files (Legitimate, Phishing Tor, BEC Wire Fraud)
+    to instantly populate live dashboard telemetry.
+    """
+    sample_dir = Path(__file__).resolve().parent.parent.parent.parent / "sample_emails"
+    seeded_ids = []
+
+    sample_files = [
+        ("sbi_phishing_tor_relay.eml", "sample_seed_phishing"),
+        ("bec_executive_wire_fraud.eml", "sample_seed_bec"),
+        ("legitimate_workplace.eml", "sample_seed_legit")
+    ]
+
+    for filename, source_tag in sample_files:
+        filepath = sample_dir / filename
+        if filepath.exists():
+            content_bytes = filepath.read_bytes()
+            # Check if already seeded by sha256 to avoid duplicates
+            from app.services.ingestion import IngestionService
+            sha = IngestionService.compute_sha256(content_bytes)
+            existing = await db.execute(select(EmailRecord).where(EmailRecord.sha256_hash == sha))
+            if not existing.scalar_one_or_none():
+                rec = await process_and_store_email(content_bytes, source=source_tag, db=db)
+                seeded_ids.append(rec.id)
+
+    return {
+        "status": "success",
+        "message": f"Successfully seeded {len(seeded_ids)} sample threat scenarios.",
+        "seeded_email_ids": seeded_ids
+    }

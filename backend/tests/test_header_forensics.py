@@ -1,0 +1,38 @@
+import pytest
+from app.services.header_forensics import HeaderForensicsService
+
+def test_received_chain_reconstruction():
+    headers = [
+        "by mx.google.com with SMTPS id 123; Thu, 15 Jan 2024 10:24:00 +0000",
+        "from mail.bulletproof-relay.net (mail.bulletproof-relay.net [185.220.101.34]) by mx.google.com with ESMTP id 456; Thu, 15 Jan 2024 10:23:47 +0000",
+        "from unknown (HELO tor-exit.de) (185.220.101.34) by mail.bulletproof-relay.net with ESMTP; Thu, 15 Jan 2024 10:23:45 +0000"
+    ]
+
+    hops, earliest_hop, anomalies = HeaderForensicsService.parse_received_chain(headers)
+    assert len(hops) == 3
+    assert earliest_hop is not None
+    assert earliest_hop["from_ip"] == "185.220.101.34"
+    assert earliest_hop["is_private"] is False
+
+def test_authentication_evaluation_pass():
+    headers = {
+        "Authentication-Results": "mx.google.com; dkim=pass header.i=@google.com; spf=pass smtp.mailfrom=user@google.com; dmarc=pass (p=REJECT)",
+        "Received-SPF": "pass (google.com: domain of user@google.com designates 209.85.220.41 as permitted sender)"
+    }
+    auth = HeaderForensicsService.evaluate_authentication(headers)
+    assert auth["spf"]["result"] == "pass"
+    assert auth["dkim"]["result"] == "pass"
+    assert auth["dmarc"]["result"] == "pass"
+    assert auth["total_auth_score"] > 0
+    assert auth["is_spoofed"] is False
+
+def test_authentication_evaluation_fail():
+    headers = {
+        "Authentication-Results": "mx.google.com; dkim=none; spf=fail smtp.mailfrom=support@sbi-secureverify.com; dmarc=fail (p=REJECT)",
+        "Received-SPF": "fail (domain does not designate IP)"
+    }
+    auth = HeaderForensicsService.evaluate_authentication(headers)
+    assert auth["spf"]["result"] == "fail"
+    assert auth["dmarc"]["result"] == "fail"
+    assert auth["total_auth_score"] < 0
+    assert auth["is_spoofed"] is True
