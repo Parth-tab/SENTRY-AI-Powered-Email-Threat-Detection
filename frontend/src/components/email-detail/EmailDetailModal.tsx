@@ -37,14 +37,51 @@ export const EmailDetailModal: React.FC<EmailDetailModalProps> = ({
   const [copiedIoc, setCopiedIoc] = useState<string | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Keyboard dismiss (existing) + initial focus for keyboard accessibility (UX-003)
+  // Focus management: initial focus (UX-003), Tab key trap (UX-004), and focus restoration on unmount (UX-004)
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", handleKeyDown);
+    const previousActiveElement = document.activeElement as HTMLElement | null;
+
+    // Initial focus on the modal container
     modalRef.current?.focus();
-    return () => window.removeEventListener("keydown", handleKeyDown);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (e.key === "Tab") {
+        if (!modalRef.current) return;
+        const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) {
+          e.preventDefault();
+          return;
+        }
+
+        const firstElement = focusable[0];
+        const lastElement = focusable[focusable.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement || document.activeElement === modalRef.current) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      previousActiveElement?.focus();
+    };
   }, [onClose]);
 
   const copyToClipboard = (text: string, id: string) => {
