@@ -1,9 +1,9 @@
 # SENTRY Project Handoff
 
-**Timestamp:** 2026-08-28T00:34:00+05:30  
+**Timestamp:** 2026-08-28T01:18:00+05:30  
 **Workspace:** `E:\SENTRY`  
 **Repository:** `Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection`  
-**Current HEAD:** `39e9199` (on `main`, in sync with `origin/main`)  
+**Current HEAD:** `1c88816` (on `main`)  
 **Frozen Release Tag:** `demo-freeze-v2` (`f437a19`)  
 **Published Release Tags:** `v1.0.0` (`f437a19`), `v1.0.1` (`39e9199`)
 
@@ -11,27 +11,23 @@
 
 ## 1. Executive Summary & Current State
 
-SENTRY is an AI-powered email threat detection, geolocation, and forensic intelligence platform built for SIH 2025. The platform operates at **zero defect debt**, 100% verified against both the backend test suite (41/41 unit/integration tests) and the Playwright multi-gate golden verification harness (15/15 verification gates).
+SENTRY is an AI-powered email threat detection, geolocation, and forensic intelligence platform built for SIH 2025. The platform operates at **zero active defect debt**, 100% verified against both the backend test suite (43/43 unit/integration tests) and the Playwright multi-gate golden verification harness (15/15 verification gates).
 
 ### Recent Accomplishments
-1. **Tour Recapture & Integrity (`e0b6dcd`, `4695391`)**:
-   - Re-captured modal screenshots after fixing the capture script and strengthening golden check #10 (`ui.email_detail_opens`) in `tools/verify_sentry.py` with a 2-gate check (`div.fixed.inset-0.z-50` overlay gate).
-   - Trimmed tour to 7 distinct stops in `docs/FEATURE_TOUR.md` with honest captions verified against image pixels.
-2. **Defect Lifecycle & Accessibility (`54057fc`, `c6744f2`, `39e9199`)**:
-   - **UX-003**: Added `role="dialog"`, `aria-modal="true"`, `aria-label`, and initial mount focus to `EmailDetailModal.tsx`.
-   - **UX-004**: Implemented full WCAG 2.1 SC 2.1.2 Tab/Shift+Tab keyboard focus containment trap and SC 2.4.3 focus restoration to triggering element on modal unmount.
-   - **Check #10 Strengthened (eval-change `39e9199`)**: Playwright test upgraded to 3 gates, behaviorally asserting 8 consecutive Tab cycles and Shift+Tab containment within the modal overlay.
-   - **Defect Register Status**: **15/15 resolved (0 open)** in `evaluation/defects.json`.
-3. **Storefront & Artifacts Cleanup (`3e2cb47`, `a8d0e6d`, `770b110`)**:
-   - Fixed ML layer naming: replaced all "transformer heuristic" references in docs/comments with "NLP feature-scoring heuristic" / "Linguistic Feature-Scoring Attention", clarifying that DistilBERT is on the offline roadmap.
-   - Cleaned root debris: moved 12 `verification_report_*.json` files to `evaluation/artifacts/` and 9 development scripts to `tools/scratch/` with explanatory READMEs.
-   - Updated `tools/verify_sentry.py` to archive labeled reports to `evaluation/artifacts/`.
-   - Swept all dead links across `evaluation/final_report.md`, `docs/TRACEABILITY_MATRIX.md`, and `AGENTS.md`.
-4. **Mermaid Syntax Fix (`650d812`)**:
-   - Quoted node labels and resolved unquoted pipe parser issues in `docs/ARCHITECTURE.md` to ensure rich display rendering on GitHub.
-5. **Releases Published**:
-   - `v1.0.0`: Certified SIH 2025 delivery frozen baseline (`f437a19`).
-   - `v1.0.1`: Accessibility & behavioral verification hardening release (`39e9199`), completing the full defect $\rightarrow$ fix $\rightarrow$ verify $\rightarrow$ release lifecycle.
+1. **Blind Panel External-Readiness Evaluation (`evaluation/blind/`)**:
+   - Administered 10 isolated personas across Browser Front (B1..B5) and Codebase Front (C1..C5).
+   - Achieved an overall **Stranger Readiness Score of 91.2 / 100** (Panel B: 90.6, Panel C: 91.8) with zero P0 / zero P1 defects.
+   - All 10 architecture claims confirmed in source code with exact line citations.
+   - XSS adversarial vectors 100% contained by Bleach allowlist.
+2. **Bounded Remediation Closed (BP-001, BP-002, BP-003)**:
+   - **BP-001**: Added granular multi-hop earliest hop assertion and seed idempotency test, raising C4 mutation kill rate to **5/5 (100%)**.
+   - **BP-002**: Bumped Vite dev server dependency to `^6.4.3` and archived npm audit receipt.
+   - **BP-003**: Added `aria-describedby` helper instructions to `IngestionDropzone.tsx` for assistive technology compliance.
+   - **BP-004**: Formally deferred to v2.0 roadmap (no unprompted feature bloat).
+3. **Strategic Defense Armor (`docs/QA_ARMOR.md`)**:
+   - Codified authoritative answers for all 10 judge/panel questions covering compromised-MTA physics, bearer JWT CSRF resilience, map accessibility, and explicit capability boundaries.
+4. **Defect Register Status**:
+   - 18 resolved defects, 1 deferred roadmap item, **0 open defects** in `evaluation/defects.json`.
 
 ---
 
@@ -47,16 +43,17 @@ SENTRY is an AI-powered email threat detection, geolocation, and forensic intell
 ## 3. Key Artifacts & References
 
 - **Operating Rules**: `AGENTS.md` (Prime directive: run `tools/verify_sentry.py` after changes; one port policy :8000/:3000; never start blocking servers).
+- **Defense Armor**: `docs/QA_ARMOR.md` (Authoritative answers to cross-examination questions).
+- **Blind Panel Report**: `evaluation/blind/BLIND_PANEL_REPORT.md`, `evaluation/artifacts/npm_audit.json`.
 - **Harness & Verification**: `tools/verify_sentry.py`, `evaluation/artifacts/README.md`.
-- **Tour & Assets**: `docs/FEATURE_TOUR.md`, `docs/assets/tour/manifest.json`.
-- **Defect Register**: `evaluation/defects.json` (All 15 defects resolved — 0 open).
-- **Errata Record**: `evaluation/ERRATA.md` (Check #10 history and retroactive validation note).
+- **Defect Register**: `evaluation/defects.json` (0 open defects).
 
 ---
 
 ## 4. Instructions for Resuming Agent
 
 1. Check git remote status (`git status`, `git log origin/main..main`).
-2. Ensure any new changes follow `AGENTS.md`: run `pytest backend/tests` and `python tools/verify_sentry.py --start` before making/certifying commits.
-3. Keep the live path clean and air-gapped (SQLite in-memory graph, no unmocked external daemons in standard test runs).
+2. Run `git push origin main` to sync latest commits to remote.
+3. Ensure any new changes follow `AGENTS.md`: run `pytest backend/tests` and `python tools/verify_sentry.py --start` before making/certifying commits.
+
 

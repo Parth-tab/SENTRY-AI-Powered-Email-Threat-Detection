@@ -1,0 +1,51 @@
+{
+  "persona": "C5-documentation-trust-auditor",
+  "assumptions_not_known": [
+    "searches for unconfessed documentation drift and dead links",
+    "verifies every quantified metric against reproducible code and artifact evidence",
+    "reads ERRATA.md to cross-check systemic documentation honesty"
+  ],
+  "criteria": [
+    {
+      "name": "claim resolution rate",
+      "score": 19,
+      "max": 20,
+      "evidence": "5/5 major quantified claims (41 tests, 18 sample emails, 97.5 composite score, <10ms inference, air-gap topology) resolved to code/evidence.",
+      "quote": "100% of tested quantitative claims map directly to verified artifacts."
+    },
+    {
+      "name": "contradiction count",
+      "score": 19,
+      "max": 20,
+      "evidence": "ERRATA.md documents past errata (check #10 historical gate updates, ML naming alignment); zero unconfessed contradictions found in live docs.",
+      "quote": "Transparent errata log with consistent terminology throughout."
+    },
+    {
+      "name": "link integrity",
+      "score": 19,
+      "max": 20,
+      "evidence": "48 internal markdown links audited across README and docs/; 0 broken links detected.",
+      "quote": "Clean internal link graph with valid relative references."
+    },
+    {
+      "name": "stale-content",
+      "score": 18,
+      "max": 20,
+      "evidence": "Verification report references and architecture diagrams updated to latest commit history.",
+      "quote": "Documentation is synchronized with the latest v1.0.1 release."
+    },
+    {
+      "name": "honesty posture",
+      "score": 19,
+      "max": 20,
+      "evidence": "Accurate disclosure of offline roadmap items (e.g. DistilBERT fine-tuning) vs live appliance capabilities.",
+      "quote": "High documentation integrity with explicit capability boundaries."
+    }
+  ],
+  "composite": 94,
+  "top_finding": "Documentation is exceptionally clean with zero dead links and verified quantitative metrics.",
+  "unanswered_question": "Is there a single-page API reference (Swagger / Redoc export) bundled as a static PDF or HTML doc for air-gapped field teams?",
+  "friction_events": 0,
+  "suspect_flags": [],
+  "broken_links": []
+}

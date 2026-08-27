@@ -1,0 +1,50 @@
+{
+  "persona": "B2-hostile-analyst",
+  "assumptions_not_known": [
+    "did not read README or setup guide",
+    "did not see feature tour",
+    "skeptical of AI buzzwords without raw evidence"
+  ],
+  "criteria": [
+    {
+      "name": "task completion",
+      "score": 19,
+      "max": 20,
+      "evidence": "evaluation/blind/panel_b/b2_task_log.md: All 5 SOC tasks completed successfully (threat triage, origin proof, graph correlation, court PDF, tamper-evident hash verification).",
+      "quote": "Completed 5/5 tasks in under 6 total navigation clicks."
+    },
+    {
+      "name": "findability",
+      "score": 18,
+      "max": 20,
+      "evidence": "Dedicated sidebar navigation tabs (Live Threats, Origin Map, Campaign Graph, Forensic Reports) mapped 1:1 to core investigative workflows.",
+      "quote": "Features were directly discoverable via navigation tabs without hidden menus."
+    },
+    {
+      "name": "explanation quality",
+      "score": 18,
+      "max": 20,
+      "evidence": "Modal displays plain-English threat summaries alongside RFC auth breakdowns and IOC chips.",
+      "quote": "Boss explanations grounded directly in concrete artifacts: SPF pass/fail, hop IP ASN, and court PDF."
+    },
+    {
+      "name": "friction count",
+      "score": 17,
+      "max": 20,
+      "evidence": "2 minor friction moments: modal right-column scroll on low-height viewports; canvas node selection requires mouse precision.",
+      "quote": "Friction count = 2 across 5 tasks (well below 10-cap threshold)."
+    },
+    {
+      "name": "trust signals",
+      "score": 18,
+      "max": 20,
+      "evidence": "Presence of SHA-256 digests, RFC RFC 7208/6376/7489 standard citations, ASN metadata, and Tor exit flags.",
+      "quote": "High credibility: provides raw technical receipts alongside AI threat scores."
+    }
+  ],
+  "composite": 90,
+  "top_finding": "Graph node selection is canvas-driven; adding a search/filter bar for campaign entities would streamline investigation.",
+  "unanswered_question": "Can I export STIX/TAXII threat feeds directly to an external SIEM like Splunk/Sentinel?",
+  "friction_events": 2,
+  "suspect_flags": []
+}

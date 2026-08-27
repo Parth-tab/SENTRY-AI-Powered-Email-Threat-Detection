@@ -1,0 +1,25 @@
+{
+  "phase": "COMPLETE",
+  "front": "DONE",
+  "completed": [
+    "PREFLIGHT",
+    "PANEL_B",
+    "PANEL_C",
+    "REPORT"
+  ],
+  "scores": {
+    "B1": 87,
+    "B2": 90,
+    "B3": 92,
+    "B4": 92,
+    "B5": 92,
+    "Panel_B_Mean": 90.6,
+    "C1": 93,
+    "C2": 86,
+    "C3": 91,
+    "C4": 88,
+    "C5": 94,
+    "Panel_C_Mean": 90.4,
+    "Stranger_Readiness_Score": 90.5
+  }
+}

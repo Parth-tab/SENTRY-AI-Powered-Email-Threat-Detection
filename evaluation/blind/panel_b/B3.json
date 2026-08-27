@@ -1,0 +1,49 @@
+{
+  "persona": "B3-accessibility-auditor",
+  "assumptions_not_known": [
+    "did not read commit history or UX-003/UX-004 PRs",
+    "evaluates live DOM and keyboard events exclusively"
+  ],
+  "criteria": [
+    {
+      "name": "keyboard operability",
+      "score": 18,
+      "max": 20,
+      "evidence": "evaluation/blind/panel_b/b3_a11y_log.md: All primary actions (tab switching, modal opening, table navigation, Escape dismiss) operable without a mouse.",
+      "quote": "Full keyboard navigation path intact across SOC dashboard, analyzer modal, and forensic views."
+    },
+    {
+      "name": "focus management",
+      "score": 19,
+      "max": 20,
+      "evidence": "Modal properly captures initial focus, traps Tab & Shift+Tab within dialog boundary, and restores focus on unmount.",
+      "quote": "WCAG 2.1 SC 2.1.2 (No Keyboard Trap) and SC 2.4.3 (Focus Order) behavioral verification passed."
+    },
+    {
+      "name": "semantics",
+      "score": 18,
+      "max": 20,
+      "evidence": "EmailDetailModal exposes role='dialog', aria-modal='true', and dynamic aria-label containing email subject.",
+      "quote": "Dialog semantics complete with meaningful accessible naming."
+    },
+    {
+      "name": "contrast",
+      "score": 19,
+      "max": 20,
+      "evidence": "Severity chips (#FA7273, #F59E0B, #10B981 on dark bg) exceed WCAG 2.1 AA 4.5:1 contrast requirement (8.2:1 for critical red).",
+      "quote": "High contrast color palette provides crisp readability in dark mode."
+    },
+    {
+      "name": "overall WCAG 2.1 AA posture",
+      "score": 18,
+      "max": 20,
+      "evidence": "Clean DOM structure with standard button/anchor elements and zero unhandled keyboard traps.",
+      "quote": "Solid WCAG 2.1 AA compliance posture for a forensic intelligence dashboard."
+    }
+  ],
+  "composite": 92,
+  "top_finding": "Dropzone file input area could add explicit aria-describedby for assistive keyboard file upload instructions.",
+  "unanswered_question": "Are map canvas geolocation markers accessible to screen readers via an alternative tabular text list?",
+  "friction_events": 1,
+  "suspect_flags": []
+}

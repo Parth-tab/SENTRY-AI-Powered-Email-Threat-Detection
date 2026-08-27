@@ -146,7 +146,7 @@
     "id": "UX-003",
     "check": "ui.email_detail_opens",
     "severity": "low",
-    "evidence": "tools/_discriminator.py — modal=0 against [role=dialog],dialog,.modal,[data-modal]; confirmed via EmailDetailModal.tsx",
+    "evidence": "tools/_discriminator.py \u2014 modal=0 against [role=dialog],dialog,.modal,[data-modal]; confirmed via EmailDetailModal.tsx",
     "status": "resolved",
     "fix_commit": "54057fc",
     "target_version": "v1.0.1",
@@ -158,12 +158,60 @@
     "id": "UX-004",
     "check": "ui.email_detail_opens",
     "severity": "low",
-    "evidence": "UX-003 fix (54057fc) — partial closure audit",
+    "evidence": "UX-003 fix (54057fc) \u2014 partial closure audit",
     "status": "resolved",
     "fix_commit": "HEAD",
     "target_version": "v1.0.2",
     "regression_test": "tools/verify_sentry.py --start",
     "effort": "S",
-    "description": "Remaining focus management after UX-003 ARIA fix: (1) focus trap — Tab and Shift+Tab cycle within the modal focusable elements; (2) focus restoration — when modal closes/unmounts, focus returns to the previously active element. Delivers full WCAG 2.1 SC 2.1.2 (No Keyboard Trap) and 2.4.3 (Focus Order) compliance."
+    "description": "Remaining focus management after UX-003 ARIA fix: (1) focus trap \u2014 Tab and Shift+Tab cycle within the modal focusable elements; (2) focus restoration \u2014 when modal closes/unmounts, focus returns to the previously active element. Delivers full WCAG 2.1 SC 2.1.2 (No Keyboard Trap) and 2.4.3 (Focus Order) compliance."
+  },
+  {
+    "id": "BP-001",
+    "check": "C4.mutation_kill_rate",
+    "severity": "medium",
+    "evidence": "evaluation/blind/panel_c/C4.json",
+    "status": "resolved",
+    "fix_commit": "HEAD",
+    "target_version": "v1.0.2",
+    "regression_test": "evaluation/blind/scripts/run_c4.py (5/5 killed)",
+    "effort": "S",
+    "description": "Mutation testing revealed unit test assertion gaps on earliest hop index selection (M2) and seed idempotency duplicate check (M5); resolved by adding test_earliest_reliable_hop_selection_multi_hop and test_seed_endpoint_idempotency, raising mutant kill rate to 5/5."
+  },
+  {
+    "id": "BP-002",
+    "check": "C2.dependency_audit",
+    "severity": "medium",
+    "evidence": "evaluation/artifacts/npm_audit.json",
+    "status": "resolved",
+    "fix_commit": "HEAD",
+    "target_version": "v1.0.2",
+    "regression_test": "frontend/package.json (vite ^6.4.3)",
+    "effort": "S",
+    "description": "Frontend dev server dependency Vite bumped to ^6.4.3 in package.json to address GHSA-67mh-4wv8-2f99."
+  },
+  {
+    "id": "BP-003",
+    "check": "B3.accessibility_dropzone",
+    "severity": "low",
+    "evidence": "evaluation/blind/panel_b/B3.json",
+    "status": "resolved",
+    "fix_commit": "HEAD",
+    "target_version": "v1.0.2",
+    "regression_test": "frontend/src/components/dashboard/IngestionDropzone.tsx",
+    "effort": "S",
+    "description": "Added aria-describedby and screen-reader helper text element to IngestionDropzone.tsx for assistive technology compliance."
+  },
+  {
+    "id": "BP-004",
+    "check": "B2.graph_search_filter",
+    "severity": "low",
+    "evidence": "evaluation/blind/panel_b/B2.json",
+    "status": "deferred — v2.0 roadmap feature request",
+    "fix_commit": null,
+    "target_version": "v2.0.0",
+    "regression_test": "evaluation/blind/scripts/run_b2.py",
+    "effort": "M",
+    "description": "Campaign Network Graph canvas text search/filter input to highlight specific entity nodes directly; logged as feature request from 90-score persona."
   }
 ]
