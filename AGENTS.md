@@ -30,12 +30,13 @@ After ANY change: run the harness before drawing any conclusion.
 2. Every fix references what it closes: a defect ID from
    `evaluation/defects.json`, an issue number, or a check name from the harness.
    A commit that improves behavior without a reference is suspect.
-3. Before commit: pytest (`backend/tests`) AND `tools/verify_sentry.py --start`
+3. Protected Branch Protocol: `main` is protected; all work lands via branches + PRs; required checks must be green; the harness runs locally before any PR.
+4. Before PR: pytest (`backend/tests`) AND `tools/verify_sentry.py --start`
    must pass. CI runs both plus the full GAUNTLET battery — do not push red.
-4. Fix the app, never the test. Battery/evaluation changes require an
+5. Fix the app, never the test. Battery/evaluation changes require an
    `eval-change:` commit with written rationale, and may only be made MORE
    strict, never less.
-5. State lives on disk (`evaluation/defects.json`, `evaluation/artifacts/verification_report_*.json`,
+6. State lives on disk (`evaluation/defects.json`, `evaluation/artifacts/verification_report_*.json`,
    `git log`), not in conversation memory. After compaction, restore context
    from disk — do not re-probe the running system in loops.
 
