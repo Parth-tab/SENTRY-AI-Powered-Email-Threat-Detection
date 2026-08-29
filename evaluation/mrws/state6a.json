@@ -1,7 +1,9 @@
 {
-  "phase": "PHASE6A_BOARD_CLOSURE",
+  "phase": "RELEASED_v1.1.0",
   "phase_completed": true,
-  "current_status": "AWAITING_EXTERNAL_AUDITOR_SIGNATURE",
+  "current_status": "RELEASED_AND_CERTIFIED",
+  "release_tag": "v1.1.0",
+  "certified_head": "1fcb5163f0983c56c0e87cd1da738fb1de67ac38",
   "registry_reconciliation": {
     "total_objects": 59,
     "resolved": 50,

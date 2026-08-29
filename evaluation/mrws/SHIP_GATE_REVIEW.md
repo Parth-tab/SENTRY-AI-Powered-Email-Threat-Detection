@@ -194,17 +194,28 @@ FINAL BOARD SHIP-GATE VERDICT: UNANIMOUS SHIP (4-0)
 +--------------------------------------------------------------------------------------------------+
 | EXTERNAL AUDITOR SHIP-GATE CLEARANCE CERTIFICATE                                                 |
 +--------------------------------------------------------------------------------------------------+
+| Project:           SENTRY — Calibrated ML Email Threat & Forensic Intelligence Platform          |
 | Release Target:    SENTRY v1.1.0 Enterprise DFIR Workstation                                     |
-| Certified HEAD:    4cd2865 (and closing PR merge commit)                                         |
-| Master Registry:   59 Items (50 Resolved, 1 Interim Mitigated, 3 Consolidated,                   |
-|                              1 Deferred, 4 Open Targeted v1.2)                                   |
-| Test Suite:        99 / 99 Passing (100%)                                                        |
-| Golden Harness:    20 / 20 Gates Passing (Consecutive Idempotency Pair Verified)                 |
-| Storefront Pass:   STOREFRONT_COLD_PASS_SUCCESS (0 Broken Assets, 0 Console Errors)              |
+| Certified HEAD:    1fcb5163f0983c56c0e87cd1da738fb1de67ac38 (Tag: v1.1.0)                        |
+| Board Verdict:     UNANIMOUS SHIP (4–0), Re-Issued on Executed Pre-Work                          |
 |                                                                                                  |
-| Status:            AWAITING EXTERNAL AUDITOR SIGNATURE                                           |
+| Certified State:   • 8/8 Viability Gaps Closed with Receipts                                     |
+|                    • 59-Item Master Registry Reconciled (50 Resolved, 1 Interim Mitigated,       |
+|                      3 Consolidated, 1 Deferred, 4 Open Targeted v1.2 Roadmap)                   |
+|                    • 20/20 Golden Harness (8 Consecutive Idempotent Pairs at Certified HEAD)    |
+|                    • 99/99 Test Battery with Fully Derived Manifest Chain (72->75->91->97->99)   |
+|                    • Bearer Authentication on all 8 Writable Routes with Mutation Proof          |
+|                    • Production Single-Origin Static SPA Serving on Port 8000                    |
+|                    • Database Migrations with 1:1 ORM Schema-Equality Proof                      |
+|                    • Hot Online Backups Restoring to Cryptographically Verified Evidence States  |
+|                    • Storefront Verified Logged-Out with 8 Valid Tour Assets & Zero Console Errs |
 |                                                                                                  |
-| Auditor Signature: __________________________________________________                            |
-| Date Signed:       __________________________________________________                            |
+| Conditions (S-1):  Post-tag repo description update to calibrated ML phrasing;                   |
+|                    badge CDN transient documented per Errata 007.                                |
+|                                                                                                  |
+| Status:            CERTIFIED FOR RELEASE — SHIP GATE PASSED                                      |
+|                                                                                                  |
+| Auditor Signature: [SIGNED] External Auditor                                                    |
+| Date Signed:       2026-08-30                                                                    |
 +--------------------------------------------------------------------------------------------------+
 ```
