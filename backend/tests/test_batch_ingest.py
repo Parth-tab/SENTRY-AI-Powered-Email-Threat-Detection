@@ -300,6 +300,40 @@ async def test_demo_reset_authenticated_success_and_audit_receipt():
             lines = [json.loads(l) for l in f.readlines() if l.strip()]
             assert len(lines) > 0
             assert lines[-1]["trigger"] == "admin_reset_demo"
+            assert "prior_audit_hash" in lines[-1]
+            assert "current_audit_hash" in lines[-1]
+
+@pytest.mark.asyncio
+async def test_demo_reset_audit_hash_chain_sequential_integrity():
+    """C-4: Verifies cryptographic sequential SHA-256 hash chaining on all reset_audit entries."""
+    import hashlib
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        # Trigger an authenticated reset to guarantee at least one fresh chained entry
+        res = await client.post(
+            "/api/v1/admin/reset-demo",
+            headers={"X-Sentry-Admin": settings.ADMIN_TOKEN}
+        )
+        assert res.status_code == 200
+
+    audit_file = Path(settings.LOGS_DIR) / "reset_audit.log"
+    assert audit_file.exists()
+    
+    with open(audit_file, "r", encoding="utf-8") as f:
+        all_entries = [json.loads(l) for l in f.readlines() if l.strip()]
+        
+    chained_entries = [e for e in all_entries if "prior_audit_hash" in e and "current_audit_hash" in e]
+    assert len(chained_entries) >= 1
+    
+    for idx, entry in enumerate(chained_entries):
+        # 1. Verify that recomputing the canonical hash matches current_audit_hash
+        canonical_str = f"{entry['prior_audit_hash']}|{entry['timestamp']}|{entry['trigger']}|{entry['prior_record_count']}|{entry['prior_chain_head_hash']}|{entry['operator']}"
+        expected_hash = hashlib.sha256(canonical_str.encode("utf-8")).hexdigest()
+        assert entry["current_audit_hash"] == expected_hash, f"Hash mismatch at entry {idx}"
+        
+        # 2. Verify link with previous block in chained segment
+        if idx > 0 and "current_audit_hash" in chained_entries[idx - 1]:
+            assert entry["prior_audit_hash"] == chained_entries[idx - 1]["current_audit_hash"], f"Broken chain link at index {idx}"
 
 @pytest.mark.asyncio
 async def test_csv_synthesizer_preserves_raw_bytes_verbatim():

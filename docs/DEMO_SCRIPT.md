@@ -78,3 +78,5 @@
    *"Evaluated on 15,240 samples across 47 dimensions: Accuracy 0.961 (partially in-sample; Enron/CEAS baseline), Macro-F1 0.952, and Macro One-vs-Rest ROC-AUC 0.988; independently stress-tested out-of-sample against 6,951 historical ham emails with 0 critical false positives."*
 5. **"What did you not test?"**  
    *"Mutation testing, physical container SIGKILL chaos, and external metrics auth — all explicitly documented in our Limitations section."*
+6. **"How do you perform a clean demonstration reset?"**  
+   *"Execute the authenticated demo reset command: `curl -X POST http://localhost:8000/api/v1/admin/reset-demo -H "X-Sentry-Admin: sentry_admin_demo_secret_2025"`. The endpoint writes a sequential cryptographic hash-chained destruction audit record before re-seeding the 18 demo scenarios."*

@@ -66,3 +66,24 @@ async def test_empty_file_upload_rejected():
         response = await client.post("/api/v1/emails/upload", files=files)
         assert response.status_code == 400
         assert "Uploaded file is empty" in response.json()["detail"]
+
+def test_production_mode_default_admin_token_refusal():
+    """C-2: Verifies that running in production with default ADMIN_TOKEN causes startup refusal."""
+    from app.config import Settings, validate_security_posture
+
+    # Production with default admin token must raise RuntimeError
+    bad_prod_settings = Settings(
+        ENVIRONMENT="production",
+        SECRET_KEY="cryptographically_secure_random_key_99999",
+        ADMIN_TOKEN="sentry_admin_demo_secret_2025"
+    )
+    with pytest.raises(RuntimeError, match="CRITICAL SECURITY CONFIGURATION ERROR"):
+        validate_security_posture(bad_prod_settings)
+
+    # Production with valid high-entropy admin token must pass validation
+    good_prod_settings = Settings(
+        ENVIRONMENT="production",
+        SECRET_KEY="cryptographically_secure_random_key_99999",
+        ADMIN_TOKEN="custom_prod_admin_entropy_token_88888"
+    )
+    validate_security_posture(good_prod_settings)
