@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-08-29T16:12:40Z",
+  "corpus_archive": "C:\\Users\\Parth\\Downloads\\ham_zipped.zip",
+  "sha256_of_corpus_zip": "c32b2212325fd671ae5b26d4915ab3b8754ae170d023c3dde9e05716fe59d2ab",
+  "archive_size_bytes": 14929123,
+  "total_files": 6951,
+  "pass_1_cold_ingestion": {
+    "wall_time_sec": 112.011,
+    "ingested": 6777,
+    "duplicates": 174,
+    "items_per_sec": 62.06
+  },
+  "pass_2_deduplication": {
+    "wall_time_sec": 1.2,
+    "ingested": 0,
+    "duplicates": 6951,
+    "items_per_sec": 5792.5
+  }
+}
