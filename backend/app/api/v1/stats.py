@@ -1,4 +1,5 @@
 import json
+import hashlib
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, List, Optional
@@ -163,18 +164,37 @@ async def reset_demo_database(
     except Exception:
         prior_chain_head_hash = "GENESIS"
 
-    audit_record = {
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "trigger": "admin_reset_demo",
-        "prior_record_count": prior_record_count,
-        "prior_chain_head_hash": prior_chain_head_hash,
-        "operator": "authenticated_admin"
-    }
-
-    # 4. Write destruction audit record BEFORE purging
+    # 4. Write cryptographically chained destruction audit record BEFORE purging
     logs_dir = Path(settings.LOGS_DIR)
     logs_dir.mkdir(parents=True, exist_ok=True)
     audit_file = logs_dir / "reset_audit.log"
+
+    # Compute sequential hash chain
+    prior_audit_hash = "GENESIS_RESET_AUDIT_BLOCK_00000000"
+    if audit_file.exists():
+        try:
+            with open(audit_file, "r", encoding="utf-8") as f:
+                lines = [l.strip() for l in f if l.strip()]
+                if lines:
+                    last_entry = json.loads(lines[-1])
+                    prior_audit_hash = last_entry.get("current_audit_hash") or hashlib.sha256(lines[-1].encode("utf-8")).hexdigest()
+        except Exception:
+            prior_audit_hash = "GENESIS_RESET_AUDIT_BLOCK_00000000"
+
+    timestamp_iso = datetime.now(timezone.utc).isoformat()
+    canonical_payload = f"{prior_audit_hash}|{timestamp_iso}|admin_reset_demo|{prior_record_count}|{prior_chain_head_hash}|authenticated_admin"
+    current_audit_hash = hashlib.sha256(canonical_payload.encode("utf-8")).hexdigest()
+
+    audit_record = {
+        "timestamp": timestamp_iso,
+        "trigger": "admin_reset_demo",
+        "prior_record_count": prior_record_count,
+        "prior_chain_head_hash": prior_chain_head_hash,
+        "operator": "authenticated_admin",
+        "prior_audit_hash": prior_audit_hash,
+        "current_audit_hash": current_audit_hash
+    }
+
     with open(audit_file, "a", encoding="utf-8") as f:
         f.write(json.dumps(audit_record) + "\n")
 

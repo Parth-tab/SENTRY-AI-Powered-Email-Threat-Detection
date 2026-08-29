@@ -86,15 +86,14 @@ async def observability_and_security_middleware(request: Request, call_next):
 
     return response
 
-# 2. CORS Configuration
+# 2. CORS Configuration (Restricted strictly to authorized frontend origins)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "*"
+        "http://127.0.0.1:5173"
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"],

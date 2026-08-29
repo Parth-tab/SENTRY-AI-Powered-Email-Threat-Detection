@@ -42,13 +42,23 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-# Fail-safe security validator: Production mode requires explicitly injected entropy
-if settings.ENVIRONMENT.lower() == "production":
-    if "demo" in settings.SECRET_KEY.lower() or "secret" in settings.SECRET_KEY.lower():
-        raise RuntimeError(
-            "CRITICAL SECURITY CONFIGURATION ERROR: Production deployment requires a secure, "
-            "cryptographically random SECRET_KEY injected via environment variable."
-        )
+def validate_security_posture(s: Settings):
+    """Fail-safe security validator: Production / non-demo environments require explicitly injected entropy."""
+    env = s.ENVIRONMENT.lower()
+    if env == "production" or env not in ("demo", "development", "testing", "local"):
+        if "demo" in s.SECRET_KEY.lower() or "secret" in s.SECRET_KEY.lower():
+            raise RuntimeError(
+                "CRITICAL SECURITY CONFIGURATION ERROR: Production deployment requires a secure, "
+                "cryptographically random SECRET_KEY injected via environment variable."
+            )
+        if "demo" in s.ADMIN_TOKEN.lower() or "secret" in s.ADMIN_TOKEN.lower() or s.ADMIN_TOKEN == "sentry_admin_demo_secret_2025":
+            raise RuntimeError(
+                "CRITICAL SECURITY CONFIGURATION ERROR: Production/non-demo deployment requires a secure, "
+                "cryptographically random ADMIN_TOKEN injected via environment variable."
+            )
+
+# Execute security validation on module load
+validate_security_posture(settings)
 
 # Ensure evidence vault directory exists
 Path(settings.EVIDENCE_VAULT_DIR).mkdir(parents=True, exist_ok=True)
