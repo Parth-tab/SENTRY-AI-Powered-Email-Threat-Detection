@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-08-29T21:02:53.052944+00:00",
+  "target_repo": "https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection",
+  "checks": {
+    "tour_images": {
+      "01-dashboard.png": {
+        "exists": true,
+        "size_bytes": 507885,
+        "valid": true
+      },
+      "02-forensic-analyzer.png": {
+        "exists": true,
+        "size_bytes": 558483,
+        "valid": true
+      },
+      "03-authentication-forensics.png": {
+        "exists": true,
+        "size_bytes": 558527,
+        "valid": true
+      },
+      "04-attack-language.png": {
+        "exists": true,
+        "size_bytes": 558569,
+        "valid": true
+      },
+      "05-relay-map.png": {
+        "exists": true,
+        "size_bytes": 283580,
+        "valid": true
+      },
+      "06-campaign-graph.png": {
+        "exists": true,
+        "size_bytes": 1150594,
+        "valid": true
+      },
+      "07-chain-integrity.png": {
+        "exists": true,
+        "size_bytes": 354079,
+        "valid": true
+      },
+      "08-forensic-report.png": {
+        "exists": true,
+        "size_bytes": 355052,
+        "valid": true
+      }
+    },
+    "hero_image": {
+      "path": "docs/assets/dashboard.png",
+      "exists": true,
+      "size_bytes": 184036,
+      "valid": true
+    },
+    "badges": {
+      "rendered_count": 1
+    },
+    "links": {},
+    "console_errors": [],
+    "http_status": 200,
+    "page_title": "GitHub - Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection: Every email is a crime scene. AI-powered threat detection, origin tracing & forensic intelligence \u2014 air-gap proven, self-verifying. \u00b7 GitHub",
+    "about_present": true,
+    "topics_present": false,
+    "screenshot_path": "E:\\SENTRY\\evaluation\\artifacts\\storefront_cold_pass.png"
+  },
+  "status": "STOREFRONT_COLD_PASS_SUCCESS"
+}
