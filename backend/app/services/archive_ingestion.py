@@ -7,6 +7,7 @@ import io
 import time
 import zipfile
 import asyncio
+import hashlib
 from typing import Dict, Any, List, Optional
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
@@ -69,6 +70,11 @@ class ArchiveIngestionService:
 
         total_files = len(entries)
 
+        # Pre-load known SHA-256 hashes for O(1) deduplication without individual DB roundtrips
+        stmt_hashes = select(EmailRecord.sha256_hash)
+        res_hashes = await db.execute(stmt_hashes)
+        known_hashes = set(res_hashes.scalars().all())
+
         for idx, entry in enumerate(entries):
             # 1. Skip directories and macOS / hidden metadata
             base_name = entry.filename.replace("\\", "/").split("/")[-1]
@@ -112,24 +118,20 @@ class ArchiveIngestionService:
 
             # 5. Check if it is RFC 822 format
             if not is_rfc822(entry_bytes):
-                # Non-RFC822 plain text or binary
                 skipped_count += 1
                 warnings.append(f"Skipped non-RFC822 entry: {entry.filename}")
                 continue
 
-            # 6. Check if SHA-256 already exists in DB before processing
-            import hashlib
+            # 6. Check if SHA-256 already exists in known hashes (O(1) deduplication)
             entry_sha = hashlib.sha256(entry_bytes).hexdigest()
-            stmt = select(EmailRecord.id).where(EmailRecord.sha256_hash == entry_sha).limit(1)
-            res = await db.execute(stmt)
-            already_exists = res.scalar_one_or_none() is not None
+            if entry_sha in known_hashes:
+                duplicate_count += 1
+                continue
 
             try:
                 await process_and_store_email(entry_bytes, source=source_format, db=db)
-                if already_exists:
-                    duplicate_count += 1
-                else:
-                    ingested_count += 1
+                known_hashes.add(entry_sha)
+                ingested_count += 1
             except Exception as exc:
                 errors.append({
                     "entry": entry.filename,

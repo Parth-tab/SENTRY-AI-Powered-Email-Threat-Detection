@@ -136,6 +136,11 @@ class CSVSynthesizerService:
 
         from app.api.v1.emails import process_and_store_email
 
+        # Pre-load known SHA-256 hashes for O(1) deduplication
+        stmt_hashes = select(EmailRecord.sha256_hash)
+        res_hashes = await db.execute(stmt_hashes)
+        known_hashes = set(res_hashes.scalars().all())
+
         for idx, row in enumerate(rows):
             body_val = row.get(body_col, "").strip()
             if not body_val:
@@ -156,16 +161,14 @@ class CSVSynthesizerService:
             )
 
             synthetic_sha = hashlib.sha256(synthetic_bytes).hexdigest()
-            stmt = select(EmailRecord.id).where(EmailRecord.sha256_hash == synthetic_sha).limit(1)
-            res = await db.execute(stmt)
-            already_exists = res.scalar_one_or_none() is not None
+            if synthetic_sha in known_hashes:
+                duplicate_count += 1
+                continue
 
             try:
                 await process_and_store_email(synthetic_bytes, source=source_format, db=db)
-                if already_exists:
-                    duplicate_count += 1
-                else:
-                    ingested_count += 1
+                known_hashes.add(synthetic_sha)
+                ingested_count += 1
             except Exception as exc:
                 errors.append({
                     "row": str(idx + 1),

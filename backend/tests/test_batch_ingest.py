@@ -64,10 +64,12 @@ async def test_zip_archive_zip_slip_memory_safety():
     """Verifies that archive entries with path traversal (../evil.eml) are processed
     purely in-memory and never written to disk outside the vault.
     """
-    sample_email = b"From: attacker@evil.com\r\nSubject: Evil Path\r\n\r\nExploit attempt"
+    import uuid
+    uid = str(uuid.uuid4())[:8]
+    sample_email = f"From: attacker@evil.com\r\nSubject: Evil Path {uid}\r\n\r\nExploit attempt".encode("utf-8")
     zip_buf = io.BytesIO()
     with zipfile.ZipFile(zip_buf, "w") as zf:
-        zf.writestr("../../../../tmp_evil_file.eml", sample_email)
+        zf.writestr(f"../../../../tmp_evil_file_{uid}.eml", sample_email)
     zip_bytes = zip_buf.getvalue()
 
     async with AsyncSessionLocal() as session:
@@ -76,8 +78,8 @@ async def test_zip_archive_zip_slip_memory_safety():
         assert result["summary"]["ingested"] == 1
 
         # Assert no file was written to root / filesystem outside vault
-        assert not os.path.exists("tmp_evil_file.eml")
-        assert not os.path.exists("../../../../tmp_evil_file.eml")
+        assert not os.path.exists(f"tmp_evil_file_{uid}.eml")
+        assert not os.path.exists(f"../../../../tmp_evil_file_{uid}.eml")
 
 @pytest.mark.asyncio
 async def test_zip_archive_safety_caps(monkeypatch):
@@ -102,10 +104,12 @@ async def test_zip_archive_reupload_idempotent_dedupe():
     """Verifies that re-uploading the exact same ZIP archive produces 0 new rows
     and duplicates == N.
     """
+    import uuid
+    uid = str(uuid.uuid4())[:8]
     zip_buf = io.BytesIO()
     with zipfile.ZipFile(zip_buf, "w") as zf:
-        zf.writestr("a.eml", b"From: user1@corp.com\r\nSubject: Alpha Batch\r\n\r\nContent Alpha")
-        zf.writestr("b.eml", b"From: user2@corp.com\r\nSubject: Beta Batch\r\n\r\nContent Beta")
+        zf.writestr("a.eml", f"From: user1@corp.com\r\nSubject: Alpha Batch {uid}\r\n\r\nContent Alpha".encode("utf-8"))
+        zf.writestr("b.eml", f"From: user2@corp.com\r\nSubject: Beta Batch {uid}\r\n\r\nContent Beta".encode("utf-8"))
     zip_bytes = zip_buf.getvalue()
 
     async with AsyncSessionLocal() as session:
@@ -124,10 +128,12 @@ async def test_zip_archive_reupload_idempotent_dedupe():
 @pytest.mark.asyncio
 async def test_csv_golden_synthesis_and_label_deduplication():
     """Verifies CSV parsing, synthesis, and label-agnostic SHA-256 deduplication."""
+    import uuid
+    uid = str(uuid.uuid4())[:8]
     csv_content = (
         "subject,body,label\n"
-        "Wire Transfer Notification,Please execute payment of $50000 immediately,1\n"
-        "Wire Transfer Notification,Please execute payment of $50000 immediately,0\n"
+        f"Wire Transfer Notification {uid},Please execute payment of $50000 immediately,1\n"
+        f"Wire Transfer Notification {uid},Please execute payment of $50000 immediately,0\n"
     ).encode("utf-8")
 
     async with AsyncSessionLocal() as session:
