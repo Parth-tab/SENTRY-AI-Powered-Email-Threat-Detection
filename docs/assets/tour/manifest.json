@@ -54,14 +54,7 @@
       "name": "08-forensic-report",
       "file": "08-forensic-report.png",
       "status": "PASS",
-      "caption_hint": "Exported PDF dossier saved to repo",
-      "detail": ""
-    },
-    {
-      "name": "08-forensic-report",
-      "file": "08-forensic-report.png",
-      "status": "PASS",
-      "caption_hint": "Report/export UI after dossier generation",
+      "caption_hint": "Report/export UI after dossier generation (PDF dossier saved)",
       "detail": ""
     }
   ],
