@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-29T16:32:07Z",
+  "timestamp": "2026-08-29T17:22:29Z",
   "benchmark_database": "evaluation/benchmark_scratch.db",
   "corpus_archive": "ham_zipped.zip",
   "total_items_in_db": 6795,
-  "page_load_seconds": 6.883,
+  "page_load_seconds": 3.38,
   "feed_page_size": 50,
   "pagination_verified": true,
   "graph_cap_notice_verified": true,
-  "graph_cap_notice_text": "Scale Guard Active (GRAPH-001):",
+  "graph_cap_notice_text": "Scale Guard Active (GRAPH-002):",
   "console_errors_count": 0,
   "page_errors_count": 0,
   "screenshots": [
