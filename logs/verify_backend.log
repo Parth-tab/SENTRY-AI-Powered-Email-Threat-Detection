@@ -3200,3 +3200,311 @@ INFO:     127.0.0.1:50297 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:60031 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
 INFO:     127.0.0.1:60031 - "GET /api/v1/emails/fa72978d-9fd5-4cf8-857f-13afcb423761 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:60031 - "POST /api/v1/emails/raw HTTP/1.1" 401 Unauthorized
+INFO:     Started server process [11544]
+INFO:     Waiting for application startup.
+E:\SENTRY\.venv\Lib\site-packages\bleach\sanitizer.py:166: NoCssSanitizerWarning: 'style' attribute specified, but css_sanitizer not set.
+  warnings.warn(
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:65105 - "GET /health HTTP/1.1" 200 OK
+E:\SENTRY\.venv\Lib\site-packages\bleach\sanitizer.py:166: NoCssSanitizerWarning: 'style' attribute specified, but css_sanitizer not set.
+  warnings.warn(
+INFO:     127.0.0.1:65109 - "POST /api/v1/samples/seed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65110 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65111 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65112 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65113 - "GET /api/v1/campaigns HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58111 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:58112 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58113 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56673 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:56675 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56674 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56676 - "GET /api/v1/emails/c89d311c-62a7-4de5-8501-ce72156d008f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58704 - "GET /api/v1/emails/c89d311c-62a7-4de5-8501-ce72156d008f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64235 - "GET /api/v1/emails/c89d311c-62a7-4de5-8501-ce72156d008f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49186 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:55868 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53039 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63722 - "POST /api/v1/emails/upload HTTP/1.1" 201 Created
+INFO:     127.0.0.1:55814 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55813 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55929 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62460 - "GET /api/v1/emails/8d91bd2e-446d-424d-aad0-420236a21f6b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57447 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63412 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57852 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60682 - "GET /api/v1/emails/8d91bd2e-446d-424d-aad0-420236a21f6b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60032 - "GET /api/v1/emails/8d91bd2e-446d-424d-aad0-420236a21f6b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65093 - "POST /api/v1/emails/raw HTTP/1.1" 201 Created
+INFO:     127.0.0.1:65138 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65137 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53938 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59516 - "GET /api/v1/emails/5281f51f-5cf5-4457-90ae-feb3725c1b7e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52865 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65401 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52786 - "GET /api/v1/emails/5281f51f-5cf5-4457-90ae-feb3725c1b7e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50954 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51794 - "GET /api/v1/emails/5281f51f-5cf5-4457-90ae-feb3725c1b7e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60033 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52565 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55977 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60032 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54221 - "POST /api/v1/emails/upload HTTP/1.1" 201 Created
+INFO:     127.0.0.1:57574 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64835 - "GET /api/v1/emails/a9c3d7d9-f594-475d-ac7c-eb97c6d16c62 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57575 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52582 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54939 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51442 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57627 - "GET /api/v1/emails/110f0d44-243d-4ca5-8b70-53f93658c798 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58525 - "GET /api/v1/emails/110f0d44-243d-4ca5-8b70-53f93658c798 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64943 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64533 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50062 - "GET /api/v1/emails/29453eb8-ca0b-48c6-8521-0bde9323a979 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50061 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62791 - "GET /api/v1/emails/29453eb8-ca0b-48c6-8521-0bde9323a979 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52111 - "GET /api/v1/emails/29453eb8-ca0b-48c6-8521-0bde9323a979 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62392 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55026 - "POST /api/v1/emails/upload HTTP/1.1" 201 Created
+INFO:     127.0.0.1:62391 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58620 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65427 - "GET /api/v1/emails/d53ff956-0c26-4d7a-a76a-98acfccf9bf8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55845 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50228 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58166 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60032 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65115 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61066 - "GET /api/v1/emails/4b106893-de03-424b-a819-db8c6208a3da HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52794 - "GET /api/v1/emails/4b106893-de03-424b-a819-db8c6208a3da HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58967 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52793 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62911 - "GET /api/v1/emails/4b106893-de03-424b-a819-db8c6208a3da HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50085 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64601 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53602 - "GET /api/v1/emails/4b106893-de03-424b-a819-db8c6208a3da HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59167 - "GET /api/v1/emails/4b106893-de03-424b-a819-db8c6208a3da HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56319 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56319 - "GET /assets/index-e9WRfSnC.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /assets/index-BRdpuOGf.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61600 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:63769 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56319 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56319 - "GET /api/v1/emails/4b106893-de03-424b-a819-db8c6208a3da HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56319 - "POST /api/v1/emails/raw HTTP/1.1" 401 Unauthorized
+Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\asyncio\proactor_events.py", line 166, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+INFO:     Started server process [8244]
+INFO:     Waiting for application startup.
+E:\SENTRY\.venv\Lib\site-packages\bleach\sanitizer.py:166: NoCssSanitizerWarning: 'style' attribute specified, but css_sanitizer not set.
+  warnings.warn(
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:49776 - "GET /health HTTP/1.1" 200 OK
+E:\SENTRY\.venv\Lib\site-packages\bleach\sanitizer.py:166: NoCssSanitizerWarning: 'style' attribute specified, but css_sanitizer not set.
+  warnings.warn(
+INFO:     127.0.0.1:49780 - "POST /api/v1/samples/seed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49781 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49782 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49783 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49784 - "GET /api/v1/campaigns HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62351 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:62352 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62353 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49953 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:49955 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49954 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58857 - "GET /api/v1/emails/fc464f38-8fc6-42a6-b927-71b24c2a746f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58858 - "GET /api/v1/emails/fc464f38-8fc6-42a6-b927-71b24c2a746f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58643 - "GET /api/v1/emails/fc464f38-8fc6-42a6-b927-71b24c2a746f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63731 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:59260 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51339 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50779 - "POST /api/v1/emails/upload HTTP/1.1" 201 Created
+INFO:     127.0.0.1:63668 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63667 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49677 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62998 - "GET /api/v1/emails/0741e45d-7003-4877-afc2-b71a3fc3f33c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52680 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49686 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49379 - "GET /api/v1/emails/0741e45d-7003-4877-afc2-b71a3fc3f33c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51004 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57139 - "GET /api/v1/emails/0741e45d-7003-4877-afc2-b71a3fc3f33c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61395 - "POST /api/v1/emails/raw HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50983 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50982 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58698 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62150 - "GET /api/v1/emails/d8fd352c-db0a-44f3-a2b8-c02a3e9cc9a9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49686 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61391 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52709 - "GET /api/v1/emails/d8fd352c-db0a-44f3-a2b8-c02a3e9cc9a9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51415 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55291 - "GET /api/v1/emails/d8fd352c-db0a-44f3-a2b8-c02a3e9cc9a9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52751 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55337 - "POST /api/v1/emails/upload HTTP/1.1" 201 Created
+INFO:     127.0.0.1:52750 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52109 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59115 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62476 - "GET /api/v1/emails/0f0db37c-1db1-43aa-af7d-9ab6c683af70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60028 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57433 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63585 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50320 - "GET /api/v1/emails/ef775aa4-45f0-4f93-8047-fe92583f5abd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50319 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54086 - "GET /api/v1/emails/ef775aa4-45f0-4f93-8047-fe92583f5abd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54087 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61334 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55591 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50491 - "GET /api/v1/emails/ef775aa4-45f0-4f93-8047-fe92583f5abd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50061 - "GET /api/v1/emails/ef775aa4-45f0-4f93-8047-fe92583f5abd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63760 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60028 - "GET /api/v1/emails/ef775aa4-45f0-4f93-8047-fe92583f5abd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60029 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54693 - "POST /api/v1/emails/upload HTTP/1.1" 201 Created
+INFO:     127.0.0.1:62632 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60028 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58000 - "GET /api/v1/emails/a5ab24bc-3081-43b1-a69f-89139c515e55 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49947 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49948 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59449 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52904 - "GET /api/v1/emails/bac8c824-8aca-418f-a6c9-208bf2e74cae HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56134 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57958 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62956 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55893 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54976 - "GET /api/v1/emails/bac8c824-8aca-418f-a6c9-208bf2e74cae HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49686 - "GET /api/v1/emails/bac8c824-8aca-418f-a6c9-208bf2e74cae HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60028 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56916 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56368 - "GET /api/v1/emails/bac8c824-8aca-418f-a6c9-208bf2e74cae HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55053 - "GET /api/v1/emails/bac8c824-8aca-418f-a6c9-208bf2e74cae HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54302 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54302 - "GET /assets/index-e9WRfSnC.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51392 - "GET /assets/index-BRdpuOGf.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56626 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:51392 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54302 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54302 - "GET /api/v1/emails/bac8c824-8aca-418f-a6c9-208bf2e74cae HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54302 - "POST /api/v1/emails/raw HTTP/1.1" 401 Unauthorized
+INFO:     Started server process [19544]
+INFO:     Waiting for application startup.
+E:\SENTRY\.venv\Lib\site-packages\bleach\sanitizer.py:166: NoCssSanitizerWarning: 'style' attribute specified, but css_sanitizer not set.
+  warnings.warn(
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:51905 - "GET /health HTTP/1.1" 200 OK
+E:\SENTRY\.venv\Lib\site-packages\bleach\sanitizer.py:166: NoCssSanitizerWarning: 'style' attribute specified, but css_sanitizer not set.
+  warnings.warn(
+INFO:     127.0.0.1:51909 - "POST /api/v1/samples/seed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51910 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51911 - "GET /api/v1/emails HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51912 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51913 - "GET /api/v1/campaigns HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62069 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:62070 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62071 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58139 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:58141 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58140 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58142 - "GET /api/v1/emails/2c63f45f-512b-412a-a2cf-6da0b88a0aff HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58143 - "GET /api/v1/emails/2c63f45f-512b-412a-a2cf-6da0b88a0aff HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63957 - "GET /api/v1/emails/2c63f45f-512b-412a-a2cf-6da0b88a0aff HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54812 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:56970 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56153 - "GET /api/v1/campaigns/graph/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52580 - "POST /api/v1/emails/upload HTTP/1.1" 201 Created
+INFO:     127.0.0.1:51687 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51686 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53014 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50767 - "GET /api/v1/emails/f3f94eda-1146-4e04-8e38-1d39e7170bf8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51688 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61587 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56112 - "GET /api/v1/emails/f3f94eda-1146-4e04-8e38-1d39e7170bf8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55538 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65228 - "GET /api/v1/emails/f3f94eda-1146-4e04-8e38-1d39e7170bf8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64538 - "POST /api/v1/emails/raw HTTP/1.1" 201 Created
+INFO:     127.0.0.1:56899 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56898 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60991 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53507 - "GET /api/v1/emails/68e7de41-a00b-4147-b592-391a1de7bd0e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62998 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51628 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50522 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56679 - "GET /api/v1/emails/68e7de41-a00b-4147-b592-391a1de7bd0e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49940 - "GET /api/v1/emails/68e7de41-a00b-4147-b592-391a1de7bd0e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60385 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55406 - "POST /api/v1/emails/upload HTTP/1.1" 201 Created
+INFO:     127.0.0.1:61791 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60384 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64310 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60028 - "GET /api/v1/emails/80d7949d-433c-4830-8b25-dca5eb1ef91e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64311 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52659 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52733 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52558 - "GET /api/v1/emails/2dd42765-0547-4134-8add-45eeb386b52e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52559 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58923 - "GET /api/v1/emails/2dd42765-0547-4134-8add-45eeb386b52e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58329 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56673 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62941 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60028 - "GET /api/v1/emails/2dd42765-0547-4134-8add-45eeb386b52e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56663 - "GET /api/v1/emails/2dd42765-0547-4134-8add-45eeb386b52e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55515 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64962 - "GET /api/v1/emails/2dd42765-0547-4134-8add-45eeb386b52e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55180 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57658 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62117 - "POST /api/v1/emails/upload HTTP/1.1" 201 Created
+INFO:     127.0.0.1:58845 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55179 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65051 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54988 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50886 - "GET /api/v1/emails/0a682540-6d5b-4d23-9c83-7ef28aa5e70f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62352 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50553 - "GET /api/v1/emails/3da046c2-e113-492a-8922-0a859321b826 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50554 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64219 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56135 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50095 - "GET /api/v1/emails/c03b0efb-6750-49d8-93cb-6c4e972d8bce HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64565 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57749 - "GET /api/v1/emails/c03b0efb-6750-49d8-93cb-6c4e972d8bce HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61619 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57247 - "GET /api/v1/emails/c03b0efb-6750-49d8-93cb-6c4e972d8bce HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52766 - "GET /api/v1/emails/c03b0efb-6750-49d8-93cb-6c4e972d8bce HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57307 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57307 - "GET /assets/index-e9WRfSnC.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55561 - "GET /assets/index-BRdpuOGf.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63651 - "WebSocket /api/v1/dashboard/live" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:55561 - "GET /api/v1/emails?limit=10000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57307 - "GET /api/v1/dashboard/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57307 - "GET /api/v1/emails/c03b0efb-6750-49d8-93cb-6c4e972d8bce HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57307 - "POST /api/v1/emails/raw HTTP/1.1" 401 Unauthorized
+Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\asyncio\proactor_events.py", line 166, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
