@@ -204,3 +204,83 @@ async def test_demo_reset_endpoint():
         data = res.json()
         assert data["status"] == "success"
         assert len(data["seeded_email_ids"]) == 18
+
+@pytest.mark.asyncio
+async def test_csv_synthesizer_preserves_raw_bytes_verbatim():
+    """B-1: Verifies that CSV synthesizer preserves raw field bytes VERBATIM without
+    import-time mutation or prepending apostrophes to '-', '=', '+', '@' characters.
+    """
+    subject_raw = "=CMD|'dir'!A0"
+    body_raw = "-This is a minus-prefixed body\r\n=calc\r\n+addition\r\n@formula"
+    
+    synth_bytes = CSVSynthesizerService.synthesize_rfc822_bytes(
+        subject=subject_raw,
+        body=body_raw,
+        sender="+attacker@evil.com",
+        recipient="-victim@corp.com"
+    )
+    
+    # Assert exact byte preservation (unmodified)
+    assert b"Subject: =CMD|'dir'!A0" in synth_bytes
+    assert b"From: +attacker@evil.com" in synth_bytes
+    assert b"To: -victim@corp.com" in synth_bytes
+    assert b"-This is a minus-prefixed body\r\n=calc\r\n+addition\r\n@formula" in synth_bytes
+    # Assert NO evidence-corrupting prepended apostrophe
+    assert b"Subject: '=CMD" not in synth_bytes
+    assert b"From: '+attacker" not in synth_bytes
+
+    # Ingest and verify stored record has exact unmodified bytes
+    import uuid
+    uid = str(uuid.uuid4())[:8]
+    csv_data = f'subject,body\n"-Financial Warning {uid}","-Please review immediately: urgency payment required."'.encode("utf-8")
+    
+    async with AsyncSessionLocal() as session:
+        res = await CSVSynthesizerService.process_csv_dataset(csv_data, db=session)
+        assert res["status"] == "completed"
+        assert res["summary"]["ingested"] == 1
+        
+        stmt = select(EmailRecord, AnalysisResult).join(AnalysisResult, EmailRecord.id == AnalysisResult.email_id).where(EmailRecord.subject == f"-Financial Warning {uid}").limit(1)
+        row = (await session.execute(stmt)).first()
+        assert row is not None
+        rec, analysis = row
+        assert rec.subject == f"-Financial Warning {uid}"
+        assert "-Please review immediately" in rec.raw_content
+        # Content analysis works accurately on verbatim text
+        assert analysis.content_analysis["urgency_score"] > 0
+
+def test_csv_export_writer_owasp_formula_neutralization():
+    """B-1: Verifies that CSV export writers apply write-time OWASP formula neutralization
+    to prevent spreadsheet execution while preserving database evidence fidelity.
+    """
+    from app.services.reporting import ReportingService
+    
+    # Unit checks on sanitize_csv_cell
+    assert ReportingService.sanitize_csv_cell("=cmd|'/C calc'!A0") == "'=cmd|'/C calc'!A0"
+    assert ReportingService.sanitize_csv_cell("-2+3+cmd|' /C calc'!A0") == "'-2+3+cmd|' /C calc'!A0"
+    assert ReportingService.sanitize_csv_cell("+1+1") == "'+1+1"
+    assert ReportingService.sanitize_csv_cell("@SUM(1+1)") == "'@SUM(1+1)"
+    assert ReportingService.sanitize_csv_cell("\t=cmd") == "'\t=cmd"
+    assert ReportingService.sanitize_csv_cell("\r=cmd") == "'\r=cmd"
+    assert ReportingService.sanitize_csv_cell("Normal Subject") == "Normal Subject"
+    assert ReportingService.sanitize_csv_cell(None) == ""
+    assert ReportingService.sanitize_csv_cell(123) == "123"
+
+    # Export generation check
+    test_records = [
+        {
+            "id": "=EVIL-ID",
+            "subject": "-Financial Fraud Campaign",
+            "sender": "+attacker@malicious.com",
+            "sender_domain": "@evil.com",
+            "threat_level": "CRITICAL",
+            "threat_score": 0.99,
+            "origin_ip": "1.2.3.4"
+        }
+    ]
+    csv_out = ReportingService.generate_ioc_csv_report(test_records)
+    assert "'=EVIL-ID" in csv_out
+    assert "'-Financial Fraud Campaign" in csv_out
+    assert "'+attacker@malicious.com" in csv_out
+    assert "'@evil.com" in csv_out
+    assert "CRITICAL" in csv_out
+

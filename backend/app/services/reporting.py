@@ -12,6 +12,41 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
 class ReportingService:
     CODE_VERSION = "SENTRY-v1.0.0-PROD"
 
+    @staticmethod
+    def sanitize_csv_cell(value: Any) -> str:
+        """
+        Applies OWASP CSV formula injection neutralization at write-time.
+        Prefixes cells starting with '=', '+', '-', '@', '\\t', '\\r' with a single quote.
+        """
+        if value is None:
+            return ""
+        s = str(value)
+        if s.startswith(("=", "+", "-", "@", "\t", "\r")):
+            return "'" + s
+        return s
+
+    @classmethod
+    def generate_ioc_csv_report(cls, email_records: List[Dict[str, Any]]) -> str:
+        """
+        Generates an IOC CSV export with write-time OWASP formula neutralization
+        on all attacker-controlled fields (subject, sender, IP, domain, URL).
+        """
+        import csv
+        output = io.StringIO()
+        writer = csv.writer(output)
+        writer.writerow(["email_id", "subject", "sender", "sender_domain", "threat_level", "threat_score", "origin_ip"])
+        for r in email_records:
+            writer.writerow([
+                cls.sanitize_csv_cell(r.get("id", "")),
+                cls.sanitize_csv_cell(r.get("subject", "")),
+                cls.sanitize_csv_cell(r.get("sender", "")),
+                cls.sanitize_csv_cell(r.get("sender_domain", "")),
+                cls.sanitize_csv_cell(r.get("threat_level", "")),
+                cls.sanitize_csv_cell(r.get("threat_score", "")),
+                cls.sanitize_csv_cell(r.get("origin_ip", ""))
+            ])
+        return output.getvalue()
+
     @classmethod
     def compute_entry_hash(cls, prev_hash: str, action: str, actor: str, timestamp: str, details: str) -> str:
         """
