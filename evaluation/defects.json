@@ -213,5 +213,17 @@
     "regression_test": "evaluation/blind/scripts/run_b2.py",
     "effort": "M",
     "description": "Campaign Network Graph canvas text search/filter input to highlight specific entity nodes directly; logged as feature request from 90-score persona."
+  },
+  {
+    "id": "ING-001",
+    "check": "ui.ingest_upload_e2e / ui.ingest_paste_e2e",
+    "severity": "high",
+    "evidence": "evaluation/ingest_repair/diagnosis.md",
+    "status": "resolved",
+    "fix_commit": "HEAD",
+    "target_version": "v1.0.2",
+    "regression_test": "backend/tests/test_ingest_endpoints.py",
+    "effort": "S",
+    "description": "Browser UI .eml upload and raw RFC 5322 paste fail with 'Failed to fetch' due to missing Vite server.proxy and static API_BASE hostname resolution asymmetry."
   }
 ]

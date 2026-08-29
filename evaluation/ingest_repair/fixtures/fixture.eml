@@ -1,0 +1,10 @@
+From: test.sender@example.com
+To: analyst@sentry-soc.local
+Subject: SEC-TEST: Minimal RFC 5322 Ingest Verification Payload
+Date: Sat, 29 Aug 2026 12:00:00 +0000
+Message-ID: <sec-test-20260829-001@example.com>
+Received: from mail.relay.example.com ([198.51.100.25]) by mx.sentry-soc.local with ESMTP; Sat, 29 Aug 2026 12:00:01 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+This is a synthetic verification email payload for testing RFC 5322 ingestion in SENTRY.

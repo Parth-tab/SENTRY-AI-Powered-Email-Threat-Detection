@@ -1,0 +1,1612 @@
+{
+  "mode": "mode_b",
+  "ui_url": "http://localhost:3000",
+  "timestamp": 1788005132.7706292,
+  "console_logs": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "warning",
+      "text": "WebSocket connection to 'ws://localhost:8000/api/v1/dashboard/live' failed: WebSocket is closed before the connection is established."
+    }
+  ],
+  "console_errors": [],
+  "network_requests": [
+    {
+      "url": "http://localhost:3000/",
+      "method": "GET",
+      "headers": {
+        "upgrade-insecure-requests": "1",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\""
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/@vite/client",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/src/main.tsx",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/@react-refresh",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/node_modules/.pnpm/vite@5.4.21/node_modules/vite/dist/client/env.mjs",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/@vite/client",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=a975f0ed",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/main.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/node_modules/.vite/deps/react.js?v=a975f0ed",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/main.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=a975f0ed",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/main.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/src/App.tsx",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/main.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/src/index.css",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/main.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/node_modules/.vite/deps/chunk-VJYZWRTN.js?v=a975f0ed",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/node_modules/.vite/deps/react.js?v=a975f0ed",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/node_modules/.vite/deps/chunk-RQRZJDNV.js?v=a975f0ed",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=a975f0ed",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/src/components/layout/Header.tsx",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/App.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/src/components/layout/Sidebar.tsx",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/App.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/src/components/layout/StatCards.tsx",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/App.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/src/components/dashboard/IngestionDropzone.tsx",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/App.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/src/components/dashboard/LiveThreatFeed.tsx",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/App.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/src/components/email-detail/EmailDetailModal.tsx",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/App.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/src/components/map/OriginRelayMap.tsx",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/App.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/src/components/graph/CampaignNetworkGraph.tsx",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/App.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/src/components/report/ForensicReportView.tsx",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/App.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/src/hooks/useWebSocket.ts",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/App.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/src/services/api.ts",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/App.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:3000/node_modules/.vite/deps/lucide-react.js?v=a975f0ed",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/src/App.tsx",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/dashboard/stats",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails?",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/dashboard/stats",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails?",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "https://fonts.googleapis.com/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2",
+      "method": "GET",
+      "headers": {
+        "origin": "http://localhost:3000",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "https://fonts.googleapis.com/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/c6d8c120-beb4-4b4d-8f21-a27ed561c944",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/c6d8c120-beb4-4b4d-8f21-a27ed561c944",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/upload",
+      "method": "POST",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "content-type": "multipart/form-data; boundary=----WebKitFormBoundaryBSBASrEmABFdxbVV",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/dashboard/stats",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails?",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/dashboard/stats",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails?",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/a1c31997-349e-466c-a505-4b426d9a7adc",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/a1c31997-349e-466c-a505-4b426d9a7adc",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/raw",
+      "method": "POST",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "content-type": "text/plain",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": "From: test.sender@example.com\nTo: analyst@sentry-soc.local\nSubject: SEC-TEST: Minimal RFC 5322 Ingest Verification Payload\nDate: Sat, 29 Aug 2026 12:00:00 +0000\nMessage-ID: <sec-test-20260829-001@example.com>\nReceived: from mail.relay.example.com ([198.51.100.25]) by mx.sentry-soc.local with ESMTP; Sat, 29 Aug 2026 12:00:01 +0000\nMIME-Version: 1.0\nContent-Type: text/plain; charset=utf-8\n\nThis is a synthetic verification email payload for testing RFC 5322 ingestion in SENTRY."
+    },
+    {
+      "url": "http://localhost:8000/api/v1/dashboard/stats",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails?",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/dashboard/stats",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails?",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/dashboard/stats",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails?",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/3888c384-86e6-4bf4-ba71-f6d1aadc4ad9",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/3888c384-86e6-4bf4-ba71-f6d1aadc4ad9",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/3888c384-86e6-4bf4-ba71-f6d1aadc4ad9",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Windows\"",
+        "referer": "http://localhost:3000/",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"HeadlessChrome\";v=\"151\", \"Chromium\";v=\"151\"",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "post_data": null
+    }
+  ],
+  "network_responses": [
+    {
+      "url": "http://localhost:3000/",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "connection": "keep-alive",
+        "content-length": "1271",
+        "content-type": "text/html",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "etag": "W/\"4f7-X7NiBKm0MC/IUDb7ZU5nODd0134\"",
+        "keep-alive": "timeout=5",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap",
+      "status": 200,
+      "headers": {
+        "content-encoding": "gzip",
+        "x-content-type-options": "nosniff",
+        "expires": "Sat, 29 Aug 2026 12:06:17 GMT",
+        "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+        "date": "Sat, 29 Aug 2026 12:06:17 GMT",
+        "content-type": "text/css; charset=utf-8",
+        "vary": "Sec-Fetch-Dest, Sec-Fetch-Mode, Sec-Fetch-Site",
+        "last-modified": "Sat, 29 Aug 2026 12:06:17 GMT",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000",
+        "link": "<https://fonts.gstatic.com>; rel=preconnect; crossorigin",
+        "cache-control": "private, max-age=86400, stale-while-revalidate=604800",
+        "timing-allow-origin": "*",
+        "cross-origin-opener-policy": "same-origin-allow-popups",
+        "cross-origin-resource-policy": "cross-origin",
+        "access-control-allow-origin": "*",
+        "x-xss-protection": "0",
+        "server": "ESF"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/@react-refresh",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"5459-W4xlIRvs7CzM1FW1IVU0Uw0TIxA\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "117548",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/@vite/client",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"5ccf-bO/YUdJIeJq074lAGtcmQbgXDxo\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "137862",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/node_modules/.pnpm/vite@5.4.21/node_modules/vite/dist/client/env.mjs",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"27a-50Oe5S7HDq59Hm15o909pGTGmf8\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "4021",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/src/main.tsx",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"431-0fKx6t+W8yOD3k/jURmk9Fe3CB0\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "2044",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/node_modules/.vite/deps/react.js?v=a975f0ed",
+      "status": 200,
+      "headers": {
+        "cache-control": "max-age=31536000,immutable",
+        "etag": "W/\"9b-M00b/ygZldGb+9DYwkbsSFznCPw\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "155",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=a975f0ed",
+      "status": 200,
+      "headers": {
+        "cache-control": "max-age=31536000,immutable",
+        "etag": "W/\"480-IjNyGL7Up8VjBgo0TsLUlzKXkC4\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "1152",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=a975f0ed",
+      "status": 200,
+      "headers": {
+        "cache-control": "max-age=31536000,immutable",
+        "etag": "W/\"90e3-lfb3WXr7GEVuc7TmbANHGyfIHX8\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "37091",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/src/App.tsx",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"2b34-4AT42AYPJH0n5QSaytKxf8bvYHw\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "26491",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/node_modules/.vite/deps/chunk-VJYZWRTN.js?v=a975f0ed",
+      "status": 200,
+      "headers": {
+        "cache-control": "max-age=31536000,immutable",
+        "etag": "W/\"135f1-Ji/evI1PobonQRV55mw/y2RbszE\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "79345",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/src/index.css",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"93bc-GaeLj0+G+2pDaJ5lbW6JrXJ/nPU\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "37820",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/node_modules/.vite/deps/chunk-RQRZJDNV.js?v=a975f0ed",
+      "status": 200,
+      "headers": {
+        "cache-control": "max-age=31536000,immutable",
+        "etag": "W/\"e2a6b-LYLb3bjJLwSKHMgXJNpIs43LPaU\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "928363",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/src/components/layout/StatCards.tsx",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"15e7-9F6BdMOU/MWmVRFLyNXVU85Nl0o\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "12098",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/src/components/layout/Sidebar.tsx",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"19d9-vwGIHKDGDIqABo53X4pNca/O+6M\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "13236",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/src/components/layout/Header.tsx",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"2175-UsDAyYW9HjX0bcAXCc3krlD8rQc\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "15316",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/src/components/dashboard/IngestionDropzone.tsx",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"3d7c-Talq1w+ryp8pvaU/MfgpUNUPUnM\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "32935",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/src/components/dashboard/LiveThreatFeed.tsx",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"5193-a533VgY16+gPHQjgy2l+mgQU05s\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "41874",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/src/components/map/OriginRelayMap.tsx",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"55a3-Pv/5YUJhJZ7mAQNSK1jzbK6TBh4\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "44966",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/src/components/email-detail/EmailDetailModal.tsx",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"fe08-MrCEP99fnFiOKyIeO6Aa9St1kNU\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "123383",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/src/components/graph/CampaignNetworkGraph.tsx",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"46c4-XHZ2X2p9FPjxhvGEYcrC62r5wSQ\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "39851",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/src/hooks/useWebSocket.ts",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"87a-4BGBZiVltCO4ze1kLHJL80kZ4Y8\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "6961",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/src/services/api.ts",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"b95-5brkb71NTEGXKdqn4c4Ot1zGmGo\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "11012",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/src/components/report/ForensicReportView.tsx",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "etag": "W/\"5fea-VEh16j+y1Yw8aOvsCxQFNYMlBlA\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "47177",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:3000/node_modules/.vite/deps/lucide-react.js?v=a975f0ed",
+      "status": 200,
+      "headers": {
+        "cache-control": "max-age=31536000,immutable",
+        "etag": "W/\"1188fc-+X1YqxP/d/C7l5Qekh1mj0T62Zo\"",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "http://localhost:3000",
+        "keep-alive": "timeout=5",
+        "content-length": "1149180",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "content-type": "text/javascript",
+        "vary": "Origin"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2",
+      "status": 200,
+      "headers": {
+        "age": "523194",
+        "report-to": "{\"group\":\"apps-themes\",\"max_age\":2592000,\"endpoints\":[{\"url\":\"https://csp.withgoogle.com/csp/report-to/apps-themes\"}]}",
+        "x-content-type-options": "nosniff",
+        "expires": "Mon, 23 Aug 2027 10:46:24 GMT",
+        "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+        "date": "Sun, 23 Aug 2026 10:46:24 GMT",
+        "last-modified": "Wed, 10 Sep 2025 16:52:37 GMT",
+        "content-type": "font/woff2",
+        "cache-control": "public, max-age=31536000",
+        "timing-allow-origin": "*",
+        "cross-origin-opener-policy": "same-origin; report-to=\"apps-themes\"",
+        "cross-origin-resource-policy": "cross-origin",
+        "content-security-policy-report-only": "require-trusted-types-for 'script'; report-uri https://csp.withgoogle.com/csp/apps-themes",
+        "accept-ranges": "bytes",
+        "access-control-allow-origin": "*",
+        "content-length": "31432",
+        "x-xss-protection": "0",
+        "server": "sffe"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "status": 200,
+      "headers": {
+        "age": "171053",
+        "report-to": "{\"group\":\"apps-themes\",\"max_age\":2592000,\"endpoints\":[{\"url\":\"https://csp.withgoogle.com/csp/report-to/apps-themes\"}]}",
+        "x-content-type-options": "nosniff",
+        "expires": "Fri, 27 Aug 2027 12:35:25 GMT",
+        "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+        "date": "Thu, 27 Aug 2026 12:35:25 GMT",
+        "last-modified": "Tue, 09 Sep 2025 18:33:53 GMT",
+        "content-type": "font/woff2",
+        "cache-control": "public, max-age=31536000",
+        "timing-allow-origin": "*",
+        "cross-origin-opener-policy": "same-origin; report-to=\"apps-themes\"",
+        "cross-origin-resource-policy": "cross-origin",
+        "content-security-policy-report-only": "require-trusted-types-for 'script'; report-uri https://csp.withgoogle.com/csp/apps-themes",
+        "accept-ranges": "bytes",
+        "access-control-allow-origin": "*",
+        "content-length": "48256",
+        "x-xss-protection": "0",
+        "server": "sffe"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails?",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "3d455f2c-fd34-44d1-99e3-988290b74a3b",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "21163",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/dashboard/stats",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "72e0b8f3-25bd-4ff8-aad0-be3e715b8f42",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "3538",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails?",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "4c4c1f21-d1a2-4cfd-8d50-fc67d88fa44f",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "21163",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/c6d8c120-beb4-4b4d-8f21-a27ed561c944",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "745074da-bcc9-4b9e-bcf4-d2b275f92224",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "5893",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/dashboard/stats",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "409c82e7-4b9e-449d-8262-ca7dae67fb52",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "3538",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/c6d8c120-beb4-4b4d-8f21-a27ed561c944",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "42bb2707-9bcd-4f14-9411-7e135a06bc3b",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "5893",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/upload",
+      "status": 201,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "6d949740-b88b-4d7c-ae9c-6e26e3658cec",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "5783",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "POST"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails?",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "aa51f88e-637a-4170-8a1c-548bbb98adea",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "21754",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/dashboard/stats",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "3e2e4429-7900-4ca7-9691-a9f89f63299c",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "3539",
+        "date": "Sat, 29 Aug 2026 12:05:33 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails?",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "df35dbdf-9ff5-4b6f-8eb5-e8f13946cfd6",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "21754",
+        "date": "Sat, 29 Aug 2026 12:05:34 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/a1c31997-349e-466c-a505-4b426d9a7adc",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "64f40419-bc26-43a5-b515-1aa42cde2a8b",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "5899",
+        "date": "Sat, 29 Aug 2026 12:05:34 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/dashboard/stats",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "2e6c066b-33a8-4362-87f9-20eb0e8910ea",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "3539",
+        "date": "Sat, 29 Aug 2026 12:05:34 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/a1c31997-349e-466c-a505-4b426d9a7adc",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "0a972c04-8bcd-4c96-bfc3-afc726699a96",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "5899",
+        "date": "Sat, 29 Aug 2026 12:05:34 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/raw",
+      "status": 201,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "36dcb927-8c02-4e80-9938-6fb3b115bbb7",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "5777",
+        "date": "Sat, 29 Aug 2026 12:05:39 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "POST"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails?",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "e7b56397-dd40-4f9b-b536-a51f87f29279",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "22342",
+        "date": "Sat, 29 Aug 2026 12:05:39 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/dashboard/stats",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "4391eedf-5f2a-4b1a-a0f8-56bb579e6306",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "3539",
+        "date": "Sat, 29 Aug 2026 12:05:39 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails?",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "47cd65bc-b23c-48a3-b625-f38973202a16",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "22342",
+        "date": "Sat, 29 Aug 2026 12:05:39 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/3888c384-86e6-4bf4-ba71-f6d1aadc4ad9",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "a0b0c0b7-8e1b-4844-9dba-a9e3b7635245",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "5893",
+        "date": "Sat, 29 Aug 2026 12:05:39 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/dashboard/stats",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "2b98f18a-8731-4887-b70e-93fbb75ffbf3",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "3539",
+        "date": "Sat, 29 Aug 2026 12:05:39 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails?",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "74f1e920-8c0c-4fc2-a744-2508b03cd8bd",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "22342",
+        "date": "Sat, 29 Aug 2026 12:05:39 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/3888c384-86e6-4bf4-ba71-f6d1aadc4ad9",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "86e10f25-8b4e-49d6-a789-a55290973034",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "5893",
+        "date": "Sat, 29 Aug 2026 12:05:39 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/dashboard/stats",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "e05902d2-70d3-46f2-b440-54fe93871d0f",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "3539",
+        "date": "Sat, 29 Aug 2026 12:05:39 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/emails/3888c384-86e6-4bf4-ba71-f6d1aadc4ad9",
+      "status": 200,
+      "headers": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' ws: wss: http: https:;",
+        "x-correlation-id": "18473108-f663-4ed6-afec-bfc70b3141c4",
+        "access-control-allow-credentials": "true",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "access-control-allow-origin": "http://localhost:3000",
+        "content-length": "5893",
+        "date": "Sat, 29 Aug 2026 12:05:39 GMT",
+        "x-xss-protection": "0",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "server": "uvicorn",
+        "x-frame-options": "DENY"
+      },
+      "method": "GET"
+    }
+  ],
+  "failed_requests": [],
+  "options_preflights": [],
+  "steps": {
+    "step0_dashboard": {
+      "status": "PASS"
+    },
+    "step1_upload": {
+      "status": "PASS",
+      "subject_appeared": true,
+      "modal_opened": true
+    },
+    "step2_paste": {
+      "status": "PASS",
+      "modal_opened": true
+    }
+  }
+}
