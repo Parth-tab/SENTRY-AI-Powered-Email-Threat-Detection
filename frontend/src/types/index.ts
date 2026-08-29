@@ -77,21 +77,27 @@ export interface AnalysisDetail {
     transformer: number;
   };
   auth_spf?: {
-    result: string;
-    detail: string;
-    score: number;
+    result?: string;
+    detail?: string;
+    score?: number;
+    status?: string;
+    reason?: string;
   };
   auth_dkim?: {
-    result: string;
-    detail: string;
-    score: number;
+    result?: string;
+    detail?: string;
+    score?: number;
+    status?: string;
+    reason?: string;
   };
   auth_dmarc?: {
-    result: string;
-    policy: string;
-    alignment: string;
-    detail: string;
-    score: number;
+    result?: string;
+    policy?: string;
+    alignment?: string;
+    detail?: string;
+    score?: number;
+    status?: string;
+    reason?: string;
   };
   header_anomalies: string[];
   relay_hops_count: number;

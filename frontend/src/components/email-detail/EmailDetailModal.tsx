@@ -221,6 +221,15 @@ export const EmailDetailModal: React.FC<EmailDetailModalProps> = ({
 
           {/* Right Column (7 Cols): Forensic Intelligence & Attribution */}
           <div className="lg:col-span-7 flex flex-col bg-[#121215] overflow-y-auto p-6 space-y-6">
+            {email.source === "csv" && (
+              <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center space-x-2">
+                <AlertTriangle className="w-4 h-4 shrink-0" />
+                <span>
+                  <strong>CSV Ground-Truth Import (D4 Degradation):</strong> Content and linguistic NLP analysis active. Transport headers, relay hops, and authentication records are unavailable (headerless source).
+                </span>
+              </div>
+            )}
+
             {/* Top Row: Threat Radial Gauge & Multi-Class Confidence */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Radial Meter Card */}
@@ -321,16 +330,18 @@ export const EmailDetailModal: React.FC<EmailDetailModalProps> = ({
                     <span className="font-mono font-bold text-zinc-300">SPF (RFC 7208)</span>
                     <span
                       className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded uppercase ${
-                        analysis.auth_spf?.result === "pass"
+                        analysis.auth_spf?.status === "unavailable"
+                          ? "bg-zinc-800 text-zinc-400 border border-zinc-700"
+                          : analysis.auth_spf?.result === "pass"
                           ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"
                           : "bg-rose-500/20 text-rose-400 border border-rose-500/40"
                       }`}
                     >
-                      {analysis.auth_spf?.result || "NONE"}
+                      {analysis.auth_spf?.status === "unavailable" ? "UNAVAILABLE" : (analysis.auth_spf?.result || "NONE")}
                     </span>
                   </div>
                   <p className="text-[10px] text-zinc-400 mt-1 leading-snug">
-                    {analysis.auth_spf?.detail}
+                    {analysis.auth_spf?.reason || analysis.auth_spf?.detail}
                   </p>
                 </div>
 
@@ -340,16 +351,18 @@ export const EmailDetailModal: React.FC<EmailDetailModalProps> = ({
                     <span className="font-mono font-bold text-zinc-300">DKIM (RFC 6376)</span>
                     <span
                       className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded uppercase ${
-                        analysis.auth_dkim?.result === "pass"
+                        analysis.auth_dkim?.status === "unavailable"
+                          ? "bg-zinc-800 text-zinc-400 border border-zinc-700"
+                          : analysis.auth_dkim?.result === "pass"
                           ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"
                           : "bg-amber-500/20 text-amber-400 border border-amber-500/40"
                       }`}
                     >
-                      {analysis.auth_dkim?.result || "NONE"}
+                      {analysis.auth_dkim?.status === "unavailable" ? "UNAVAILABLE" : (analysis.auth_dkim?.result || "NONE")}
                     </span>
                   </div>
                   <p className="text-[10px] text-zinc-400 mt-1 leading-snug">
-                    {analysis.auth_dkim?.detail}
+                    {analysis.auth_dkim?.reason || analysis.auth_dkim?.detail}
                   </p>
                 </div>
 
@@ -359,16 +372,18 @@ export const EmailDetailModal: React.FC<EmailDetailModalProps> = ({
                     <span className="font-mono font-bold text-zinc-300">DMARC (RFC 7489)</span>
                     <span
                       className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded uppercase ${
-                        analysis.auth_dmarc?.result === "pass"
+                        analysis.auth_dmarc?.status === "unavailable"
+                          ? "bg-zinc-800 text-zinc-400 border border-zinc-700"
+                          : analysis.auth_dmarc?.result === "pass"
                           ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"
                           : "bg-rose-500/20 text-rose-400 border border-rose-500/40"
                       }`}
                     >
-                      {analysis.auth_dmarc?.result || "NONE"}
+                      {analysis.auth_dmarc?.status === "unavailable" ? "UNAVAILABLE" : (analysis.auth_dmarc?.result || "NONE")}
                     </span>
                   </div>
                   <p className="text-[10px] text-zinc-400 mt-1 leading-snug">
-                    {analysis.auth_dmarc?.detail}
+                    {analysis.auth_dmarc?.reason || analysis.auth_dmarc?.detail}
                   </p>
                 </div>
               </div>
