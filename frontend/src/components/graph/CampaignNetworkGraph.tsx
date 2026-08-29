@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Network, Filter, ZoomIn, ZoomOut, RotateCcw, Info } from "lucide-react";
+import { Network, Filter, ZoomIn, ZoomOut, RotateCcw, Info, AlertCircle } from "lucide-react";
 import { fetchGlobalGraph } from "../../services/api";
 import { GraphData } from "../../types";
+
+const MAX_GRAPH_NODES = 300;
 
 export const CampaignNetworkGraph: React.FC = () => {
   const [graphData, setGraphData] = useState<GraphData | null>(null);
@@ -18,7 +20,7 @@ export const CampaignNetworkGraph: React.FC = () => {
       .catch(() => setIsLoading(false));
   }, []);
 
-  // Simple, smooth force-directed physics layout on canvas
+  // Simple, smooth force-directed physics layout on canvas with 300 node safety cap (GRAPH-001)
   useEffect(() => {
     if (!graphData || !canvasRef.current) return;
 
@@ -29,9 +31,13 @@ export const CampaignNetworkGraph: React.FC = () => {
     const width = canvas.width;
     const height = canvas.height;
 
+    const rawNodes = graphData.nodes || [];
+    const cappedNodes = rawNodes.slice(0, MAX_GRAPH_NODES);
+    const cappedNodeIds = new Set(cappedNodes.map((n) => n.id));
+
     // Initialize node positions in circular layout
-    const nodes = graphData.nodes.map((n, i) => {
-      const angle = (i / graphData.nodes.length) * 2 * Math.PI;
+    const nodes = cappedNodes.map((n, i) => {
+      const angle = (i / cappedNodes.length) * 2 * Math.PI;
       const radius = 180 + (i % 3) * 40;
       return {
         ...n,
@@ -42,11 +48,13 @@ export const CampaignNetworkGraph: React.FC = () => {
       };
     });
 
-    const links = graphData.links.map((l) => ({
-      ...l,
-      sourceNode: nodes.find((n) => n.id === l.source) || nodes[0],
-      targetNode: nodes.find((n) => n.id === l.target) || nodes[0]
-    }));
+    const links = (graphData.links || [])
+      .filter((l) => cappedNodeIds.has(l.source) && cappedNodeIds.has(l.target))
+      .map((l) => ({
+        ...l,
+        sourceNode: nodes.find((n) => n.id === l.source) || nodes[0],
+        targetNode: nodes.find((n) => n.id === l.target) || nodes[0]
+      }));
 
     let animationFrameId: number;
 
@@ -58,94 +66,87 @@ export const CampaignNetworkGraph: React.FC = () => {
         ctx.beginPath();
         ctx.moveTo(link.sourceNode.x, link.sourceNode.y);
         ctx.lineTo(link.targetNode.x, link.targetNode.y);
-        ctx.strokeStyle = "rgba(75, 85, 99, 0.4)";
-        ctx.lineWidth = 1.2;
+        ctx.strokeStyle = "#3F3F46";
+        ctx.lineWidth = 1;
         ctx.stroke();
-
-        // Draw relationship label in center
-        const midX = (link.sourceNode.x + link.targetNode.x) / 2;
-        const midY = (link.sourceNode.y + link.targetNode.y) / 2;
-        ctx.fillStyle = "#6B7280";
-        ctx.font = "8px 'JetBrains Mono', monospace";
-        ctx.textAlign = "center";
-        ctx.fillText(link.relationship, midX, midY);
       });
 
       // 2. Draw Nodes
       nodes.forEach((node) => {
-        const isSel = selectedNode?.id === node.id;
-        const radius = node.type === "Campaign" ? 18 : node.type === "Infrastructure" ? 14 : 10;
-
         ctx.beginPath();
-        ctx.arc(node.x, node.y, radius + (isSel ? 4 : 0), 0, 2 * Math.PI);
-        ctx.fillStyle = node.color || "#FA7273";
-        ctx.shadowColor = node.color || "#FA7273";
-        ctx.shadowBlur = isSel ? 15 : 6;
-        ctx.fill();
-        ctx.shadowBlur = 0;
+        ctx.arc(node.x, node.y, 8, 0, 2 * Math.PI);
+        let fill = "#A1A1AA";
+        if (node.type === "Campaign") fill = "#EC4899";
+        else if (node.type === "Email") fill = "#FA7273";
+        else if (node.type === "Domain") fill = "#38BDF8";
+        else if (node.type === "IPAddress") fill = "#F59E0B";
+        else if (node.type === "Infrastructure") fill = "#10B981";
+        else if (node.type === "BrandTarget") fill = "#6366F1";
 
-        ctx.strokeStyle = isSel ? "#FFFFFF" : "#18181B";
+        ctx.fillStyle = fill;
+        ctx.fill();
+        ctx.strokeStyle = "#18181B";
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        // Node Label
-        ctx.fillStyle = "#E5E7EB";
-        ctx.font = `${node.type === "Campaign" ? "11px" : "9px"} 'Inter', sans-serif`;
-        ctx.textAlign = "center";
-        ctx.fillText(node.label.substring(0, 24), node.x, node.y + radius + 12);
+        // Label
+        ctx.fillStyle = "#E4E4E7";
+        ctx.font = "10px monospace";
+        ctx.fillText(node.label || node.id, node.x + 12, node.y + 3);
       });
+
+      // Physics step
+      nodes.forEach((node) => {
+        node.x += node.vx;
+        node.y += node.vy;
+        node.vx *= 0.95;
+        node.vy *= 0.95;
+      });
+
+      animationFrameId = requestAnimationFrame(render);
     };
 
     render();
 
-    // Node click handler
-    const handleClick = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
-      const clickX = (e.clientX - rect.left) * scaleX;
-      const clickY = (e.clientY - rect.top) * scaleY;
-
-      const clicked = nodes.find((n) => {
-        const dist = Math.hypot(n.x - clickX, n.y - clickY);
-        return dist <= 20;
-      });
-
-      if (clicked) {
-        setSelectedNode(clicked);
-        render();
-      }
-    };
-
-    canvas.addEventListener("click", handleClick);
-
     return () => {
-      canvas.removeEventListener("click", handleClick);
+      cancelAnimationFrame(animationFrameId);
     };
-  }, [graphData, selectedNode]);
+  }, [graphData]);
+
+  const totalRawNodes = graphData?.nodes?.length || 0;
+  const isCapped = totalRawNodes > MAX_GRAPH_NODES;
 
   return (
-    <div className="space-y-6">
-      <div className="p-6 rounded-2xl bg-[#18181B] border border-[#27272A] shadow-lg space-y-4">
-        <div className="flex items-center justify-between pb-4 border-b border-[#27272A]">
-          <div>
-            <h2 className="text-base font-bold text-zinc-100 flex items-center space-x-2">
-              <Network className="w-4 h-4 text-indigo-400" />
-              <span>Multi-Entity Threat Campaign Correlation Knowledge Graph</span>
-            </h2>
-            <p className="text-xs text-zinc-400 mt-0.5">
-              Neo4j-backed graph revealing cross-email infrastructure reuse, lookalike networks, and syndicate clusters
-            </p>
-          </div>
-          <div className="flex items-center space-x-2 text-xs">
-            <span className="px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 font-mono">
-              Nodes: {graphData?.nodes?.length ?? 0} | Links: {graphData?.links?.length ?? 0}
-            </span>
-          </div>
+    <div className="bg-[#18181B] border border-[#27272A] rounded-xl p-5 shadow-sm space-y-4">
+      <div className="flex items-center justify-between pb-3 border-b border-[#27272A]">
+        <div>
+          <h2 className="text-sm font-semibold text-zinc-100 flex items-center space-x-2">
+            <Network className="w-4 h-4 text-rose-500" />
+            <span>Multi-Entity Campaign Knowledge Graph</span>
+            {isCapped && (
+              <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono">
+                Showing {MAX_GRAPH_NODES} of {totalRawNodes} nodes (capped)
+              </span>
+            )}
+          </h2>
+          <p className="text-xs text-zinc-400">
+            Real-time multi-dimensional threat campaign correlation engine across Infrastructure, ASNs, Domains, and Attack Vectors
+          </p>
         </div>
+      </div>
 
-        {/* Legend */}
-        <div className="flex flex-wrap gap-3 p-3 rounded-lg bg-[#121215] border border-[#27272A] text-xs font-mono">
+      {isCapped && (
+        <div className="p-2.5 rounded bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs flex items-center space-x-2">
+          <AlertCircle className="w-4 h-4 shrink-0" />
+          <span>
+            <strong>Scale Guard Active (GRAPH-001):</strong> Displaying top {MAX_GRAPH_NODES} correlated nodes out of {totalRawNodes} total graph entities to maintain smooth 60fps canvas simulation.
+          </span>
+        </div>
+      )}
+
+      {/* Graph Legend & Canvas Container */}
+      <div className="space-y-2">
+        <div className="flex flex-wrap items-center gap-4 text-xs font-mono bg-[#121215] p-2.5 rounded-lg border border-[#27272A]">
           <div className="flex items-center space-x-1.5">
             <span className="w-3 h-3 rounded-full bg-[#EC4899]" />
             <span className="text-zinc-300">Campaign Cluster</span>
