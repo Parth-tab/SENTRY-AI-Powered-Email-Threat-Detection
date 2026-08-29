@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ShieldAlert, AlertTriangle, CheckCircle2, Search, ArrowUpRight, Shield } from "lucide-react";
+import React, { useState, useMemo } from "react";
+import { ShieldAlert, AlertTriangle, CheckCircle2, Search, ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { EmailRecordItem, ThreatLevel } from "../../types";
 
 interface LiveThreatFeedProps {
@@ -15,16 +15,29 @@ export const LiveThreatFeed: React.FC<LiveThreatFeedProps> = ({
 }) => {
   const [filterLevel, setFilterLevel] = useState<string>("ALL");
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(50);
 
-  const filteredEmails = emails.filter((e) => {
-    const matchesFilter = filterLevel === "ALL" || e.threat_level === filterLevel;
-    const matchesSearch =
-      searchTerm === "" ||
-      e.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      e.sender.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      e.origin_ip.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesFilter && matchesSearch;
-  });
+  const filteredEmails = useMemo(() => {
+    return emails.filter((e) => {
+      const matchesFilter = filterLevel === "ALL" || e.threat_level === filterLevel;
+      const matchesSearch =
+        searchTerm === "" ||
+        e.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        e.sender.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (e.origin_ip && e.origin_ip.toLowerCase().includes(searchTerm.toLowerCase()));
+      return matchesFilter && matchesSearch;
+    });
+  }, [emails, filterLevel, searchTerm]);
+
+  // Reset to page 1 when filter or search changes
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [filterLevel, searchTerm, pageSize]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredEmails.length / pageSize));
+  const startIndex = (currentPage - 1) * pageSize;
+  const paginatedEmails = filteredEmails.slice(startIndex, startIndex + pageSize);
 
   const getThreatBadge = (level: ThreatLevel, score: number) => {
     switch (level) {
@@ -77,6 +90,26 @@ export const LiveThreatFeed: React.FC<LiveThreatFeedProps> = ({
     );
   };
 
+  const getSourceBadge = (source?: string) => {
+    if (!source) return null;
+    const s = source.toLowerCase();
+    if (s === "csv" || s.includes("csv")) {
+      return (
+        <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[9px] font-mono font-bold shrink-0">
+          CSV
+        </span>
+      );
+    }
+    if (s === "archive" || s.includes("archive") || s === "batch_upload") {
+      return (
+        <span className="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-[9px] font-mono font-bold shrink-0">
+          ARCHIVE
+        </span>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="bg-[#18181B] border border-[#27272A] rounded-xl shadow-sm overflow-hidden flex flex-col">
       {/* Header with Search and Filter */}
@@ -85,11 +118,11 @@ export const LiveThreatFeed: React.FC<LiveThreatFeedProps> = ({
           <h2 className="text-sm font-semibold text-zinc-100 flex items-center space-x-2">
             <span>Threat Intelligence Ingestion Stream</span>
             <span className="text-[11px] font-mono font-normal text-zinc-500">
-              ({filteredEmails.length} artifacts)
+              ({filteredEmails.length} total)
             </span>
           </h2>
           <p className="text-xs text-zinc-400">
-            Real-time multi-signal classified telemetry queue
+            Real-time multi-signal classified telemetry queue with pagination controls
           </p>
         </div>
 
@@ -137,14 +170,14 @@ export const LiveThreatFeed: React.FC<LiveThreatFeedProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-[#27272A]/60">
-            {filteredEmails.length === 0 ? (
+            {paginatedEmails.length === 0 ? (
               <tr>
                 <td colSpan={6} className="py-8 text-center text-zinc-500">
                   No email artifacts matching criteria. Use the sandbox or click "Load Demo Scenarios".
                 </td>
               </tr>
             ) : (
-              filteredEmails.map((email) => {
+              paginatedEmails.map((email) => {
                 const isSelected = selectedEmailId === email.id;
                 return (
                   <tr
@@ -161,13 +194,16 @@ export const LiveThreatFeed: React.FC<LiveThreatFeedProps> = ({
                       {getClassificationBadge(email.primary_classification)}
                     </td>
                     <td className="py-3 px-4 max-w-xs">
-                      <div className="font-medium text-zinc-200 truncate">{email.subject}</div>
+                      <div className="flex items-center space-x-1.5 truncate">
+                        {getSourceBadge(email.source)}
+                        <span className="font-medium text-zinc-200 truncate">{email.subject}</span>
+                      </div>
                       <div className="text-[11px] text-zinc-400 truncate font-mono mt-0.5">
                         {email.sender}
                       </div>
                     </td>
                     <td className="py-3 px-4 whitespace-nowrap font-mono text-[11px]">
-                      <div className="text-zinc-300">{email.origin_ip}</div>
+                      <div className="text-zinc-300">{email.origin_ip || "Unavailable"}</div>
                       <div className="text-zinc-500 text-[10px]">
                         {email.origin_country || "XX"}
                       </div>
@@ -197,6 +233,42 @@ export const LiveThreatFeed: React.FC<LiveThreatFeedProps> = ({
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination Footer Controls (FEED-001) */}
+      <div className="p-3 border-t border-[#27272A] bg-[#141418] flex items-center justify-between text-xs text-zinc-400">
+        <div className="flex items-center space-x-2">
+          <span>Showing {filteredEmails.length === 0 ? 0 : startIndex + 1}–{Math.min(startIndex + pageSize, filteredEmails.length)} of {filteredEmails.length}</span>
+          <span className="text-zinc-600">|</span>
+          <span>Per page:</span>
+          <select
+            value={pageSize}
+            onChange={(e) => setPageSize(Number(e.target.value))}
+            className="bg-[#09090B] border border-[#27272A] rounded px-1.5 py-0.5 text-zinc-200 font-mono text-[11px] focus:outline-none"
+          >
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select>
+        </div>
+
+        <div className="flex items-center space-x-2 font-mono text-[11px]">
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage <= 1}
+            className="p-1 rounded bg-zinc-800 hover:bg-zinc-700 disabled:opacity-40 disabled:hover:bg-zinc-800 text-zinc-300 transition-colors"
+          >
+            <ChevronLeft className="w-3.5 h-3.5" />
+          </button>
+          <span>Page {currentPage} of {totalPages}</span>
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage >= totalPages}
+            className="p-1 rounded bg-zinc-800 hover:bg-zinc-700 disabled:opacity-40 disabled:hover:bg-zinc-800 text-zinc-300 transition-colors"
+          >
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
       </div>
     </div>
   );
