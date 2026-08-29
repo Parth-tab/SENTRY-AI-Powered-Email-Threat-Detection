@@ -152,12 +152,13 @@ The repository tracks `frontend/pnpm-lock.yaml` in version control, while the do
 **Applies to:** `frontend/pnpm-lock.yaml`, `evaluation/defects.json`, `evaluation/final_inch/cold_browser_simulation.py`.
 
 ### 1. Vite & Esbuild Direct Vulnerability Fix
-Rather than relying on risk-dismissal rationales, all 4 upstream build-toolchain advisories were directly fixed by upgrading `frontend/pnpm-lock.yaml` to `vite@6.4.3` and `esbuild@0.25.12`:
+Rather than relying on risk-dismissal rationales, all 4 upstream build-toolchain advisories were directly fixed by upgrading `frontend/pnpm-lock.yaml` to `vite@6.4.3` and `esbuild@0.25.12`. Root cause mechanism: dual lockfiles with divergent versions; the BP-002 bump updated the untracked lockfile while the tracked `pnpm-lock.yaml` remained at Vite 5.4.21 until FINAL-INCH-3:
 - `GHSA-67mh-4wv8-2f99` (`esbuild` dev-server request exposure): Fixed in `>=0.24.3` (installed: `0.25.12`).
 - `GHSA-4w7w-66w2-5vf9` (`vite` path traversal in `.map` files): Fixed in `>=6.4.2` (installed: `6.4.3`).
 - `GHSA-fx2h-pf6j-xcff` (`vite` Windows alternate data stream bypass): Fixed in `>=6.4.1` (installed: `6.4.3`).
 - `GHSA-v6wh-96g9-6wx3` (`launch-editor` NTLMv2 UNC path disclosure): Fixed in `>=6.4.3` (installed: `6.4.3`).
 - **Audit Verification:** `pnpm audit` now reports: `No known vulnerabilities found` (Exit 0).
+- **GitHub Dependabot State:** All 4 alerts transitioned to `Fixed` with 0 open alerts.
 
 ### 2. Hero Image State Transition Explanation
 A review of git history confirmed that [`docs/assets/dashboard.png`](file:///E:/SENTRY/docs/assets/dashboard.png) (184KB) and its markdown link in [`README.md`](file:///E:/SENTRY/README.md) were never modified or missing. The initial broken report in FINAL-INCH-1 was an artifact of the Playwright script testing `naturalWidth > 0` immediately upon `domcontentloaded` before the 184KB PNG completed loading from GitHub's raw CDN. Updating the harness simulation to wait for `networkidle` and trigger scroll-into-view confirmed that the hero image renders with `naturalWidth=1600x1011` on the unauthenticated public view.
