@@ -30,7 +30,18 @@ def normalize_label(val: Any) -> Optional[str]:
 
 class CSVSynthesizerService:
     @staticmethod
+    def sanitize_csv_field(val: str) -> str:
+        """Sanitizes text fields to prevent CSV formula injection (=, +, -, @, \\t, \\r)."""
+        if not val:
+            return ""
+        s = str(val).strip()
+        if s.startswith(("=", "+", "-", "@", "\t", "\r")):
+            return "'" + s
+        return s
+
+    @classmethod
     def synthesize_rfc822_bytes(
+        cls,
         subject: str,
         body: str,
         sender: str = "csv-import@unknown.local",
@@ -41,7 +52,7 @@ class CSVSynthesizerService:
         Ground-truth labels are excluded from synthesized headers so rows differing
         only in label produce identical SHA-256 byte identity.
         """
-        subj_clean = (subject or "[No Subject - CSV Import]").replace("\r", " ").replace("\n", " ")
+        subj_clean = cls.sanitize_csv_field(subject or "[No Subject - CSV Import]").replace("\r", " ").replace("\n", " ")
         sender_clean = (sender or "csv-import@unknown.local").replace("\r", "").replace("\n", "")
         recipient_clean = (recipient or "undisclosed-recipients@local").replace("\r", "").replace("\n", "")
 
