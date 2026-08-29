@@ -280,11 +280,35 @@
     "severity": "high",
     "evidence": "backend/tests/test_ingest_endpoints.py::test_ingest_forged_message_id_creates_new_record",
     "status": "resolved",
-    "fix_commit": "HEAD",
+    "fix_commit": "9c88d33",
     "target_version": "v1.0.3",
     "regression_test": "backend/tests/test_ingest_endpoints.py (test_ingest_sha256_deduplication_upload_and_raw, test_ingest_forged_message_id_creates_new_record, test_ingest_identical_subject_and_sender_distinct_bytes_creates_new_record)",
     "effort": "S",
     "description": "General forensic ingestion (upload/raw) used multi-vector dedupe (Message-ID / Subject+Sender), causing evidence suppression and campaign collapse on distinct byte payloads; resolved by enforcing SHA-256 byte identity ONLY."
+  },
+  {
+    "id": "D-2",
+    "check": "ui.ingest_upload_e2e / ui.ingest_paste_e2e",
+    "severity": "high",
+    "evidence": "tools/verify_sentry.py (golden gates 16 & 17 probe assertion and feed row count deltas)",
+    "status": "resolved",
+    "fix_commit": "3919f05",
+    "target_version": "v1.0.3",
+    "regression_test": "tools/verify_sentry.py (Gates 16 & 17 with HARNESS-PROBE-GATE16-UPLOAD and HARNESS-PROBE-GATE17-PASTE)",
+    "effort": "S",
+    "description": "Gates 16 and 17 in the verification harness checked pre-existing seed subjects, which allowed vacuous passes without verifying live write-path ingestion; resolved by using unique probe fixtures and strictly asserting feed row count increments (+1, +2)."
+  },
+  {
+    "id": "D-3",
+    "check": "evaluation.mutation_kill_receipt_attribution",
+    "severity": "medium",
+    "evidence": "evaluation/ingest_repair/ERRATA.md",
+    "status": "resolved",
+    "fix_commit": "HEAD",
+    "target_version": "v1.0.3",
+    "regression_test": "tools/verify_sentry.py (scratch DB isolation and Vite proxy mutation kill)",
+    "effort": "S",
+    "description": "The prior mutation-kill receipt showed 39 items due to persistent database pollution in backend/sentry.db and cross-origin fallback resolution; resolved via isolated scratch database (harness_scratch.db), relative API paths, and documented in ERRATA.md."
   },
   {
     "id": "DEF-005",
