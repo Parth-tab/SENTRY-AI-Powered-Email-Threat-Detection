@@ -1,16 +1,5 @@
 [
   {
-    "id": "ARCH-001",
-    "check": "F-1",
-    "severity": "high",
-    "evidence": "tools/demo_day.ps1",
-    "status": "resolved",
-    "fix_commit": "e1fd790",
-    "regression_test": "tools/demo_day.ps1 -PreflightOnly",
-    "effort": "S",
-    "description": "Data layer runbook contradiction between standalone SQLite appliance and Docker containers; resolved by unifying all runbooks around self-contained appliance truth."
-  },
-  {
     "id": "AUD-001",
     "check": "F-1/R-1",
     "severity": "critical",

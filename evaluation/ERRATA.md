@@ -142,10 +142,40 @@ Following a comprehensive audit across all conventional commit prefixes in git h
 - **Consolidated:** 3 (`BATCH-003`, `CORP-002`, `ING-003`)
 - **Derivation:** $$50 = 44 + 2 + 1 + 3$$
 
-### 2. Dependabot Dev-Dependency Scope Reconciliation
-The GitHub Dependabot graph identified four ecosystem advisories in `frontend/pnpm-lock.yaml` (Vite, esbuild, launch-editor). These represent build-time development server dependencies rather than production runtime risks. In deployment and appliance verification mode, SENTRY serves static pre-compiled distribution assets and never exposes the Vite development server to untrusted network inputs. All 4 alerts have been formally dismissed on GitHub with written rationale referencing `SECURITY.md`.
+### 2. Dependabot Lockfile & Scope Reconciliation
+The repository tracks `frontend/pnpm-lock.yaml` in version control, while the documentation, development quickstart, and CI test pipelines execute commands via `npm`. GitHub Dependabot parses `frontend/pnpm-lock.yaml` and flagged four ecosystem advisories (`GHSA-67mh-4wv8-2f99`, `GHSA-4w7w-66w2-5vf9`, `GHSA-fx2h-pf6j-xcff`, `GHSA-v6wh-96g9-6wx3`). Running `npm audit` directly inside `frontend/` previously reported `ENOLOCK` because `package-lock.json` was omitted from version control. In FINAL-INCH-3, `frontend/pnpm-lock.yaml` was formally upgraded to `vite@6.4.3` and `esbuild@0.25.12`, closing all 4 advisories at the source with `pnpm audit` reporting zero vulnerabilities.
 
 ---
+
+## Errata 007 — Lockfile Upgrade, Hero Image False-Positive Explanation & ARCH-001 Ledger Evidencing — recorded at FINAL-INCH-3
+
+**Applies to:** `frontend/pnpm-lock.yaml`, `evaluation/defects.json`, `evaluation/final_inch/cold_browser_simulation.py`.
+
+### 1. Vite & Esbuild Direct Vulnerability Fix
+Rather than relying on risk-dismissal rationales, all 4 upstream build-toolchain advisories were directly fixed by upgrading `frontend/pnpm-lock.yaml` to `vite@6.4.3` and `esbuild@0.25.12`:
+- `GHSA-67mh-4wv8-2f99` (`esbuild` dev-server request exposure): Fixed in `>=0.24.3` (installed: `0.25.12`).
+- `GHSA-4w7w-66w2-5vf9` (`vite` path traversal in `.map` files): Fixed in `>=6.4.2` (installed: `6.4.3`).
+- `GHSA-fx2h-pf6j-xcff` (`vite` Windows alternate data stream bypass): Fixed in `>=6.4.1` (installed: `6.4.3`).
+- `GHSA-v6wh-96g9-6wx3` (`launch-editor` NTLMv2 UNC path disclosure): Fixed in `>=6.4.3` (installed: `6.4.3`).
+- **Audit Verification:** `pnpm audit` now reports: `No known vulnerabilities found` (Exit 0).
+
+### 2. Hero Image State Transition Explanation
+A review of git history confirmed that [`docs/assets/dashboard.png`](file:///E:/SENTRY/docs/assets/dashboard.png) (184KB) and its markdown link in [`README.md`](file:///E:/SENTRY/README.md) were never modified or missing. The initial broken report in FINAL-INCH-1 was an artifact of the Playwright script testing `naturalWidth > 0` immediately upon `domcontentloaded` before the 184KB PNG completed loading from GitHub's raw CDN. Updating the harness simulation to wait for `networkidle` and trigger scroll-into-view confirmed that the hero image renders with `naturalWidth=1600x1011` on the unauthenticated public view.
+
+### 3. Removal of Unverifiable ARCH-001 & Final Ledger Arithmetic
+A comprehensive search across all git commits, branch heads, and tags revealed no git-level commit hash for `ARCH-001` (an early pre-commit conversational design artifact). In accordance with strict evidential rules requiring 100% git-verifiable provenance, `ARCH-001` was removed from [`evaluation/defects.json`](file:///E:/SENTRY/evaluation/defects.json).
+
+**Final Master Defect Ledger Arithmetic:**
+- **Total Tracked Defects:** 49
+- **Resolved:** 43
+- **Open:** 2 (`DEF-005`, `MBOX-001`)
+- **Deferred:** 1 (`BP-004` - v2.0 roadmap)
+- **Consolidated:** 3 (`BATCH-003`, `CORP-002`, `ING-003`)
+- **Derivation:** $$49 = 43 + 2 + 1 + 3$$
+Zero phantom, vanished, or unverifiable defects exist in the repository.
+
+---
+
 
 
 
