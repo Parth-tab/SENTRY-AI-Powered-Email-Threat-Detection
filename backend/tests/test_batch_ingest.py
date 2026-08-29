@@ -12,13 +12,16 @@ Tests:
 
 import io
 import os
+import json
 import zipfile
+from pathlib import Path
 import pytest
 import pytest_asyncio
 from httpx import AsyncClient, ASGITransport
 from sqlalchemy.future import select
 
 from app.main import app
+from app.config import settings
 from app.db.database import get_db, AsyncSessionLocal
 from app.db.models import EmailRecord, AnalysisResult, EvidenceVault
 from app.services.sniffer import is_rfc822, is_zip_archive, is_csv_format, sniff_payload_format
@@ -239,15 +242,64 @@ async def test_csv_d4_degradation_rule():
         assert "urgency_score" in analysis_rec.content_analysis
 
 @pytest.mark.asyncio
-async def test_demo_reset_endpoint():
-    """Verifies that POST /api/v1/admin/reset-demo cleans and reseeds 18 demo emails."""
+async def test_demo_reset_unauthenticated_rejected():
+    """F-2: Verifies that unauthenticated POST /api/v1/admin/reset-demo is rejected with 401."""
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         res = await client.post("/api/v1/admin/reset-demo")
+        assert res.status_code == 401
+        assert "Unauthorized" in res.json().get("detail", "")
+
+@pytest.mark.asyncio
+async def test_demo_reset_form_encoded_without_header_rejected():
+    """F-2: Verifies that form-encoded POST without X-Sentry-Admin header (drive-by vector) is rejected with 401."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        res = await client.post(
+            "/api/v1/admin/reset-demo",
+            data={"action": "reset"},
+            headers={"Content-Type": "application/x-www-form-urlencoded"}
+        )
+        assert res.status_code == 401
+
+@pytest.mark.asyncio
+async def test_demo_reset_invalid_token_rejected():
+    """F-2: Verifies that POST /api/v1/admin/reset-demo with wrong token is rejected with 401."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        res = await client.post(
+            "/api/v1/admin/reset-demo",
+            headers={"X-Sentry-Admin": "invalid_admin_token"}
+        )
+        assert res.status_code == 401
+
+@pytest.mark.asyncio
+async def test_demo_reset_authenticated_success_and_audit_receipt():
+    """F-2: Verifies that authenticated POST /api/v1/admin/reset-demo logs destruction audit record and reseeds 18 demo emails."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        res = await client.post(
+            "/api/v1/admin/reset-demo",
+            headers={"X-Sentry-Admin": settings.ADMIN_TOKEN}
+        )
         assert res.status_code == 200
         data = res.json()
         assert data["status"] == "success"
         assert len(data["seeded_email_ids"]) == 18
+        assert "audit_record" in data
+        audit = data["audit_record"]
+        assert audit["trigger"] == "admin_reset_demo"
+        assert "prior_record_count" in audit
+        assert "prior_chain_head_hash" in audit
+        assert "timestamp" in audit
+
+        # Verify audit log exists on filesystem
+        audit_file = Path(settings.LOGS_DIR) / "reset_audit.log"
+        assert audit_file.exists()
+        with open(audit_file, "r", encoding="utf-8") as f:
+            lines = [json.loads(l) for l in f.readlines() if l.strip()]
+            assert len(lines) > 0
+            assert lines[-1]["trigger"] == "admin_reset_demo"
 
 @pytest.mark.asyncio
 async def test_csv_synthesizer_preserves_raw_bytes_verbatim():

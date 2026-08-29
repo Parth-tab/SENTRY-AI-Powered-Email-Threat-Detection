@@ -25,9 +25,11 @@ class Settings(BaseSettings):
 
     # Security & Evidence
     SECRET_KEY: str = "sentry_demo_secret_key_2025_evidentiary_standard"
+    ADMIN_TOKEN: str = "sentry_admin_demo_secret_2025"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
     EVIDENCE_VAULT_DIR: str = str(BASE_DIR.parent / "evidence_vault")
+    LOGS_DIR: str = str(BASE_DIR.parent / "logs")
 
     # Threat Intel Feeds (Optional with simulated offline fallbacks)
     VIRUSTOTAL_API_KEY: str = ""

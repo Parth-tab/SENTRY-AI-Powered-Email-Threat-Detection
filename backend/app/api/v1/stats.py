@@ -1,6 +1,8 @@
+import json
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, Any, List
-from fastapi import APIRouter, Depends, HTTPException, status
+from typing import Dict, Any, List, Optional
+from fastapi import APIRouter, Depends, HTTPException, status, Header
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, desc, or_, and_, delete
 from app.services.ingestion import IngestionService
@@ -121,11 +123,24 @@ async def seed_sample_emails(db: AsyncSession = Depends(get_db)):
     }
 
 @router.post("/admin/reset-demo", response_model=Dict[str, Any])
-async def reset_demo_database(db: AsyncSession = Depends(get_db)):
+async def reset_demo_database(
+    x_sentry_admin: Optional[str] = Header(None, alias="X-Sentry-Admin"),
+    db: AsyncSession = Depends(get_db)
+):
     """
     Wipes all database records and resets in-memory correlation graph
-    to pristine 18-email seed state. Gated on demo/testing environments.
+    to pristine 18-email seed state. Gated on demo/testing environments
+    and authenticated via X-Sentry-Admin custom header.
+    Logs an evidentiary destruction audit record before purging state.
     """
+    # 1. Authenticate via custom header (structurally forces CORS preflight)
+    if not x_sentry_admin or x_sentry_admin != settings.ADMIN_TOKEN:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Unauthorized: Missing or invalid X-Sentry-Admin authentication header."
+        )
+
+    # 2. Environment guard
     env = (getattr(settings, "ENVIRONMENT", "") or "").lower()
     if env not in ("demo", "development", "testing", "local"):
         raise HTTPException(
@@ -133,16 +148,66 @@ async def reset_demo_database(db: AsyncSession = Depends(get_db)):
             detail="Demo reset endpoint is only accessible in demo/testing environments."
         )
 
-    # 1. Clear database tables
+    # 3. Capture prior state for destruction audit record BEFORE purging
+    try:
+        count_res = await db.execute(select(func.count()).select_from(EmailRecord))
+        prior_record_count = count_res.scalar() or 0
+    except Exception:
+        prior_record_count = 0
+
+    try:
+        head_res = await db.execute(
+            select(EvidenceVault.last_entry_hash).order_by(EvidenceVault.id.desc()).limit(1)
+        )
+        prior_chain_head_hash = head_res.scalar_one_or_none() or "GENESIS"
+    except Exception:
+        prior_chain_head_hash = "GENESIS"
+
+    audit_record = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "trigger": "admin_reset_demo",
+        "prior_record_count": prior_record_count,
+        "prior_chain_head_hash": prior_chain_head_hash,
+        "operator": "authenticated_admin"
+    }
+
+    # 4. Write destruction audit record BEFORE purging
+    logs_dir = Path(settings.LOGS_DIR)
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    audit_file = logs_dir / "reset_audit.log"
+    with open(audit_file, "a", encoding="utf-8") as f:
+        f.write(json.dumps(audit_record) + "\n")
+
+    # Also update structured reset_audit.json
+    json_audit_file = logs_dir / "reset_audit.json"
+    try:
+        existing_records = []
+        if json_audit_file.exists():
+            try:
+                with open(json_audit_file, "r", encoding="utf-8") as jf:
+                    existing_records = json.load(jf)
+                if not isinstance(existing_records, list):
+                    existing_records = []
+            except Exception:
+                existing_records = []
+        existing_records.append(audit_record)
+        with open(json_audit_file, "w", encoding="utf-8") as jf:
+            json.dump(existing_records, jf, indent=2)
+    except Exception:
+        pass
+
+    # 5. Clear database tables
     await db.execute(delete(Alert))
     await db.execute(delete(EvidenceVault))
     await db.execute(delete(AnalysisResult))
     await db.execute(delete(EmailRecord))
     await db.commit()
 
-    # 2. Reset in-memory correlation graph
+    # 6. Reset in-memory correlation graph
     CorrelationEngine.reset_graph()
 
-    # 3. Reseed 18 sample emails
-    return await seed_sample_emails(db=db)
+    # 7. Reseed 18 sample emails
+    seed_result = await seed_sample_emails(db=db)
+    seed_result["audit_record"] = audit_record
+    return seed_result
 
