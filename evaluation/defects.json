@@ -333,5 +333,41 @@
     "regression_test": "backend/tests/test_ingest_endpoints.py::test_ingest_forged_message_id_creates_new_record",
     "effort": "M",
     "description": "Red-team evaluation battery lacks a dedicated forged-header-dedupe-suppression attack scenario in the adversarial corpus; documented in adversarial corpus gap tracking."
+  },
+  {
+    "id": "CORP-001",
+    "check": "ingest.batch_archive_csv_extensionless_support",
+    "severity": "high",
+    "evidence": "evaluation/batch_ingest/diagnosis.md",
+    "status": "open",
+    "fix_commit": "",
+    "target_version": "v1.0.4",
+    "regression_test": "backend/tests/test_batch_ingest.py",
+    "effort": "M",
+    "description": "Single-file upload endpoint rejected extensionless files, ZIP archives, and CSV datasets due to hardcoded extension allowlists in frontend and backend; bulk dropzone was single-file only."
+  },
+  {
+    "id": "FEED-001",
+    "check": "ui.threat_feed_pagination_controls",
+    "severity": "medium",
+    "evidence": "evaluation/batch_ingest/diagnosis.md",
+    "status": "open",
+    "fix_commit": "",
+    "target_version": "v1.0.4",
+    "regression_test": "frontend/src/components/dashboard/LiveThreatFeed.tsx",
+    "effort": "S",
+    "description": "Live threat feed lacked pagination controls (client/server page switching) causing display truncation at default backend limit 50 when viewing large corpora."
+  },
+  {
+    "id": "GRAPH-001",
+    "check": "ui.campaign_graph_node_render_cap",
+    "severity": "medium",
+    "evidence": "evaluation/batch_ingest/diagnosis.md",
+    "status": "open",
+    "fix_commit": "",
+    "target_version": "v1.0.4",
+    "regression_test": "frontend/src/components/graph/CampaignNetworkGraph.tsx",
+    "effort": "S",
+    "description": "Campaign network graph rendered uncapped nodes on 2D canvas force layout, threatening tab freeze on multi-thousand email corpora; requires 300 node rendering cap with user notice."
   }
 ]
