@@ -305,12 +305,14 @@ async def run_browser_checks(report, ui_url):
         try:
             loc = page.get_by_text(FEED_ROW_TEXT)
             await loc.first.wait_for(timeout=10_000)
+            await asyncio.sleep(1.0)
             count = await loc.count()
-            if count >= 1:
+            if count == 23:
                 report.add("ui.threat_feed_populated", "PASS",
-                           f"{count} severity-tagged elements")
+                           f"{count} severity-tagged elements (18 feed rows + 5 stat cards)")
             else:
-                report.add("ui.threat_feed_populated", "FAIL", "0 severity badges")
+                report.add("ui.threat_feed_populated", "FAIL",
+                           f"Expected 23 severity-tagged elements (18 feed rows + 5 stat cards), got {count}")
         except Exception as exc:
             report.add("ui.threat_feed_populated", "FAIL", repr(exc)[:300])
 
