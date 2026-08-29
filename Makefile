@@ -1,7 +1,7 @@
 .PHONY: help build run test dev clean seed
 
 help:
-	@echo "SENTRY - AI-Powered Email Threat Detection & Forensic Intelligence Platform"
+	@echo "SENTRY - Calibrated ML Email Threat Detection & Forensic Intelligence Platform"
 	@echo "Available commands:"
 	@echo "  make dev      - Run local backend and frontend concurrently"
 	@echo "  make test     - Run full automated pytest test suite"

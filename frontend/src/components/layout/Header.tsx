@@ -23,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({ isConnected, onSeedSamples, isSe
             <span className="text-xs text-zinc-500 hidden md:inline">| PS ID 26106</span>
           </div>
           <p className="text-[11px] text-zinc-400 hidden sm:block">
-            AI Email Threat Detection, Geolocation & Evidentiary Attribution
+            Calibrated ML Email Threat Detection, Geolocation & Evidentiary Attribution
           </p>
         </div>
       </div>
