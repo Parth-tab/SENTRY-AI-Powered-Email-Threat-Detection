@@ -280,4 +280,6 @@ export interface GraphData {
     target: string;
     relationship: string;
   }>;
+  total_entities_in_db?: number;
+  queried_entities_count?: number;
 }

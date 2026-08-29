@@ -114,7 +114,9 @@ export const CampaignNetworkGraph: React.FC = () => {
   }, [graphData]);
 
   const totalRawNodes = graphData?.nodes?.length || 0;
-  const isCapped = totalRawNodes > MAX_GRAPH_NODES;
+  const totalDbEntities = graphData?.total_entities_in_db ?? totalRawNodes;
+  const queriedEntities = graphData?.queried_entities_count ?? totalRawNodes;
+  const isCapped = totalDbEntities > MAX_GRAPH_NODES || totalRawNodes > MAX_GRAPH_NODES;
 
   return (
     <div className="bg-[#18181B] border border-[#27272A] rounded-xl p-5 shadow-sm space-y-4">
@@ -125,7 +127,7 @@ export const CampaignNetworkGraph: React.FC = () => {
             <span>Multi-Entity Campaign Knowledge Graph</span>
             {isCapped && (
               <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono">
-                Showing {MAX_GRAPH_NODES} of {totalRawNodes} nodes (capped)
+                Showing top {MAX_GRAPH_NODES} of {totalDbEntities.toLocaleString()} entities ({queriedEntities.toLocaleString()} queried)
               </span>
             )}
           </h2>
@@ -139,7 +141,7 @@ export const CampaignNetworkGraph: React.FC = () => {
         <div className="p-2.5 rounded bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs flex items-center space-x-2">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>
-            <strong>Scale Guard Active (GRAPH-001):</strong> Displaying top {MAX_GRAPH_NODES} correlated nodes out of {totalRawNodes} total graph entities to maintain smooth 60fps canvas simulation.
+            <strong>Scale Guard Active (GRAPH-002):</strong> Displaying top {MAX_GRAPH_NODES} of {totalDbEntities.toLocaleString()} entities (top {queriedEntities.toLocaleString()} queried) to maintain smooth 60fps canvas simulation.
           </span>
         </div>
       )}

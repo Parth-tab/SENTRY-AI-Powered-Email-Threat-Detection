@@ -24,9 +24,13 @@ async def get_campaign(campaign_id: str):
 @router.get("/graph/all")
 async def get_global_network_graph(db: AsyncSession = Depends(get_db)):
     """Returns the full multi-entity knowledge graph for campaign visualization."""
+    from sqlalchemy import select, func
+    from app.db.models import EmailRecord, AnalysisResult
+
+    # True total entity count in database
+    total_emails_count = (await db.execute(select(func.count(EmailRecord.id)))).scalar() or 0
+
     if CorrelationEngine._graph.number_of_nodes() <= 30:
-        from sqlalchemy import select
-        from app.db.models import EmailRecord, AnalysisResult
         stmt = select(EmailRecord, AnalysisResult).outerjoin(AnalysisResult, EmailRecord.id == AnalysisResult.email_id).limit(1000)
         res = await db.execute(stmt)
         rows = res.all()
@@ -47,4 +51,7 @@ async def get_global_network_graph(db: AsyncSession = Depends(get_db)):
                         "domain_intel": analysis_rec.domain_intel if analysis_rec else {}
                     }
                 )
-    return CorrelationEngine.get_graph_data()
+    data = CorrelationEngine.get_graph_data()
+    data["total_entities_in_db"] = total_emails_count
+    data["queried_entities_count"] = min(total_emails_count, 1000)
+    return data
