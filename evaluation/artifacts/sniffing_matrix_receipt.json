@@ -1,0 +1,77 @@
+{
+  "timestamp": "2026-08-29T16:35:00Z",
+  "total_cases": 7,
+  "passed_cases": 7,
+  "matrix": [
+    {
+      "id": "PAYLOAD-1-RFC822",
+      "name": "Valid RFC 822 Email",
+      "filename": "email.eml",
+      "size_bytes": 105,
+      "classified_route": "rfc822",
+      "expected_route": "rfc822",
+      "expected_api_verdict": "ACCEPTED (201 Created)",
+      "status": "PASS"
+    },
+    {
+      "id": "PAYLOAD-2-BINARY-GARBAGE",
+      "name": "Binary Garbage / Shellcode",
+      "filename": "payload.bin",
+      "size_bytes": 160,
+      "classified_route": "unsupported",
+      "expected_route": "unsupported",
+      "expected_api_verdict": "REJECTED (400 Bad Request)",
+      "status": "PASS"
+    },
+    {
+      "id": "PAYLOAD-3-EMPTY",
+      "name": "Empty Payload (0 bytes)",
+      "filename": "empty.eml",
+      "size_bytes": 0,
+      "classified_route": "unsupported",
+      "expected_route": "unsupported",
+      "expected_api_verdict": "REJECTED (400 Bad Request: empty)",
+      "status": "PASS"
+    },
+    {
+      "id": "PAYLOAD-4-UTF8-BOM",
+      "name": "UTF-8 BOM Prefixed Email",
+      "filename": "bom_prefixed",
+      "size_bytes": 68,
+      "classified_route": "rfc822",
+      "expected_route": "rfc822",
+      "expected_api_verdict": "ACCEPTED (201 Created)",
+      "status": "PASS"
+    },
+    {
+      "id": "PAYLOAD-5-MBOX-FROM-LINE",
+      "name": "Mbox Envelope From_ Line",
+      "filename": "inbox.mbox",
+      "size_bytes": 101,
+      "classified_route": "rfc822",
+      "expected_route": "rfc822",
+      "expected_api_verdict": "ACCEPTED (201 Created)",
+      "status": "PASS"
+    },
+    {
+      "id": "PAYLOAD-6-CSV-HEADER",
+      "name": "CSV Ground-Truth Dataset",
+      "filename": "dataset.csv",
+      "size_bytes": 85,
+      "classified_route": "csv",
+      "expected_route": "csv",
+      "expected_api_verdict": "ACCEPTED (201 Created -> D4 Degradation)",
+      "status": "PASS"
+    },
+    {
+      "id": "PAYLOAD-7-ZIP-ARCHIVE",
+      "name": "ZIP Archive Magic (PK\\x03\\x04)",
+      "filename": "corpus.zip",
+      "size_bytes": 160,
+      "classified_route": "archive",
+      "expected_route": "archive",
+      "expected_api_verdict": "ACCEPTED (201 Created -> In-Memory Stream)",
+      "status": "PASS"
+    }
+  ]
+}
