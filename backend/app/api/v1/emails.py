@@ -5,7 +5,7 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, Body, Response, status
 from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, desc
+from sqlalchemy import select, desc, or_, and_
 
 from app.db.database import get_db
 from app.db.models import EmailRecord, AnalysisResult, EvidenceVault, Alert, Campaign
@@ -30,9 +30,48 @@ def model_to_dict(obj):
 
 router = APIRouter(prefix="/emails", tags=["Emails"])
 
+async def find_existing_email_record(
+    db: AsyncSession,
+    sha256_hash: Optional[str] = None,
+    message_id: Optional[str] = None,
+    subject: Optional[str] = None,
+    sender: Optional[str] = None
+) -> Optional[EmailRecord]:
+    """
+    Multi-vector deduplication lookup (shared across upload, paste, and seed):
+    1. Primary: SHA-256 digest
+    2. Fallback: Message-ID header
+    3. Fallback: Subject + Sender pair
+    """
+    conditions = []
+    if sha256_hash:
+        conditions.append(EmailRecord.sha256_hash == sha256_hash)
+    if message_id:
+        conditions.append(EmailRecord.message_id == message_id)
+    if subject and sender:
+        conditions.append(and_(EmailRecord.subject == subject, EmailRecord.sender == sender))
+
+    if not conditions:
+        return None
+
+    stmt = select(EmailRecord).where(or_(*conditions)).limit(1)
+    res = await db.execute(stmt)
+    return res.scalar_one_or_none()
+
 async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSession) -> EmailRecord:
     # 1. Ingestion & Raw Extraction
     email_data = IngestionService.parse_raw_email(raw_bytes, source=source)
+
+    # 1.1 Multi-vector deduplication check (SHA-256 first, Message-ID / Subject+Sender fallback)
+    existing_record = await find_existing_email_record(
+        db=db,
+        sha256_hash=email_data.get("sha256_hash"),
+        message_id=email_data.get("message_id"),
+        subject=email_data.get("subject"),
+        sender=email_data.get("sender")
+    )
+    if existing_record:
+        return existing_record
     
     # 2. Header Forensics
     hops, earliest_hop, hop_anomalies = HeaderForensicsService.parse_received_chain(email_data["received_headers"])

@@ -261,5 +261,17 @@
     "regression_test": "backend/tests/test_domain_intel.py::test_short_acronym_lookalike_bounds",
     "effort": "S",
     "description": "Short acronym brands (e.g., 2-3 char strings like 'sbi', 'ibm') triggered false positive lookalike matches on unrelated domains (e.g. 'sub', 'biz'); resolved by bounding relative edit distance (dist/max_len <= 0.35) and minimum brand length >= 4."
+  },
+  {
+    "id": "ING-002",
+    "check": "api.ingest_deduplication / api.emails_list",
+    "severity": "high",
+    "evidence": "backend/tests/test_ingest_endpoints.py::test_ingest_sha256_deduplication_upload_and_raw",
+    "status": "resolved",
+    "fix_commit": "HEAD",
+    "target_version": "v1.0.2",
+    "regression_test": "backend/tests/test_ingest_endpoints.py::test_ingest_sha256_deduplication_upload_and_raw",
+    "effort": "S",
+    "description": "General ingest endpoints (/upload and /raw) lacked SHA-256 / multi-vector deduplication, causing duplicate database records and non-idempotent test harness runs; resolved via shared find_existing_email_record helper."
   }
 ]

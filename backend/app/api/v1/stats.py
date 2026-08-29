@@ -8,7 +8,7 @@ from app.services.ingestion import IngestionService
 from app.db.database import get_db
 from app.db.models import EmailRecord, AnalysisResult, Alert
 from app.services.correlation_engine import CorrelationEngine
-from app.api.v1.emails import process_and_store_email
+from app.api.v1.emails import process_and_store_email, find_existing_email_record
 
 router = APIRouter(prefix="", tags=["Stats & Seeding"])
 
@@ -100,20 +100,14 @@ async def seed_sample_emails(db: AsyncSession = Depends(get_db)):
             try:
                 content_bytes = filepath.read_bytes()
                 parsed = IngestionService.parse_raw_email(content_bytes, source=f"demo_seed_{filepath.stem}")
-                sha = parsed.get("sha256_hash")
-                msg_id = parsed.get("message_id")
-                subj = parsed.get("subject")
-                sender = parsed.get("sender")
-
-                # Multi-vector deduplication: match by SHA-256 digest, Message-ID, or Subject+Sender
-                conditions = [EmailRecord.sha256_hash == sha]
-                if msg_id:
-                    conditions.append(EmailRecord.message_id == msg_id)
-                if subj and sender:
-                    conditions.append(and_(EmailRecord.subject == subj, EmailRecord.sender == sender))
-
-                existing = await db.execute(select(EmailRecord).where(or_(*conditions)))
-                if not existing.scalar_one_or_none():
+                existing = await find_existing_email_record(
+                    db=db,
+                    sha256_hash=parsed.get("sha256_hash"),
+                    message_id=parsed.get("message_id"),
+                    subject=parsed.get("subject"),
+                    sender=parsed.get("sender")
+                )
+                if not existing:
                     rec = await process_and_store_email(content_bytes, source=f"demo_seed_{filepath.stem}", db=db)
                     seeded_ids.append(rec.id)
             except Exception as e:
