@@ -92,3 +92,19 @@ An initial summary line reported `91.2` due to an unrounded floating intermediat
 Updated `evaluation/blind/BLIND_PANEL_REPORT.md`, `evaluation/blind/state.json`, and `evaluation/HANDOFF.md` to reflect the exact arithmetic composite of **91.3 / 100**.
 
 ---
+
+## Errata 004 — Pytest Warnings Accounting (Python 3.12+ / Upstream Deprecations) — recorded at BATCH-004
+
+**Applies to:** Full pytest suite runs without `-W ignore`.
+
+### Accounting of Warnings
+A full run of the pytest suite without warning filters emits ~367 non-fatal deprecation warnings categorized into 3 distinct upstream sources:
+1. **`datetime.datetime.utcnow()` Deprecation Warnings (~360 instances):** Emitted across SQLite date population and RFC 3227 timestamp generators where `datetime.utcnow()` is flagged for deprecation in future Python versions in favor of `datetime.now(datetime.timezone.utc)`.
+2. **Pydantic V2 Config Deprecation (4 instances):** Class-based `Config` in `app/config.py` and response schemas emits `PydanticDeprecatedSince20` notices recommending `ConfigDict`.
+3. **Bleach NoCssSanitizerWarning (3 instances):** Emitted in `test_xss_email_body_sanitization` due to `style` attribute presence without a dedicated CSS sanitizer instance.
+
+### Transparency & Integrity Note
+None of these warnings represent test assertion failures, memory leaks, or logical defects. All test cases execute with 100% PASS verdicts. In accordance with zero-silent-suppression rules, this ledger explicitly documents upstream technical debt without altering core evaluation metrics.
+
+---
+

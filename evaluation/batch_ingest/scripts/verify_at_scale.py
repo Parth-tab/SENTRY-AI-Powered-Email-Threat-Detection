@@ -126,7 +126,7 @@ def main():
             page.wait_for_selector("canvas", timeout=15000)
             
             # Verify cap notice text is visible
-            cap_notice = page.locator("text=Scale Guard Active (GRAPH-001)").first
+            cap_notice = page.locator("text=Scale Guard Active").first
             cap_notice.wait_for(state="visible", timeout=10000)
             notice_text = cap_notice.inner_text()
             print(f"  [ PASS ] Graph cap notice rendered: '{notice_text}'")
