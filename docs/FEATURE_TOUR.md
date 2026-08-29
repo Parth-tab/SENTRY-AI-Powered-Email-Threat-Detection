@@ -7,7 +7,7 @@
 The corpus email used throughout this tour is **"URGENT: Mandatory KYC
 Verification Required Within 24 Hours or Account Suspended"** — a BEC/phishing
 hybrid originating from IP `185.220.101.34` (Amsterdam, NL — F3 Netze Tor exit
-range, AS205100 Jonas Bunde). It arrives impersonating an SBI security team,
+range, AS205100 Jonas Bunde). It arrives impersonating an Apex National Bank security team,
 carries a `CRITICAL (0.98)` threat score, and is detected, traced, attributed,
 and sealed in under a second.
 
@@ -20,11 +20,11 @@ and sealed in under a second.
 The landing view. Four KPI cards summarise the current ingestion batch:
 **18 emails ingested**, **3 critical threats flagged**, **4 suspicious / BEC
 risks**, and **3 attributed campaigns**. Below the ingestion sandbox (which
-accepts `.eml`, `.msg`, and `.mbox` by drag-and-drop or RFC 3322 raw paste),
+accepts `.eml`, `.msg`, `.mbox`, `.zip`, and `.csv` by drag-and-drop or raw RFC 5322 paste),
 the **Threat Intelligence Ingestion Stream** lists all 18 artifacts with
 per-row threat level, class badge, subject/sender, origin IP + country, and
 ingestion timestamp. The top row — `CRITICAL (0.98) · BEC` from
-`support@sbi-secureverify.com` at `185.220.101.34 (NL)` — is the email we
+`support@apex-secureverify.com` at `185.220.101.34 (NL)` — is the email we
 follow for the rest of this tour. Severity badges span the full range: two
 CRITICAL BEC rows, a CLEAN SUSPICIOUS row, and three MEDIUM PHISHING rows
 visible without scrolling. The live-stream indicator (top-right) confirms the
@@ -42,7 +42,7 @@ phishing email. The header bar shows **CRITICAL THREAT (0.98)** and case ID
 
 The **left column** displays the split email body — sanitised body tab active,
 showing the raw social-engineering text. Metadata fields show sender
-(`support@sbi-secureverify.com`), recipient (`target-customer@gmail.com`),
+(`support@apex-secureverify.com`), recipient (`target-customer@gmail.com`),
 SHA-256 fingerprint, and hop count (3).
 
 The **right column** opens with the **Classification Ensemble Triangulation
@@ -91,7 +91,7 @@ and `CLOUD / VPS HOSTING`, High Anonymity (TOR Network), Confidence: 28%.
 
 Then **Graph Campaign Attribution**: CMP-2024-0034, Cluster
 `AS205100-GhostRelay-Cluster`, 14 Correlated Incidents. Extracted IOCs:
-`https://sbi-secureverify.com/login`, `https://onlinesbi.sbi/login`,
+`https://apex-secureverify.com/login`, `https://online.apexbank.internal/login`,
 IP `185.220.101.34`.
 
 Finally, **Incident Response Countermeasures**: block sender domain across
@@ -136,9 +136,9 @@ IP Address (orange/yellow), Infrastructure ASN (green), and Targeted Brand
 (dark blue).
 
 The central pink node **Campaign: CMP-2024-0034** anchors the cluster. Two
-lookalike domains radiate outward: `onlinesbi-kyc-update.com` and
-`sbi-secureverify.com`, both annotated `LOOKALIKE_OF` pointing toward **State
-Bank of India** and **HDFC Bank** (dark-blue brand nodes). Two orange IP nodes
+lookalike domains radiate outward: `onlineapex-kyc-update.com` and
+`apex-secureverify.com`, both annotated `LOOKALIKE_OF` pointing toward **Apex
+National Bank** and **Apex Commercial Bank** (dark-blue brand nodes). Two orange IP nodes
 share `HOSTED_BY` and `USES_INFRASTRUCTURE` edges: **194.26.29.117 (RU)** and
 **185.220.101.5 (NL)**. The green ASN node **AS205100 (Jonas Bunde / ...)** —
 the same Tor exit provider seen in Stop 4 — is linked as the shared
@@ -157,13 +157,12 @@ artifact is the CRITICAL KYC phishing email. The left panel shows the
 **Cryptographic Audit Steps (SHA-256 Hash Chain)** for chain-of-custody ID
 `COC-F6C2971F`:
 
-- **Step 1 · EVIDENCE_ACQUISITION** (2026-08-27T14:34:28.010Z) — Raw RFC
-  3322 email acquired via `demo_seed_sbi_phishing_tor_relay`, preserved
+- **Step 1 · EVIDENCE_ACQUISITION** — Raw RFC
+  5322 email acquired via `demo_seed_apex_phishing_tor_relay`, preserved
   byte-exact in vault with SHA-256 entry hash
-  `8fc4d33dfb9e6a3f41408babcfae1cf2043bdce32d90aea74f876ea745a41015`
-- **Step 2 · AUTOMATED_FORENSIC_ANALYSIS** (2026-08-27T14:34:28.010Z) —
+- **Step 2 · AUTOMATED_FORENSIC_ANALYSIS** —
   Extracted 3 relay hops, verified SPF/DKIM/DMARC, classified as
-  `CRITICAL (0.98)`, entry hash `c84045f30366aa2a21d366547131730778f28fd66de567eaeb44275130af4fe4`
+  `CRITICAL (0.98)`
 
 The right panel shows **RFC 3227 Hash-Chain Tamper Verification**. After
 clicking **Verify Hash Chain Integrity**, the result panel displays:
@@ -171,7 +170,6 @@ clicking **Verify Hash Chain Integrity**, the result panel displays:
 > **INTEGRITY VERIFIED (PASS)**
 > RFC 3227 Hash Chain is cryptographically valid and verified.
 > Steps Verified: 2
-> Sealed Head Hash: c84045f30366aa2a21d366547131730778f28fd66de567eaeb44275130af4fe4
 
 Evidentiary standards listed: RFC 3227 Guidelines for Evidence Collection,
 NIST SP 800-86 Forensic Integration, ISO/IEC 27037 Digital Evidence Handling.

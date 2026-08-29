@@ -5,7 +5,7 @@ X-Google-Smtp-Source: AGHT+IF4m2WvBvJ8n...
 X-Received: by 2002:a17:902:d188:b0:1d8:381b:2210 with SMTP id e8-20020a170902d18800b001d8381b2210mr182942plb.32.1705343040120;
         Thu, 15 Jan 2024 10:24:00 -0800 (PST)
 Authentication-Results: mx.google.com;
-       dkiÿ=pass header.i=@google.com header.s=20230601 header.b=XyZ123;
+       dkiï¿½=pass header.i=@google.com header.s=20230601 header.b=XyZ123;
        spf=pass (google.com: domain of engineering-updates@google.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=engineering-updates@google.com;
        dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=google.com
 Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
@@ -15,7 +15,7 @@ Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41]
 Message-ID: <CA+9=d9e8f7a6b5c4d3e2f1g0@mail.gmail.com>
 Date: Thu, 15 Jan 2024 10:23:55 -0800
 From: Google Workspace Team <engineering-updates@google.com>
-To: victim-analyst@enter¡rise.com
+To: victim-analyst@enterï¿½rise.com
 Subject: Monthly Engineering Architecture & Security Summary - January 2024
 Content-Type: text/plain; charset="UTF-8"
 

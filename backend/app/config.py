@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,9 +43,7 @@ class Settings(BaseSettings):
     URLHAUS_API_KEY: str = ""
     THREATFOX_API_KEY: str = ""
 
-    class Config:
-        env_file = ".env"
-        extra = "allow"
+    model_config = SettingsConfigDict(env_file=".env", extra="allow")
 
 settings = Settings()
 
@@ -62,6 +60,11 @@ def validate_security_posture(s: Settings):
             raise RuntimeError(
                 "CRITICAL SECURITY CONFIGURATION ERROR: Production/non-demo deployment requires a secure, "
                 "cryptographically random ADMIN_TOKEN injected via environment variable."
+            )
+        if "demo" in s.SENTRY_API_TOKEN.lower() or s.SENTRY_API_TOKEN == "sentry_operator_token_2025":
+            raise RuntimeError(
+                "CRITICAL SECURITY CONFIGURATION ERROR: Production/non-demo deployment requires a secure, "
+                "cryptographically random SENTRY_API_TOKEN injected via environment variable."
             )
 
 # Execute security validation on module load

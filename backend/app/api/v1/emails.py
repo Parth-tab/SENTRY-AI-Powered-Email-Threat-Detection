@@ -1,7 +1,7 @@
 import io
 import json
 from typing import List, Optional, Dict, Any
-from datetime import datetime
+from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, Body, Response, status
 from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -207,7 +207,7 @@ async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSessio
         attribution_assessment=json_serializable(attribution_res),
         threat_intel_matches=json_serializable(threat_intel_res),
         recommendations=json_serializable(classification_res["recommendations"]),
-        created_at=datetime.utcnow()
+        created_at=datetime.now(timezone.utc)
     )
     db.add(analysis_record)
 
@@ -219,7 +219,7 @@ async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSessio
         chain_entries=json_serializable(chain_entries),
         last_entry_hash=last_hash,
         is_sealed=True,
-        created_at=datetime.utcnow()
+        created_at=datetime.now(timezone.utc)
     )
     db.add(evidence_record)
 
@@ -233,7 +233,7 @@ async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSessio
             message=f"Detected {classification_res['primary_classification'].upper()} from {email_data['sender']} (Score: {classification_res['overall_threat_score']:.2f})",
             threat_score=float(classification_res["overall_threat_score"]),
             is_acknowledged=False,
-            created_at=datetime.utcnow()
+            created_at=datetime.now(timezone.utc)
         )
         db.add(alert_record)
 

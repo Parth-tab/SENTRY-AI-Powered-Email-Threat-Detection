@@ -1,11 +1,11 @@
 {
-  "started": "2026-08-29T16:14:31.898765+00:00",
-  "finished": "2026-08-29T16:14:51.474771+00:00",
+  "started": "2026-08-29T20:30:55.696517+00:00",
+  "finished": "2026-08-29T20:31:17.453808+00:00",
   "exit_code": 0,
   "verdict": "PASS",
   "note": "",
   "counts": {
-    "PASS": 19,
+    "PASS": 20,
     "FAIL": 0,
     "TIMEOUT": 0
   },
@@ -104,12 +104,17 @@
       "name": "ui.no_http_errors",
       "status": "PASS",
       "detail": ""
+    },
+    {
+      "name": "ui.production_mode_e2e",
+      "status": "PASS",
+      "detail": "Single-origin static SPA mounted on http://127.0.0.1:8000; auth gating (HTTP 401 on unauth write) & 26 feed rows validated"
     }
   ],
   "console_errors": [],
   "failed_http_responses": [],
   "websockets_opened": [
-    "ws://127.0.0.1:3000/?token=D7Kk1TfDvCAK",
+    "ws://127.0.0.1:3000/?token=2ObO1QNV-A_s",
     "ws://127.0.0.1:8000/api/v1/dashboard/live",
     "ws://127.0.0.1:8000/api/v1/dashboard/live",
     "ws://127.0.0.1:8000/api/v1/dashboard/live"
@@ -129,6 +134,9 @@
     "screenshots\\verify\\07_ingest_csv_FAIL.png",
     "screenshots\\verify\\08_ingest_zip.png",
     "screenshots\\verify\\08_ingest_zip_FAIL.png",
+    "screenshots\\verify\\20_production_mode.png",
+    "screenshots\\verify\\20_production_mode_FAIL.png",
+    "screenshots\\verify\\auth_login_screen.png",
     "screenshots\\verify\\mode_b_paste.png",
     "screenshots\\verify\\mode_b_upload.png"
   ]

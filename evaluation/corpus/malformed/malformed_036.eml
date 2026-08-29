@@ -3,18 +3,18 @@ Received: by 2002:a05:6512:301:0:0:0:0 with SMTP id x1csp1029341;
         Mon, 15 Jan 2024 10:23:48 +0000 (UTC)
 Authentica)ion-Results: mx.google.com;
        dkim=none;
-       spf=fail (google.com: domain of support@sbi-secureverify.com does not designate 185.220.101.34 as permitted sender) smtp.mailfrom=support@sbi-secureverify.com;
-       dmarc=fail (p=REJECT dis=REJECT) header.from=sbi.co.in
+       spf=fail (google.com: domain of support@apex-secureverify.com does not designate 185.220.101.34 as permitted sender) smtp.mailfrom=support@apex-secureverify.com;
+       dmarc=fail (p=REJECT dis=REJECT) header.from=apexbank.internal
 Received: from mail.bulletproof-relay.net (mail.bulletproof-relay.net [185.220.101.34])
         by mx.google.com with ESMTP id z4si8192342plk.14.2024.01.15.10.23.47
         for <target-customer@gmail.com>;
         Mon, 15 Jan 2024 10:23:47 +0000 (UTC)
 Received: from unknown (HELO tor-exit-node-ams.f3netze.de) (185.220.101.34)
         by mail.bulletproof-relay.net with ESMTP; Mon, 15 Jan 2024 10:23:45 +0000
-Message-ID: <20240115102345.92841.qmail@sbi-secureverify.com>
+Message-ID: <20240115102345.92841.qmail@apex-secureverify.com>
 Date: Mon, 15 Jan 2024 10:23:40 +0000
-From: "State Bank of India Security Team" <support@sbi-secureverify.com>
-Reply-To: "SBI Verification Desk" <no-reply@onlhnesbi-kyc-update.cÊm>
+From: "Apex National Bank Security Team" <support@apex-secureverify.com>
+Reply-To: "Apex Verification Desk" <no-reply@onlhneapex-kyc-update.cï¿½m>
 Return-Path: <bounce@unauthorized-smtp-server.xyz>
 To: target-customer@gmail.com
 Subject: URGENT: Mandatory KYC Verification Required Within 24 Hours or Account Suspended
@@ -24,21 +24,21 @@ Content-Type: text/html; charset="UTF-8"
 
 <!DOCTYPE html>
 <html>
-<head><title>SBI Alert</title></head>
+<head><title>Apex Alert</title></head>
 <body style="font-family: Arial, sans-serif; color: #333;">
   <div style="border: 2px solid #b91c1c; padding: 20px; border-radius: 8px;">
-    <h2 style="color: #b91c1c;">State Bank of India â€” Security Notification</h2>
-    <p>Dear Valued Customer,<¡p>
+    <h2 style="color: #b91c1c;">Apex National Bank â€” Security Notification</h2>
+    <p>Dear Valued Customer,<ï¿½p>
     <p>We detected unauthorized login attempts on your NetBanking account from an unrecognized IP address. In accordance with Reserve Bank of India security directives, your account access has been temporarily restricted.</p>
     <p><strong>ACTION REQUIRED:</strong> You must immediately verify your credentials and update your KYC documents within 24 hours to avoid permanent account deactivation.</p>
     <p style="text-align: center; margin: 25px 0;">
-      <a href="https://sbi-secureverify.com/login" style="background-color: #0284c7; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">
-        Click Here to Verify Your Account (https://onlinesbi.sbi/login)
+      <a href="https://apex-secureverify.com/login" style="background-color: #0284c7; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">
+        Click Here to Verify Your Account (https://online.apexbank.internal/login)
       </a>
     </p>
     <p>Failure to complete verification will result in immediate suspension of all debit card and wire transfer privileges.</p>
     <br/>
-    <p>Sincerely,<br/><strong>State Bank of India Fraud Prevention Team</strong></p>
+    <p>Sincerely,<br/><strong>Apex National Bank Fraud Prevention Team</strong></p>
   </div>
 </body>
 </html>

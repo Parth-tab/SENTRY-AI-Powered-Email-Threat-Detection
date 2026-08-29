@@ -7,7 +7,7 @@ class ThreatIntelService:
     # Known malicious test signatures & IOC database
     KNOWN_IOCS = {
         "urls": {
-            "https://sbi-secureverify.com/login": {"source": "URLhaus", "threat": "credential_harvesting", "confidence": 0.95},
+            "https://apex-secureverify.com/login": {"source": "URLhaus", "threat": "credential_harvesting", "confidence": 0.95},
             "http://update-secure-bank-kyc.top/verify": {"source": "OpenPhish", "threat": "phishing", "confidence": 0.98},
             "http://185.220.101.34/payload.exe": {"source": "ThreatFox", "threat": "malware_delivery", "confidence": 0.99}
         },
@@ -16,7 +16,7 @@ class ThreatIntelService:
             "194.26.29.117": {"source": "Spamhaus", "threat": "bulletproof_smtp_relay", "confidence": 0.88}
         },
         "domains": {
-            "sbi-secureverify.com": {"source": "OpenPhish", "threat": "phishing_domain", "confidence": 0.96},
+            "apex-secureverify.com": {"source": "OpenPhish", "threat": "phishing_domain", "confidence": 0.96},
             "update-secure-bank-kyc.top": {"source": "URLhaus", "threat": "phishing_domain", "confidence": 0.94}
         }
     }

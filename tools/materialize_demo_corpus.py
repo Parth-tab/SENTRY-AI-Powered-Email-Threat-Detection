@@ -1,127 +1,270 @@
 import os
+import shutil
 from pathlib import Path
 
 sample_dir = Path("E:/SENTRY/sample_emails")
-sample_dir.mkdir(parents=True, exist_ok=True)
+
+# Clean existing directory to prevent orphaned old-brand EMLs
+if sample_dir.exists():
+    for f in sample_dir.glob("*.eml"):
+        try:
+            f.unlink()
+        except Exception:
+            pass
+else:
+    sample_dir.mkdir(parents=True, exist_ok=True)
 
 emails = [
-    # Campaign 1: Operation GhostRelay (CMP-2024-0034) - Indian Banking Credential Harvesting
+    # Baseline Threat 1: Tor Relay Credential Harvester (Apex National Bank)
     (
-        "04_sbi_kyc_escalation.eml",
-        """From: SBI NetBanking Care <alerts@onlinesbi-kyc-update.com>
-To: victim.user@corporate.in
-Subject: Final Notice: Immediate SBI YONO Access Termination Warning
-Date: Mon, 15 Jan 2024 11:15:00 +0530
-Message-ID: <20240115111500.8372.qmail@onlinesbi-kyc-update.com>
-Received: from mx.corporate.in (10.0.0.1) by mail.corporate.in; Mon, 15 Jan 2024 11:15:05 +0530
-Received: from relay01.f3netze.de (185.220.101.5) by mx.corporate.in with ESMTP; Mon, 15 Jan 2024 11:15:02 +0530
-Received: from authenticated-user (185.220.101.5) by relay01.f3netze.de; Mon, 15 Jan 2024 11:15:00 +0530
-Authentication-Results: mx.corporate.in; spf=softfail (sender IP 185.220.101.5); dkim=none; dmarc=fail
+        "apex_phishing_tor_relay.eml",
+        """Delivered-To: target-customer@gmail.com
+Received: by 2002:a05:6512:301:0:0:0:0 with SMTP id x1csp1029341;
+        Mon, 15 Jan 2024 10:23:48 +0000 (UTC)
+Authentication-Results: mx.google.com;
+       dkim=none;
+       spf=fail (google.com: domain of support@apex-secureverify.com does not designate 185.220.101.34 as permitted sender) smtp.mailfrom=support@apex-secureverify.com;
+       dmarc=fail (p=REJECT dis=REJECT) header.from=apexbank.internal
+Received: from mail.bulletproof-relay.net (mail.bulletproof-relay.net [185.220.101.34])
+        by mx.google.com with ESMTP id z4si8192342plk.14.2024.01.15.10.23.47
+        for <target-customer@gmail.com>;
+        Mon, 15 Jan 2024 10:23:47 +0000 (UTC)
+Received: from unknown (HELO tor-exit-node-ams.f3netze.de) (185.220.101.34)
+        by mail.bulletproof-relay.net with ESMTP; Mon, 15 Jan 2024 10:23:45 +0000
+Message-ID: <20240115102345.92841.qmail@apex-secureverify.com>
+Date: Mon, 15 Jan 2024 10:23:40 +0000
+From: "Apex National Bank Security Team" <support@apex-secureverify.com>
+Reply-To: "Apex Verification Desk" <no-reply@onlineapex-kyc-update.com>
+Return-Path: <bounce@unauthorized-smtp-server.xyz>
+To: target-customer@gmail.com
+Subject: URGENT: Mandatory KYC Verification Required Within 24 Hours or Account Suspended
+X-Originating-IP: [185.220.101.34]
+X-Mailer: PHPMailer 6.1.4 (https://github.com/PHPMailer/PHPMailer)
+Content-Type: text/html; charset="UTF-8"
+
+<!DOCTYPE html>
+<html>
+<head><title>Apex Alert</title></head>
+<body style="font-family: Arial, sans-serif; color: #333;">
+  <div style="border: 2px solid #b91c1c; padding: 20px; border-radius: 8px;">
+    <h2 style="color: #b91c1c;">Apex National Bank — Security Notification</h2>
+    <p>Dear Valued Customer,</p>
+    <p>We detected unauthorized login attempts on your NetBanking account from an unrecognized IP address. In accordance with National Banking Regulatory Board security directives, your account access has been temporarily restricted.</p>
+    <p><strong>ACTION REQUIRED:</strong> You must immediately verify your credentials and update your KYC documents within 24 hours to avoid permanent account deactivation.</p>
+    <p style="text-align: center; margin: 25px 0;">
+      <a href="https://apex-secureverify.com/login" style="background-color: #0284c7; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">
+        Click Here to Verify Your Account (https://online.apexbank.internal/login)
+      </a>
+    </p>
+    <p>Failure to complete verification will result in immediate suspension of all debit card and wire transfer privileges.</p>
+    <br/>
+    <p style="font-size: 12px; color: #666;">This is an automated notification. Please do not reply directly to this email.</p>
+    <p style="font-size: 11px; color: #999;">Reference ID: APEX-SEC-2024-01-15-88419</p>
+  </div>
+</body>
+</html>"""
+    ),
+
+    # Baseline Threat 2: Executive Wire Fraud BEC
+    (
+        "bec_executive_wire_fraud.eml",
+        """Delivered-To: accountant@mercertech.com
+Received: by 2002:a17:902:838b:0:0:0:0 with SMTP id b11csp4829103;
+        Mon, 15 Jan 2024 07:15:22 -0500 (EST)
+Authentication-Results: mx.mercertech.com;
+       dkim=pass header.i=@gmail.com;
+       spf=pass smtp.mailfrom=ceo.mercer.corp@gmail.com;
+       dmarc=pass (p=NONE) header.from=gmail.com
+Received: from mail-sor-f65.google.com (mail-sor-f65.google.com [209.85.220.65])
+        by mx.mercertech.com with ESMTP id p18si4910283wmc.21.2024.01.15.07.15.21
+        for <accountant@mercertech.com>;
+        Mon, 15 Jan 2024 07:15:21 -0500 (EST)
+Message-ID: <CABhZ=8xK2=1092819038@mail.gmail.com>
+Date: Mon, 15 Jan 2024 07:15:18 -0500
+From: "Richard Mercer (CEO)" <ceo.mercer.corp@gmail.com>
+Reply-To: "Richard Mercer" <exec.rmercer@executive-corp-mail.com>
+To: accountant@mercertech.com
+Subject: URGENT: Confidential Acquisition Wire Transfer ($1.25M)
+Content-Type: text/plain; charset="UTF-8"
+
+Good morning,
+
+I am currently in an urgent off-site board meeting regarding our Project Apex acquisition. 
+
+We need to process an immediate, time-sensitive closing wire of $1,250,000.00 to our external legal escrow partners today before 11:00 AM EST.
+
+Please find the wiring instructions below:
+Beneficiary: Apex Global Escrow Services Ltd
+Bank: HSBC Corporate London
+IBAN: GB29HBUK40127684920192
+SWIFT: HBUKGB41XXX
+Reference: PROJECT-APEX-CLOSING-TRANCHE-1
+
+Due to strict SEC disclosure restrictions, please do not discuss this transaction over Slack or email anyone else until the press release goes live this afternoon.
+
+Confirm once the wire has been queued with the bank.
+
+Best regards,
+
+Richard Mercer
+Chief Executive Officer | Mercer Technologies Corp
+"""
+    ),
+
+    # Baseline Threat 3: Legitimate Workplace Email
+    (
+        "legitimate_workplace.eml",
+        """Delivered-To: sarah.jenkins@corp.google.com
+Received: by 2002:a05:6512:110:0:0:0:0 with SMTP id m10csp1928341;
+        Mon, 15 Jan 2024 09:30:15 -0500 (EST)
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@google.com header.s=20230601;
+       spf=pass smtp.mailfrom=engineering-updates@google.com;
+       dmarc=pass (p=REJECT) header.from=google.com
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com [209.85.220.41])
+        by mx.google.com with ESMTP id d9si9182341plk.2.2024.01.15.09.30.14
+        for <sarah.jenkins@corp.google.com>;
+        Mon, 15 Jan 2024 09:30:14 -0500 (EST)
+Received: from internal-ci.corp.google.com (10.12.0.4) by mail-sor-f41.google.com;
+        Mon, 15 Jan 2024 09:30:10 -0500
+Message-ID: <109283019283.engineering@google.com>
+Date: Mon, 15 Jan 2024 09:30:10 -0500
+From: "Google Engineering Updates" <engineering-updates@google.com>
+To: sarah.jenkins@corp.google.com
+Subject: Monthly Engineering Architecture & Security Summary - January 2024
+Content-Type: text/plain; charset="UTF-8"
+
+Hi Sarah,
+
+Here is the monthly summary of our microservice infrastructure migration and security posture enhancements across all engineering teams.
+
+Key progress:
+1. Completed zero-trust microservice infrastructure boundary rollout.
+2. Hardened authentication tokens and secrets rotation.
+3. Updated CI/CD pipeline automated regression tests.
+
+Best regards,
+Engineering Operations Team
+"""
+    ),
+
+    # Campaign 1: Operation GhostRelay (CMP-2024-0034) - Fictional Banking Credential Harvesting
+    (
+        "04_apex_kyc_escalation.eml",
+        """From: Apex NetBanking Care <alerts@onlineapex-kyc-update.com>
+To: victim.user@corporate.internal
+Subject: Final Notice: Immediate Apex NetBanking Access Termination Warning
+Date: Mon, 15 Jan 2024 11:15:00 +0000
+Message-ID: <20240115111500.8372.qmail@onlineapex-kyc-update.com>
+Received: from mx.corporate.internal (10.0.0.1) by mail.corporate.internal; Mon, 15 Jan 2024 11:15:05 +0000
+Received: from relay01.f3netze.de (185.220.101.5) by mx.corporate.internal with ESMTP; Mon, 15 Jan 2024 11:15:02 +0000
+Received: from authenticated-user (185.220.101.5) by relay01.f3netze.de; Mon, 15 Jan 2024 11:15:00 +0000
+Authentication-Results: mx.corporate.internal; spf=softfail (sender IP 185.220.101.5); dkim=none; dmarc=fail
 Content-Type: text/html; charset="utf-8"
 
-<p>Dear State Bank of India Customer,</p>
-<p>Your SBI YONO online netbanking privileges are scheduled for immediate suspension within 12 hours due to pending mandatory KYC documentation under RBI mandate 2024.</p>
-<p>Please update your Aadhaar and PAN card details immediately via our secure server: <a href="http://sbi-secureverify.com/portal/login">https://www.onlinesbi.sbi/kyc-update</a></p>
+<p>Dear Apex National Bank Customer,</p>
+<p>Your online netbanking privileges are scheduled for immediate suspension within 12 hours due to pending mandatory KYC documentation under Regulatory Mandate 2024.</p>
+<p>Please update your identity records immediately via our secure server: <a href="http://apex-secureverify.com/portal/login">https://www.online.apexbank.internal/kyc-update</a></p>
 <p>Failure to comply will result in permanent account freezing.</p>
 """
     ),
     (
-        "05_hdfc_netbanking_token.eml",
-        """From: HDFC Security Desk <security@hdfc-netbanking-alert.xyz>
+        "05_apex_netbanking_token.eml",
+        """From: Apex Security Desk <security@apex-netbanking-alert.xyz>
 To: target.analyst@enterprise.com
 Subject: Security Alert: High Value Transaction Authorization Required
-Date: Mon, 15 Jan 2024 09:30:00 +0530
-Message-ID: <20240115093000.91823.smtp@hdfc-netbanking-alert.xyz>
-Received: from mx.enterprise.com (10.0.1.2) by internal.enterprise.com; Mon, 15 Jan 2024 09:30:08 +0530
-Received: from mail.jonasbunde-vps.net (194.26.29.117) by mx.enterprise.com with ESMTP; Mon, 15 Jan 2024 09:30:04 +0530
+Date: Mon, 15 Jan 2024 09:30:00 +0000
+Message-ID: <20240115093000.91823.smtp@apex-netbanking-alert.xyz>
+Received: from mx.enterprise.com (10.0.1.2) by internal.enterprise.com; Mon, 15 Jan 2024 09:30:08 +0000
+Received: from mail.jonasbunde-vps.net (194.26.29.117) by mx.enterprise.com with ESMTP; Mon, 15 Jan 2024 09:30:04 +0000
 Authentication-Results: mx.enterprise.com; spf=fail (IP 194.26.29.117); dkim=none; dmarc=fail
 Content-Type: text/html; charset="utf-8"
 
-<p>Dear HDFC Customer,</p>
-<p>An outgoing IMPS fund transfer of INR 4,85,000.00 is currently pending your authorization token on device iPhone 14 Pro.</p>
-<p>If you did not initiate this transfer, cancel the transaction immediately: <a href="http://hdfc-netbanking-alert.xyz/cancel-tx">https://netbanking.hdfcbank.com/dispute</a></p>
+<p>Dear Apex Customer,</p>
+<p>An outgoing fund transfer of $48,500.00 is currently pending your authorization token on device iPhone 14 Pro.</p>
+<p>If you did not initiate this transfer, cancel the transaction immediately: <a href="http://apex-netbanking-alert.xyz/cancel-tx">https://netbanking.apexcommercial.internal/dispute</a></p>
 """
     ),
     (
-        "06_icici_pan_link_phish.eml",
-        """From: ICICI Bank Alert <no-reply@icicibank-update-portal.com>
-To: accounts.payable@victim-domain.in
-Subject: Mandatory Action: ICICI iMobile Pay Account Verification
-Date: Sun, 14 Jan 2024 16:45:00 +0530
-Message-ID: <20240114164500.5512.mail@icicibank-update-portal.com>
-Received: from mx1.victim-domain.in (10.2.0.1) by mail.victim-domain.in; Sun, 14 Jan 2024 16:45:06 +0530
-Received: from tor-node-nl.f3netze.de (185.220.101.34) by mx1.victim-domain.in with ESMTP; Sun, 14 Jan 2024 16:45:02 +0530
-Authentication-Results: mx1.victim-domain.in; spf=fail; dkim=none; dmarc=fail
+        "06_apex_pan_link_phish.eml",
+        """From: Apex Bank Alert <no-reply@apex-update-portal.com>
+To: accounts.payable@victim-domain.internal
+Subject: Mandatory Action: Apex Mobile Pay Account Verification
+Date: Sun, 14 Jan 2024 16:45:00 +0000
+Message-ID: <20240114164500.5512.mail@apex-update-portal.com>
+Received: from mx1.victim-domain.internal (10.2.0.1) by mail.victim-domain.internal; Sun, 14 Jan 2024 16:45:06 +0000
+Received: from tor-node-nl.f3netze.de (185.220.101.34) by mx1.victim-domain.internal with ESMTP; Sun, 14 Jan 2024 16:45:02 +0000
+Authentication-Results: mx1.victim-domain.internal; spf=fail; dkim=none; dmarc=fail
 Content-Type: text/html; charset="utf-8"
 
 <p>Dear Valued Customer,</p>
-<p>Link your PAN card to ICICI iMobile NetBanking to maintain active debit card privileges before midnight.</p>
-<p>Login securely: <a href="http://icicibank-update-portal.com/auth">https://infinity.icicibank.com/login</a></p>
+<p>Link your tax ID to Apex Mobile NetBanking to maintain active debit card privileges before midnight.</p>
+<p>Login securely: <a href="http://apex-update-portal.com/auth">https://online.apexbank.internal/login</a></p>
 """
     ),
     (
-        "07_rbi_statutory_directive.eml",
-        """From: Reserve Bank Compliance <circulars@rbi-statutory-notice.org>
-To: compliance.officer@bank-entity.in
+        "07_apex_statutory_directive.eml",
+        """From: National Regulatory Compliance <circulars@regulatory-notice.internal>
+To: compliance.officer@bank-entity.internal
 Subject: STATUTORY ORDER: Mandatory Fraud Auditing of Dormant Beneficiaries
-Date: Mon, 15 Jan 2024 08:00:00 +0530
-Message-ID: <20240115080000.1102.qmail@rbi-statutory-notice.org>
-Received: from mx.bank-entity.in (10.0.0.5) by mail.bank-entity.in; Mon, 15 Jan 2024 08:00:05 +0530
-Received: from tor-exit-de.f3netze.de (185.220.102.8) by mx.bank-entity.in with ESMTP; Mon, 15 Jan 2024 08:00:02 +0530
-Authentication-Results: mx.bank-entity.in; spf=fail; dkim=none; dmarc=fail
+Date: Mon, 15 Jan 2024 08:00:00 +0000
+Message-ID: <20240115080000.1102.qmail@regulatory-notice.internal>
+Received: from mx.bank-entity.internal (10.0.0.5) by mail.bank-entity.internal; Mon, 15 Jan 2024 08:00:05 +0000
+Received: from tor-exit-de.f3netze.de (185.220.102.8) by mx.bank-entity.internal with ESMTP; Mon, 15 Jan 2024 08:00:02 +0000
+Authentication-Results: mx.bank-entity.internal; spf=fail; dkim=none; dmarc=fail
 Content-Type: text/html; charset="utf-8"
 
-<p>All scheduled commercial banks must review the attached statutory annexure and verify RTGS clearing portals immediately.</p>
-<p>Access Directive Annexure: <a href="http://sbi-secureverify.com/rbi-directive">https://rbi.org.in/notifications/2024</a></p>
+<p>All scheduled commercial banks must review the attached statutory annexure and verify automated clearing portals immediately.</p>
+<p>Access Directive Annexure: <a href="http://apex-secureverify.com/regulatory-directive">https://banking-regulator.internal/notifications/2024</a></p>
 """
     ),
     (
-        "08_sbi_reward_points_lure.eml",
-        """From: SBI Card Rewards <rewards@onlinesbi-kyc-update.com>
-To: user.cardholder@indiamail.in
-Subject: Congratulations! You have INR 9,850 Unclaimed SBI Reward Points Expiring Today
-Date: Sun, 14 Jan 2024 19:20:00 +0530
-Message-ID: <20240114192000.7812.smtp@onlinesbi-kyc-update.com>
-Received: from mx.indiamail.in (10.1.1.1) by mail.indiamail.in; Sun, 14 Jan 2024 19:20:04 +0530
-Received: from tor-relay02.f3netze.de (185.220.101.9) by mx.indiamail.in with ESMTP; Sun, 14 Jan 2024 19:20:02 +0530
-Authentication-Results: mx.indiamail.in; spf=softfail; dkim=none; dmarc=fail
+        "08_apex_reward_points_lure.eml",
+        """From: Apex Card Rewards <rewards@onlineapex-kyc-update.com>
+To: user.cardholder@corporatemail.internal
+Subject: Congratulations! You have $985.00 Unclaimed Apex Reward Points Expiring Today
+Date: Sun, 14 Jan 2024 19:20:00 +0000
+Message-ID: <20240114192000.7812.smtp@onlineapex-kyc-update.com>
+Received: from mx.corporatemail.internal (10.1.1.1) by mail.corporatemail.internal; Sun, 14 Jan 2024 19:20:04 +0000
+Received: from tor-relay02.f3netze.de (185.220.101.9) by mx.corporatemail.internal with ESMTP; Sun, 14 Jan 2024 19:20:02 +0000
+Authentication-Results: mx.corporatemail.internal; spf=softfail; dkim=none; dmarc=fail
 Content-Type: text/html; charset="utf-8"
 
-<p>Dear SBI Cardholder,</p>
-<p>Your accumulated 19,700 SBI Reward Points worth INR 9,850 are set to expire tonight. Redeem directly into your bank account:</p>
-<p><a href="http://sbi-secureverify.com/rewards/claim">https://www.sbicard.com/redeem-now</a></p>
+<p>Dear Apex Cardholder,</p>
+<p>Your accumulated 19,700 Apex Reward Points worth $985.00 are set to expire tonight. Redeem directly into your bank account:</p>
+<p><a href="http://apex-secureverify.com/rewards/claim">https://online.apexbank.internal/redeem-now</a></p>
 """
     ),
     (
-        "09_hdfc_credit_limit_scam.eml",
-        """From: HDFC Bank Credit Division <limit-enhancement@hdfc-netbanking-alert.xyz>
+        "09_apex_credit_limit_scam.eml",
+        """From: Apex Commercial Credit Division <limit-enhancement@apex-netbanking-alert.xyz>
 To: premium.client@corporatemail.com
-Subject: Instant Approval: Pre-Approved Credit Card Limit Enhancement to INR 10,00,000
-Date: Mon, 15 Jan 2024 12:40:00 +0530
-Message-ID: <20240115124000.3341.smtp@hdfc-netbanking-alert.xyz>
-Received: from mx.corporatemail.com (10.0.0.2) by mail.corporatemail.com; Mon, 15 Jan 2024 12:40:06 +0530
-Received: from vps-nl.jonasbunde-vps.net (194.26.29.120) by mx.corporatemail.com with ESMTP; Mon, 15 Jan 2024 12:40:03 +0530
+Subject: Instant Approval: Pre-Approved Credit Card Limit Enhancement to $100,000
+Date: Mon, 15 Jan 2024 12:40:00 +0000
+Message-ID: <20240115124000.3341.smtp@apex-netbanking-alert.xyz>
+Received: from mx.corporatemail.com (10.0.0.2) by mail.corporatemail.com; Mon, 15 Jan 2024 12:40:06 +0000
+Received: from vps-nl.jonasbunde-vps.net (194.26.29.120) by mx.corporatemail.com with ESMTP; Mon, 15 Jan 2024 12:40:03 +0000
 Authentication-Results: mx.corporatemail.com; spf=fail; dkim=none; dmarc=fail
 Content-Type: text/html; charset="utf-8"
 
-<p>Congratulations! You are eligible for an instant zero-fee credit limit increase to INR 10,00,000.</p>
-<p>Claim pre-approved offer: <a href="http://hdfc-netbanking-alert.xyz/credit-boost">https://mycards.hdfcbank.com/limit-upgrade</a></p>
+<p>Congratulations! You are eligible for an instant zero-fee credit limit increase to $100,000.</p>
+<p>Claim pre-approved offer: <a href="http://apex-netbanking-alert.xyz/credit-boost">https://online.apexbank.internal/limit-upgrade</a></p>
 """
     ),
     (
-        "10_axis_urgent_unblock.eml",
-        """From: Axis Bank Online Desk <alerts@axis-bank-verify.com>
-To: customer.ops@enterprisemail.in
-Subject: Security Notice: Axis Internet Banking Account Temporarily Locked
-Date: Mon, 15 Jan 2024 14:00:00 +0530
-Message-ID: <20240115140000.9981.mail@axis-bank-verify.com>
-Received: from mx.enterprisemail.in (10.0.0.4) by mail.enterprisemail.in; Mon, 15 Jan 2024 14:00:05 +0530
-Received: from relay01.f3netze.de (185.220.101.5) by mx.enterprisemail.in with ESMTP; Mon, 15 Jan 2024 14:00:02 +0530
-Authentication-Results: mx.enterprisemail.in; spf=fail; dkim=none; dmarc=fail
+        "10_apex_urgent_unblock.eml",
+        """From: Apex Online Desk <alerts@apex-bank-verify.com>
+To: customer.ops@enterprisemail.internal
+Subject: Security Notice: Apex Internet Banking Account Temporarily Locked
+Date: Mon, 15 Jan 2024 14:00:00 +0000
+Message-ID: <20240115140000.9981.mail@apex-bank-verify.com>
+Received: from mx.enterprisemail.internal (10.0.0.4) by mail.enterprisemail.internal; Mon, 15 Jan 2024 14:00:05 +0000
+Received: from relay01.f3netze.de (185.220.101.5) by mx.enterprisemail.internal with ESMTP; Mon, 15 Jan 2024 14:00:02 +0000
+Authentication-Results: mx.enterprisemail.internal; spf=fail; dkim=none; dmarc=fail
 Content-Type: text/html; charset="utf-8"
 
-<p>Dear Customer, your Axis Bank internet banking ID has been temporarily locked after 3 failed password attempts.</p>
-<p>Unlock your account now: <a href="http://sbi-secureverify.com/axis/unlock">https://omni.axisbank.co.in/axisretail/unlock</a></p>
+<p>Dear Customer, your Apex Bank internet banking ID has been temporarily locked after 3 failed password attempts.</p>
+<p>Unlock your account now: <a href="http://apex-secureverify.com/apex/unlock">https://online.apexbank.internal/unlock</a></p>
 """
     ),
 
@@ -309,6 +452,6 @@ Content-Type: text/html; charset="utf-8"
 for filename, content in emails:
     file_path = sample_dir / filename
     file_path.write_text(content.strip(), encoding="utf-8")
-    print(f"  [+] Created demo EML: {file_path}")
+    print(f"  [+] Created sanitized demo EML: {file_path}")
 
-print(f"\n[OK] Materialized {len(emails)} curated demo EMLs across 3 campaign clusters.")
+print(f"\n[OK] Materialized {len(emails)} sanitized demo EMLs across 3 campaign clusters (D4 / GAP-004).")

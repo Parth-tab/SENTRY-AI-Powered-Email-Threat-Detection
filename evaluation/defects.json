@@ -612,11 +612,12 @@
     "check": "legal.trademark_sanitization_synthetic_corpus",
     "severity": "high",
     "evidence": "sample_emails/ (04_sbi_kyc_escalation.eml, 05_hdfc_netbanking_token.eml)",
-    "status": "open",
+    "status": "resolved",
     "target_version": "MRWS",
-    "effort": "S",
+    "effort": "M",
     "impact": "H",
-    "description": "Public demo corpus uses real Indian bank trademarks (SBI, HDFC, ICICI, RBI), risking automated takedown from brand protection crawlers."
+    "description": "Public demo corpus uses real Indian bank trademarks (SBI, HDFC, ICICI, RBI), risking automated takedown from brand protection crawlers.",
+    "scope_note": "Includes complete rewrites of all 18 fixture EMLs in sample_emails/, tests, docs, graph schemas, screenshot recaptures, and FEATURE_TOUR.md rewrite per D4."
   },
   {
     "id": "GAP-005",

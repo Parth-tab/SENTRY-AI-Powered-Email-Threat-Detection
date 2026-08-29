@@ -7,7 +7,7 @@ Authentication-Results: mx.techcorp.com;
        dmarc=fail (p=QUARANTINE) header.from=techcorp.com
 Received: from vps-bulletproof.ch (vps-bulletproof.ch [194.26.29.117])
         by mx.techcorp.com with ESMTP id f9si2849102klm.2.2024.01.16.14.12.08
-    Â   for <cfo-finance@techcorp.com>;
+    ï¿½   for <cfo-finance@techcorp.com>;
         Tue, 16 Jan 2024 14:12:08 +0000 (UTC)
 Received: from [194.26.29.117] by vps-bulletproof.ch with HTTP;
         Tue, 16 Jan 2024 14:12:00 +0000

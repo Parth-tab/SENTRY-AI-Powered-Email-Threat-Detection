@@ -12,7 +12,7 @@ from app.config import settings
 
 @pytest.mark.asyncio
 async def test_raw_email_upload_and_analysis_endpoint(client):
-    raw_email = """From: Security <alert@sbi-secureverify.com>
+    raw_email = """From: Security <alert@apex-secureverify.com>
 To: target@victim.com
 Subject: URGENT: Action Required
 Date: Mon, 15 Jan 2024 10:00:00 +0000

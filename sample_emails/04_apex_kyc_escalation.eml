@@ -1,0 +1,15 @@
+From: Apex NetBanking Care <alerts@onlineapex-kyc-update.com>
+To: victim.user@corporate.internal
+Subject: Final Notice: Immediate Apex NetBanking Access Termination Warning
+Date: Mon, 15 Jan 2024 11:15:00 +0000
+Message-ID: <20240115111500.8372.qmail@onlineapex-kyc-update.com>
+Received: from mx.corporate.internal (10.0.0.1) by mail.corporate.internal; Mon, 15 Jan 2024 11:15:05 +0000
+Received: from relay01.f3netze.de (185.220.101.5) by mx.corporate.internal with ESMTP; Mon, 15 Jan 2024 11:15:02 +0000
+Received: from authenticated-user (185.220.101.5) by relay01.f3netze.de; Mon, 15 Jan 2024 11:15:00 +0000
+Authentication-Results: mx.corporate.internal; spf=softfail (sender IP 185.220.101.5); dkim=none; dmarc=fail
+Content-Type: text/html; charset="utf-8"
+
+<p>Dear Apex National Bank Customer,</p>
+<p>Your online netbanking privileges are scheduled for immediate suspension within 12 hours due to pending mandatory KYC documentation under Regulatory Mandate 2024.</p>
+<p>Please update your identity records immediately via our secure server: <a href="http://apex-secureverify.com/portal/login">https://www.online.apexbank.internal/kyc-update</a></p>
+<p>Failure to comply will result in permanent account freezing.</p>
