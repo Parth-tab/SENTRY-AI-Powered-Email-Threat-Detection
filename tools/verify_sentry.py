@@ -449,7 +449,90 @@ async def run_browser_checks(report, ui_url):
             await page.screenshot(path=str(SHOT_DIR / "06_ingest_paste_FAIL.png"), full_page=True)
             report.add("ui.ingest_paste_e2e", "FAIL", repr(exc)[:300])
 
-        # -- Scene 8: WebSocket live feed connected ------------------------
+        # -- Scene 8: Ingest CSV Dataset E2E (CORP-005 golden gate 18) ------
+        csv_fixture_path = REPO_ROOT / "evaluation" / "batch_ingest" / "fixtures" / "probe_gate18.csv"
+        csv_subjects = [
+            "HARNESS-PROBE-GATE18-CSV-1",
+            "HARNESS-PROBE-GATE18-CSV-2",
+            "HARNESS-PROBE-GATE18-CSV-3"
+        ]
+
+        try:
+            pre_count = await page.locator("tbody tr").count()
+
+            file_mode_btn = page.locator("button:has-text('Batch / File Upload'), button:has-text('File Upload')").first
+            if await file_mode_btn.count() > 0:
+                await file_mode_btn.click(timeout=3_000)
+
+            file_input = page.locator("input[type='file']").first
+            await file_input.set_input_files(str(csv_fixture_path))
+
+            # Batch summary card renders or feed updates
+            await asyncio.sleep(2.0)
+            await page.screenshot(path=str(SHOT_DIR / "07_ingest_csv.png"), full_page=True)
+
+            # Assert all 3 subjects are visible on feed
+            for subj in csv_subjects:
+                subj_el = page.locator(f"text={subj}").first
+                await subj_el.wait_for(state="visible", timeout=10_000)
+
+            post_count = await page.locator("tbody tr").count()
+            if post_count != pre_count + 3:
+                raise AssertionError(f"Expected feed count delta +3 ({pre_count} -> {pre_count + 3}), got {post_count}")
+
+            # Assert CSV badge is present
+            csv_badge = page.locator("span:has-text('CSV')").first
+            if await csv_badge.count() == 0:
+                raise AssertionError("Expected CSV source badge on feed rows")
+
+            report.add("ui.ingest_csv_e2e", "PASS",
+                       f"Subjects confirmed; feed rows: {pre_count} -> {post_count}; CSV badges validated")
+        except Exception as exc:
+            await page.screenshot(path=str(SHOT_DIR / "07_ingest_csv_FAIL.png"), full_page=True)
+            report.add("ui.ingest_csv_e2e", "FAIL", repr(exc)[:300])
+
+        # -- Scene 9: Ingest Archive ZIP E2E (CORP-005 golden gate 19) ------
+        zip_fixture_path = REPO_ROOT / "evaluation" / "batch_ingest" / "fixtures" / "probe_gate19.zip"
+        zip_subjects = [
+            "HARNESS-PROBE-GATE19-ZIP-1",
+            "HARNESS-PROBE-GATE19-ZIP-2",
+            "HARNESS-PROBE-GATE19-ZIP-3"
+        ]
+
+        try:
+            pre_count = await page.locator("tbody tr").count()
+
+            file_mode_btn = page.locator("button:has-text('Batch / File Upload'), button:has-text('File Upload')").first
+            if await file_mode_btn.count() > 0:
+                await file_mode_btn.click(timeout=3_000)
+
+            file_input = page.locator("input[type='file']").first
+            await file_input.set_input_files(str(zip_fixture_path))
+
+            await asyncio.sleep(2.0)
+            await page.screenshot(path=str(SHOT_DIR / "08_ingest_zip.png"), full_page=True)
+
+            # Assert all 3 subjects are visible on feed
+            for subj in zip_subjects:
+                subj_el = page.locator(f"text={subj}").first
+                await subj_el.wait_for(state="visible", timeout=10_000)
+
+            post_count = await page.locator("tbody tr").count()
+            if post_count != pre_count + 3:
+                raise AssertionError(f"Expected feed count delta +3 ({pre_count} -> {pre_count + 3}), got {post_count}")
+
+            # Assert ARCHIVE badge is present
+            archive_badge = page.locator("span:has-text('ARCHIVE')").first
+            if await archive_badge.count() == 0:
+                raise AssertionError("Expected ARCHIVE source badge on feed rows")
+
+            report.add("ui.ingest_archive_e2e", "PASS",
+                       f"Subjects confirmed; feed rows: {pre_count} -> {post_count}; ARCHIVE badges validated")
+        except Exception as exc:
+            await page.screenshot(path=str(SHOT_DIR / "08_ingest_zip_FAIL.png"), full_page=True)
+            report.add("ui.ingest_archive_e2e", "FAIL", repr(exc)[:300])
+
+        # -- Scene 10: WebSocket live feed connected -----------------------
         live = [u for u in report.ws_opened if "dashboard/live" in u and u.startswith("ws")]
         if live:
             report.add("ui.websocket_live_connected", "PASS", live[0])
