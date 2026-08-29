@@ -7,13 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-08-30
+
 ### Added
 - **Database Schema Migration Framework (D5 / GAP-009):** Integrated Alembic migrations with baseline schema revision (`0001_initial_schema`), dynamic database URL detection, batch rendering, and automated upgrade/downgrade lifecycle testing.
 - **Evidentiary Hot Backup & Restore Subsystem (D6 / GAP-010):** Implemented atomic hot snapshot tooling (`BackupService`, `tools/backup_vault.py`, `tools/restore_vault.py`) utilizing SQLite online backup and archive manifests with mathematical post-restore RFC 3227 hash-chain verification.
 - **Enterprise Log Rotation:** Configured `RotatingFileHandler` with 10MB threshold and 5 backup generations for structured access and error logs.
 - **Enterprise Operations Runbook:** Published [`docs/RUNBOOK.md`](file:///E:/SENTRY/docs/RUNBOOK.md) documenting backup automation schedules, disaster recovery restore drills, migration procedures, and disk quota monitoring.
 - **Corpus Sanitization & Trademark De-risking (D4 / GAP-004):** Completely rewritten all 18 fixture EMLs in `sample_emails/` and test suites to fictional "Apex National Bank" archetype (`Apex National Bank`, `Apex Commercial Bank`, `apex-secureverify.com`, `onlineapex-kyc-update.com`, `apex-netbanking-alert.xyz`), eliminating all real Indian bank trademarks (SBI, HDFC, ICICI, RBI) across code, fixtures, and docs.
-- **Guided Tour Screenshot Recapture:** Re-captured all 9 tour screenshots against the authenticated, production-built UI and updated `FEATURE_TOUR.md` with verified caption alignment under the Caption Honesty Law.
+- **Guided Tour Screenshot Recapture:** Re-captured all 8 tour screenshots against the authenticated, production-built UI and updated `FEATURE_TOUR.md` with verified caption alignment under the Caption Honesty Law.
 - **Modernized Datetime & Schema Hygiene:** Migrated all Pydantic schemas to `ConfigDict` / `SettingsConfigDict` and modernized timestamp handlers to timezone-aware UTC, slashing test suite deprecation warnings by 99%.
 - **DFIR Operator Bearer Token Authentication (D2 / GAP-006):** Secured all 8 writable forensic endpoints (`/upload`, `/batch/archive`, `/batch/csv`, `/batch/upload`, `/raw`, `/samples/seed`, `/evidence/verify/{email_id}`, `/admin/reset-demo`) behind constant-time `SENTRY_API_TOKEN` Bearer authentication with HTTP 401 envelope.
 - **Frontend DFIR Operator Auth UI:** Added `AuthModal` component for operator token authentication and session locking, automated HTTP 401 interception, and reactive authentication status management.

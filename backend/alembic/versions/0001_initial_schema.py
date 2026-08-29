@@ -131,8 +131,25 @@ def upgrade() -> None:
     with op.batch_alter_table('alerts', schema=None) as batch_op:
         batch_op.create_index('ix_alerts_id', ['id'], unique=False)
 
+    # 6. Create users
+    op.create_table(
+        'users',
+        sa.Column('id', sa.String(length=36), nullable=False),
+        sa.Column('username', sa.String(length=50), nullable=False),
+        sa.Column('email', sa.String(length=255), nullable=False),
+        sa.Column('hashed_password', sa.String(length=255), nullable=False),
+        sa.Column('role', sa.String(length=50), nullable=True, server_default='analyst'),
+        sa.Column('is_active', sa.Boolean(), nullable=True, server_default='1'),
+        sa.Column('created_at', sa.DateTime(), nullable=True),
+        sa.PrimaryKeyConstraint('id')
+    )
+    with op.batch_alter_table('users', schema=None) as batch_op:
+        batch_op.create_index('ix_users_username', ['username'], unique=True)
+        batch_op.create_index('ix_users_email', ['email'], unique=True)
+
 
 def downgrade() -> None:
+    op.drop_table('users')
     op.drop_table('alerts')
     op.drop_table('campaigns')
     op.drop_table('evidence_vault')

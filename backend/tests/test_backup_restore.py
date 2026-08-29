@@ -240,3 +240,71 @@ def test_backup_and_restore_cli_tools():
         assert res_restore.returncode == 0, f"Restore CLI failed: {res_restore.stderr}"
         assert "RESTORE VERIFICATION PASSED (PASS)" in res_restore.stdout
         assert "Verified Hash Chains:    3 (0 failures)" in res_restore.stdout
+
+
+def test_restore_post_backup_probe_isolation():
+    """
+    P4-2: Verifies that records ingested AFTER a backup was created do NOT
+    leak or persist into the restored state (Point-in-Time Isolation).
+    """
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        tmp_path = Path(tmp_dir)
+        db_path = tmp_path / "live_sentry.db"
+        vault_dir = tmp_path / "live_vault"
+        archive_path = tmp_path / "backups" / "point_in_time.tar.gz"
+
+        create_test_db_and_vault(db_path, vault_dir)
+
+        # 1. Take Snapshot with 3 baseline emails
+        backup_result = BackupService.create_snapshot(
+            db_path=db_path,
+            vault_dir=vault_dir,
+            output_archive=archive_path
+        )
+        assert backup_result["status"] == "SNAPSHOT_SUCCESS"
+        assert backup_result["total_email_records"] == 3
+
+        # 2. Ingest a 4th post-backup probe email
+        post_backup_email_id = "post-backup-probe-004"
+        post_payload = b"From: attacker4@evil.com\nSubject: Post-Backup Injection\n\nLure"
+        post_vault_file = vault_dir / "payload_4_post_backup.eml"
+        post_vault_file.write_bytes(post_payload)
+        post_sha256 = BackupService.compute_file_sha256(post_vault_file)
+
+        coc_id4, entries4, h4 = ReportingService.initialize_chain_of_custody(post_backup_email_id, post_sha256, source="post_backup_test")
+
+        conn = sqlite3.connect(str(db_path))
+        conn.execute("""
+        INSERT INTO email_records (id, message_id, subject, sender, sha256_hash, ingested_at)
+        VALUES (?, ?, ?, ?, ?, ?)
+        """, (post_backup_email_id, "<msg-4@post.com>", "Post-Backup Injection", "attacker4@evil.com", post_sha256, datetime.now(timezone.utc).isoformat()))
+
+        conn.execute("""
+        INSERT INTO evidence_vault (id, email_id, sha256_hash, stored_path, chain_of_custody_id, chain_entries, last_entry_hash, is_sealed, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, ("ev-4", post_backup_email_id, post_sha256, str(post_vault_file), coc_id4, json.dumps(entries4), h4, True, datetime.now(timezone.utc).isoformat()))
+        conn.commit()
+        conn.close()
+
+        # Confirm 4th email exists prior to restore
+        conn = sqlite3.connect(str(db_path))
+        assert conn.execute("SELECT count(*) FROM email_records").fetchone()[0] == 4
+        conn.close()
+
+        # 3. Execute Restore from Snapshot
+        restore_result = BackupService.restore_snapshot(
+            snapshot_archive=archive_path,
+            target_db_path=db_path,
+            target_vault_dir=vault_dir
+        )
+        assert restore_result["status"] == "RESTORE_VERIFIED_PASS"
+        assert restore_result["total_chains_verified"] == 3
+
+        # 4. Assert Post-Backup Email is completely absent in restored state
+        conn = sqlite3.connect(str(db_path))
+        cursor = conn.cursor()
+        cursor.execute("SELECT count(*) FROM email_records WHERE id = ?", (post_backup_email_id,))
+        assert cursor.fetchone()[0] == 0, "Post-backup email leaked into restored database state!"
+        cursor.execute("SELECT count(*) FROM email_records")
+        assert cursor.fetchone()[0] == 3
+        conn.close()

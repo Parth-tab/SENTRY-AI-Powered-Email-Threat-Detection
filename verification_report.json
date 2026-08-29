@@ -1,6 +1,6 @@
 {
-  "started": "2026-08-29T20:39:37.480838+00:00",
-  "finished": "2026-08-29T20:39:57.912098+00:00",
+  "started": "2026-08-29T20:51:17.506552+00:00",
+  "finished": "2026-08-29T20:51:39.239746+00:00",
   "exit_code": 0,
   "verdict": "PASS",
   "note": "",
@@ -114,28 +114,21 @@
   "console_errors": [],
   "failed_http_responses": [],
   "websockets_opened": [
-    "ws://127.0.0.1:3000/?token=YXGQHKAHP4MF",
+    "ws://127.0.0.1:3000/?token=tINRfQ1tyNER",
     "ws://127.0.0.1:8000/api/v1/dashboard/live",
     "ws://127.0.0.1:8000/api/v1/dashboard/live",
     "ws://127.0.0.1:8000/api/v1/dashboard/live"
   ],
   "screenshots": [
     "screenshots\\verify\\01_dashboard.png",
-    "screenshots\\verify\\01_dashboard_FAIL.png",
     "screenshots\\verify\\02_email_detail.png",
-    "screenshots\\verify\\02_email_detail_FAIL.png",
     "screenshots\\verify\\03_map.png",
     "screenshots\\verify\\04_graph.png",
     "screenshots\\verify\\05_ingest_upload.png",
-    "screenshots\\verify\\05_ingest_upload_FAIL.png",
     "screenshots\\verify\\06_ingest_paste.png",
-    "screenshots\\verify\\06_ingest_paste_FAIL.png",
     "screenshots\\verify\\07_ingest_csv.png",
-    "screenshots\\verify\\07_ingest_csv_FAIL.png",
     "screenshots\\verify\\08_ingest_zip.png",
-    "screenshots\\verify\\08_ingest_zip_FAIL.png",
     "screenshots\\verify\\20_production_mode.png",
-    "screenshots\\verify\\20_production_mode_FAIL.png",
     "screenshots\\verify\\auth_login_screen.png",
     "screenshots\\verify\\mode_b_paste.png",
     "screenshots\\verify\\mode_b_upload.png"
