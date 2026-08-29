@@ -1,0 +1,54 @@
+{
+  "timestamp": "2026-08-29T16:36:00Z",
+  "corpus_archive_filename": "ham_zipped.zip",
+  "corpus_archive_sha256": "c32b2212325fd671ae5b26d4915ab3b8754ae170d023c3dde9e05716fe59d2ab",
+  "total_files_in_corpus": 6951,
+  "unique_sha256_digests": 6777,
+  "internal_duplicate_instances": 174,
+  "duplicate_digest_groups_count": 172,
+  "mathematical_invariant": "6777 + 174 == 6951",
+  "sample_duplicate_groups": [
+    {
+      "sha256": "96ff764985eaa3f6ae17132f250b5b6883efda116d2e04c0c28ae723a590f65d",
+      "copy_count": 3,
+      "filenames": [
+        "00001.7c7d6921e671bbe18ebb5f893cd9bb35",
+        "0226.7c7d6921e671bbe18ebb5f893cd9bb35",
+        "0238.7c7d6921e671bbe18ebb5f893cd9bb35"
+      ]
+    },
+    {
+      "sha256": "72bcca040b380309f1b56d0000555e4ad53d0c7c1854505cb574cdfd5a0a5bf3",
+      "copy_count": 2,
+      "filenames": [
+        "00002.ca96f74042d05c1a1d29ca30467cfcd5",
+        "0134.ca96f74042d05c1a1d29ca30467cfcd5"
+      ]
+    },
+    {
+      "sha256": "e5d5da5f411f6fde2e25031a79d34773fa0ba8654f66362171c69f52a4728608",
+      "copy_count": 2,
+      "filenames": [
+        "00004.68819fc91d34c82433074d7bd3127dcc",
+        "0197.68819fc91d34c82433074d7bd3127dcc"
+      ]
+    },
+    {
+      "sha256": "b374620887ccf9e32c6e14284a3221835e9baae1f58b228101ee9a4ec5a44051",
+      "copy_count": 2,
+      "filenames": [
+        "00016.ef397cef16f8041242e3b6560e168053",
+        "0020.ef397cef16f8041242e3b6560e168053"
+      ]
+    },
+    {
+      "sha256": "00fd61a11302eba86e848dce576d02f94901e9f9c9bf7a9c6609506c456289f5",
+      "copy_count": 2,
+      "filenames": [
+        "00039.b2b936a8501444b213f61f9ff193b480",
+        "0179.b2b936a8501444b213f61f9ff193b480"
+      ]
+    }
+  ],
+  "conclusion": "Corpus self-duplicates confirmed by independent raw byte hashing. SENTRY's SHA-256 deduplication correctly ingested 6,777 unique records and identified 174 duplicates."
+}
