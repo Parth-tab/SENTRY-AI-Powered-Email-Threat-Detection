@@ -197,6 +197,54 @@
     "description": "Design specification defect for multi-format content sniffing; consolidated and implemented under CORP-001."
   },
   {
+    "id": "CORP-003",
+    "check": "ingest.batch_sniffer_and_archive_handler",
+    "severity": "high",
+    "evidence": "commit 227a453 / backend/app/services/ingestion.py",
+    "status": "resolved",
+    "fix_commit": "227a453",
+    "target_version": "v1.0.4",
+    "regression_test": "backend/tests/test_batch_ingest.py::test_sniffing_matrix",
+    "effort": "M",
+    "description": "Multi-format content sniffing for raw RFC 822 streams, ZIP archives, and CSV datasets without file-extension dependency."
+  },
+  {
+    "id": "CORP-004",
+    "check": "security.admin_reset_demo_state",
+    "severity": "high",
+    "evidence": "commit acdc02b / backend/app/api/v1/stats.py",
+    "status": "resolved",
+    "fix_commit": "acdc02b",
+    "target_version": "v1.0.4",
+    "regression_test": "backend/tests/test_batch_ingest.py::test_demo_reset_authenticated_success_and_audit_receipt",
+    "effort": "M",
+    "description": "Authenticated and audited reset-demo endpoint enabling clean demonstration resets while writing RFC 3227 destruction audit logs."
+  },
+  {
+    "id": "CORP-005",
+    "check": "evaluation.harness_gates_18_19_probes",
+    "severity": "medium",
+    "evidence": "commit 3db3276 / tools/verify_sentry.py",
+    "status": "resolved",
+    "fix_commit": "3db3276",
+    "target_version": "v1.0.4",
+    "regression_test": "tools/verify_sentry.py",
+    "effort": "S",
+    "description": "Verification harness golden gates 18 (CSV ingestion) and 19 (ZIP archive ingestion) with probe tracking and feed delta validation."
+  },
+  {
+    "id": "CORP-006",
+    "check": "evaluation.corpus_at_scale_benchmark",
+    "severity": "medium",
+    "evidence": "commit 7f09551 / evaluation/batch_ingest/scripts/verify_at_scale.py",
+    "status": "resolved",
+    "fix_commit": "7f09551",
+    "target_version": "v1.0.4",
+    "regression_test": "evaluation/batch_ingest/scripts/verify_at_scale.py",
+    "effort": "M",
+    "description": "Productized browser-based benchmark script proving UI responsiveness, feed pagination, and graph scale guards on 6,777+ emails."
+  },
+  {
     "id": "CQ-001",
     "check": "CQ-2",
     "severity": "low",
@@ -206,6 +254,30 @@
     "regression_test": "evaluation/battery/checks/check_d01_code_quality.py",
     "effort": "S",
     "description": "Unannotated internal service function return types; resolved by completing Pydantic schemas and type hints across all services."
+  },
+  {
+    "id": "CSV-001",
+    "check": "ingest.csv_dataset_mime_synthesis",
+    "severity": "high",
+    "evidence": "commit b951b9f / backend/app/services/csv_synthesizer.py",
+    "status": "resolved",
+    "fix_commit": "b951b9f",
+    "target_version": "v1.0.4",
+    "regression_test": "backend/tests/test_batch_ingest.py::test_csv_golden_synthesis_and_label_deduplication",
+    "effort": "M",
+    "description": "Tabular CSV dataset synthesis into RFC 5322 MIME byte streams with D4 degradation contract and ground-truth label preservation."
+  },
+  {
+    "id": "CSV-002",
+    "check": "ui.threat_feed_batch_source_badges",
+    "severity": "low",
+    "evidence": "commit 0c3448b / frontend/src/components/dashboard/LiveThreatFeed.tsx",
+    "status": "resolved",
+    "fix_commit": "0c3448b",
+    "target_version": "v1.0.4",
+    "regression_test": "frontend/src/components/dashboard/LiveThreatFeed.tsx",
+    "effort": "S",
+    "description": "UI threat feed badge indicators distinguishing direct uploads, synthetic CSV rows, and batch ZIP archive members."
   },
   {
     "id": "D-1",
@@ -254,6 +326,18 @@
     "regression_test": "backend/tests/test_ingest_endpoints.py::test_ingest_forged_message_id_creates_new_record",
     "effort": "M",
     "description": "Red-team evaluation battery lacks a dedicated forged-header-dedupe-suppression attack scenario in the adversarial corpus; documented in adversarial corpus gap tracking."
+  },
+  {
+    "id": "DEF-006",
+    "check": "docs.in_sample_evaluation_metric_caveat",
+    "severity": "low",
+    "evidence": "commit 56b2f41 / docs/ARCHITECTURE.md",
+    "status": "resolved",
+    "fix_commit": "56b2f41",
+    "target_version": "v1.0.3",
+    "regression_test": "docs/ARCHITECTURE.md",
+    "effort": "S",
+    "description": "Propagated explicit in-sample Enron/CEAS baseline citation caveats across all 0.961 accuracy mentions to ensure academic rigor."
   },
   {
     "id": "FEED-001",
@@ -326,6 +410,18 @@
     "regression_test": "backend/tests/test_domain_intel.py::test_short_acronym_lookalike_bounds",
     "effort": "S",
     "description": "Short acronym brands (e.g., 2-3 char strings like 'sbi', 'ibm') triggered false positive lookalike matches on unrelated domains (e.g. 'sub', 'biz'); resolved by bounding relative edit distance (dist/max_len <= 0.35) and minimum brand length >= 4."
+  },
+  {
+    "id": "HAM-004",
+    "check": "evaluation.ham_benchmark_runner_cli_args",
+    "severity": "low",
+    "evidence": "commit f039d13 / evaluation/battery/run_ham_stress.py",
+    "status": "resolved",
+    "fix_commit": "f039d13",
+    "target_version": "v1.0.2",
+    "regression_test": "evaluation/battery/run_ham_stress.py",
+    "effort": "S",
+    "description": "Added flexible CLI parameter `--corpus-path` to the out-of-sample ham benchmark runner for arbitrary dataset paths."
   },
   {
     "id": "ING-001",

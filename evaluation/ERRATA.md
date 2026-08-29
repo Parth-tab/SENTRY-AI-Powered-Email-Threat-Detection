@@ -127,4 +127,25 @@ Reconstructed all historical defects across git history into `evaluation/defects
 
 ---
 
+## Errata 006 — Complete Master Defect Ledger (50 IDs) & Dependabot Scope Reconciliation — recorded at FINAL-INCH-2
+
+**Applies to:** `evaluation/defects.json` and Dependabot alert resolution.
+
+### 1. Master Defect Ledger Completion (50 Total IDs)
+Following a comprehensive audit across all conventional commit prefixes in git history, eight commit-level feature/fix identifiers (`CORP-003`, `CORP-004`, `CORP-005`, `CORP-006`, `CSV-001`, `CSV-002`, `HAM-004`, `DEF-006`) were identified and permanently entered into the cumulative master register with their evidenced fix commits and regression test references.
+
+**Master Defect Ledger Arithmetic:**
+- **Total Tracked Defects:** 50
+- **Resolved:** 44
+- **Open:** 2 (`DEF-005`, `MBOX-001`)
+- **Deferred:** 1 (`BP-004` - v2.0 roadmap)
+- **Consolidated:** 3 (`BATCH-003`, `CORP-002`, `ING-003`)
+- **Derivation:** $$50 = 44 + 2 + 1 + 3$$
+
+### 2. Dependabot Dev-Dependency Scope Reconciliation
+The GitHub Dependabot graph identified four ecosystem advisories in `frontend/pnpm-lock.yaml` (Vite, esbuild, launch-editor). These represent build-time development server dependencies rather than production runtime risks. In deployment and appliance verification mode, SENTRY serves static pre-compiled distribution assets and never exposes the Vite development server to untrusted network inputs. All 4 alerts have been formally dismissed on GitHub with written rationale referencing `SECURITY.md`.
+
+---
+
+
 

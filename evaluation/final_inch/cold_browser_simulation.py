@@ -45,7 +45,7 @@ def main():
 
         # Step 1: Measure Time to First README Content
         t0 = time.time()
-        page.goto(REPO_URL, wait_until="domcontentloaded", timeout=30000)
+        page.goto(REPO_URL, wait_until="networkidle", timeout=30000)
         page.wait_for_selector("article.markdown-body", timeout=20000)
         time_to_readme_seconds = round(time.time() - t0, 3)
         print(f"  [ PASS ] README article attached in {time_to_readme_seconds}s")
@@ -54,22 +54,25 @@ def main():
         page.screenshot(path=str(SCREENSHOT_PATH), full_page=False)
         print(f"  [ SHOT ] Above-the-fold screenshot captured: {SCREENSHOT_PATH.name}")
 
-        # Step 3: Audit Topics, Description, License, Release
-        desc_elem = page.locator("p.f4.my-3, div.BorderGrid-cell p").first
-        desc_text = desc_elem.inner_text() if desc_elem.count() > 0 else ""
+        # Step 3: Audit Topics, Description, License, Release in About Section
+        about_h2 = page.locator("h2", has_text="About")
+        about_cell = about_h2.first.locator("xpath=..") if about_h2.count() > 0 else page.locator("div.BorderGrid-cell").first
         
-        topics = page.locator("a.topic-tag").all_inner_texts()
+        desc_elem = about_cell.locator("p").first
+        desc_text = desc_elem.inner_text().strip() if desc_elem.count() > 0 else ""
         
-        license_elem = page.locator("a[href*='LICENSE'], svg.octicon-law + span, a:has-text('Apache-2.0'), a:has-text('MIT')").first
+        topics = [t.strip() for t in page.locator("a[href*='/topics/']").all_inner_texts() if t.strip()]
+        
+        license_elem = page.locator("a[href*='LICENSE']").first
         has_license = license_elem.count() > 0
-        license_text = license_elem.inner_text() if has_license else ""
+        license_text = license_elem.inner_text().strip() if has_license else ""
 
-        release_elem = page.locator("a[href*='/releases/tag/'], a[href*='/releases'] span").first
+        release_elem = page.locator("a[href*='/releases/tag/']").first
         has_release = release_elem.count() > 0
-        release_text = release_elem.inner_text() if has_release else ""
+        release_text = release_elem.inner_text().strip() if has_release else ""
 
-        print(f"  [ INFO ] Description: '{desc_text}'")
-        print(f"  [ INFO ] Topics ({len(topics)}): {topics}")
+        print(f"  [ INFO ] About Description: '{desc_text}'")
+        print(f"  [ INFO ] About Topics ({len(topics)}): {topics}")
         print(f"  [ INFO ] License visible: {has_license} ('{license_text}')")
         print(f"  [ INFO ] Release visible: {has_release} ('{release_text}')")
 
@@ -79,16 +82,22 @@ def main():
         for img in readme_images:
             src = img.get_attribute("src") or ""
             alt = img.get_attribute("alt") or ""
+            img.scroll_into_view_if_needed()
+            page.wait_for_timeout(300)
             is_loaded = img.evaluate("el => el.complete && el.naturalWidth > 0")
+            nw = img.evaluate("el => el.naturalWidth")
+            nh = img.evaluate("el => el.naturalHeight")
             images_audit.append({
                 "src": src,
                 "alt": alt,
+                "dimensions": f"{nw}x{nh}",
                 "rendered": bool(is_loaded)
             })
 
         print(f"  [ AUDIT] Evaluated {len(images_audit)} images/badges in README:")
         broken_images = [img for img in images_audit if not img["rendered"]]
-        print(f"    - Loaded: {len(images_audit) - len(broken_images)} | Broken: {len(broken_images)}")
+        for img in images_audit:
+            print(f"    - [{img['alt']}] Rendered: {img['rendered']} ({img['dimensions']})")
 
         # Step 5: Audit First 3 Links in README
         readme_links = page.locator("article.markdown-body a[href^='http']").all()
