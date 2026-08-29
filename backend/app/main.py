@@ -42,8 +42,29 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 import time
 import uuid
 import logging
+from logging.handlers import RotatingFileHandler
+from pathlib import Path
 from sqlalchemy import text
 from app.services.metrics import get_prometheus_metrics
+
+# Configure Enterprise Rotating Log File Handler (10MB max, 5 backup generations)
+logs_dir = Path(settings.LOGS_DIR)
+logs_dir.mkdir(parents=True, exist_ok=True)
+app_log_file = logs_dir / "app.log"
+
+logger = logging.getLogger("sentry")
+logger.setLevel(logging.INFO)
+
+if not any(isinstance(h, RotatingFileHandler) for h in logger.handlers):
+    file_handler = RotatingFileHandler(
+        str(app_log_file),
+        maxBytes=10 * 1024 * 1024,
+        backupCount=5,
+        encoding="utf-8"
+    )
+    file_formatter = logging.Formatter("%(asctime)s [%(levelname)s] [%(name)s] [corr=%(correlation_id)s] %(message)s")
+    file_handler.setFormatter(file_formatter)
+    logger.addHandler(file_handler)
 
 # Process start time for uptime tracking
 START_TIME = time.time()
@@ -68,6 +89,15 @@ async def observability_and_security_middleware(request: Request, call_next):
     start_t = time.time()
     response: Response = await call_next(request)
     duration_ms = round((time.time() - start_t) * 1000, 2)
+
+    # Structured request logging
+    try:
+        logger.info(
+            f"{request.method} {request.url.path} -> {response.status_code} ({duration_ms}ms)",
+            extra={"correlation_id": correlation_id}
+        )
+    except Exception:
+        pass
 
     # Attach Correlation ID & Enterprise Security Headers
     response.headers["X-Correlation-ID"] = correlation_id

@@ -136,18 +136,50 @@ cd frontend && npm run dev -- --port 3000
 
 ---
 
-## 5. Persistent Data Locations & Backup Operations
+---
+
+## 5. Database Migrations & Schema Upgrades (GAP-009 / D5)
+
+SENTRY manages database schema evolution via Alembic.
+
+### Applying Migrations
+Before starting the backend on an existing database, run:
+```bash
+cd backend
+alembic upgrade head
+```
+
+### Stamping Legacy Installations
+For v1.0.0 installations initialized prior to migration tracking:
+```bash
+cd backend
+alembic stamp head
+```
+
+---
+
+## 6. Persistent Data Locations & Backup Operations (GAP-010 / D6)
 
 | Data Asset | Filesystem Location | Description |
 | :--- | :--- | :--- |
 | **Relational Database** | `backend/sentry.db` (or configured path) | SQLite database containing parsed emails, threat scores, campaign links, and hop chronologies. |
-| **Evidence Vault** | `evidence_vault/` | Write-once SHA-256 addressed `.eml` and `.msg` raw files with RFC 3227 genesis hash blocks. |
+| **Evidence Vault** | `evidence_vault/` | Write-once SHA-256 addressed `.eml` raw files with RFC 3227 genesis hash blocks. |
+| **Application & Access Logs** | `logs/app.log` | Rotating structured logs (10MB limit, 5 backup generations). |
 | **Admin Audit Trail** | `logs/reset_audit.log` | Cryptographically signed administrative action and reset audit records. |
 
 > [!IMPORTANT]
 > **Atomic Backup Notice (GAP-010):**  
 > Because SENTRY links database records to physical disk digests via cryptographic hash chains, restoring a database snapshot without the matching `evidence_vault/` filesystem snapshot (or vice-versa) invalidates RFC 3227 verification.  
-> Always use the coordinated snapshot tooling:
+> Always use the coordinated evidentiary hot backup and restore tooling:
+>
+> **Create Hot Snapshot:**
 > ```bash
-> python tools/snapshot_backup.py --out /backups/sentry_snapshot_$(date +%Y%m%d_%H%M%S).tar.gz
+> python tools/backup_vault.py --output backups/sentry_snapshot_$(date +%Y%m%d_%H%M%S).tar.gz
 > ```
+>
+> **Execute Verified Restore:**
+> ```bash
+> python tools/restore_vault.py --snapshot backups/sentry_snapshot_<timestamp>.tar.gz
+> ```
+>
+> For full disaster recovery procedures, automated cron schedules, and rollback drills, consult [`docs/RUNBOOK.md`](docs/RUNBOOK.md).
