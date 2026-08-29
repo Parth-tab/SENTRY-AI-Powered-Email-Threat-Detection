@@ -95,7 +95,7 @@ Cryptographically re-computes and verifies the sequential SHA-256 hash chain to 
 ## 5. Machine Learning & Model Transparency
 
 ### `GET /api/v1/model/metrics`
-Returns formal multi-class model metrics (Accuracy: 0.961, Macro-F1: 0.952, Macro OvR ROC-AUC: 0.988), $5\times 5$ confusion matrix, 10-bin probability calibration curve, and ranked top feature importances.
+Returns formal multi-class model metrics (Accuracy: 0.961 [partially in-sample; Enron/CEAS 2008 baseline distribution], Macro-F1: 0.952, Macro OvR ROC-AUC: 0.988), $5\times 5$ confusion matrix, 10-bin probability calibration curve, and ranked top feature importances.
 
 ### `GET /api/v1/model/features`
 Returns the 47-dimension feature vector taxonomy extracted by SENTRY.

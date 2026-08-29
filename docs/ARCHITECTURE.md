@@ -70,7 +70,7 @@ Every analyzed artifact in SENTRY is cryptographically sealed from the milliseco
 - **Layer 1 (Deterministic Heuristic Rules):** 100% precision perimeter filters for known Tor exit nodes, SPF/DKIM hard fails, lookalike bank domains, and active IOC matches.
 - **Layer 2 (Calibrated Gradient Boosted Trees):** 47 continuous and categorical dimensions (Linguistic, Structural, Header Forensics, Authentication, Domain Intel, Geo-Origin).
 - **Layer 3 (Linguistic Feature-Scoring Attention):** NLP heuristic layer computing weighted urgency, financial-pressure, authority-impersonation, and credential-harvesting signal scores for contextual intent extraction — no neural runtime dependency; executes in <1ms. Roadmap: DistilBERT fine-tuning as an offline research track.
-- **Validation Rigor:** Evaluated on 15,240-sample benchmark dataset achieving Accuracy (0.961), Macro-F1 (0.952), and Macro One-vs-Rest (OvR) ROC-AUC (0.988).
+- **Validation Rigor:** Evaluated on 15,240-sample benchmark dataset achieving Accuracy (0.961; partially in-sample due to Enron/CEAS 2008 baseline distribution), Macro-F1 (0.952), and Macro One-vs-Rest (OvR) ROC-AUC (0.988).
 
 ### C. Multi-Entity Campaign Knowledge Graph
 SENTRY correlates disparate emails into unified threat campaigns using graph clustering:

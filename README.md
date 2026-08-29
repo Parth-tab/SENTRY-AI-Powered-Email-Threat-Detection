@@ -124,7 +124,7 @@ testing was in-process, not container-kill). **Composite: 97.5/100 adjusted,
 98.0/100 base.** Full derivation, per-check evidence, defect registry, and
 limitations: [`evaluation/final_report.md`](evaluation/final_report.md).*
 
-Key ML metrics (macro OvR): accuracy 0.961, macro-F1 0.952, ROC-AUC 0.988 on
+Key ML metrics (macro OvR): accuracy 0.961 (partially in-sample; legitimate baseline derived from Enron/CEAS 2008), macro-F1 0.952, ROC-AUC 0.988 on
 15,240 validation samples; 9/10 adversarial evasions detected (homoglyphs,
 zero-width chars, IDN punycode, RTLO).
 

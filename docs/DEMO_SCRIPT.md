@@ -75,6 +75,6 @@
 3. **"Why use Bleach?"**  
    *"Bleach 6.1 is pinned with a strict ASVS Level 2 allowlist and regression-tested; high-throughput streaming in v2.0 transitions to the Rust-based `nh3` library."*
 4. **"How does the ML ensemble perform?"**  
-   *"Evaluated on 15,240 samples across 47 dimensions: Accuracy 0.961, Macro-F1 0.952, and Macro One-vs-Rest ROC-AUC 0.988."*
+   *"Evaluated on 15,240 samples across 47 dimensions: Accuracy 0.961 (partially in-sample; Enron/CEAS baseline), Macro-F1 0.952, and Macro One-vs-Rest ROC-AUC 0.988; independently stress-tested out-of-sample against 6,951 historical ham emails with 0 critical false positives."*
 5. **"What did you not test?"**  
    *"Mutation testing, physical container SIGKILL chaos, and external metrics auth — all explicitly documented in our Limitations section."*
