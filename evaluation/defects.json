@@ -600,11 +600,12 @@
     "check": "deploy.production_build_cors_and_api_base",
     "severity": "blocker",
     "evidence": "frontend/src/services/api.ts:L9-14, backend/app/main.py:L89-101",
-    "status": "open",
+    "status": "resolved",
     "target_version": "MRWS",
     "effort": "S",
     "impact": "H",
-    "description": "Frontend production dist defaults to relative path without reverse proxy support and backend CORS rejects origins other than :3000/:5173."
+    "fix_commit": "HEAD",
+    "description": "Implemented D1 production single-origin serving: FastAPI mounts compiled SPA from frontend/dist on root '/' when SERVE_STATIC or production environment is active; broadened CORS allowlist; added Gate 20 ui.production_mode_e2e to golden harness."
   },
   {
     "id": "GAP-004",

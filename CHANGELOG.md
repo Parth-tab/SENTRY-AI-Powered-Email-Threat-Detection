@@ -8,12 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Single-Origin Production Serving (D1 / GAP-003):** FastAPI dynamic static mount for pre-compiled React/Vite SPA bundle (`frontend/dist`), eliminating dual-process requirements and CORS barriers in production.
+- **Enterprise On-Premises Deployment Guide:** Added [`DEPLOYMENT.md`](file:///E:/SENTRY/DEPLOYMENT.md) covering build instructions, environment variables, port topology, persistent storage paths, and atomic backup procedures.
+- **Gate 20 Harness Verification (`ui.production_mode_e2e`):** Extended golden verification battery to 20 gates with end-to-end single-origin serving assertion.
 - **Auditor's Annex & Errata (Phase 0):** Formalized viability audit corrections, SY-1 scale-out analysis errata, memory profiling notes, and market math reconciliations.
 - **MaxMind GeoLite2 EULA Attribution:** Explicit attribution notice and direct links on UI footer, PDF dossiers, and README.
 - **Trademark & Brand Disclaimers:** Non-affiliation statement regarding `sentry.io` (Functional Software, Inc.) in README and SECURITY.md.
 
 ### Changed
 - **Positioning Copy Recalibration (GAP-008):** Aligned all public documentation and demo scripts to "Calibrated Machine Learning & Evidentiary Email Forensics" (eliminating uncalibrated "AI-Powered" phrasing).
+- **CORS Allowlist:** Broadened CORS policy to permit single-origin localhost calls (`:8000`) and customizable origins via `CORS_ORIGINS`.
 
 ---
 
