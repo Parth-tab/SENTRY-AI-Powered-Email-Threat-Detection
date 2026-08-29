@@ -5,8 +5,8 @@
 
 ---
 
-## Item 1: Token Revocation (OAuth Lifecycle Closure)
-> **Rationale:** All GitHub API operations (Branch Protection, Rulesets, Dependabot, Secret Scanning, PR Merges) are now 100% completed and sealed. Revoking the stored session credential ensures zero latent credential exposure.
+## Item 1: Token Revocation (Immediate Next Human Action)
+> **Rationale:** All GitHub API operations (Branch Protection, Tag Rulesets, Metadata, Dependabot Alert Dismissals, PR Merges) are now 100% completed and sealed at `origin/main`. Revoking the stored session credential immediately terminates the active credential lifecycle and ensures zero latent access exposure.
 
 **Exact Click-Path (~60 seconds):**
 1. Open your browser and navigate to: [`https://github.com/settings/applications`](https://github.com/settings/applications) (or `Settings` $\rightarrow$ `Developer settings` $\rightarrow$ `Personal access tokens` / `Authorized OAuth Apps`).
@@ -15,8 +15,19 @@
 
 ---
 
-## Item 2: Fresh Credential Re-Authentication & Invariant Verification
-> **Rationale:** Confirms that the old token transitions immediately to DEAD and establishes a fresh, clean credential state.
+## Item 2: Account Security Log Audit (Explicit Dated Verification)
+> **Rationale:** Explicitly verify account-level security events to confirm no anomalous API or credential activities occurred.
+
+**Exact Audit Steps:**
+1. Navigate to: [`https://github.com/settings/security-log`](https://github.com/settings/security-log).
+2. Filter / Review events dated **2026-08-29**.
+3. Confirm all logged actions (`repo.update`, `ruleset.create`, `pull_request.merge`, `oauth_access.revoke`) match the documented actions in this report.
+4. Confirm zero unauthorized IP addresses or unexpected geographic access points.
+
+---
+
+## Item 3: Fresh Credential Re-Authentication & Invariant Verification
+> **Rationale:** Confirms that the old token transitions immediately to DEAD and establishes a fresh, clean credential state for local development.
 
 **Exact Terminal Command:**
 ```bash
@@ -29,7 +40,7 @@ git fetch origin
 
 ---
 
-## Item 3: Social Preview Image Upload
+## Item 4: Social Preview Image Upload
 > **Rationale:** GitHub provides no public REST API endpoint for uploading repository social preview images (`og:image`); this is strictly a browser UI action.
 
 **Exact Click-Path (~30 seconds):**
@@ -41,7 +52,7 @@ git fetch origin
 
 ---
 
-## Item 4: Stranger Usability Interviews
+## Item 5: Stranger Usability Interviews
 > **Rationale:** Conduct three 2-minute silent observation evaluations with first-time viewers to gauge strangers' immediate mental model and capture unfiltered friction points.
 
 **Instructions:**
@@ -51,3 +62,4 @@ git fetch origin
 4. Record verbatim first sentence and debrief answers in [`evaluation/final_inch/stranger_results_template.md`](file:///E:/SENTRY/evaluation/final_inch/stranger_results_template.md).
 
 ---
+

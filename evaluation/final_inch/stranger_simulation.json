@@ -1,42 +1,58 @@
 {
-  "timestamp": "2026-08-29T17:55:57Z",
+  "timestamp": "2026-08-29T18:07:52Z",
   "target_url": "https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection",
   "browser_mode": "Chromium (fresh context, logged-out, unauthenticated)",
-  "time_to_readme_seconds": 1.597,
-  "description": "",
-  "topics": [],
+  "time_to_readme_seconds": 2.453,
+  "description": "Every email is a crime scene. AI-powered threat detection, origin tracing & forensic intelligence \u2014 air-gap proven, self-verifying.",
+  "topics": [
+    "cybersecurity",
+    "digital-forensics",
+    "email-security",
+    "fastapi",
+    "hackathon",
+    "machine-learning",
+    "phishing-detection",
+    "react",
+    "sih2025",
+    "threat-intelligence"
+  ],
   "license_visible": true,
-  "license_text": "100 Commits",
-  "release_visible": false,
-  "release_text": "",
+  "license_text": "LICENSE",
+  "release_visible": true,
+  "release_text": "github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection/releases/tag/v1.0.0",
   "total_images_in_readme": 5,
-  "rendered_images_count": 4,
-  "broken_images_count": 1,
+  "rendered_images_count": 5,
+  "broken_images_count": 0,
   "images_audit": [
     {
       "src": "https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection/actions/workflows/ci.yml/badge.svg",
       "alt": "CI",
+      "dimensions": "244x20",
       "rendered": true
     },
     {
       "src": "https://camo.githubusercontent.com/96abf9b704f80578ea56dd10cab0d911c56d46dbec347f431ece9cf60ac175ad/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f707974686f6e2d332e31312532422d626c7565",
       "alt": "Python 3.11+",
+      "dimensions": "92x20",
       "rendered": true
     },
     {
       "src": "https://camo.githubusercontent.com/f8df3091bbe1149f398a5369b2c39e896766f9f6efba3477c63e9b4aa940ef14/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c6963656e73652d4d49542d677265656e",
       "alt": "License: MIT",
+      "dimensions": "78x20",
       "rendered": true
     },
     {
       "src": "https://camo.githubusercontent.com/3bbc7a3a55aa1ee8389555e6cba906772b9892a1ff9c5c33905362472dc4f316/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4741554e544c45542d39372e352532463130302d386235636636",
       "alt": "Verified: GAUNTLET 97.5/100",
+      "dimensions": "130x20",
       "rendered": true
     },
     {
       "src": "/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection/raw/main/docs/assets/dashboard.png",
       "alt": "SOC Dashboard",
-      "rendered": false
+      "dimensions": "1600x1011",
+      "rendered": true
     }
   ],
   "first_links_audit": [
@@ -52,5 +68,5 @@
     }
   ],
   "above_the_fold_screenshot": "evaluation/final_inch/above_the_fold.png",
-  "verdict": "FINDINGS_RECORDED"
+  "verdict": "PASS"
 }
