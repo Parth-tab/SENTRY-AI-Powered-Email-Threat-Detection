@@ -193,6 +193,25 @@ $$\text{Total Objects (59)} = 50 \text{ Resolved} + 1 \text{ Interim Mitigated} 
 
 Zero (0) blockers or high-severity defects remain open for the v1.1.0 release. All four open items are explicitly scoped and scheduled for v1.2.0. `DILIGENCE.md` and `SHIP_GATE_REVIEW.md` are updated to cite the exact 59-item arithmetic.
 
+---
+
+## Errata 009 — GHCR Image Publish Workflow Lowercase Owner Normalization & Commit Range — recorded at GHCR-FIX
+
+**Applies to:** `.github/workflows/release.yml`, GHCR Packages (`ghcr.io/parth-tab/sentry-backend:1.1.0`, `ghcr.io/parth-tab/sentry-frontend:1.1.0`).
+
+### 1. What Happened
+The initial tag push to `v1.1.0` triggered the `release.yml` GitHub Actions workflow, but the step `Build & Publish Backend Image` failed because Docker and GitHub Container Registry (GHCR) strictly reject uppercase characters in image repository references (`ghcr.io/Parth-tab/...`). The workflow previously referenced `${{ github.repository_owner }}` directly without normalization. Furthermore, the workflow lacked a `workflow_dispatch` manual trigger for out-of-band publishing and used older action versions.
+
+### 2. The Fix
+- Added bash normalization `${GITHUB_REPOSITORY_OWNER,,}` to dynamically derive the lowercase repository owner (`parth-tab`) without hardcoding the owner name (ensuring project rename resilience).
+- Added `workflow_dispatch` trigger with `image_tag` parameter (defaulting to `1.1.0`).
+- Bumped action versions (`docker/build-push-action@v6`, `docker/setup-buildx-action@v3`, `docker/login-action@v3`, `actions/checkout@v4`).
+- Added required permissions (`packages: write`, `id-token: write`, `attestations: write`).
+
+### 3. Commit Range & Image Provenance
+The release container images for `v1.1.0` (`ghcr.io/parth-tab/sentry-backend:1.1.0` and `ghcr.io/parth-tab/sentry-frontend:1.1.0`) encapsulate the verified release state spanning from certified HEAD `95d153c` through the GHCR workflow fix PR merge commit.
+
+
 
 
 
