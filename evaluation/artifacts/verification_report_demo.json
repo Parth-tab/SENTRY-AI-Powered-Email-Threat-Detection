@@ -1,0 +1,103 @@
+{
+  "started": "2026-08-29T10:12:44.670075+00:00",
+  "finished": "2026-08-29T10:13:20.166994+00:00",
+  "exit_code": 0,
+  "verdict": "PASS",
+  "note": "",
+  "counts": {
+    "PASS": 15,
+    "FAIL": 0,
+    "TIMEOUT": 0
+  },
+  "checks": [
+    {
+      "name": "setup.backend_up",
+      "status": "PASS",
+      "detail": "http://127.0.0.1:8000"
+    },
+    {
+      "name": "setup.frontend_up",
+      "status": "PASS",
+      "detail": "http://127.0.0.1:3000"
+    },
+    {
+      "name": "api.seed",
+      "status": "PASS",
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "api.health",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "api.emails_list",
+      "status": "PASS",
+      "detail": "18 items"
+    },
+    {
+      "name": "api.dashboard_stats",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "api.campaigns",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "ui.dashboard_renders",
+      "status": "PASS",
+      "detail": "http://127.0.0.1:3000"
+    },
+    {
+      "name": "ui.threat_feed_populated",
+      "status": "PASS",
+      "detail": "23 severity-tagged elements"
+    },
+    {
+      "name": "ui.email_detail_opens",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "ui.map_canvas_renders",
+      "status": "PASS",
+      "detail": "nav_clicked=True"
+    },
+    {
+      "name": "ui.graph_canvas_renders",
+      "status": "PASS",
+      "detail": "nav_clicked=True"
+    },
+    {
+      "name": "ui.websocket_live_connected",
+      "status": "PASS",
+      "detail": "ws://127.0.0.1:8000/api/v1/dashboard/live"
+    },
+    {
+      "name": "ui.console_clean",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "ui.no_http_errors",
+      "status": "PASS",
+      "detail": ""
+    }
+  ],
+  "console_errors": [],
+  "failed_http_responses": [],
+  "websockets_opened": [
+    "ws://127.0.0.1:3000/?token=XTaDlbE0kHTF",
+    "ws://127.0.0.1:8000/api/v1/dashboard/live",
+    "ws://127.0.0.1:8000/api/v1/dashboard/live",
+    "ws://127.0.0.1:8000/api/v1/dashboard/live"
+  ],
+  "screenshots": [
+    "screenshots\\verify\\01_dashboard.png",
+    "screenshots\\verify\\02_email_detail.png",
+    "screenshots\\verify\\03_map.png",
+    "screenshots\\verify\\04_graph.png"
+  ]
+}
