@@ -51,7 +51,7 @@ jobs:
       - name: Run Backend Pytest Suite with Coverage (>80%)
         run: |
           cd backend
-          python -m pytest tests/ -v --cov=app --cov-report=term --cov-report=xml --cov-fail-under=80
+          PYTHONPATH=. python -m pytest tests/ -v --cov=app --cov-report=term --cov-report=xml --cov-fail-under=80
 
       - name: Upload Test Coverage Artifact
         uses: actions/upload-artifact@v4
