@@ -19,3 +19,4 @@ Please include detailed reproduction steps, proof-of-concept payloads, and envir
 - **Rate Limiting:** `SlowAPI` token-bucket rate limiting (120 req/min burst limits).
 - **Payload Guard:** 25MB maximum request size limit.
 - **RFC 3227 Chain-of-Custody:** Sequential SHA-256 hash chaining with automated tamper verification.
+- **Administrative Endpoint Hardening (`/api/v1/admin/reset-demo`):** Privileged state reset requires an explicit `X-Sentry-Admin` header matching `ADMIN_TOKEN`. Non-safelisted custom headers trigger browser CORS preflights (`OPTIONS`), structurally neutralizing cross-origin drive-by form-POST exploits. All destruction events append a cryptographically attributed audit record to `logs/reset_audit.log` before database purging.

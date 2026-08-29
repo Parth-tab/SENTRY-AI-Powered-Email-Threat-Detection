@@ -65,7 +65,7 @@ Generates and downloads the official court-admissible PDF forensic report with c
 ## 3. Administration & Reset
 
 ### `POST /api/v1/admin/reset-demo`
-Gated exclusively to `ENVIRONMENT=demo`. Flushes database, cleans the in-memory campaign correlation graph (`CorrelationEngine.reset_graph()`), and reseeds the immutable 18-email demo corpus with fresh RFC 3227 chain-of-custody seals.
+Gated to `ENVIRONMENT=demo` and authenticated via custom header `X-Sentry-Admin: <ADMIN_TOKEN>`. Non-simple custom header structurally forces CORS preflight (`OPTIONS`), preventing cross-origin drive-by form submissions. Appends an evidentiary destruction audit record (`logs/reset_audit.log`) containing timestamp, trigger, prior record count, and prior chain head hash before database table purging, in-memory graph reset (`CorrelationEngine.reset_graph()`), and re-seeding of the 18 demo email scenarios.
 
 ---
 
