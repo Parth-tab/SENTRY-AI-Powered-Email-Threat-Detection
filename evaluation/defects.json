@@ -304,11 +304,23 @@
     "severity": "medium",
     "evidence": "evaluation/ingest_repair/ERRATA.md",
     "status": "resolved",
-    "fix_commit": "HEAD",
+    "fix_commit": "b8e04f5",
     "target_version": "v1.0.3",
     "regression_test": "tools/verify_sentry.py (scratch DB isolation and Vite proxy mutation kill)",
     "effort": "S",
     "description": "The prior mutation-kill receipt showed 39 items due to persistent database pollution in backend/sentry.db and cross-origin fallback resolution; resolved via isolated scratch database (harness_scratch.db), relative API paths, and documented in ERRATA.md."
+  },
+  {
+    "id": "ING-004",
+    "check": "frontend.relative_api_base_proxy_routing",
+    "severity": "high",
+    "evidence": "commit cdcefef / frontend/src/services/api.ts",
+    "status": "resolved",
+    "fix_commit": "cdcefef",
+    "target_version": "v1.0.3",
+    "regression_test": "tools/verify_sentry.py (ui.ingest_upload_e2e, ui.ingest_paste_e2e without VITE_API_URL)",
+    "effort": "S",
+    "description": "getApiBase in api.ts previously constructed explicit port 8000 URLs when VITE_API_URL was absent, bypassing Vite's server.proxy and breaking cross-origin deployments; resolved by defaulting to relative URLs ('') so all /api requests route through Vite dev proxy or same-origin reverse proxy."
   },
   {
     "id": "DEF-005",
