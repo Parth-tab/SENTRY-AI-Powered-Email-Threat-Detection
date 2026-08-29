@@ -38,8 +38,9 @@ These detections represent explainable and legitimate forensic feature activatio
 ## 3. Training & Validation Data Provenance (P0 Integrity Verdict)
 
 - **Internal 15,240 Validation Set:** SENTRY's internal GBDT validation benchmark (4,200 Phishing, 2,850 BEC, 2,100 Impersonation, 1,800 Suspicious, 4,290 Legitimate) was constructed from Enron, CEAS 2008, and synthetic multi-hop attack scenarios.
-- **SpamAssassin Corpus Independence:** The 6,951 SpamAssassin ham dataset tested here was evaluated strictly out-of-sample as an external stress test of timezone resilience, null-safety, and regex throughput.
-- **Provenance Verdict:** The ham benchmark is an **independent external test** of pipeline robustness and feature bounds.
+- **Enron Provenance & Overlap Flag:** Because the 4,290 legitimate baseline samples in the 15,240-sample validation set were derived from the public Enron and CEAS 2008 corpora, the reported 0.961 accuracy metric is **partially in-sample** regarding corporate baseline distributions.
+- **SpamAssassin Corpus Independence:** The 6,951 SpamAssassin ham dataset tested in this benchmark contains zero overlap with the 15,240 validation set and was evaluated strictly out-of-sample as an external stress test of timezone resilience, null-safety, and regex throughput.
+- **Provenance Verdict:** The ham benchmark is an **independent external out-of-sample test** of pipeline robustness and feature bounds.
 
 ---
 
