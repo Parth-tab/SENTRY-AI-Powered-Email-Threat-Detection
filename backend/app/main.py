@@ -55,13 +55,15 @@ async def observability_and_security_middleware(request: Request, call_next):
     correlation_id = request.headers.get("X-Correlation-ID") or request.headers.get("X-Request-ID") or str(uuid.uuid4())
     request.state.correlation_id = correlation_id
 
-    # Max Request Size Guard (25 MB)
+    # Max Request Size Guard (250MB for batch/archive uploads, 25MB for standard endpoints)
     content_length = request.headers.get("content-length")
-    if content_length and int(content_length) > 26_214_400:
-        return JSONResponse(
-            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
-            content={"detail": "Payload exceeds maximum allowed size of 25MB."}
-        )
+    if content_length:
+        max_allowed = 275_000_000 if ("/batch" in request.url.path or "/upload" in request.url.path) else 26_214_400
+        if int(content_length) > max_allowed:
+            return JSONResponse(
+                status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+                content={"detail": f"Payload exceeds maximum allowed size ({max_allowed // (1024 * 1024)}MB)."}
+            )
 
     start_t = time.time()
     response: Response = await call_next(request)
