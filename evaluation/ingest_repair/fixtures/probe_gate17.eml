@@ -1,0 +1,9 @@
+From: probe-paster@gate17-verifier.sec
+To: soc-analyst@sentry-soc.local
+Subject: HARNESS-PROBE-GATE17-PASTE
+Date: Sat, 29 Aug 2026 16:05:00 +0000
+Message-ID: <harness-probe-gate17-paste-id-99902@gate17.sec>
+Received: from probe-relay.gate17.sec ([198.51.100.88]) by mx.sentry-soc.local with ESMTP; Sat, 29 Aug 2026 16:05:00 +0000
+Content-Type: text/plain; charset=utf-8
+
+Unique E2E probe payload for golden harness Gate 17 raw paste verification.

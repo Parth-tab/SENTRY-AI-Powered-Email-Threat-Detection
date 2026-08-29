@@ -6,6 +6,11 @@ real UI in headless Chromium, asserts on DOM + API + WebSocket + console,
 captures screenshots and telemetry, writes verification_report.json, and
 exits with a code the agent can branch on.
 
+Scratch World Isolation:
+The golden harness runs strictly against an isolated scratch database
+(evaluation/harness_scratch.db) which is deleted before backend boot.
+The live appliance database (backend/sentry.db) is untouched and pristine.
+
 Exit codes:
     0 = all checks passed
     1 = one or more checks failed (see report)
@@ -181,12 +186,26 @@ class Stack:
 
     def start_backend(self):
         # Deliberately NO --reload: reloader restarts corrupt verification.
+        # Scratch DB Isolation: The golden harness runs strictly against an isolated
+        # scratch DB (evaluation/harness_scratch.db) and NEVER mutates backend/sentry.db.
+        scratch_db_path = REPO_ROOT / "evaluation" / "harness_scratch.db"
+        if scratch_db_path.exists():
+            try:
+                scratch_db_path.unlink()
+            except Exception:
+                pass
+
+        env = os.environ.copy()
+        scratch_db_uri = scratch_db_path.as_posix()
+        env["DATABASE_URL"] = f"sqlite+aiosqlite:///{scratch_db_uri}"
+        env["SYNC_DATABASE_URL"] = f"sqlite:///{scratch_db_uri}"
+
         self._spawn(
             [sys.executable, "-m", "uvicorn", "app.main:app",
              "--app-dir", "backend", "--host", "127.0.0.1",
              "--port", str(self.api_port)],
-            cwd=REPO_ROOT, log_name="verify_backend.log")
-        print(f"  backend spawned on :{self.api_port} (log: logs/verify_backend.log)")
+            cwd=REPO_ROOT, env=env, log_name="verify_backend.log")
+        print(f"  backend spawned on :{self.api_port} (scratch DB: evaluation/harness_scratch.db, log: logs/verify_backend.log)")
 
     def start_frontend(self):
         front = next((d for d in FRONTEND_CANDIDATES
@@ -345,9 +364,9 @@ async def run_browser_checks(report, ui_url):
         await canvas_scene("ui.map_canvas_renders", MAP_NAV, "03_map.png")
         await canvas_scene("ui.graph_canvas_renders", GRAPH_NAV, "04_graph.png")
 
-        # -- Scene 6: Ingest Upload E2E (ING-001 / ING-002 golden gate 16) --
-        upload_fixture_path = REPO_ROOT / "sample_emails" / "bec_executive_wire_fraud.eml"
-        upload_subject = "Immediate Out-of-Band Wire Transfer Request"
+        # -- Scene 6: Ingest Upload E2E (ING-003 golden gate 16) ------------
+        upload_fixture_path = REPO_ROOT / "evaluation" / "ingest_repair" / "fixtures" / "probe_gate16.eml"
+        upload_subject = "HARNESS-PROBE-GATE16-UPLOAD"
 
         try:
             # Navigate back to Dashboard/Threat Feed view if on map/graph
@@ -355,6 +374,9 @@ async def run_browser_checks(report, ui_url):
             if await nav_dashboard.count() > 0:
                 await nav_dashboard.click(timeout=3_000)
                 await asyncio.sleep(0.5)
+
+            # Capture pre-upload feed row count
+            pre_count = await page.locator("tbody tr").count()
 
             file_mode_btn = page.locator("button:has-text('File Upload')").first
             if await file_mode_btn.count() > 0:
@@ -373,20 +395,28 @@ async def run_browser_checks(report, ui_url):
             await modal_overlay.wait_for(state="detached", timeout=5_000)
             await asyncio.sleep(0.5)
 
-            # Assert the specific uploaded subject string is visible in the feed
+            # Assert BOTH: probe subject visible AND feed count == pre_count + 1
             subj_el = page.locator(f"text={upload_subject}").first
             await subj_el.wait_for(state="visible", timeout=5_000)
-            report.add("ui.ingest_upload_e2e", "PASS", f"Subject '{upload_subject}' confirmed in feed")
+            post_count = await page.locator("tbody tr").count()
+            if post_count != pre_count + 1:
+                raise AssertionError(f"Expected feed count {pre_count + 1}, got {post_count}")
+
+            report.add("ui.ingest_upload_e2e", "PASS",
+                       f"Subject '{upload_subject}' confirmed; feed rows: {pre_count} -> {post_count}")
         except Exception as exc:
             await page.screenshot(path=str(SHOT_DIR / "05_ingest_upload_FAIL.png"), full_page=True)
             report.add("ui.ingest_upload_e2e", "FAIL", repr(exc)[:300])
 
-        # -- Scene 7: Ingest Raw Paste E2E (ING-001 / ING-002 golden gate 17) -
-        paste_fixture_path = REPO_ROOT / "sample_emails" / "sbi_phishing_tor_relay.eml"
+        # -- Scene 7: Ingest Raw Paste E2E (ING-003 golden gate 17) ---------
+        paste_fixture_path = REPO_ROOT / "evaluation" / "ingest_repair" / "fixtures" / "probe_gate17.eml"
         raw_payload = paste_fixture_path.read_text(encoding="utf-8")
-        paste_subject = "Mandatory KYC Verification Required Within 24 Hours"
+        paste_subject = "HARNESS-PROBE-GATE17-PASTE"
 
         try:
+            # Capture pre-paste feed row count
+            pre_count = await page.locator("tbody tr").count()
+
             raw_mode_btn = page.locator("button:has-text('Raw RFC 5322')").first
             await raw_mode_btn.click(timeout=3_000)
             await asyncio.sleep(0.5)
@@ -405,10 +435,15 @@ async def run_browser_checks(report, ui_url):
             await modal_overlay.wait_for(state="detached", timeout=5_000)
             await asyncio.sleep(0.5)
 
-            # Assert the specific pasted subject string is visible in the feed
+            # Assert BOTH: probe subject visible AND feed count == pre_count + 1
             subj_el = page.locator(f"text={paste_subject}").first
             await subj_el.wait_for(state="visible", timeout=5_000)
-            report.add("ui.ingest_paste_e2e", "PASS", f"Subject '{paste_subject}' confirmed in feed")
+            post_count = await page.locator("tbody tr").count()
+            if post_count != pre_count + 1:
+                raise AssertionError(f"Expected feed count {pre_count + 1}, got {post_count}")
+
+            report.add("ui.ingest_paste_e2e", "PASS",
+                       f"Subject '{paste_subject}' confirmed; feed rows: {pre_count} -> {post_count}")
         except Exception as exc:
             await page.screenshot(path=str(SHOT_DIR / "06_ingest_paste_FAIL.png"), full_page=True)
             report.add("ui.ingest_paste_e2e", "FAIL", repr(exc)[:300])
