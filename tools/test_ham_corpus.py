@@ -15,8 +15,10 @@ from app.services.domain_intel import DomainIntelService
 from app.services.geo_origin import GeoOriginService
 from app.services.threat_intel import ThreatIntelService
 from app.ml.classifier import ThreatClassifier
+import argparse
 
-HAM_DIR = Path(r"C:\Users\Parth\Downloads\ham_zipped\main_ham")
+REPO_ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_CORPUS_DIR = REPO_ROOT / "sample_emails"
 
 def process_single_email(file_path: Path):
     raw_bytes = file_path.read_bytes()
@@ -81,13 +83,34 @@ def process_single_email(file_path: Path):
     }
 
 def main():
-    if not HAM_DIR.exists():
-        print(f"Error: Directory {HAM_DIR} does not exist.")
+    parser = argparse.ArgumentParser(description="SENTRY Ham Corpus Benchmark Runner")
+    parser.add_argument("--corpus-path", type=str, default=str(DEFAULT_CORPUS_DIR),
+                        help="Path to directory containing email corpus files (.eml or raw text)")
+    parser.add_argument("--output-dir", type=str, default="evaluation/runs/ham_test",
+                        help="Directory to save summary and aggregate evaluation artifacts")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="Optional limit on maximum number of emails to evaluate")
+    args = parser.parse_args()
+
+    corpus_dir = Path(args.corpus_path)
+    if not corpus_dir.exists() or not corpus_dir.is_dir():
+        print(f"Error: Corpus directory '{corpus_dir}' does not exist or is not a directory.")
+        print("Usage: python tools/test_ham_corpus.py --corpus-path /path/to/ham_emails")
         sys.exit(1)
         
-    all_files = sorted([f for f in HAM_DIR.iterdir() if f.is_file()])
+    all_files = sorted([
+        f for f in corpus_dir.iterdir()
+        if f.is_file() and not f.name.endswith((".md", ".py", ".pyc", ".json", ".png", ".log"))
+        and f.name.lower() not in ("readme.md", "license", ".gitignore")
+    ])
+    if args.limit:
+        all_files = all_files[:args.limit]
     total_files = len(all_files)
-    print(f"Found {total_files} email files in {HAM_DIR}")
+    if total_files == 0:
+        print(f"Error: No files found in corpus directory '{corpus_dir}'.")
+        sys.exit(1)
+
+    print(f"Found {total_files} email files in {corpus_dir}")
     
     # Run test on all files
     start_time = time.time()
@@ -151,7 +174,7 @@ def main():
     fp_rate = ((fp_high + fp_critical) / len(results) * 100) if results else 0
     
     summary = {
-        "dataset": str(HAM_DIR),
+        "dataset": str(corpus_dir),
         "total_files": total_files,
         "successful_parses": len(results),
         "parse_errors": len(errors),
@@ -168,7 +191,7 @@ def main():
     }
     
     # Save detailed JSON output
-    out_dir = Path("evaluation/runs/ham_test")
+    out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "ham_test_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     
