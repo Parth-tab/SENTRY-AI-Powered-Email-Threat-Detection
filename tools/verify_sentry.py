@@ -384,7 +384,89 @@ async def run_browser_checks(report, ui_url):
         await canvas_scene("ui.map_canvas_renders", MAP_NAV, "03_map.png")
         await canvas_scene("ui.graph_canvas_renders", GRAPH_NAV, "04_graph.png")
 
-        # -- Scene 6: WebSocket live feed connected ------------------------
+        # -- Scene 6: Ingest Upload E2E (ING-001 golden gate 16) ------------
+        fixture_path = REPO_ROOT / "evaluation" / "ingest_repair" / "fixtures" / "fixture.eml"
+        if not fixture_path.exists():
+            fixture_path.parent.mkdir(parents=True, exist_ok=True)
+            fixture_path.write_text(
+                "From: test.sender@example.com\n"
+                "To: analyst@sentry-soc.local\n"
+                "Subject: SEC-TEST: RFC 5322 Ingestion Gate Verification\n"
+                "Date: Sat, 29 Aug 2026 12:00:00 +0000\n"
+                "Message-ID: <sec-test-golden-gate-16@example.com>\n"
+                "Received: from mail.relay.example.com ([198.51.100.25]) by mx.sentry-soc.local with ESMTP; Sat, 29 Aug 2026 12:00:01 +0000\n"
+                "Content-Type: text/plain; charset=utf-8\n\n"
+                "RFC 5322 E2E Ingestion verification payload for golden harness gate 16.\n",
+                encoding="utf-8"
+            )
+
+        try:
+            # Navigate back to Dashboard/Threat Feed view if on map/graph
+            nav_dashboard = page.locator("button:has-text('SOC Live Triage'), button:has-text('Live Triage'), button:has-text('Dashboard'), nav button").first
+            if await nav_dashboard.count() > 0:
+                await nav_dashboard.click(timeout=3_000)
+                await asyncio.sleep(0.5)
+
+            file_mode_btn = page.locator("button:has-text('File Upload')").first
+            if await file_mode_btn.count() > 0:
+                await file_mode_btn.click(timeout=3_000)
+
+            file_input = page.locator("input[type='file']").first
+            await file_input.set_input_files(str(fixture_path))
+
+            # Ingestion opens the Forensic Detail modal
+            modal_overlay = page.locator("div[role='dialog']").first
+            await modal_overlay.wait_for(state="attached", timeout=15_000)
+            await page.screenshot(path=str(SHOT_DIR / "05_ingest_upload.png"), full_page=True)
+
+            # Dismiss modal via Escape key
+            await page.keyboard.press("Escape")
+            await modal_overlay.wait_for(state="detached", timeout=5_000)
+            await asyncio.sleep(0.5)
+
+            feed_rows = await page.get_by_text(FEED_ROW_TEXT).count()
+            if feed_rows >= 1:
+                report.add("ui.ingest_upload_e2e", "PASS", f"Feed active ({feed_rows} severity badges)")
+            else:
+                report.add("ui.ingest_upload_e2e", "FAIL", "No severity badges in feed after upload")
+        except Exception as exc:
+            await page.screenshot(path=str(SHOT_DIR / "05_ingest_upload_FAIL.png"), full_page=True)
+            report.add("ui.ingest_upload_e2e", "FAIL", repr(exc)[:300])
+
+        # -- Scene 7: Ingest Raw Paste E2E (ING-001 golden gate 17) ---------
+        try:
+            raw_payload = (
+                "From: raw.paste.verifier@example.org\n"
+                "To: soc-triage@company.local\n"
+                "Subject: SEC-TEST: Raw Paste Ingestion Verification\n"
+                "Date: Sat, 29 Aug 2026 13:00:00 +0000\n"
+                "Received: from mail.gateway.org ([203.0.113.88]) by mx.company.local with SMTP; Sat, 29 Aug 2026 13:00:00 +0000\n\n"
+                "Raw RFC 5322 triage verification payload for golden harness gate 17.\n"
+            )
+            raw_mode_btn = page.locator("button:has-text('Raw RFC 5322')").first
+            await raw_mode_btn.click(timeout=3_000)
+            await asyncio.sleep(0.5)
+
+            textarea = page.locator("textarea").first
+            await textarea.fill(raw_payload)
+
+            submit_btn = page.locator("button:has-text('Execute Forensic Triage')").first
+            await submit_btn.click(timeout=5_000)
+
+            modal_overlay = page.locator("div[role='dialog']").first
+            await modal_overlay.wait_for(state="attached", timeout=15_000)
+            await page.screenshot(path=str(SHOT_DIR / "06_ingest_paste.png"), full_page=True)
+
+            await page.keyboard.press("Escape")
+            await modal_overlay.wait_for(state="detached", timeout=5_000)
+            await asyncio.sleep(0.5)
+
+            report.add("ui.ingest_paste_e2e", "PASS", "Raw RFC 5322 triaged and sealed")
+        except Exception as exc:
+            await page.screenshot(path=str(SHOT_DIR / "06_ingest_paste_FAIL.png"), full_page=True)
+            report.add("ui.ingest_paste_e2e", "FAIL", repr(exc)[:300])
+
+        # -- Scene 8: WebSocket live feed connected ------------------------
         live = [u for u in report.ws_opened if "dashboard/live" in u and u.startswith("ws")]
         if live:
             report.add("ui.websocket_live_connected", "PASS", live[0])
