@@ -572,5 +572,118 @@
     "regression_test": "tools/verify_sentry.py",
     "effort": "S",
     "description": "WebSocket verification matched Vite HMR dev socket instead of real dashboard stream; resolved by filtering strictly for /api/v1/dashboard/live."
+  },
+  {
+    "id": "GAP-001",
+    "check": "topology.scale_out_live_path_invocation",
+    "severity": "medium",
+    "evidence": "docker-compose.yml, backend/app/services/celery_app.py",
+    "status": "open",
+    "target_version": "v1.1+",
+    "effort": "M",
+    "impact": "M",
+    "description": "Documented enterprise scale-out services (Postgres/Neo4j/Redis/Celery) are uninvoked diagram-ware; all live queries run on in-process SQLite and NetworkX."
+  },
+  {
+    "id": "GAP-002",
+    "check": "product.automated_mailbox_connectors",
+    "severity": "blocker",
+    "evidence": "backend/app/api/v1/emails.py",
+    "status": "open",
+    "target_version": "MRWS",
+    "effort": "L",
+    "impact": "H",
+    "description": "Lack of automated ingestion pipelines (IMAP polling, Microsoft Graph API, Google Workspace webhooks) creates 4-6h/day analyst toil for 500-email SOCs."
+  },
+  {
+    "id": "GAP-003",
+    "check": "deploy.production_build_cors_and_api_base",
+    "severity": "blocker",
+    "evidence": "frontend/src/services/api.ts:L9-14, backend/app/main.py:L89-101",
+    "status": "open",
+    "target_version": "MRWS",
+    "effort": "S",
+    "impact": "H",
+    "description": "Frontend production dist defaults to relative path without reverse proxy support and backend CORS rejects origins other than :3000/:5173."
+  },
+  {
+    "id": "GAP-004",
+    "check": "legal.trademark_sanitization_synthetic_corpus",
+    "severity": "high",
+    "evidence": "sample_emails/ (04_sbi_kyc_escalation.eml, 05_hdfc_netbanking_token.eml)",
+    "status": "open",
+    "target_version": "MRWS",
+    "effort": "S",
+    "impact": "H",
+    "description": "Public demo corpus uses real Indian bank trademarks (SBI, HDFC, ICICI, RBI), risking automated takedown from brand protection crawlers."
+  },
+  {
+    "id": "GAP-005",
+    "check": "legal.trademark_conflict_sentry_io",
+    "severity": "medium",
+    "evidence": "backend/app/config.py:PROJECT_NAME",
+    "status": "interim_mitigated",
+    "target_version": "MRWS",
+    "effort": "S",
+    "impact": "M",
+    "description": "Trademark conflict with sentry.io mitigated for current arc via explicit Non-Affiliation and Trademark Notices in README.md and SECURITY.md; full project renaming flagged as commercialization trigger.",
+    "fix_commit": "HEAD"
+  },
+  {
+    "id": "GAP-006",
+    "check": "security.auth_surface_ingest_hardening",
+    "severity": "blocker",
+    "evidence": "backend/app/api/v1/emails.py, evaluation/viability/panel_L.json",
+    "status": "open",
+    "target_version": "MRWS",
+    "effort": "M",
+    "impact": "H",
+    "description": "8 writable API endpoints (upload, batch, raw, seed) are reachable unauthenticated when server is bound to 0.0.0.0."
+  },
+  {
+    "id": "GAP-007",
+    "check": "compliance.maxmind_geolite2_ui_attribution",
+    "severity": "high",
+    "evidence": "frontend/src/components/layout/Header.tsx, backend/app/services/geo_origin.py",
+    "status": "resolved",
+    "target_version": "MRWS",
+    "effort": "S",
+    "impact": "H",
+    "description": "MaxMind GeoLite2 EULA Section 3 mandatory attribution text and hyperlink added across all 3 surfaces: frontend UI (Sidebar.tsx footer), PDF report dossier (reporting.py), and README.md.",
+    "fix_commit": "HEAD"
+  },
+  {
+    "id": "GAP-008",
+    "check": "positioning.ml_vs_ai_copy_calibration",
+    "severity": "medium",
+    "evidence": "README.md:L1-3",
+    "status": "resolved",
+    "target_version": "MRWS",
+    "effort": "S",
+    "impact": "M",
+    "description": "Recalibrated all public copy (README, Makefile, index.html, Header.tsx, docs/ARCHITECTURE.md) to 'Calibrated Machine Learning & Evidentiary Email Forensics', eliminating uncalibrated 'AI-Powered' assertions.",
+    "fix_commit": "HEAD"
+  },
+  {
+    "id": "GAP-009",
+    "check": "ops.database_schema_migration_framework",
+    "severity": "blocker",
+    "evidence": "backend/app/db/database.py",
+    "status": "open",
+    "target_version": "MRWS",
+    "effort": "M",
+    "impact": "H",
+    "description": "Absence of Alembic or automated schema migration tooling makes in-place upgrades impossible without wiping SQLite state."
+  },
+  {
+    "id": "GAP-010",
+    "check": "ops.db_vault_atomic_backup_procedure",
+    "severity": "high",
+    "evidence": "backend/app/services/reporting.py, evidence_vault/",
+    "status": "open",
+    "target_version": "MRWS",
+    "effort": "M",
+    "impact": "M",
+    "description": "Restoring SQLite database without physical filesystem vault snapshot (or vice versa) invalidates RFC 3227 hash chains."
   }
 ]
