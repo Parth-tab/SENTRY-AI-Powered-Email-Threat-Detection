@@ -199,6 +199,8 @@ class Stack:
         scratch_db_uri = scratch_db_path.as_posix()
         env["DATABASE_URL"] = f"sqlite+aiosqlite:///{scratch_db_uri}"
         env["SYNC_DATABASE_URL"] = f"sqlite:///{scratch_db_uri}"
+        env["SERVE_STATIC"] = "true"
+        env["BUILD_MODE"] = "production"
 
         self._spawn(
             [sys.executable, "-m", "uvicorn", "app.main:app",
@@ -217,6 +219,11 @@ class Stack:
             print("  installing frontend dependencies (npm install)...")
             npm_cmd = ["cmd", "/c", "npm", "install"] if IS_WINDOWS else ["npm", "install"]
             subprocess.run(npm_cmd, cwd=front, check=True)
+        dist = front / "dist"
+        if not dist.exists() or not (dist / "index.html").exists():
+            print("  building frontend SPA distribution (npm run build)...")
+            build_cmd = ["cmd", "/c", "npm", "run", "build"] if IS_WINDOWS else ["npm", "run", "build"]
+            subprocess.run(build_cmd, cwd=front, check=True)
         env = os.environ.copy()
         env["VITE_WS_URL"] = (f"ws://127.0.0.1:{self.api_port}"
                               f"/api/v1/dashboard/live")
@@ -267,7 +274,7 @@ def run_api_checks(report, api_base):
 
 # ------------------------------------------------------------ browser checks --
 
-async def run_browser_checks(report, ui_url):
+async def run_browser_checks(report, ui_url, api_base=None):
     try:
         from playwright.async_api import async_playwright
     except ImportError:
@@ -555,6 +562,42 @@ async def run_browser_checks(report, ui_url):
         else:
             report.add("ui.no_http_errors", "PASS")
 
+        # -- Gate 20: Production Mode E2E Single-Origin Serving (D8 / GAP-003) ----
+        prod_target = api_base or ui_url
+        try:
+            prod_page = await browser.new_page(viewport={"width": 1440, "height": 900})
+            prod_errors = []
+            prod_page.on("console", lambda m: prod_errors.append(m.text)
+                         if m.type == "error" and not any(n in m.text.lower() for n in CONSOLE_NOISE) else None)
+
+            await prod_page.goto(f"{prod_target}/", wait_until="networkidle", timeout=15_000)
+            await asyncio.sleep(1.0)
+
+            # 1. Assert SPA title and single-origin mount
+            title = await prod_page.title()
+            if "SENTRY" not in title:
+                raise AssertionError(f"Expected SENTRY in page title on single-origin mount ({prod_target}/), got '{title}'")
+
+            # 2. Assert threat feed is populated via single-origin API
+            prod_feed_rows = await prod_page.locator("tbody tr").count()
+            if prod_feed_rows < 18:
+                raise AssertionError(f"Expected >= 18 threat feed rows on single-origin mount, got {prod_feed_rows}")
+
+            await prod_page.screenshot(path=str(SHOT_DIR / "20_production_mode.png"), full_page=True)
+
+            if prod_errors:
+                raise AssertionError(f"Console errors during single-origin serving: {prod_errors[0][:200]}")
+
+            report.add("ui.production_mode_e2e", "PASS",
+                       f"Single-origin static SPA mounted on {prod_target}; title & {prod_feed_rows} feed rows validated")
+            await prod_page.close()
+        except Exception as exc:
+            try:
+                await prod_page.screenshot(path=str(SHOT_DIR / "20_production_mode_FAIL.png"), full_page=True)
+            except Exception:
+                pass
+            report.add("ui.production_mode_e2e", "FAIL", repr(exc)[:300])
+
         await browser.close()
 
 
@@ -700,7 +743,7 @@ async def main_async(args, report):
             report.add("api.seed", "FAIL", repr(exc)[:200])
 
         run_api_checks(report, api_base)
-        await run_browser_checks(report, ui_url)
+        await run_browser_checks(report, ui_url, api_base)
         return 0 if report.ok else 1
 
     finally:
