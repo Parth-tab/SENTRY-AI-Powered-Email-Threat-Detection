@@ -122,3 +122,28 @@ def test_classifier_legitimate_email():
     assert res["overall_threat_score"] < 0.40
     assert res["primary_classification"] == "legitimate"
     assert res["threat_level"] == "LOW"
+
+def test_truncated_headers_null_safety():
+    """HAM-002: Null safety and graceful degradation with truncated headers and None sub-dicts."""
+    mock_email = {
+        "body_plain": "Plain test message with minimal structure.",
+        "body_html": "",
+        "subject": "Status Update",
+        "sender": "sender@domain.com",
+        "recipient": "recipient@domain.com",
+        "attachments": []
+    }
+    # Pass empty or None sub-dicts
+    classification = ThreatClassifier.evaluate(
+        email_data=mock_email,
+        header_res=None,
+        content_res=None,
+        domain_res=None,
+        origin_res=None,
+        threat_intel_res=None
+    )
+    assert "threat_level" in classification
+    assert "overall_threat_score" in classification
+    assert 0.0 <= classification["overall_threat_score"] <= 1.0
+    assert classification["threat_level"] in ["LOW", "MEDIUM", "HIGH", "CRITICAL", "CLEAN"]
+

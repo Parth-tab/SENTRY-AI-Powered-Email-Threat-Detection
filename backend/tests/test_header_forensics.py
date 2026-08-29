@@ -52,3 +52,16 @@ def test_authentication_evaluation_fail():
     assert auth["dmarc"]["result"] == "fail"
     assert auth["total_auth_score"] < 0
     assert auth["is_spoofed"] is True
+
+def test_mixed_timezone_awareness_chronology():
+    """HAM-001: Mixed offset-naive and offset-aware datetimes in Received headers."""
+    headers = [
+        "from mail.relay.net (mail.relay.net [185.220.101.34]) by mx.google.com with ESMTP id 123; Thu, 15 Jan 2024 10:24:00 +0000",
+        "from sender.net (sender.net [198.51.100.1]) by mail.relay.net with ESMTP id 456; 15 Jan 2024 10:23:47"
+    ]
+    hops, earliest_hop, anomalies = HeaderForensicsService.parse_received_chain(headers)
+    assert len(hops) == 2
+    assert earliest_hop is not None
+    assert earliest_hop["from_ip"] == "185.220.101.34"
+    assert "impossible_timestamp_sequence_hop_1_to_2" not in anomalies
+

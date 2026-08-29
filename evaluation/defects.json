@@ -220,10 +220,46 @@
     "severity": "high",
     "evidence": "evaluation/ingest_repair/diagnosis.md",
     "status": "resolved",
-    "fix_commit": "HEAD",
+    "fix_commit": "1328a09",
     "target_version": "v1.0.2",
     "regression_test": "backend/tests/test_ingest_endpoints.py",
     "effort": "S",
     "description": "Browser UI .eml upload and raw RFC 5322 paste fail with 'Failed to fetch' due to missing Vite server.proxy and static API_BASE hostname resolution asymmetry."
+  },
+  {
+    "id": "HAM-001",
+    "check": "forensics.timezone_aware_chronology",
+    "severity": "medium",
+    "evidence": "commit 88825d6 / header_forensics.py",
+    "status": "resolved",
+    "fix_commit": "88825d6",
+    "target_version": "v1.0.2",
+    "regression_test": "backend/tests/test_header_forensics.py::test_mixed_timezone_awareness_chronology",
+    "effort": "S",
+    "description": "Relay hop timestamp subtraction raised TypeError on mixed offset-naive and offset-aware datetimes; resolved via timezone normalization in header_forensics.py."
+  },
+  {
+    "id": "HAM-002",
+    "check": "ml.null_safe_feature_extraction",
+    "severity": "medium",
+    "evidence": "commit 88825d6 / feature_extractor.py & classifier.py",
+    "status": "resolved",
+    "fix_commit": "88825d6",
+    "target_version": "v1.0.2",
+    "regression_test": "backend/tests/test_ml_classifier.py::test_truncated_headers_null_safety",
+    "effort": "S",
+    "description": "Feature extraction crashed with AttributeError on None sub-dicts (authentication, earliest_reliable_hop, domain_intel); resolved via null coalesce guards across feature_extractor.py and classifier.py."
+  },
+  {
+    "id": "HAM-003",
+    "check": "intel.lookalike_relative_edit_distance_bounds",
+    "severity": "high",
+    "evidence": "commit 88825d6 / domain_intel.py",
+    "status": "resolved",
+    "fix_commit": "88825d6",
+    "target_version": "v1.0.2",
+    "regression_test": "backend/tests/test_domain_intel.py::test_short_acronym_lookalike_bounds",
+    "effort": "S",
+    "description": "Short acronym brands (e.g., 2-3 char strings like 'sbi', 'ibm') triggered false positive lookalike matches on unrelated domains (e.g. 'sub', 'biz'); resolved by bounding relative edit distance (dist/max_len <= 0.35) and minimum brand length >= 4."
   }
 ]

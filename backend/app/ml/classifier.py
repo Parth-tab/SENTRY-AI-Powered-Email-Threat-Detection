@@ -18,17 +18,18 @@ class ThreatClassifier:
         content_res: Dict[str, Any],
         domain_res: Dict[str, Any],
         origin_res: Dict[str, Any],
-        threat_intel_res: Dict[str, Any]
+        threat_intel_res: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        feature_vector = MLFeatureExtractor.extract_feature_vector(
-            email_data, header_res, content_res, domain_res, origin_res
-        )
-
+        email_data = email_data or {}
         header_res = header_res or {}
         content_res = content_res or {}
         domain_res = domain_res or {}
         origin_res = origin_res or {}
         threat_intel_res = threat_intel_res or {}
+
+        feature_vector = MLFeatureExtractor.extract_feature_vector(
+            email_data, header_res, content_res, domain_res, origin_res
+        )
 
         auth = header_res.get("authentication") or {}
         anomalies = header_res.get("header_anomalies") or []

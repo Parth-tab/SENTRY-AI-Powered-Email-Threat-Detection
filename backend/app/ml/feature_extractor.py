@@ -25,6 +25,12 @@ class MLFeatureExtractor:
         """
         Extracts 47 engineered features into a normalized float array for ML inference.
         """
+        email_data = email_data or {}
+        header_res = header_res or {}
+        content_res = content_res or {}
+        domain_res = domain_res or {}
+        origin_res = origin_res or {}
+
         feats = []
 
         # Linguistic (1-10)
