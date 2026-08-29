@@ -369,5 +369,29 @@
     "regression_test": "frontend/src/components/graph/CampaignNetworkGraph.tsx",
     "effort": "S",
     "description": "Campaign network graph rendered uncapped nodes on 2D canvas force layout, threatening tab freeze on multi-thousand email corpora; requires 300 node rendering cap with user notice."
+  },
+  {
+    "id": "BATCH-001",
+    "check": "security.csv_formula_injection_sanitization_boundary",
+    "severity": "high",
+    "evidence": "evaluation/batch_ingest/audit_b1.md",
+    "status": "resolved",
+    "fix_commit": "60a27ff",
+    "target_version": "v1.0.4",
+    "regression_test": "backend/tests/test_batch_ingest.py::test_csv_synthesizer_preserves_raw_bytes_verbatim",
+    "effort": "S",
+    "description": "CSV formula sanitization was incorrectly applied at import time in CSVSynthesizerService, modifying raw evidence bytes; resolved by removing import sanitization to preserve byte fidelity and enforcing OWASP formula neutralization on CSV export writers at write-time."
+  },
+  {
+    "id": "BATCH-002",
+    "check": "evaluation.batch_receipts_package_and_scale_proof",
+    "severity": "high",
+    "evidence": "evaluation/artifacts/corpus_at_scale_receipt.json",
+    "status": "resolved",
+    "fix_commit": "HEAD",
+    "target_version": "v1.0.4",
+    "regression_test": "tools/verify_sentry.py",
+    "effort": "M",
+    "description": "Missing complete 19-gate verification pair, full mutation outputs, browser at-scale Playwright receipts on 6,777 items, and independent duplicate decomposition receipt."
   }
 ]

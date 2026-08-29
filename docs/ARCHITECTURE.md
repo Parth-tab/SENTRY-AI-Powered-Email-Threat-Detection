@@ -97,7 +97,7 @@ SENTRY correlates disparate emails into unified threat campaigns using graph clu
   2. Configure full CORS preflight handling on the backend (`CORSMiddleware`) for POST requests with `Content-Type: multipart/form-data` and `Content-Type: text/plain`.
 - **Ingestion Deduplication Contracts:**
   - **General Forensic Ingestion (`/api/v1/emails/upload`, `/api/v1/emails/raw`, `/api/v1/emails/batch/*`):** Enforces **SHA-256 byte identity ONLY**. Distinct bytes always generate a new evidentiary record with independent hash-chain sealing, regardless of Message-ID or Subject/Sender overlap. This guarantees zero evidence loss and prevents adversarial evidence suppression (forged Message-ID reuse) or campaign collapse (multi-wave attacks with shared subject/sender).
-  - **Demo Dataset Reset (`/api/v1/samples/seed`, `/api/v1/admin/reset-demo`):** Employs **multi-vector deduplication** (SHA-256 digest $\rightarrow$ Message-ID header $\rightarrow$ Subject + Sender pair) to guarantee idempotent presentation resets without duplicate demonstration artifacts.
+  - **Demo Dataset Reset (`/api/v1/samples/seed`, `/api/v1/admin/reset-demo`):** Employs **multi-vector deduplication** (SHA-256 digest $\rightarrow$ Message-ID header $\rightarrow$ Subject + Sender pair) to guarantee idempotent presentation resets without duplicate demonstration artifacts. When invoked, `POST /api/v1/admin/reset-demo` flushes the database and in-memory graph, clears non-seed vault artifacts, and reseeds the 18 demo emails with fresh RFC 3227 Genesis blocks ($H_0$) and newly sealed sequential SHA-256 hash chains.
   - *Evidentiary Rule:* Artifact identity in forensic ingestion is byte identity; looser vectors are seed-reset semantics and correlation signals, never ingestion drops.
 
 ---

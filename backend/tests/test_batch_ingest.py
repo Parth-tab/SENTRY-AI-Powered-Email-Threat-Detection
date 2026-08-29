@@ -99,6 +99,50 @@ async def test_zip_archive_safety_caps(monkeypatch):
         assert result["status"] == "error"
         assert "exceeds safety cap" in result["error"]
 
+    # Test Uncompressed Size Cap
+    monkeypatch.setattr("app.services.archive_ingestion.MAX_ENTRY_COUNT", 1000)
+    monkeypatch.setattr("app.services.archive_ingestion.MAX_UNCOMPRESSED_TOTAL", 50)
+    zip_buf2 = io.BytesIO()
+    with zipfile.ZipFile(zip_buf2, "w") as zf:
+        zf.writestr("big.eml", b"A" * 100)
+    async with AsyncSessionLocal() as session:
+        result2 = await ArchiveIngestionService.process_zip_archive(zip_buf2.getvalue(), db=session)
+        assert result2["status"] == "error"
+        assert "exceeds safety cap" in result2["error"]
+
+@pytest.mark.asyncio
+async def test_zip_archive_encrypted_or_corrupt_entry_graceful_handling(monkeypatch):
+    """Verifies that an encrypted/corrupt ZIP entry generates a per-entry error while
+    allowing other valid entries in the archive to be ingested safely without crashing.
+    """
+    import uuid
+    uid = str(uuid.uuid4())[:8]
+    zip_buf = io.BytesIO()
+    with zipfile.ZipFile(zip_buf, "w") as zf:
+        zf.writestr("valid.eml", f"From: valid@corp.com\r\nSubject: Valid Email {uid}\r\n\r\nContent".encode("utf-8"))
+        zf.writestr("corrupted.eml", b"Some data")
+    
+    zip_bytes = zip_buf.getvalue()
+    
+    # Mock zf.read to simulate RuntimeError on corrupted/encrypted entry
+    orig_read = zipfile.ZipFile.read
+    def mock_read(self, name, pwd=None):
+        entry_name = name.filename if isinstance(name, zipfile.ZipInfo) else name
+        if entry_name == "corrupted.eml":
+            raise RuntimeError("File is encrypted, password required")
+        return orig_read(self, name, pwd=pwd)
+    
+    monkeypatch.setattr(zipfile.ZipFile, "read", mock_read)
+
+    async with AsyncSessionLocal() as session:
+        result = await ArchiveIngestionService.process_zip_archive(zip_bytes, db=session)
+        assert result["status"] == "completed"
+        # Valid entry ingested
+        assert result["summary"]["ingested"] == 1
+        # Corrupted entry captured as per-entry error
+        assert result["summary"]["errors_count"] == 1
+        assert any("Decompression failed" in e.get("reason", "") for e in result["summary"]["errors"])
+
 @pytest.mark.asyncio
 async def test_zip_archive_reupload_idempotent_dedupe():
     """Verifies that re-uploading the exact same ZIP archive produces 0 new rows
