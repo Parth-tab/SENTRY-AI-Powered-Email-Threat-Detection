@@ -1,0 +1,4 @@
+subject,body,label
+HARNESS-PROBE-GATE18-CSV-1,Security alert for user 1,1
+HARNESS-PROBE-GATE18-CSV-2,Account invoice review required,0
+HARNESS-PROBE-GATE18-CSV-3,Immediate compliance update,1
