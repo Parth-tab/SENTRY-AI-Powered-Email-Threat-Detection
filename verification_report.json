@@ -1,11 +1,11 @@
 {
-  "started": "2026-08-27T15:29:20.664051+00:00",
-  "finished": "2026-08-27T15:30:20.411604+00:00",
+  "started": "2026-08-29T16:14:31.898765+00:00",
+  "finished": "2026-08-29T16:14:51.474771+00:00",
   "exit_code": 0,
   "verdict": "PASS",
   "note": "",
   "counts": {
-    "PASS": 15,
+    "PASS": 19,
     "FAIL": 0,
     "TIMEOUT": 0
   },
@@ -33,7 +33,7 @@
     {
       "name": "api.emails_list",
       "status": "PASS",
-      "detail": "18 items"
+      "detail": "18 items (seed invariant verified)"
     },
     {
       "name": "api.dashboard_stats",
@@ -53,7 +53,7 @@
     {
       "name": "ui.threat_feed_populated",
       "status": "PASS",
-      "detail": "23 severity-tagged elements"
+      "detail": "23 severity-tagged elements (18 feed rows + 5 stat cards)"
     },
     {
       "name": "ui.email_detail_opens",
@@ -69,6 +69,26 @@
       "name": "ui.graph_canvas_renders",
       "status": "PASS",
       "detail": "nav_clicked=True"
+    },
+    {
+      "name": "ui.ingest_upload_e2e",
+      "status": "PASS",
+      "detail": "Subject 'HARNESS-PROBE-GATE16-UPLOAD' confirmed; feed rows: 18 -> 19"
+    },
+    {
+      "name": "ui.ingest_paste_e2e",
+      "status": "PASS",
+      "detail": "Subject 'HARNESS-PROBE-GATE17-PASTE' confirmed; feed rows: 19 -> 20"
+    },
+    {
+      "name": "ui.ingest_csv_e2e",
+      "status": "PASS",
+      "detail": "Subjects confirmed; feed rows: 20 -> 23; CSV badges validated"
+    },
+    {
+      "name": "ui.ingest_archive_e2e",
+      "status": "PASS",
+      "detail": "Subjects confirmed; feed rows: 23 -> 26; ARCHIVE badges validated"
     },
     {
       "name": "ui.websocket_live_connected",
@@ -89,15 +109,27 @@
   "console_errors": [],
   "failed_http_responses": [],
   "websockets_opened": [
-    "ws://127.0.0.1:3000/?token=mpLehjzSji5d",
+    "ws://127.0.0.1:3000/?token=D7Kk1TfDvCAK",
     "ws://127.0.0.1:8000/api/v1/dashboard/live",
     "ws://127.0.0.1:8000/api/v1/dashboard/live",
     "ws://127.0.0.1:8000/api/v1/dashboard/live"
   ],
   "screenshots": [
     "screenshots\\verify\\01_dashboard.png",
+    "screenshots\\verify\\01_dashboard_FAIL.png",
     "screenshots\\verify\\02_email_detail.png",
+    "screenshots\\verify\\02_email_detail_FAIL.png",
     "screenshots\\verify\\03_map.png",
-    "screenshots\\verify\\04_graph.png"
+    "screenshots\\verify\\04_graph.png",
+    "screenshots\\verify\\05_ingest_upload.png",
+    "screenshots\\verify\\05_ingest_upload_FAIL.png",
+    "screenshots\\verify\\06_ingest_paste.png",
+    "screenshots\\verify\\06_ingest_paste_FAIL.png",
+    "screenshots\\verify\\07_ingest_csv.png",
+    "screenshots\\verify\\07_ingest_csv_FAIL.png",
+    "screenshots\\verify\\08_ingest_zip.png",
+    "screenshots\\verify\\08_ingest_zip_FAIL.png",
+    "screenshots\\verify\\mode_b_paste.png",
+    "screenshots\\verify\\mode_b_upload.png"
   ]
 }

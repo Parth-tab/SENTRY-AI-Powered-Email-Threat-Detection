@@ -1,0 +1,18 @@
+{
+  "(a) single_extensionless": {
+    "exception": "Error('Locator.text_content: Error: strict mode violation: locator(\"div.bg-rose-500\\\\\\\\/10, div.text-rose-400\") resolved to 3 elements:\\n    1) <div class=\"w-9 h-9 rounded-lg bg-gradient-to-br from-rose-500/20 to-red-600/30 border border-rose-500/40 flex items-center justify-center text-rose-400 shadow-lg shadow-rose-500/10\">\u2026</div> aka locator(\"div\").nth(3)\\n    2) <div class=\"text-2xl font-bold font-mono text-rose-400\">3</div> aka get_by_text(\"3\").nth(3)\\n    3) <div class=\"mt-3 p-2.5 rounded bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs\">Unsupported file type \\'00001.1a31cc283af0060967a2\u2026</div> aka get_by_text(\"Unsupported file type \\'00001.\")\\n\\nCall log:\\n  - waiting for locator(\"div.bg-rose-500\\\\\\\\/10, div.text-rose-400\")\\n')",
+    "verdict": "EXCEPTION"
+  },
+  "(b) multi_select_10_files": {
+    "exception": "Error('Locator.set_input_files: Error: Non-multiple file input can only accept single file\\nCall log:\\n  - waiting for locator(\"input[type=\\'file\\']\").first\\n    - locator resolved to <input type=\"file\" class=\"hidden\" accept=\".eml,.msg,.mbox,.txt\" aria-describedby=\"dropzone-helper-text\"/>\\n')",
+    "verdict": "EXCEPTION"
+  },
+  "(c) zip_archive": {
+    "exception": "Error('Locator.text_content: Error: strict mode violation: locator(\"div.bg-rose-500\\\\\\\\/10, div.text-rose-400\") resolved to 3 elements:\\n    1) <div class=\"w-9 h-9 rounded-lg bg-gradient-to-br from-rose-500/20 to-red-600/30 border border-rose-500/40 flex items-center justify-center text-rose-400 shadow-lg shadow-rose-500/10\">\u2026</div> aka locator(\"div\").nth(3)\\n    2) <div class=\"text-2xl font-bold font-mono text-rose-400\">3</div> aka get_by_text(\"3\").nth(3)\\n    3) <div class=\"mt-3 p-2.5 rounded bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs\">Unsupported file type \\'small_sample.zip\\'. Support\u2026</div> aka get_by_text(\"Unsupported file type \\'\")\\n\\nCall log:\\n  - waiting for locator(\"div.bg-rose-500\\\\\\\\/10, div.text-rose-400\")\\n')",
+    "verdict": "EXCEPTION"
+  },
+  "(d) csv_file": {
+    "exception": "Error('Locator.text_content: Error: strict mode violation: locator(\"div.bg-rose-500\\\\\\\\/10, div.text-rose-400\") resolved to 3 elements:\\n    1) <div class=\"w-9 h-9 rounded-lg bg-gradient-to-br from-rose-500/20 to-red-600/30 border border-rose-500/40 flex items-center justify-center text-rose-400 shadow-lg shadow-rose-500/10\">\u2026</div> aka locator(\"div\").nth(3)\\n    2) <div class=\"text-2xl font-bold font-mono text-rose-400\">3</div> aka get_by_text(\"3\").nth(3)\\n    3) <div class=\"mt-3 p-2.5 rounded bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs\">Unsupported file type \\'ling_sample.csv\\'. Supporte\u2026</div> aka get_by_text(\"Unsupported file type \\'\")\\n\\nCall log:\\n  - waiting for locator(\"div.bg-rose-500\\\\\\\\/10, div.text-rose-400\")\\n')",
+    "verdict": "EXCEPTION"
+  }
+}
