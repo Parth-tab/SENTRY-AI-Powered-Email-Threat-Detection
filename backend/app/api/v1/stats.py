@@ -13,6 +13,7 @@ from app.db.database import get_db
 from app.db.models import EmailRecord, AnalysisResult, Alert, EvidenceVault
 from app.services.correlation_engine import CorrelationEngine
 from app.api.v1.emails import process_and_store_email, find_existing_email_record
+from app.auth import require_api_token
 
 router = APIRouter(prefix="", tags=["Stats & Seeding"])
 
@@ -82,7 +83,10 @@ async def get_dashboard_stats(db: AsyncSession = Depends(get_db)):
     }
 
 @router.post("/samples/seed", response_model=Dict[str, Any])
-async def seed_sample_emails(db: AsyncSession = Depends(get_db)):
+async def seed_sample_emails(
+    db: AsyncSession = Depends(get_db),
+    _token: str = Depends(require_api_token)
+):
     """
     Ingests and processes all sample EML files (Legitimate, Phishing Tor, BEC Wire Fraud)
     to instantly populate live dashboard telemetry.
@@ -126,7 +130,8 @@ async def seed_sample_emails(db: AsyncSession = Depends(get_db)):
 @router.post("/admin/reset-demo", response_model=Dict[str, Any])
 async def reset_demo_database(
     x_sentry_admin: Optional[str] = Header(None, alias="X-Sentry-Admin"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    _token: str = Depends(require_api_token)
 ):
     """
     Wipes all database records and resets in-memory correlation graph

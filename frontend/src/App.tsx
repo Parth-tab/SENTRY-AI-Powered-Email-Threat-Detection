@@ -8,6 +8,7 @@ import { EmailDetailModal } from "./components/email-detail/EmailDetailModal";
 import { OriginRelayMap } from "./components/map/OriginRelayMap";
 import { CampaignNetworkGraph } from "./components/graph/CampaignNetworkGraph";
 import { ForensicReportView } from "./components/report/ForensicReportView";
+import { AuthModal } from "./components/auth/AuthModal";
 import { useWebSocket } from "./hooks/useWebSocket";
 import {
   fetchStats,
@@ -24,6 +25,7 @@ export function App() {
   const [emails, setEmails] = useState<EmailRecordItem[]>([]);
   const [selectedEmailDetail, setSelectedEmailDetail] = useState<FullEmailDetail | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isSeeding, setIsSeeding] = useState(false);
   const [toastAlert, setToastAlert] = useState<any | null>(null);
 
@@ -45,6 +47,15 @@ export function App() {
 
   useEffect(() => {
     loadData();
+
+    const handleUnauthorized = () => {
+      setIsAuthModalOpen(true);
+    };
+
+    window.addEventListener("sentry:unauthorized", handleUnauthorized);
+    return () => {
+      window.removeEventListener("sentry:unauthorized", handleUnauthorized);
+    };
   }, []);
 
   // WebSocket Live Updates
@@ -97,6 +108,7 @@ export function App() {
         isConnected={isConnected}
         onSeedSamples={handleSeedSamples}
         isSeeding={isSeeding}
+        onOpenAuth={() => setIsAuthModalOpen(true)}
       />
 
       {/* Main Workspace Layout */}
@@ -181,6 +193,12 @@ export function App() {
           onClose={() => setIsModalOpen(false)}
         />
       )}
+
+      {/* DFIR Operator Authentication Modal (GAP-006 / D2) */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
     </div>
   );
 }

@@ -635,11 +635,13 @@
     "check": "security.auth_surface_ingest_hardening",
     "severity": "blocker",
     "evidence": "backend/app/api/v1/emails.py, evaluation/viability/panel_L.json",
-    "status": "open",
+    "status": "resolved",
     "target_version": "MRWS",
     "effort": "M",
     "impact": "H",
-    "description": "8 writable API endpoints (upload, batch, raw, seed) are reachable unauthenticated when server is bound to 0.0.0.0."
+    "description": "All 8 writable DFIR forensic API endpoints (upload, batch, raw, seed, admin reset, hash-chain verify) secured behind constant-time SENTRY_API_TOKEN Bearer authentication with 401 envelope, frontend AuthModal operator unlock, and single-origin Gate 20 verification.",
+    "fix_commit": "HEAD",
+    "regression_test": "backend/tests/test_auth_surface.py"
   },
   {
     "id": "GAP-007",

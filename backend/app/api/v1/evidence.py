@@ -6,6 +6,7 @@ from sqlalchemy import select
 from app.db.database import get_db
 from app.db.models import EvidenceVault
 from app.services.reporting import ReportingService
+from app.auth import require_api_token
 
 router = APIRouter(prefix="/evidence", tags=["Evidence"])
 
@@ -31,7 +32,11 @@ async def get_evidence(email_id: str, db: AsyncSession = Depends(get_db)):
     }
 
 @router.post("/verify/{email_id}", response_model=Dict[str, Any])
-async def verify_chain(email_id: str, db: AsyncSession = Depends(get_db)):
+async def verify_chain(
+    email_id: str,
+    db: AsyncSession = Depends(get_db),
+    _token: str = Depends(require_api_token)
+):
     """
     Cryptographically verifies the RFC 3227 hash chain for an email to guarantee
     evidentiary integrity and detect any tampering.

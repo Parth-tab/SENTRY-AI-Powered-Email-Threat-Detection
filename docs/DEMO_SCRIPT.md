@@ -18,10 +18,11 @@
 
 ## Stage 2: Live Ingestion & RFC 3227 Evidentiary Sealing (0:45 - 1:45)
 
-**Action:** Click **"Seed Demo Attack Scenarios"** or upload a raw `.eml` file. Point to live WebSocket counter increments.
+**Action:** Click **"Operator Auth"** (show authenticated token badge) $\to$ Click **"Seed Demo Attack Scenarios"** or upload a raw `.eml` file. Point to live WebSocket counter increments.
 
 **Spoken Narration:**
-> "Watch what happens upon ingestion: within 8 milliseconds, the email payload is parsed byte-for-byte according to RFC 5322.
+> "First, observe our access control posture: the appliance is sealed — nothing writes to the evidence vault without a verified DFIR Operator Bearer Token. Every ingestion, triage action, and forensic mutation is cryptographically attributed.
+> Watch what happens upon ingestion: within 8 milliseconds, the email payload is parsed byte-for-byte according to RFC 5322.
 > Before any inspection occurs, SENTRY calculates the SHA-256 cryptographic digest of the raw bytes and commits it as Genesis Block $H_0$ to an immutable evidence vault.
 > Simultaneously, our multi-pass Bleach sanitizer neutralizes any embedded XSS or hidden tracking pixels before rendering."
 
