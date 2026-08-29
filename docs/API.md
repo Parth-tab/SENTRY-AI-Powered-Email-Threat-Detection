@@ -23,27 +23,20 @@ OpenAPI Specification Export: [`docs/openapi.json`](openapi.json)
 ## 2. Ingestion & Email Endpoints
 
 ### `POST /api/v1/emails/upload`
-Uploads a raw `.eml`, `.msg`, or `.mbox` file for complete automated forensic triage.
-- **Request:** `multipart/form-data` with `file` binary attachment (max 20MB).
-- **Response `201 Created`:**
-```json
-{
-  "id": "20baf534-9ff5-47cc-9718-6eb2921bd150",
-  "message_id": "20240115102345.92841.qmail@sbi-secureverify.com",
-  "subject": "URGENT: Mandatory KYC Verification Required",
-  "sender": "support@sbi-secureverify.com",
-  "sha256_hash": "a8fbc98234...",
-  "analysis": {
-    "overall_threat_score": 0.88,
-    "threat_level": "CRITICAL",
-    "primary_classification": "phishing"
-  },
-  "evidence": {
-    "chain_of_custody_id": "COC-20240115-9921",
-    "is_sealed": true
-  }
-}
-```
+Universal content-sniffed ingestion gateway. Inspects file payload signatures to dynamically route between:
+1. **RFC 822 / 5322 Emails (`.eml`, `.msg`, `.mbox`, extensionless):** Executes complete multi-hop, authentication, origin attribution, and evidence sealing pipeline.
+2. **ZIP Archives (`.zip`):** Ingests multi-thousand email archives in-memory with strict Denial-of-Service safety caps (250MB compressed, 500MB uncompressed, 10k entries, 25MB per file).
+3. **Tabular Datasets (`.csv`, `.tsv`):** Parses CSV datasets with flexible header mapping, synthesizes deterministic RFC 822 MIME streams, and applies the **D4 Degradation Contract** (quarantines labels, marks missing transport headers as unavailable, zero fabricated hops).
+- **Request:** `multipart/form-data` with `file` binary attachment (up to 250MB for batch endpoints).
+
+### `POST /api/v1/emails/batch/archive`
+Direct batch ZIP archive ingestion endpoint. Streams entries in-memory with live WebSocket progress broadcasts.
+
+### `POST /api/v1/emails/batch/csv`
+Direct tabular dataset ingestion endpoint. Synthesizes RFC 822 MIME streams from `subject`, `body`, `label`, `sender`, `recipient`, `date` columns.
+
+### `POST /api/v1/emails/batch/upload`
+Multi-file upload endpoint accepting an array of individual files (`files`) simultaneously.
 
 ### `POST /api/v1/emails/raw`
 Ingests raw RFC 5322 string content directly.
@@ -69,7 +62,14 @@ Generates and downloads the official court-admissible PDF forensic report with c
 
 ---
 
-## 3. Campaign & Graph Intelligence
+## 3. Administration & Reset
+
+### `POST /api/v1/admin/reset-demo`
+Gated exclusively to `ENVIRONMENT=demo`. Flushes database, cleans the in-memory campaign correlation graph (`CorrelationEngine.reset_graph()`), and reseeds the immutable 18-email demo corpus with fresh RFC 3227 chain-of-custody seals.
+
+---
+
+## 4. Campaign & Graph Intelligence
 
 ### `GET /api/v1/campaigns`
 Lists all identified cybercrime campaigns and correlated attack clusters.
@@ -78,11 +78,11 @@ Lists all identified cybercrime campaigns and correlated attack clusters.
 Returns granular telemetry, correlated infrastructure IPs, lookalike domains, and target brand profiles for a campaign.
 
 ### `GET /api/v1/campaigns/graph/all`
-Exports the entire multi-entity graph network formatted for D3 / React Force Graph visualization (`{ nodes: [...], links: [...] }`).
+Exports the multi-entity graph network formatted for D3 / React Force Graph visualization (`{ nodes: [...], links: [...] }`).
 
 ---
 
-## 4. Evidence Vault & RFC 3227 Verification
+## 5. Evidence Vault & RFC 3227 Verification
 
 ### `GET /api/v1/evidence/{email_id}`
 Retrieves the immutable evidence vault record and sequence of chained forensic actions.
@@ -92,7 +92,7 @@ Cryptographically re-computes and verifies the sequential SHA-256 hash chain to 
 
 ---
 
-## 5. Machine Learning & Model Transparency
+## 6. Machine Learning & Model Transparency
 
 ### `GET /api/v1/model/metrics`
 Returns formal multi-class model metrics (Accuracy: 0.961 [partially in-sample; Enron/CEAS 2008 baseline distribution], Macro-F1: 0.952, Macro OvR ROC-AUC: 0.988), $5\times 5$ confusion matrix, 10-bin probability calibration curve, and ranked top feature importances.
@@ -102,7 +102,7 @@ Returns the 47-dimension feature vector taxonomy extracted by SENTRY.
 
 ---
 
-## 6. Observability & Real-Time Telemetry
+## 7. Observability & Real-Time Telemetry
 
 ### `GET /metrics`
 Prometheus plain-text telemetry endpoint exposing request rates, error counters, pipeline duration histograms, and active WebSocket connection gauges.
@@ -111,4 +111,4 @@ Prometheus plain-text telemetry endpoint exposing request rates, error counters,
 Liveness and deep subsystem readiness probes (Database, Filesystem Storage, ML Classifier, Threat Feeds, Process Uptime).
 
 ### `WebSocket /api/v1/dashboard/live`
-Real-time bidirectional WebSocket stream broadcasting instant threat alerts (`NEW_ALERT`) and parsed email events (`EMAIL_ANALYZED`) to SOC analyst dashboards.
+Real-time bidirectional WebSocket stream broadcasting instant threat alerts (`NEW_ALERT`), parsed email events (`EMAIL_ANALYZED`), and batch ingestion progress (`BATCH_PROGRESS`) to SOC analyst dashboards.

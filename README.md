@@ -32,6 +32,7 @@ evidentiary-grade output.
 | **Header & protocol forensics** | Full `Received`-chain reconstruction, SPF/DKIM/DMARC validation, relay-anomaly and forgery detection |
 | **Origin tracing** | Earliest-reliable-hop extraction, IP geolocation, Tor/VPN/hosting detection, confidence-scored origin assessment |
 | **Campaign attribution** | In-memory graph correlation across senders, domains, IPs, and lookalike networks — clusters isolated emails into coordinated campaigns |
+| **Batch & Corpus Ingestion** | Content-sniffed multi-format gateway: RFC 822 (.eml, .msg, extensionless), in-memory ZIP archives (6,951 emails in 112s), CSV tabular datasets with D4 degradation contract |
 | **Evidentiary output** | RFC 3227-aligned chain of custody, sequential SHA-256 hash chain, PDF forensic dossier, machine-readable IOC export |
 | **Zero-dependency appliance** | Runs fully air-gapped on one machine: async SQLite + in-memory graph, no Docker, Redis, or external APIs required |
 
@@ -66,7 +67,7 @@ harvesting). All demo emails are **synthetic** — written for demonstration,
 with illustrative infrastructure details.
 
 **Verify your install in one command** (boots the stack, drives the real UI
-in headless Chromium, runs 15 golden checks, exits 0/1):
+in headless Chromium, runs 19 golden checks, exits 0/1):
 
 ```bash
 python tools/verify_sentry.py --start
@@ -83,7 +84,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/demo_day.ps1
 
 | Doc | Contents |
 |---|---|
-| [`ARCHITECTURE.md`](docs/ARCHITECTURE.md) | System design, data flow (Mermaid), RFC 3227 evidence lifecycle, ML ensemble schema |
+| [`ARCHITECTURE.md`](docs/ARCHITECTURE.md) | System design, data flow (Mermaid), RFC 3227 evidence lifecycle, ML ensemble schema, batch & D4 degradation model |
 | [`API.md`](docs/API.md) / [`openapi.json`](docs/openapi.json) | Full REST + WebSocket reference |
 | [`DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) | Timed 5-minute walkthrough with narration & presenter Q&A armor |
 | [`TRACEABILITY_MATRIX.md`](docs/TRACEABILITY_MATRIX.md) | Every PS 26106 requirement $\to$ feature $\to$ evidence |
@@ -93,14 +94,17 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/demo_day.ps1
 ## Testing & Verification
 
 ```bash
-# Unit + integration suite (41 tests, 85% branch coverage)
+# Unit + integration suite (59 tests, 85%+ branch coverage)
 pytest backend/tests -v --cov=app --cov-branch
 
-# End-to-end golden harness: 15 checks across API, WebSocket, and live UI
+# End-to-end golden harness: 19 checks across API, WebSocket, CSV, ZIP, and live UI
 python tools/verify_sentry.py --start
 
 # Full 12-dimension GAUNTLET evaluation battery
 python evaluation/battery/run_battery.py
+
+# Productized Corpus Ingestion Benchmark (6,951+ items)
+python tools/benchmark_corpus_ingest.py --start
 ```
 
 ## Evaluation — Audited, Not Asserted

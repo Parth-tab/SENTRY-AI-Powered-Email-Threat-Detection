@@ -96,7 +96,32 @@ SENTRY correlates disparate emails into unified threat campaigns using graph clu
   1. Serve frontend static assets and backend API under the same origin domain (e.g., via Nginx `location /api { proxy_pass http://backend:8000; }`), OR
   2. Configure full CORS preflight handling on the backend (`CORSMiddleware`) for POST requests with `Content-Type: multipart/form-data` and `Content-Type: text/plain`.
 - **Ingestion Deduplication Contracts:**
-  - **General Forensic Ingestion (`/api/v1/emails/upload`, `/api/v1/emails/raw`):** Enforces **SHA-256 byte identity ONLY**. Distinct bytes always generate a new evidentiary record with independent hash-chain sealing, regardless of Message-ID or Subject/Sender overlap. This guarantees zero evidence loss and prevents adversarial evidence suppression (forged Message-ID reuse) or campaign collapse (multi-wave attacks with shared subject/sender).
-  - **Demo Dataset Reset (`/api/v1/samples/seed`):** Employs **multi-vector deduplication** (SHA-256 digest $\rightarrow$ Message-ID header $\rightarrow$ Subject + Sender pair) to guarantee idempotent presentation resets without duplicate demonstration artifacts.
+  - **General Forensic Ingestion (`/api/v1/emails/upload`, `/api/v1/emails/raw`, `/api/v1/emails/batch/*`):** Enforces **SHA-256 byte identity ONLY**. Distinct bytes always generate a new evidentiary record with independent hash-chain sealing, regardless of Message-ID or Subject/Sender overlap. This guarantees zero evidence loss and prevents adversarial evidence suppression (forged Message-ID reuse) or campaign collapse (multi-wave attacks with shared subject/sender).
+  - **Demo Dataset Reset (`/api/v1/samples/seed`, `/api/v1/admin/reset-demo`):** Employs **multi-vector deduplication** (SHA-256 digest $\rightarrow$ Message-ID header $\rightarrow$ Subject + Sender pair) to guarantee idempotent presentation resets without duplicate demonstration artifacts.
   - *Evidentiary Rule:* Artifact identity in forensic ingestion is byte identity; looser vectors are seed-reset semantics and correlation signals, never ingestion drops.
+
+---
+
+## 5. Batch Ingestion & Tabular Degradation Model (CORP / CSV Substrate)
+
+### A. Content-Sniffed Ingestion Precedence
+Payload format classification (`backend/app/services/sniffer.py`) inspects the initial 4KB of input:
+1. **ZIP Archive Signature:** `PK\x03\x04` magic bytes $\rightarrow$ In-memory archive pipeline.
+2. **RFC 822 Grammar:** Header key-value grammar (`^[A-Za-z0-9-]+:\s*.+`) with zero null bytes in first 512 bytes $\rightarrow$ Standard forensic pipeline.
+3. **Tabular Dataset Grammar:** Delimited text ($\ge 2$ columns) matching recognized header tokens (`body`, `text`, `subject`, `label`) $\rightarrow$ CSV synthesizer pipeline.
+
+### B. In-Memory Archive Safety & Scale Caps
+- **In-Memory Streaming:** ZIP entries decompressed entirely in memory (`io.BytesIO`). Zero disk extraction eliminates Zip-Slip vulnerabilities.
+- **Corpus DoS Caps:**
+  - Max compressed archive size: 250 MB.
+  - Max total uncompressed payload: 500 MB.
+  - Max entry count: 10,000 files.
+  - Max single entry size: 25 MB.
+- **Deduplication Performance:** In-memory $O(1)$ set caching (`known_hashes`) enables 5,792+ items/sec deduplication throughput on SQLite.
+
+### C. D4 Degradation Model for Headerless Tabular Data
+Tabular datasets (e.g. Ling-Spam, Kaggle phishing CSVs) provide message text and ground-truth labels without SMTP network transport headers:
+1. **Ground-Truth Label Quarantine:** Classification labels are quarantined from synthesized RFC 822 MIME headers. Records differing solely in ground-truth label produce identical SHA-256 digests.
+2. **Deterministic Unavailable States:** Missing network artifacts return explicit unavailable notices (`"status": "unavailable", "reason": "unavailable — headerless source"`) across SPF, DKIM, DMARC, and Geolocation.
+3. **Zero Hallucination Guarantee:** `relay_hops_count = 0`, `relay_path = []`, `earliest_reliable_hop = None`. Zero synthetic IP addresses or fabricated hops are introduced into the evidentiary chain.
 
