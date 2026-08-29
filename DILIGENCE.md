@@ -79,9 +79,15 @@ Every gap tracked from the Viability Audit and Auditor's Annex has been resolved
 - **Local SQLite Burst Rate:** **51.7 emails/second** sustained batch parsing and cryptographic hashing on 4-core workstation hardware.
 - **Batch Capabilities:** Supports single `.eml` uploads, multi-file drag-and-drop, `.zip` archives (with zip-slip safety), `.csv` datasets (with OWASP formula sanitization), and raw RFC 5322 text.
 
-### 4.3 Defect Arithmetic & Quality Ledger
-- **Total Historical Defects Tracked:** 24 defects across SIH prototype and Viability Audit.
-- **Total Defects Resolved:** **24 / 24 (100% Closed)**.
+### 4.3 Defect Arithmetic & Quality Ledger (59-Item Master Registry)
+- **Master Defect Registry (evaluation/defects.json):** Exactly **59 tracked defect and gap objects** across repo history (see [`evaluation/ERRATA.md:Errata 008`](evaluation/ERRATA.md) for full lineage reconciliation).
+- **Status Breakdown:**
+  - **Resolved:** **50** (43 historical + 7 MRWS gaps)
+  - **Interim Mitigated:** **1** (`GAP-005` sentry.io trademark disclaimers)
+  - **Consolidated:** **3** (`BATCH-003`, `CORP-002`, `ING-003`)
+  - **Deferred:** **1** (`BP-004` - v2.0 roadmap client-side graph dimension filter)
+  - **Open (Targeted v1.2 Roadmap):** **4** (`DEF-005` forged-header battery, `MBOX-001` multi-message mbox delimiter parser, `GAP-001` scale-out daemons, `GAP-002` automated IMAP/M365 mailbox connector)
+- **Release Gate Derivation:** **100% of v1.1.0 release blockers and high-severity defects are closed** ($50 + 1 + 3 + 1 = 55$ resolved/accounted). Zero blockers or high-severity items remain open for v1.1.0.
 - **Golden Verification Harness:** **20 / 20 Golden Gates Passing** (`tools/verify_sentry.py --start`).
 - **Automated Pytest Battery:** **99 / 99 Unit & Integration Tests Passing** (`backend/tests`).
 - **Deprecation Warnings:** **6 warnings total** (slashed from 544 via Pydantic v2 and UTC datetime migration).

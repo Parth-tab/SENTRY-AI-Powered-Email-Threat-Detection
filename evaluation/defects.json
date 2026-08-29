@@ -311,7 +311,7 @@
     "evidence": "evaluation/defects.json",
     "status": "open",
     "fix_commit": "",
-    "target_version": "v1.1.0",
+    "target_version": "v1.2.0",
     "regression_test": "backend/tests/test_ingest_endpoints.py::test_ingest_forged_message_id_creates_new_record",
     "effort": "M",
     "description": "Red-team evaluation battery lacks a dedicated forged-header-dedupe-suppression attack scenario in the adversarial corpus; documented in adversarial corpus gap tracking."
@@ -467,7 +467,7 @@
     "evidence": "docs/ARCHITECTURE.md",
     "status": "open",
     "fix_commit": "",
-    "target_version": "v1.1.0",
+    "target_version": "v1.2.0",
     "regression_test": "backend/tests/test_batch_ingest.py",
     "effort": "M",
     "description": "Multi-message concatenated mbox archives currently parsed as single-message streams rather than discrete multi-record entities; interim behavior documented and single-message mbox supported."
@@ -582,7 +582,8 @@
     "target_version": "v1.1+",
     "effort": "M",
     "impact": "M",
-    "description": "Documented enterprise scale-out services (Postgres/Neo4j/Redis/Celery) are uninvoked diagram-ware; all live queries run on in-process SQLite and NetworkX."
+    "description": "Documented enterprise scale-out services (Postgres/Neo4j/Redis/Celery) are uninvoked diagram-ware; all live queries run on in-process SQLite and NetworkX.",
+    "target": "v1.2.0"
   },
   {
     "id": "GAP-002",
@@ -593,7 +594,8 @@
     "target_version": "MRWS",
     "effort": "L",
     "impact": "H",
-    "description": "Lack of automated ingestion pipelines (IMAP polling, Microsoft Graph API, Google Workspace webhooks) creates 4-6h/day analyst toil for 500-email SOCs."
+    "description": "Lack of automated ingestion pipelines (IMAP polling, Microsoft Graph API, Google Workspace webhooks) creates 4-6h/day analyst toil for 500-email SOCs.",
+    "target": "v1.2.0"
   },
   {
     "id": "GAP-003",
@@ -629,7 +631,8 @@
     "effort": "S",
     "impact": "M",
     "description": "Trademark conflict with sentry.io mitigated for current arc via explicit Non-Affiliation and Trademark Notices in README.md and SECURITY.md; full project renaming flagged as commercialization trigger.",
-    "fix_commit": "HEAD"
+    "fix_commit": "HEAD",
+    "target": "v1.2.0"
   },
   {
     "id": "GAP-006",

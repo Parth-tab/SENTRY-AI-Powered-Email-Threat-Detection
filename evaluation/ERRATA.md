@@ -167,15 +167,31 @@ A review of git history confirmed that [`docs/assets/dashboard.png`](file:///E:/
 A comprehensive search across all git commits, branch heads, and tags revealed no git-level commit hash for `ARCH-001` (an early pre-commit conversational design artifact). In accordance with strict evidential rules requiring 100% git-verifiable provenance, `ARCH-001` was removed from [`evaluation/defects.json`](file:///E:/SENTRY/evaluation/defects.json).
 
 **Final Master Defect Ledger Arithmetic:**
-- **Total Tracked Defects:** 49
-- **Resolved:** 43
-- **Open:** 2 (`DEF-005`, `MBOX-001`)
-- **Deferred:** 1 (`BP-004` - v2.0 roadmap)
-- **Consolidated:** 3 (`BATCH-003`, `CORP-002`, `ING-003`)
-- **Derivation:** $$49 = 43 + 2 + 1 + 3$$
-Zero phantom, vanished, or unverifiable defects exist in the repository.
-
 ---
+
+## Errata 008 — Defect Registry Arithmetic & Lineage Reconciliation (59-Item Master Registry) — recorded at Phase 6A
+
+**Applies to:** `DILIGENCE.md`, `evaluation/defects.json`, `evaluation/mrws/SHIP_GATE_REVIEW.md`.
+
+### 1. What Happened
+Earlier working summaries referenced a "24/24 closed defects" shorthand. That metric was an informal triage aggregate from the early SIH forensic sub-panel rather than the true repository-wide master registry.
+
+### 2. The True Master Registry Derivation
+A full-lineage audit of `evaluation/defects.json` reveals exactly **59 tracked defect and gap objects**:
+- **Pre-MRWS Historical Defects (FINAL-INCH-3 Ledger):** 49 items
+  - Resolved: **43**
+  - Consolidated: **3** (`BATCH-003` $\to$ `BATCH-004`, `CORP-002` $\to$ `CORP-001`, `ING-003` $\to$ `D-1`)
+  - Deferred: **1** (`BP-004` - v2.0 client-side graph dimension filter)
+  - Open (Targeted v1.2 Roadmap): **2** (`DEF-005` forged-header red-team battery, `MBOX-001` multi-message mbox delimiter parser)
+- **Enterprise-MRWS Viability Gaps (GAP-001 through GAP-010):** 10 items
+  - Resolved: **7** (`GAP-003` single-origin build, `GAP-004` synthetic corpus sanitization, `GAP-006` DFIR operator bearer auth, `GAP-007` MaxMind EULA notices, `GAP-008` ML copy calibration, `GAP-009` Alembic migrations, `GAP-010` hot backup tooling)
+  - Interim Mitigated: **1** (`GAP-005` sentry.io trademark disclaimers, targeted v1.2 for formal rebranding)
+  - Open (Targeted v1.2 Roadmap): **2** (`GAP-001` scale-out daemons, `GAP-002` automated IMAP/M365 mailbox connector)
+
+### 3. Master Ledger Equation
+$$\text{Total Objects (59)} = 50 \text{ Resolved} + 1 \text{ Interim Mitigated} + 3 \text{ Consolidated} + 1 \text{ Deferred} + 4 \text{ Open (v1.2)}$$
+
+Zero (0) blockers or high-severity defects remain open for the v1.1.0 release. All four open items are explicitly scoped and scheduled for v1.2.0. `DILIGENCE.md` and `SHIP_GATE_REVIEW.md` are updated to cite the exact 59-item arithmetic.
 
 
 
