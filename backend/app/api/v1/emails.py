@@ -21,6 +21,9 @@ from app.services.correlation_engine import CorrelationEngine
 from app.services.reporting import ReportingService
 from app.services.alerting import alert_manager
 from app.services.utils import json_serializable
+from app.services.sniffer import sniff_payload_format, is_rfc822, is_zip_archive, is_csv_format
+from app.services.archive_ingestion import ArchiveIngestionService
+from app.services.csv_synthesizer import CSVSynthesizerService
 from app.ml.classifier import ThreatClassifier
 
 def model_to_dict(obj):
@@ -72,19 +75,46 @@ async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSessio
         if existing_record:
             return existing_record
     
-    # 2. Header Forensics
-    hops, earliest_hop, hop_anomalies = HeaderForensicsService.parse_received_chain(email_data["received_headers"])
-    auth_results = HeaderForensicsService.evaluate_authentication(email_data["headers"])
-    detected_anomalies = HeaderForensicsService.detect_anomalies(email_data, earliest_hop)
-    all_anomalies = list(set(hop_anomalies + detected_anomalies))
-    
-    header_res = {
-        "relay_hops_count": len(hops),
-        "relay_path": hops,
-        "earliest_reliable_hop": earliest_hop,
-        "authentication": auth_results,
-        "header_anomalies": all_anomalies
-    }
+    # 2. Forensic Header & Network Enrichment
+    if source == "csv":
+        # D4 Degradation Rule: CSV datasets lack network transport headers.
+        # Zero fabricated hops, fake IPs, or synthesized geolocations.
+        hops = []
+        earliest_hop = None
+        all_anomalies = []
+        auth_results = {
+            "spf": {"status": "unavailable", "reason": "unavailable — headerless source"},
+            "dkim": {"status": "unavailable", "reason": "unavailable — headerless source"},
+            "dmarc": {"status": "unavailable", "reason": "unavailable — headerless source"}
+        }
+        header_res = {
+            "relay_hops_count": 0,
+            "relay_path": [],
+            "earliest_reliable_hop": None,
+            "authentication": auth_results,
+            "header_anomalies": []
+        }
+        origin_res = {
+            "status": "unavailable",
+            "reason": "unavailable — headerless source",
+            "probable_origin_ip": None,
+            "country": "Unavailable",
+            "country_code": "XX",
+            "city": "Unavailable"
+        }
+    else:
+        hops, earliest_hop, hop_anomalies = HeaderForensicsService.parse_received_chain(email_data["received_headers"])
+        auth_results = HeaderForensicsService.evaluate_authentication(email_data["headers"])
+        detected_anomalies = HeaderForensicsService.detect_anomalies(email_data, earliest_hop)
+        all_anomalies = list(set(hop_anomalies + detected_anomalies))
+        header_res = {
+            "relay_hops_count": len(hops),
+            "relay_path": hops,
+            "earliest_reliable_hop": earliest_hop,
+            "authentication": auth_results,
+            "header_anomalies": all_anomalies
+        }
+        origin_res = GeoOriginService.evaluate_origin(earliest_hop, relay_hops_count=len(hops))
 
     # 3. Content Analysis
     content_res = ContentAnalysisService.analyze_content(email_data)
@@ -92,21 +122,26 @@ async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSessio
     # 4. Domain Intelligence
     domain_res = DomainIntelService.analyze_domain(
         email_data.get("sender_domain", ""),
-        sender_ip=earliest_hop.get("from_ip") if earliest_hop else None
+        sender_ip=earliest_hop.get("from_ip") if (earliest_hop and isinstance(earliest_hop, dict)) else None
     )
 
-    # 5. Geolocation & Origin Assessment
-    origin_res = GeoOriginService.evaluate_origin(earliest_hop, relay_hops_count=len(hops))
-
-    # 6. External Threat Intelligence Corroboration
+    # 5. External Threat Intelligence Corroboration
     threat_intel_res = await ThreatIntelService.evaluate_threat_intelligence(
-        ip=origin_res.get("probable_origin_ip", ""),
+        ip=origin_res.get("probable_origin_ip") or "",
         domain=domain_res.get("domain", ""),
         urls=content_res.get("urls_found", [])
     )
 
-    # 7. Correlation & Attribution
-    attribution_res = CorrelationEngine.correlate(email_data, origin_res, domain_res, content_res)
+    # 6. Correlation & Attribution
+    if source == "csv":
+        attribution_res = {
+            "campaign_id": None,
+            "threat_actor": "Unattributed (Headerless CSV Source)",
+            "confidence": 0.0,
+            "correlated_indicators": []
+        }
+    else:
+        attribution_res = CorrelationEngine.correlate(email_data, origin_res, domain_res, content_res)
 
     # 8. ML Multi-signal Classification
     classification_res = ThreatClassifier.evaluate(
@@ -240,60 +275,147 @@ async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSessio
 
     return email_record
 
-@router.post("/upload", response_model=EmailDetailResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/upload", response_model=Dict[str, Any], status_code=status.HTTP_201_CREATED)
 async def upload_eml_file(
     file: UploadFile = File(...),
     db: AsyncSession = Depends(get_db)
 ):
     """
-    Accepts .eml, .msg, or .mbox email file uploads, runs complete forensic pipeline,
-    and returns full analysis.
+    Accepts RFC 822 emails (.eml, .msg, .mbox, extensionless), ZIP archives (.zip),
+    or tabular datasets (.csv, .tsv). Sniffs content and executes appropriate pipeline.
     """
-    # File validation
     filename = file.filename or ""
-    allowed_exts = (".eml", ".msg", ".mbox", ".txt")
-    if not any(filename.lower().endswith(ext) for ext in allowed_exts) and filename != "":
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Unsupported file type '{filename}'. Supported formats: .eml, .msg, .mbox."
-        )
-
     content_bytes = await file.read()
     if not content_bytes:
         raise HTTPException(status_code=400, detail="Uploaded file is empty.")
-    if len(content_bytes) > 20_971_520:
-        raise HTTPException(status_code=413, detail="File exceeds maximum size limit of 20MB.")
-    
-    email_record = await process_and_store_email(content_bytes, source="eml_upload", db=db)
-    
-    stmt = select(EmailRecord).where(EmailRecord.id == email_record.id)
-    res = await db.execute(stmt)
-    full_email = res.scalar_one_or_none()
-    
-    stmt_analysis = select(AnalysisResult).where(AnalysisResult.email_id == email_record.id)
-    res_analysis = await db.execute(stmt_analysis)
-    analysis = res_analysis.scalar_one_or_none()
-    
-    stmt_evidence = select(EvidenceVault).where(EvidenceVault.email_id == email_record.id)
-    res_evidence = await db.execute(stmt_evidence)
-    evidence = res_evidence.scalar_one_or_none()
+
+    payload_format = sniff_payload_format(content_bytes, filename=filename)
+
+    if payload_format == "archive":
+        return await ArchiveIngestionService.process_zip_archive(content_bytes, db=db, source_format="archive")
+
+    if payload_format == "csv":
+        return await CSVSynthesizerService.process_csv_dataset(content_bytes, db=db, source_format="csv")
+
+    if payload_format == "rfc822":
+        if len(content_bytes) > 26_214_400:
+            raise HTTPException(status_code=413, detail="File exceeds maximum size limit of 25MB.")
+        email_record = await process_and_store_email(content_bytes, source="eml_upload", db=db)
+        
+        stmt = select(EmailRecord).where(EmailRecord.id == email_record.id)
+        res = await db.execute(stmt)
+        full_email = res.scalar_one_or_none()
+        
+        stmt_analysis = select(AnalysisResult).where(AnalysisResult.email_id == email_record.id)
+        res_analysis = await db.execute(stmt_analysis)
+        analysis = res_analysis.scalar_one_or_none()
+        
+        stmt_evidence = select(EvidenceVault).where(EvidenceVault.email_id == email_record.id)
+        res_evidence = await db.execute(stmt_evidence)
+        evidence = res_evidence.scalar_one_or_none()
+
+        return {
+            "id": full_email.id,
+            "message_id": full_email.message_id,
+            "subject": full_email.subject,
+            "sender": full_email.sender,
+            "sender_domain": full_email.sender_domain,
+            "recipient": full_email.recipient,
+            "date": full_email.date,
+            "source": full_email.source,
+            "sha256_hash": full_email.sha256_hash,
+            "ingested_at": full_email.ingested_at,
+            "status": full_email.status,
+            "raw_headers": full_email.raw_headers,
+            "raw_content": full_email.raw_content,
+            "analysis": model_to_dict(analysis),
+            "evidence": model_to_dict(evidence)
+        }
+
+    raise HTTPException(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        detail=f"Unsupported file type '{filename}'. Supported formats: .eml, .msg, .mbox, .csv, .zip."
+    )
+
+@router.post("/batch/archive", response_model=Dict[str, Any], status_code=status.HTTP_201_CREATED)
+async def upload_batch_archive(
+    file: UploadFile = File(...),
+    db: AsyncSession = Depends(get_db)
+):
+    """Processes ZIP archive containing RFC 822 email files in-memory."""
+    content_bytes = await file.read()
+    if not content_bytes:
+        raise HTTPException(status_code=400, detail="Archive file is empty.")
+    return await ArchiveIngestionService.process_zip_archive(content_bytes, db=db, source_format="archive")
+
+@router.post("/batch/csv", response_model=Dict[str, Any], status_code=status.HTTP_201_CREATED)
+async def upload_batch_csv(
+    file: UploadFile = File(...),
+    db: AsyncSession = Depends(get_db)
+):
+    """Processes tabular dataset (CSV/TSV) and synthesizes RFC 822 artifacts."""
+    content_bytes = await file.read()
+    if not content_bytes:
+        raise HTTPException(status_code=400, detail="CSV file is empty.")
+    return await CSVSynthesizerService.process_csv_dataset(content_bytes, db=db, source_format="csv")
+
+@router.post("/batch/upload", response_model=Dict[str, Any], status_code=status.HTTP_201_CREATED)
+async def upload_multiple_files(
+    files: List[UploadFile] = File(...),
+    db: AsyncSession = Depends(get_db)
+):
+    """Batch ingestion endpoint for multiple files simultaneously."""
+    import time
+    start_time = time.time()
+    ingested_count = 0
+    duplicate_count = 0
+    skipped_count = 0
+    errors = []
+
+    for f in files:
+        fname = f.filename or ""
+        b = await f.read()
+        if not b:
+            skipped_count += 1
+            continue
+        fmt = sniff_payload_format(b, filename=fname)
+        if fmt == "archive":
+            res = await ArchiveIngestionService.process_zip_archive(b, db=db, source_format="archive")
+            s = res.get("summary", {})
+            ingested_count += s.get("ingested", 0)
+            duplicate_count += s.get("duplicates", 0)
+            skipped_count += s.get("skipped", 0)
+        elif fmt == "csv":
+            res = await CSVSynthesizerService.process_csv_dataset(b, db=db, source_format="csv")
+            s = res.get("summary", {})
+            ingested_count += s.get("ingested", 0)
+            duplicate_count += s.get("duplicates", 0)
+            skipped_count += s.get("skipped", 0)
+        elif fmt == "rfc822":
+            import hashlib
+            file_sha = hashlib.sha256(b).hexdigest()
+            stmt = select(EmailRecord.id).where(EmailRecord.sha256_hash == file_sha).limit(1)
+            ex = await db.execute(stmt)
+            if ex.scalar_one_or_none():
+                duplicate_count += 1
+            else:
+                await process_and_store_email(b, source="batch_upload", db=db)
+                ingested_count += 1
+        else:
+            errors.append({"entry": fname, "reason": "Unsupported format"})
 
     return {
-        "id": full_email.id,
-        "message_id": full_email.message_id,
-        "subject": full_email.subject,
-        "sender": full_email.sender,
-        "sender_domain": full_email.sender_domain,
-        "recipient": full_email.recipient,
-        "date": full_email.date,
-        "source": full_email.source,
-        "sha256_hash": full_email.sha256_hash,
-        "ingested_at": full_email.ingested_at,
-        "status": full_email.status,
-        "raw_headers": full_email.raw_headers,
-        "raw_content": full_email.raw_content,
-        "analysis": model_to_dict(analysis),
-        "evidence": model_to_dict(evidence)
+        "status": "completed",
+        "source_format": "batch_upload",
+        "summary": {
+            "total_entries": len(files),
+            "ingested": ingested_count,
+            "duplicates": duplicate_count,
+            "skipped": skipped_count,
+            "errors_count": len(errors),
+            "errors": errors[:50],
+            "elapsed_seconds": round(time.time() - start_time, 3)
+        }
     }
 
 @router.post("/raw", response_model=EmailDetailResponse, status_code=status.HTTP_201_CREATED)
