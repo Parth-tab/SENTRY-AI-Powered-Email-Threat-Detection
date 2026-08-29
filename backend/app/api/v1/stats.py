@@ -1,12 +1,13 @@
 from pathlib import Path
 from typing import Dict, Any, List
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, desc, or_, and_
+from sqlalchemy import select, func, desc, or_, and_, delete
 from app.services.ingestion import IngestionService
+from app.config import settings
 
 from app.db.database import get_db
-from app.db.models import EmailRecord, AnalysisResult, Alert
+from app.db.models import EmailRecord, AnalysisResult, Alert, EvidenceVault
 from app.services.correlation_engine import CorrelationEngine
 from app.api.v1.emails import process_and_store_email, find_existing_email_record
 
@@ -118,3 +119,30 @@ async def seed_sample_emails(db: AsyncSession = Depends(get_db)):
         "message": f"Successfully seeded {len(seeded_ids)} curated threat scenarios into live telemetry.",
         "seeded_email_ids": seeded_ids
     }
+
+@router.post("/admin/reset-demo", response_model=Dict[str, Any])
+async def reset_demo_database(db: AsyncSession = Depends(get_db)):
+    """
+    Wipes all database records and resets in-memory correlation graph
+    to pristine 18-email seed state. Gated on demo/testing environments.
+    """
+    env = (getattr(settings, "ENVIRONMENT", "") or "").lower()
+    if env not in ("demo", "development", "testing", "local"):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Demo reset endpoint is only accessible in demo/testing environments."
+        )
+
+    # 1. Clear database tables
+    await db.execute(delete(Alert))
+    await db.execute(delete(EvidenceVault))
+    await db.execute(delete(AnalysisResult))
+    await db.execute(delete(EmailRecord))
+    await db.commit()
+
+    # 2. Reset in-memory correlation graph
+    CorrelationEngine.reset_graph()
+
+    # 3. Reseed 18 sample emails
+    return await seed_sample_emails(db=db)
+

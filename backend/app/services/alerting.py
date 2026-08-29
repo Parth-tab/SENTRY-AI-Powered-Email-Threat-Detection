@@ -56,6 +56,19 @@ class AlertManager:
             except Exception:
                 disconnected.append(connection)
         
+    async def broadcast_batch_progress(self, progress_data: Dict[str, Any]):
+        """Broadcasts throttled batch ingestion progress to all active WebSocket clients."""
+        payload = json.dumps({
+            "type": "BATCH_PROGRESS",
+            "data": progress_data
+        })
+        disconnected = []
+        for connection in self.active_connections:
+            try:
+                await connection.send_text(payload)
+            except Exception:
+                disconnected.append(connection)
+        
         for conn in disconnected:
             self.disconnect(conn)
 

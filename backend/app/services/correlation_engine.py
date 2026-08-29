@@ -267,6 +267,12 @@ class CorrelationEngine:
         return {"nodes": nodes, "links": links}
 
     @classmethod
+    def reset_graph(cls):
+        """Clears in-memory graph and re-initializes the seed cluster."""
+        cls._graph.clear()
+        cls._populate_seed_cluster()
+
+    @classmethod
     def _populate_seed_cluster(cls):
         """Pre-seeds the correlation graph with campaign CMP-2024-0034 cluster nodes."""
         g = cls._graph
