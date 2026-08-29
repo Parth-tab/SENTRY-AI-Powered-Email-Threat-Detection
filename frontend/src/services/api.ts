@@ -8,11 +8,7 @@ import {
 
 function getApiBase(): string {
   if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
-  if (typeof window !== "undefined" && window.location.hostname) {
-    const proto = window.location.protocol === "https:" ? "https:" : "http:";
-    return `${proto}//${window.location.hostname}:8000`;
-  }
-  return "http://127.0.0.1:8000";
+  return "";
 }
 
 const API_BASE = getApiBase();

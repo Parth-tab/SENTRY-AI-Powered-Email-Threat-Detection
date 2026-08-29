@@ -218,7 +218,6 @@ class Stack:
             npm_cmd = ["cmd", "/c", "npm", "install"] if IS_WINDOWS else ["npm", "install"]
             subprocess.run(npm_cmd, cwd=front, check=True)
         env = os.environ.copy()
-        env["VITE_API_URL"] = f"http://127.0.0.1:{self.api_port}"
         env["VITE_WS_URL"] = (f"ws://127.0.0.1:{self.api_port}"
                               f"/api/v1/dashboard/live")
         cmd = (["cmd", "/c", "npx", "vite"] if IS_WINDOWS else ["npx", "vite"])
