@@ -1,37 +1,37 @@
 {
-  "dataset": "C:\\Users\\Parth\\Downloads\\ham_zipped\\main_ham",
-  "total_files": 6951,
-  "successful_parses": 6951,
+  "dataset": "sample_emails",
+  "total_files": 18,
+  "successful_parses": 18,
   "parse_errors": 0,
-  "total_time_seconds": 24.44,
-  "average_latency_ms": 3.52,
-  "throughput_emails_per_sec": 284.5,
+  "total_time_seconds": 0.09,
+  "average_latency_ms": 5.1,
+  "throughput_emails_per_sec": 196.1,
   "threat_level_distribution": {
-    "MEDIUM": 1639,
-    "LOW": 5312
+    "CRITICAL": 3,
+    "HIGH": 4,
+    "MEDIUM": 9,
+    "LOW": 2
   },
   "primary_classification_distribution": {
-    "impersonation": 4602,
-    "suspicious": 2047,
-    "legitimate": 229,
-    "phishing": 63,
-    "bec": 10
+    "phishing": 11,
+    "bec": 4,
+    "suspicious": 2,
+    "legitimate": 1
   },
   "score_distribution": {
-    "0.40-0.59 (Moderate)": 1604,
-    "0.20-0.39 (Low)": 5312,
-    "0.60-0.79 (High)": 35
+    "0.80-1.00 (Critical)": 6,
+    "0.40-0.59 (Moderate)": 8,
+    "0.60-0.79 (High)": 2,
+    "0.00-0.19 (Minimal)": 2
   },
   "top_origin_countries": {
-    "Netherlands": 2144,
-    "Germany": 1077,
-    "United States": 905,
-    "India": 889,
-    "Singapore": 858,
-    "United Kingdom": 789,
-    "Unknown": 289
+    "Netherlands": 5,
+    "United States": 5,
+    "United Kingdom": 4,
+    "Russia": 2,
+    "Singapore": 2
   },
-  "clean_classification_rate_pct": 76.42,
-  "false_positive_rate_pct": 0.0,
+  "clean_classification_rate_pct": 11.11,
+  "false_positive_rate_pct": 38.89,
   "errors": []
 }
