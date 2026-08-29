@@ -108,3 +108,23 @@ None of these warnings represent test assertion failures, memory leaks, or logic
 
 ---
 
+## Errata 005 — Defect Registry Historical Consolidation & Arithmetic Reconciliation (V-1) — recorded at FINAL-INCH
+
+**Applies to:** `evaluation/defects.json` and previous session summary reports.
+
+### What happened
+1. **Prior Report Count Arithmetic Discrepancy:** The BATCH-004 session handoff report stated "Open (2) / Resolved (17) / Total (19)" while listing 18 resolved defect IDs by name (`SEC-001`, `SEC-002`, `SEC-003`, `ML-001`, `OBS-001`, `OBS-002`, `CICD-001`, `WS-001`, `AUD-001`, `D-3`, `ING-004`, `CORP-001`, `FEED-001`, `GRAPH-001`, `BATCH-001`, `BATCH-002`, `GRAPH-002`, `BATCH-004`). The arithmetic was discordant ($2 + 18 = 20 \ne 19$) due to an omitted increment when adding `GRAPH-002` and `BATCH-004` to the pre-existing 17-item list.
+2. **Historical Registry Truncation:** During earlier compacting sessions (post Gate-0 and post Blind Panel), earlier resolved defect records (`AUD-002`..`AUD-005`, `BP-001`..`BP-004`, `HAM-001`..`HAM-003`, `D-1`..`D-2`, etc.) were compacted from active display rather than maintained in a cumulative append-only register.
+
+### The fix
+Reconstructed all historical defects across git history into `evaluation/defects.json`. Explicitly mapped consolidated milestone markers (`BATCH-003` $\rightarrow$ `BATCH-004`, `CORP-002` $\rightarrow$ `CORP-001`, `ING-003` $\rightarrow$ `D-1`), preserving full audit lineage:
+- **Total Unique Historical Defects:** 42
+- **Resolved:** 36
+- **Open:** 2 (`DEF-005`, `MBOX-001`)
+- **Deferred:** 1 (`BP-004` - v2.0 roadmap)
+- **Consolidated:** 3 (`BATCH-003`, `CORP-002`, `ING-003`)
+- **Derivation:** $42 = 36 + 2 + 1 + 3$. Zero phantom or vanished defects.
+
+---
+
+
