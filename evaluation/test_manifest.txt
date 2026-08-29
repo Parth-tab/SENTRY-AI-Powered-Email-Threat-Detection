@@ -1,0 +1,87 @@
+tests/test_alerting.py::test_alert_manager_connection_and_broadcast
+tests/test_alerting.py::test_global_alert_manager_instance
+tests/test_api_deep_integration.py::test_full_api_suite
+tests/test_api_endpoints.py::test_health_check_endpoint
+tests/test_api_endpoints.py::test_raw_email_upload_and_analysis_endpoint
+tests/test_api_endpoints.py::test_dashboard_stats_endpoint
+tests/test_api_endpoints.py::test_seed_endpoint_idempotency
+tests/test_batch_ingest.py::test_sniffing_matrix
+tests/test_batch_ingest.py::test_zip_archive_zip_slip_memory_safety
+tests/test_batch_ingest.py::test_zip_archive_safety_caps
+tests/test_batch_ingest.py::test_zip_archive_encrypted_or_corrupt_entry_graceful_handling
+tests/test_batch_ingest.py::test_zip_archive_reupload_idempotent_dedupe
+tests/test_batch_ingest.py::test_csv_golden_synthesis_and_label_deduplication
+tests/test_batch_ingest.py::test_csv_d4_degradation_rule
+tests/test_batch_ingest.py::test_demo_reset_unauthenticated_rejected
+tests/test_batch_ingest.py::test_demo_reset_form_encoded_without_header_rejected
+tests/test_batch_ingest.py::test_demo_reset_invalid_token_rejected
+tests/test_batch_ingest.py::test_demo_reset_authenticated_success_and_audit_receipt
+tests/test_batch_ingest.py::test_demo_reset_audit_hash_chain_sequential_integrity
+tests/test_batch_ingest.py::test_csv_synthesizer_preserves_raw_bytes_verbatim
+tests/test_batch_ingest.py::test_csv_export_writer_owasp_formula_neutralization
+tests/test_content_analysis.py::test_content_linguistic_urgency_and_credentials
+tests/test_content_analysis.py::test_bec_financial_and_authority_detection
+tests/test_correlation.py::test_campaign_correlation_ghostrelay
+tests/test_correlation_deep.py::test_campaign_correlation_graph_export
+tests/test_correlation_deep.py::test_campaign_ioc_attribution
+tests/test_domain_intel.py::test_lookalike_detection_sbi
+tests/test_domain_intel.py::test_lookalike_detection_paypal_typosquat
+tests/test_domain_intel.py::test_legitimate_google_domain
+tests/test_domain_intel.py::test_short_acronym_lookalike_bounds
+tests/test_evidence_reporting.py::test_rfc_3227_hash_chain_integrity
+tests/test_evidence_reporting.py::test_pdf_report_generation
+tests/test_geo_origin.py::test_tor_exit_node_detection_and_confidence_penalty
+tests/test_geo_origin.py::test_clean_corporate_origin
+tests/test_header_forensics.py::test_received_chain_reconstruction
+tests/test_header_forensics.py::test_earliest_reliable_hop_selection_multi_hop
+tests/test_header_forensics.py::test_authentication_evaluation_pass
+tests/test_header_forensics.py::test_authentication_evaluation_fail
+tests/test_header_forensics.py::test_mixed_timezone_awareness_chronology
+tests/test_ingest_endpoints.py::test_upload_eml_file_endpoint_success
+tests/test_ingest_endpoints.py::test_submit_raw_rfc5322_endpoint_success
+tests/test_ingest_endpoints.py::test_upload_invalid_file_extension_rejected
+tests/test_ingest_endpoints.py::test_ingest_sha256_deduplication_upload_and_raw
+tests/test_ingest_endpoints.py::test_ingest_forged_message_id_creates_new_record
+tests/test_ingest_endpoints.py::test_ingest_identical_subject_and_sender_distinct_bytes_creates_new_record
+tests/test_ingestion.py::test_parse_legitimate_email
+tests/test_ingestion.py::test_parse_phishing_email_with_multiple_received_hops
+tests/test_ml_classifier.py::test_feature_extractor_47_dimensions
+tests/test_ml_classifier.py::test_classifier_bec_classification
+tests/test_ml_classifier.py::test_classifier_legitimate_email
+tests/test_ml_classifier.py::test_truncated_headers_null_safety
+tests/test_model_metrics.py::test_model_metrics_endpoint
+tests/test_model_metrics.py::test_model_features_endpoint
+tests/test_model_metrics.py::test_adversarial_zero_width_space_evasion_detection
+tests/test_model_metrics.py::test_adversarial_punycode_idn_evasion_detection
+tests/test_observability.py::test_prometheus_metrics_endpoint
+tests/test_observability.py::test_deep_health_check_endpoint
+tests/test_observability.py::test_correlation_id_header_propagation
+tests/test_observability.py::test_correlation_id_auto_generation
+tests/test_security_hardening.py::test_xss_email_body_sanitization
+tests/test_security_hardening.py::test_security_headers_present
+tests/test_security_hardening.py::test_unsupported_file_upload_rejected
+tests/test_security_hardening.py::test_empty_file_upload_rejected
+tests/test_security_hardening.py::test_production_mode_default_admin_token_refusal
+tests/test_threat_intel.py::test_threat_intel_urlhaus_hit
+tests/test_threat_intel.py::test_threat_intel_threatfox_ip_hit
+tests/test_threat_intel.py::test_threat_intel_parallel_aggregation
+
+============================== warnings summary ===============================
+app\config.py:7
+  E:\SENTRY\backend\app\config.py:7: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class Settings(BaseSettings):
+
+app\schemas\email.py:17
+  E:\SENTRY\backend\app\schemas\email.py:17: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class EmailResponse(EmailBase):
+
+app\schemas\analysis.py:70
+  E:\SENTRY\backend\app\schemas\analysis.py:70: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class AnalysisResultResponse(BaseModel):
+
+app\schemas\campaign.py:12
+  E:\SENTRY\backend\app\schemas\campaign.py:12: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class CampaignResponse(CampaignBase):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+67 tests collected in 0.04s

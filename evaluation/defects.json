@@ -405,5 +405,29 @@
     "regression_test": "backend/tests/test_batch_ingest.py",
     "effort": "M",
     "description": "Multi-message concatenated mbox archives currently parsed as single-message streams rather than discrete multi-record entities; interim behavior documented and single-message mbox supported."
+  },
+  {
+    "id": "GRAPH-002",
+    "check": "ui.campaign_graph_true_total_banner_reporting",
+    "severity": "medium",
+    "evidence": "evaluation/artifacts/corpus_at_scale_receipt.json",
+    "status": "resolved",
+    "fix_commit": "f2c71ac",
+    "target_version": "v1.0.4",
+    "regression_test": "frontend/src/components/graph/CampaignNetworkGraph.tsx",
+    "effort": "S",
+    "description": "Graph canvas scale guard banner reported query cap rather than true database entity count; resolved by computing total entities from database count and displaying queried count."
+  },
+  {
+    "id": "BATCH-004",
+    "check": "security.cors_token_fail_fast_audit_chaining",
+    "severity": "high",
+    "evidence": "logs/reset_audit.log",
+    "status": "resolved",
+    "fix_commit": "HEAD",
+    "target_version": "v1.0.4",
+    "regression_test": "backend/tests/test_security_hardening.py::test_production_mode_default_admin_token_refusal",
+    "effort": "M",
+    "description": "CORS wildcard allow_origins restricted to authorized frontend origins, default ADMIN_TOKEN fail-fast on production startup added, and destruction audit log upgraded to sequential cryptographic SHA-256 hash chaining."
   }
 ]

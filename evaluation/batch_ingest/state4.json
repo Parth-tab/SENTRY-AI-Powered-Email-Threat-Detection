@@ -1,0 +1,52 @@
+{
+  "session": "BATCH-004",
+  "phase": "COMPLETE",
+  "status": "PASS",
+  "banner_fix": {
+    "defect": "GRAPH-002",
+    "status": "resolved",
+    "wording": "Displaying top 300 of {total} entities (top 1,000 queried)",
+    "screenshot": "evaluation/artifacts/screenshots/scale_graph_cap_notice.png",
+    "receipt": "evaluation/artifacts/corpus_at_scale_receipt.json"
+  },
+  "cors_and_token_posture": {
+    "cors_origins": [
+      "http://localhost:3000",
+      "http://127.0.0.1:3000",
+      "http://localhost:5173",
+      "http://127.0.0.1:5173"
+    ],
+    "wildcard_removed": true,
+    "admin_token_fail_fast": true,
+    "demo_script_updated": true
+  },
+  "warnings_ledger": {
+    "ledger_file": "evaluation/ERRATA.md",
+    "errata_id": "Errata 004",
+    "upstream_deprecations_count": 367,
+    "categories": [
+      "datetime.utcnow deprecation (Python 3.12+)",
+      "Pydantic V2 Config deprecation",
+      "Bleach NoCssSanitizerWarning"
+    ]
+  },
+  "audit_chaining": {
+    "mode": "sequential_sha256_hash_chain",
+    "log_file": "logs/reset_audit.log",
+    "chain_verified": true
+  },
+  "manifest_and_defects": {
+    "manifest_file": "evaluation/test_manifest.txt",
+    "total_tests": 67,
+    "defect_register": {
+      "open": [
+        "DEF-005",
+        "MBOX-001"
+      ],
+      "resolved_in_session": [
+        "GRAPH-002",
+        "BATCH-004"
+      ]
+    }
+  }
+}
