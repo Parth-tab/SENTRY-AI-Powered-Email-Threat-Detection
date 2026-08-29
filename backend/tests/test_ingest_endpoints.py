@@ -111,3 +111,78 @@ Testing multi-vector deduplication across general ingest endpoints.
     matching_ids = [e["id"] for e in all_emails if e["id"] == email_id_1]
     assert len(matching_ids) == 1, "Expected exactly 1 database row for deduplicated email"
 
+
+@pytest.mark.asyncio
+async def test_ingest_forged_message_id_creates_new_record(client):
+    """ING-003 / T2: Distinct bytes with forged Message-ID of existing email must create a NEW record (evidence-suppression kill)."""
+    eml_original = b"""From: victim-corp@example.com
+To: user@target.org
+Subject: Security Notification 101
+Date: Sat, 29 Aug 2026 15:10:00 +0000
+Message-ID: <shared-message-id-123@example.com>
+Received: from [198.51.100.1] by mx.target.org with ESMTP; Sat, 29 Aug 2026 15:10:00 +0000
+Content-Type: text/plain; charset=utf-8
+
+Original legitimate email notification.
+"""
+    eml_forged_mid = b"""From: attacker@adversary.org
+To: user@target.org
+Subject: Urgent Security Alert - Reset Your Credentials
+Date: Sat, 29 Aug 2026 15:12:00 +0000
+Message-ID: <shared-message-id-123@example.com>
+Received: from [203.0.113.55] by mx.target.org with ESMTP; Sat, 29 Aug 2026 15:12:00 +0000
+Content-Type: text/plain; charset=utf-8
+
+Malicious payload attempting to suppress evidence via forged Message-ID reuse.
+"""
+    # 1. Ingest original email
+    res1 = await client.post("/api/v1/emails/upload", files={"file": ("orig.eml", io.BytesIO(eml_original), "message/rfc822")})
+    assert res1.status_code in [200, 201]
+    id1 = res1.json()["id"]
+
+    # 2. Ingest forged Message-ID email (distinct bytes)
+    res2 = await client.post("/api/v1/emails/upload", files={"file": ("forged.eml", io.BytesIO(eml_forged_mid), "message/rfc822")})
+    assert res2.status_code in [200, 201]
+    id2 = res2.json()["id"]
+
+    # Must create a distinct new record to prevent adversarial suppression
+    assert id2 != id1, f"Expected distinct record id for forged Message-ID, but got same id {id1}"
+
+
+@pytest.mark.asyncio
+async def test_ingest_identical_subject_and_sender_distinct_bytes_creates_new_record(client):
+    """ING-003 / T3: Distinct bytes with identical Subject and Sender must create a NEW record (campaign-collapse kill)."""
+    eml_wave1 = b"""From: cfo@finance-executive.com
+To: accountant@company.com
+Subject: Urgent Wire Request - Supplier Payment
+Date: Sat, 29 Aug 2026 15:20:00 +0000
+Message-ID: <campaign-wave1-1@finance-executive.com>
+Received: from [192.0.2.10] by mx.company.com with ESMTP; Sat, 29 Aug 2026 15:20:00 +0000
+Content-Type: text/plain; charset=utf-8
+
+Wave 1 phishing lure: Wire $50,000 to Account A.
+"""
+    eml_wave2 = b"""From: cfo@finance-executive.com
+To: accountant@company.com
+Subject: Urgent Wire Request - Supplier Payment
+Date: Sat, 29 Aug 2026 15:25:00 +0000
+Message-ID: <campaign-wave2-2@finance-executive.com>
+Received: from [192.0.2.20] by mx.company.com with ESMTP; Sat, 29 Aug 2026 15:25:00 +0000
+Content-Type: text/plain; charset=utf-8
+
+Wave 2 phishing lure: Wire $75,000 to Account B with updated routing.
+"""
+    # 1. Ingest wave 1
+    res1 = await client.post("/api/v1/emails/upload", files={"file": ("wave1.eml", io.BytesIO(eml_wave1), "message/rfc822")})
+    assert res1.status_code in [200, 201]
+    id1 = res1.json()["id"]
+
+    # 2. Ingest wave 2 (identical subject and sender, but distinct bytes)
+    res2 = await client.post("/api/v1/emails/upload", files={"file": ("wave2.eml", io.BytesIO(eml_wave2), "message/rfc822")})
+    assert res2.status_code in [200, 201]
+    id2 = res2.json()["id"]
+
+    # Must create a distinct new record to prevent collapsing multi-wave attacks
+    assert id2 != id1, f"Expected distinct record id for wave 2 email, but got same id {id1}"
+
+

@@ -62,16 +62,15 @@ async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSessio
     # 1. Ingestion & Raw Extraction
     email_data = IngestionService.parse_raw_email(raw_bytes, source=source)
 
-    # 1.1 Multi-vector deduplication check (SHA-256 first, Message-ID / Subject+Sender fallback)
-    existing_record = await find_existing_email_record(
-        db=db,
-        sha256_hash=email_data.get("sha256_hash"),
-        message_id=email_data.get("message_id"),
-        subject=email_data.get("subject"),
-        sender=email_data.get("sender")
-    )
-    if existing_record:
-        return existing_record
+    # 1.1 SHA-256 byte identity deduplication ONLY (RFC 3227 forensic evidentiary standard)
+    # Distinct bytes always create a new record; identical bytes return existing record.
+    sha256_hash = email_data.get("sha256_hash")
+    if sha256_hash:
+        stmt = select(EmailRecord).where(EmailRecord.sha256_hash == sha256_hash).limit(1)
+        res = await db.execute(stmt)
+        existing_record = res.scalar_one_or_none()
+        if existing_record:
+            return existing_record
     
     # 2. Header Forensics
     hops, earliest_hop, hop_anomalies = HeaderForensicsService.parse_received_chain(email_data["received_headers"])

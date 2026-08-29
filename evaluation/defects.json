@@ -273,5 +273,29 @@
     "regression_test": "backend/tests/test_ingest_endpoints.py::test_ingest_sha256_deduplication_upload_and_raw",
     "effort": "S",
     "description": "General ingest endpoints (/upload and /raw) lacked SHA-256 / multi-vector deduplication, causing duplicate database records and non-idempotent test harness runs; resolved via shared find_existing_email_record helper."
+  },
+  {
+    "id": "D-1",
+    "check": "forensics.sha256_byte_identity_deduplication",
+    "severity": "high",
+    "evidence": "backend/tests/test_ingest_endpoints.py::test_ingest_forged_message_id_creates_new_record",
+    "status": "resolved",
+    "fix_commit": "HEAD",
+    "target_version": "v1.0.3",
+    "regression_test": "backend/tests/test_ingest_endpoints.py (test_ingest_sha256_deduplication_upload_and_raw, test_ingest_forged_message_id_creates_new_record, test_ingest_identical_subject_and_sender_distinct_bytes_creates_new_record)",
+    "effort": "S",
+    "description": "General forensic ingestion (upload/raw) used multi-vector dedupe (Message-ID / Subject+Sender), causing evidence suppression and campaign collapse on distinct byte payloads; resolved by enforcing SHA-256 byte identity ONLY."
+  },
+  {
+    "id": "DEF-005",
+    "check": "security.red_team_battery_adversarial_suppression",
+    "severity": "medium",
+    "evidence": "evaluation/defects.json",
+    "status": "open",
+    "fix_commit": "",
+    "target_version": "v1.1.0",
+    "regression_test": "backend/tests/test_ingest_endpoints.py::test_ingest_forged_message_id_creates_new_record",
+    "effort": "M",
+    "description": "Red-team evaluation battery lacks a dedicated forged-header-dedupe-suppression attack scenario in the adversarial corpus; documented in adversarial corpus gap tracking."
   }
 ]

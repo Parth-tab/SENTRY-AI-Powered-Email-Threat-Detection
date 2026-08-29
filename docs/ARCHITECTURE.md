@@ -95,5 +95,8 @@ SENTRY correlates disparate emails into unified threat campaigns using graph clu
 - **Non-Vite & Production Deployments:** Non-Vite production deployments (e.g. Nginx, Docker Compose, standalone static asset hosting) must either:
   1. Serve frontend static assets and backend API under the same origin domain (e.g., via Nginx `location /api { proxy_pass http://backend:8000; }`), OR
   2. Configure full CORS preflight handling on the backend (`CORSMiddleware`) for POST requests with `Content-Type: multipart/form-data` and `Content-Type: text/plain`.
-- **Multi-Vector Ingestion Deduplication:** All general ingestion write paths (`/api/v1/emails/upload` and `/api/v1/emails/raw`) enforce multi-vector deduplication (primary SHA-256 digest, fallback Message-ID header, fallback Subject + Sender pair) to guarantee idempotent ingestion and prevent duplicate records in the evidence vault and relational storage.
+- **Ingestion Deduplication Contracts:**
+  - **General Forensic Ingestion (`/api/v1/emails/upload`, `/api/v1/emails/raw`):** Enforces **SHA-256 byte identity ONLY**. Distinct bytes always generate a new evidentiary record with independent hash-chain sealing, regardless of Message-ID or Subject/Sender overlap. This guarantees zero evidence loss and prevents adversarial evidence suppression (forged Message-ID reuse) or campaign collapse (multi-wave attacks with shared subject/sender).
+  - **Demo Dataset Reset (`/api/v1/samples/seed`):** Employs **multi-vector deduplication** (SHA-256 digest $\rightarrow$ Message-ID header $\rightarrow$ Subject + Sender pair) to guarantee idempotent presentation resets without duplicate demonstration artifacts.
+  - *Evidentiary Rule:* Artifact identity in forensic ingestion is byte identity; looser vectors are seed-reset semantics and correlation signals, never ingestion drops.
 
