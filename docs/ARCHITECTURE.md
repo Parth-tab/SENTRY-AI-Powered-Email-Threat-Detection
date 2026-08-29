@@ -97,7 +97,7 @@ SENTRY correlates disparate emails into unified threat campaigns using graph clu
   2. Configure full CORS preflight handling on the backend (`CORSMiddleware`) for POST requests with `Content-Type: multipart/form-data` and `Content-Type: text/plain`.
 - **Ingestion Deduplication Contracts:**
   - **General Forensic Ingestion (`/api/v1/emails/upload`, `/api/v1/emails/raw`, `/api/v1/emails/batch/*`):** Enforces **SHA-256 byte identity ONLY**. Distinct bytes always generate a new evidentiary record with independent hash-chain sealing, regardless of Message-ID or Subject/Sender overlap. This guarantees zero evidence loss and prevents adversarial evidence suppression (forged Message-ID reuse) or campaign collapse (multi-wave attacks with shared subject/sender).
-  - **Demo Dataset Reset (`/api/v1/samples/seed`, `/api/v1/admin/reset-demo`):** Employs **multi-vector deduplication** (SHA-256 digest $\rightarrow$ Message-ID header $\rightarrow$ Subject + Sender pair) to guarantee idempotent presentation resets without duplicate demonstration artifacts. When invoked, `POST /api/v1/admin/reset-demo` flushes the database and in-memory graph, clears non-seed vault artifacts, and reseeds the 18 demo emails with fresh RFC 3227 Genesis blocks ($H_0$) and newly sealed sequential SHA-256 hash chains.
+  - **Demo Dataset Reset (`/api/v1/samples/seed`, `/api/v1/admin/reset-demo`):** The forensic evidence vault is strictly write-once within a case session; `POST /api/v1/admin/reset-demo` is an explicit, authenticated (`X-Sentry-Admin: <ADMIN_TOKEN>`), audited operator action. Employs multi-vector deduplication (SHA-256 digest $\rightarrow$ Message-ID header $\rightarrow$ Subject + Sender pair) to guarantee idempotent presentation resets without duplicate demonstration artifacts. Before purging database tables and re-seeding the 18 demo emails with fresh RFC 3227 Genesis blocks ($H_0$), the system records an evidentiary destruction audit log (`logs/reset_audit.log`) containing timestamp, trigger, prior record count, and prior chain head hash.
   - *Evidentiary Rule:* Artifact identity in forensic ingestion is byte identity; looser vectors are seed-reset semantics and correlation signals, never ingestion drops.
 
 ---
@@ -109,6 +109,7 @@ Payload format classification (`backend/app/services/sniffer.py`) inspects the i
 1. **ZIP Archive Signature:** `PK\x03\x04` magic bytes $\rightarrow$ In-memory archive pipeline.
 2. **RFC 822 Grammar:** Header key-value grammar (`^[A-Za-z0-9-]+:\s*.+`) with zero null bytes in first 512 bytes $\rightarrow$ Standard forensic pipeline.
 3. **Tabular Dataset Grammar:** Delimited text ($\ge 2$ columns) matching recognized header tokens (`body`, `text`, `subject`, `label`) $\rightarrow$ CSV synthesizer pipeline.
+4. **MBOX Handling (F-4 / MBOX-001):** Single-message `.mbox` files and standard RFC 822 streams are processed directly. Multi-message mailbox archives (concatenated via `From ` envelope delimiters) are currently parsed as single continuous streams; full multi-message mailbox delimiter splitting into discrete batch entities is tracked under defect `MBOX-001` (target v1.1.0) with ZIP archives serving as the primary multi-file ingestion format.
 
 ### B. In-Memory Archive Safety & Scale Caps
 - **In-Memory Streaming:** ZIP entries decompressed entirely in memory (`io.BytesIO`). Zero disk extraction eliminates Zip-Slip vulnerabilities.
@@ -124,4 +125,7 @@ Tabular datasets (e.g. Ling-Spam, Kaggle phishing CSVs) provide message text and
 1. **Ground-Truth Label Quarantine:** Classification labels are quarantined from synthesized RFC 822 MIME headers. Records differing solely in ground-truth label produce identical SHA-256 digests.
 2. **Deterministic Unavailable States:** Missing network artifacts return explicit unavailable notices (`"status": "unavailable", "reason": "unavailable — headerless source"`) across SPF, DKIM, DMARC, and Geolocation.
 3. **Zero Hallucination Guarantee:** `relay_hops_count = 0`, `relay_path = []`, `earliest_reliable_hop = None`. Zero synthetic IP addresses or fabricated hops are introduced into the evidentiary chain.
+
+### D. Visualization Scale Guards (GRAPH-001 / F-3)
+- **Campaign Graph Render Cap:** In multi-thousand entity corpora, the 2D canvas visualization enforces a 300-node display ceiling with an explicit banner indicating *"Showing 300 of {total} nodes (capped)"* / *"Displaying top 300 correlated nodes out of {total} total graph entities"* to maintain 60fps rendering while preserving 100% of underlying graph relationships in database and memory structures.
 

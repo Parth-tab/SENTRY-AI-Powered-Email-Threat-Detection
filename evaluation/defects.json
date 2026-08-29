@@ -393,5 +393,17 @@
     "regression_test": "tools/verify_sentry.py",
     "effort": "M",
     "description": "Missing complete 19-gate verification pair, full mutation outputs, browser at-scale Playwright receipts on 6,777 items, and independent duplicate decomposition receipt."
+  },
+  {
+    "id": "MBOX-001",
+    "check": "ingest.multi_message_mbox_delimiter_splitting",
+    "severity": "low",
+    "evidence": "docs/ARCHITECTURE.md",
+    "status": "open",
+    "fix_commit": "",
+    "target_version": "v1.1.0",
+    "regression_test": "backend/tests/test_batch_ingest.py",
+    "effort": "M",
+    "description": "Multi-message concatenated mbox archives currently parsed as single-message streams rather than discrete multi-record entities; interim behavior documented and single-message mbox supported."
   }
 ]
