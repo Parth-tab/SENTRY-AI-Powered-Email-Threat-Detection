@@ -79,22 +79,30 @@ async def observability_and_security_middleware(request: Request, call_next):
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; "
         "script-src 'self' 'unsafe-inline' 'unsafe-eval'; "
-        "style-src 'self' 'unsafe-inline'; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' https://fonts.gstatic.com data:; "
         "img-src 'self' data: https:; "
         "connect-src 'self' ws: wss: http: https:;"
     )
 
     return response
 
-# 2. CORS Configuration (Restricted strictly to authorized frontend origins)
+# 2. CORS Configuration (Restricted strictly to authorized origins + single-origin self-calls)
+cors_origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+if getattr(settings, "CORS_ORIGINS", None):
+    extra = [o.strip() for o in settings.CORS_ORIGINS.split(",") if o.strip()]
+    cors_origins.extend(extra)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://localhost:5173",
-        "http://127.0.0.1:5173"
-    ],
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"],
     allow_headers=["*"],
@@ -175,15 +183,28 @@ async def deep_health_check():
         "subsystems": subsystems
     }
 
-@app.get("/", tags=["Root"])
-async def root():
-    return {
-        "platform": settings.PROJECT_NAME,
-        "docs_url": "/docs",
-        "metrics_url": "/metrics",
-        "api_v1": settings.API_V1_STR,
-        "status": "OPERATIONAL"
-    }
+# D1 Production Serving: Mount built SPA assets if SERVE_STATIC or production environment
+from fastapi.staticfiles import StaticFiles
+
+frontend_dist = Path(settings.FRONTEND_DIST_DIR)
+is_prod_serving = (
+    settings.SERVE_STATIC
+    or settings.ENVIRONMENT.lower() in ("production", "standalone", "appliance")
+    or settings.BUILD_MODE.lower() in ("production", "standalone")
+)
+
+if is_prod_serving and frontend_dist.exists() and (frontend_dist / "index.html").exists():
+    app.mount("/", StaticFiles(directory=str(frontend_dist), html=True), name="static")
+else:
+    @app.get("/", tags=["Root"])
+    async def root():
+        return {
+            "platform": settings.PROJECT_NAME,
+            "docs_url": "/docs",
+            "metrics_url": "/metrics",
+            "api_v1": settings.API_V1_STR,
+            "status": "OPERATIONAL"
+        }
 
 if __name__ == "__main__":
     import uvicorn
