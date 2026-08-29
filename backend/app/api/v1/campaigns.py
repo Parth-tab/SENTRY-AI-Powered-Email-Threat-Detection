@@ -22,6 +22,29 @@ async def get_campaign(campaign_id: str):
     return campaign
 
 @router.get("/graph/all")
-async def get_global_network_graph():
+async def get_global_network_graph(db: AsyncSession = Depends(get_db)):
     """Returns the full multi-entity knowledge graph for campaign visualization."""
+    if CorrelationEngine._graph.number_of_nodes() <= 30:
+        from sqlalchemy import select
+        from app.db.models import EmailRecord, AnalysisResult
+        stmt = select(EmailRecord, AnalysisResult).outerjoin(AnalysisResult, EmailRecord.id == AnalysisResult.email_id).limit(1000)
+        res = await db.execute(stmt)
+        rows = res.all()
+        if len(rows) > 30:
+            for email_rec, analysis_rec in rows:
+                CorrelationEngine.add_email_to_graph(
+                    email_id=email_rec.id,
+                    email_data={
+                        "subject": email_rec.subject,
+                        "sender": email_rec.sender,
+                        "sender_domain": email_rec.sender_domain
+                    },
+                    analysis_data={
+                        "overall_threat_score": analysis_rec.overall_threat_score if analysis_rec else 0.0,
+                        "threat_level": analysis_rec.threat_level if analysis_rec else "LOW",
+                        "origin_assessment": analysis_rec.origin_assessment if analysis_rec else {},
+                        "attribution_assessment": analysis_rec.attribution_assessment if analysis_rec else {},
+                        "domain_intel": analysis_rec.domain_intel if analysis_rec else {}
+                    }
+                )
     return CorrelationEngine.get_graph_data()

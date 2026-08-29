@@ -19,10 +19,11 @@ export async function fetchStats(): Promise<DashboardStats> {
   return res.json();
 }
 
-export async function fetchEmails(threatLevel?: string, sender?: string): Promise<EmailRecordItem[]> {
+export async function fetchEmails(threatLevel?: string, sender?: string, limit: number = 10000): Promise<EmailRecordItem[]> {
   const params = new URLSearchParams();
   if (threatLevel && threatLevel !== "ALL") params.append("threat_level", threatLevel);
   if (sender) params.append("sender", sender);
+  params.append("limit", limit.toString());
   
   const res = await fetch(`${API_BASE}/api/v1/emails?${params.toString()}`);
   if (!res.ok) throw new Error("Failed to fetch emails");

@@ -455,7 +455,7 @@ async def upload_raw_email(
 
 @router.get("", response_model=List[Dict[str, Any]])
 async def list_emails(
-    limit: int = 50,
+    limit: int = 10000,
     offset: int = 0,
     threat_level: Optional[str] = None,
     sender: Optional[str] = None,
