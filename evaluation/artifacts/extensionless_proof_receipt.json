@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-08-29T16:33:24Z",
+  "fixture": "00001.7c53336b37003a9286aba55d2945844c",
+  "has_extension": false,
+  "extracted_subject": "Re: New Sequences Window",
+  "feed_row_count_before": 18,
+  "feed_row_count_after": 19,
+  "delta": 1,
+  "screenshot": "evaluation/artifacts/screenshots/extensionless_upload_success.png",
+  "verdict": "PASS"
+}

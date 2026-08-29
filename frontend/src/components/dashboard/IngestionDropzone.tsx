@@ -158,7 +158,7 @@ Hi Engineering Team, Here is your monthly summary of architecture updates and qu
             <span>Browse Local Files</span>
             <input
               type="file"
-              accept=".eml,.msg,.mbox,.csv,.tsv,.zip,.txt,*"
+              accept="*/*,.eml,.msg,.mbox,.csv,.tsv,.zip,.txt"
               multiple
               onChange={handleFileUpload}
               disabled={isLoading}
