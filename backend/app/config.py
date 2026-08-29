@@ -23,6 +23,13 @@ class Settings(BaseSettings):
     NEO4J_USER: str = "neo4j"
     NEO4J_PASSWORD: str = ""
 
+    # Production Serving & Frontend Static Mount (D1)
+    SERVE_STATIC: bool = False
+    BUILD_MODE: str = "demo"
+    FRONTEND_DIST_DIR: str = str(BASE_DIR.parent / "frontend" / "dist")
+    CORS_ORIGINS: str = ""
+    SENTRY_API_TOKEN: str = "sentry_operator_token_2025"
+
     # Security & Evidence
     SECRET_KEY: str = "sentry_demo_secret_key_2025_evidentiary_standard"
     ADMIN_TOKEN: str = "sentry_admin_demo_secret_2025"
