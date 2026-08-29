@@ -119,14 +119,20 @@ class DomainIntelService:
                             "reason": f"Brand keyword '{kw}' combined with deceptive phishing terms in '{domain}'"
                         }
 
-            # Check 2: Levenshtein Distance against legitimate domains
+            # Check 2: Levenshtein Distance and Homoglyph matching against legitimate domains
             norm_name = cls.normalize_homoglyphs(dec_base_name)
             for legit in legit_domains:
                 legit_base = legit.split(".")[0]
                 dist = cls.levenshtein_distance(norm_name, legit_base)
+                max_len = max(len(norm_name), len(legit_base))
                 
-                # Close edit distance (e.g. paypa1 vs paypal: dist 1, agogle vs google: dist 2)
-                if (1 <= dist <= 2 or norm_name == legit_base) and len(norm_name) >= 4:
+                # Match 1: Normalized homoglyph substitution (e.g. paypa1 -> paypal, or IDN punycode spoof)
+                is_homoglyph_spoof = (norm_name == legit_base and (is_punycode or dec_base_name != legit_base))
+                
+                # Match 2: Close typo edit distance on brands of length >= 4 (prevents false matches on 2-3 char acronyms like sbi)
+                is_typo_spoof = (1 <= dist <= 2 and len(legit_base) >= 4 and abs(len(norm_name) - len(legit_base)) <= 2 and (dist / max_len) <= 0.35)
+                
+                if is_homoglyph_spoof or is_typo_spoof:
                     return {
                         "is_lookalike": True,
                         "impersonated_brand": brand_name,

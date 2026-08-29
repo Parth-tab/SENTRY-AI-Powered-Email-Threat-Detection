@@ -24,9 +24,15 @@ class ThreatClassifier:
             email_data, header_res, content_res, domain_res, origin_res
         )
 
-        auth = header_res.get("authentication", {})
-        anomalies = header_res.get("header_anomalies", [])
-        anon = origin_res.get("anonymization", {})
+        header_res = header_res or {}
+        content_res = content_res or {}
+        domain_res = domain_res or {}
+        origin_res = origin_res or {}
+        threat_intel_res = threat_intel_res or {}
+
+        auth = header_res.get("authentication") or {}
+        anomalies = header_res.get("header_anomalies") or []
+        anon = origin_res.get("anonymization") or {}
         corroboration = threat_intel_res.get("corroboration_score", 0.0)
 
         # -------------------------------------------------------------

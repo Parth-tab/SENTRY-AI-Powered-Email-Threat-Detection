@@ -54,7 +54,7 @@ class MLFeatureExtractor:
         feats.append(1.0 if email_data.get("body_html") else 0.0)
 
         # Header Forensics (21-30)
-        anomalies = header_res.get("header_anomalies", [])
+        anomalies = header_res.get("header_anomalies", []) or []
         feats.append(float(header_res.get("relay_hops_count", 1)))
         feats.append(1.0 if any("impossible_timestamp" in a for a in anomalies) else 0.0)
         feats.append(1.0 if "display_name_contains_fake_email" in anomalies else 0.0)
@@ -64,13 +64,14 @@ class MLFeatureExtractor:
         feats.append(1.0 if "x_originating_ip_discrepancy" in anomalies else 0.0)
         feats.append(1.0 if any("suspicious_x_mailer" in a for a in anomalies) else 0.0)
         feats.append(0.0) # missing_date_flag
-        feats.append(1.0 if not header_res.get("earliest_reliable_hop", {}).get("is_reliable", True) else 0.0)
+        earliest_hop = header_res.get("earliest_reliable_hop") or {}
+        feats.append(1.0 if not earliest_hop.get("is_reliable", True) else 0.0)
 
         # Authentication (31-36)
-        auth = header_res.get("authentication", {})
-        spf = auth.get("spf", {})
-        dkim = auth.get("dkim", {})
-        dmarc = auth.get("dmarc", {})
+        auth = header_res.get("authentication") or {}
+        spf = auth.get("spf") or {}
+        dkim = auth.get("dkim") or {}
+        dmarc = auth.get("dmarc") or {}
         feats.append(float(spf.get("score", 0)))
         feats.append(float(dkim.get("score", 0)))
         feats.append(float(dmarc.get("score", 0)))
@@ -79,19 +80,22 @@ class MLFeatureExtractor:
         feats.append(1.0 if dmarc.get("policy") == "reject" else 0.0)
 
         # Domain Intel (37-42)
-        feats.append(1.0 if domain_res.get("is_lookalike") else 0.0)
-        feats.append(float(domain_res.get("risk_score", 0.0)))
-        feats.append(1.0 if any("high_risk_tld" in f for f in domain_res.get("flags", [])) else 0.0)
-        feats.append(1.0 if "excessive_subdomains" in domain_res.get("flags", []) else 0.0)
+        domain_intel = domain_res or {}
+        domain_flags = domain_intel.get("flags") or []
+        feats.append(1.0 if domain_intel.get("is_lookalike") else 0.0)
+        feats.append(float(domain_intel.get("risk_score", 0.0)))
+        feats.append(1.0 if any("high_risk_tld" in f for f in domain_flags) else 0.0)
+        feats.append(1.0 if "excessive_subdomains" in domain_flags else 0.0)
         feats.append(0.1) # domain_age_risk
-        feats.append(0.0 if domain_res.get("mx_records_present", True) else 1.0)
+        feats.append(0.0 if domain_intel.get("mx_records_present", True) else 1.0)
 
         # Origin & Anonymization (43-47)
-        anon = origin_res.get("anonymization", {})
+        origin_dict = origin_res or {}
+        anon = origin_dict.get("anonymization") or {}
         feats.append(1.0 if anon.get("tor_exit_node") else 0.0)
         feats.append(1.0 if anon.get("vpn_detected") else 0.0)
         feats.append(1.0 if anon.get("hosting_provider") else 0.0)
-        feats.append(float(origin_res.get("confidence", 0.8)))
+        feats.append(float(origin_dict.get("confidence", 0.8)))
         feats.append(0.0) # origin country risk
 
         return np.array(feats, dtype=np.float32)

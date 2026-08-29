@@ -103,10 +103,18 @@ class HeaderForensicsService:
             t1 = hops[i]["parsed_date"]
             t2 = hops[i+1]["parsed_date"]
             if t1 and t2:
-                time_delta = (t2 - t1).total_seconds()
-                if time_delta < -300: # Hop received 5+ minutes before it was sent -> clock skew or forged hop
-                    anomalies.append(f"impossible_timestamp_sequence_hop_{i+1}_to_{i+2}")
-                    hops[i]["is_reliable"] = False
+                try:
+                    # Normalize timezone awareness to allow safe subtraction
+                    if t1.tzinfo is not None and t2.tzinfo is None:
+                        t2 = t2.replace(tzinfo=t1.tzinfo)
+                    elif t1.tzinfo is None and t2.tzinfo is not None:
+                        t1 = t1.replace(tzinfo=t2.tzinfo)
+                    time_delta = (t2 - t1).total_seconds()
+                    if time_delta < -300: # Hop received 5+ minutes before it was sent -> clock skew or forged hop
+                        anomalies.append(f"impossible_timestamp_sequence_hop_{i+1}_to_{i+2}")
+                        hops[i]["is_reliable"] = False
+                except Exception:
+                    pass
 
         # Identify earliest reliable public hop (first public IP in chronological chain)
         earliest_reliable_hop = None
