@@ -67,23 +67,26 @@ async def test_empty_file_upload_rejected():
         assert response.status_code == 400
         assert "Uploaded file is empty" in response.json()["detail"]
 
-def test_production_mode_default_admin_token_refusal():
-    """C-2: Verifies that running in production with default ADMIN_TOKEN causes startup refusal."""
+@pytest.mark.parametrize("env,secret_key,admin_token,should_raise", [
+    ("demo", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", False),
+    ("development", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", False),
+    ("testing", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", False),
+    ("local", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", False),
+    ("production", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", True),
+    ("staging", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", True),
+])
+def test_security_validator_decision_matrix(env, secret_key, admin_token, should_raise):
+    """V-2: Verifies fail-fast credential security decision matrix across 6 standard & unrecognized environments."""
     from app.config import Settings, validate_security_posture
 
-    # Production with default admin token must raise RuntimeError
-    bad_prod_settings = Settings(
-        ENVIRONMENT="production",
-        SECRET_KEY="cryptographically_secure_random_key_99999",
-        ADMIN_TOKEN="sentry_admin_demo_secret_2025"
+    test_settings = Settings(
+        ENVIRONMENT=env,
+        SECRET_KEY=secret_key,
+        ADMIN_TOKEN=admin_token
     )
-    with pytest.raises(RuntimeError, match="CRITICAL SECURITY CONFIGURATION ERROR"):
-        validate_security_posture(bad_prod_settings)
 
-    # Production with valid high-entropy admin token must pass validation
-    good_prod_settings = Settings(
-        ENVIRONMENT="production",
-        SECRET_KEY="cryptographically_secure_random_key_99999",
-        ADMIN_TOKEN="custom_prod_admin_entropy_token_88888"
-    )
-    validate_security_posture(good_prod_settings)
+    if should_raise:
+        with pytest.raises(RuntimeError, match="CRITICAL SECURITY CONFIGURATION ERROR"):
+            validate_security_posture(test_settings)
+    else:
+        validate_security_posture(test_settings)

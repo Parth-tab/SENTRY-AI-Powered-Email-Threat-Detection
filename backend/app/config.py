@@ -43,7 +43,7 @@ class Settings(BaseSettings):
 settings = Settings()
 
 def validate_security_posture(s: Settings):
-    """Fail-safe security validator: Production / non-demo environments require explicitly injected entropy."""
+    """Fail-safe security validator: Enforces credential entropy on production and unrecognized environments while allowing demo defaults in demo/development/testing/local."""
     env = s.ENVIRONMENT.lower()
     if env == "production" or env not in ("demo", "development", "testing", "local"):
         if "demo" in s.SECRET_KEY.lower() or "secret" in s.SECRET_KEY.lower():

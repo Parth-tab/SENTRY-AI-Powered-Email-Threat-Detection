@@ -61,7 +61,12 @@ tests/test_security_hardening.py::test_xss_email_body_sanitization
 tests/test_security_hardening.py::test_security_headers_present
 tests/test_security_hardening.py::test_unsupported_file_upload_rejected
 tests/test_security_hardening.py::test_empty_file_upload_rejected
-tests/test_security_hardening.py::test_production_mode_default_admin_token_refusal
+tests/test_security_hardening.py::test_security_validator_decision_matrix[demo-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-False]
+tests/test_security_hardening.py::test_security_validator_decision_matrix[development-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-False]
+tests/test_security_hardening.py::test_security_validator_decision_matrix[testing-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-False]
+tests/test_security_hardening.py::test_security_validator_decision_matrix[local-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-False]
+tests/test_security_hardening.py::test_security_validator_decision_matrix[production-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-True]
+tests/test_security_hardening.py::test_security_validator_decision_matrix[staging-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-True]
 tests/test_threat_intel.py::test_threat_intel_urlhaus_hit
 tests/test_threat_intel.py::test_threat_intel_threatfox_ip_hit
 tests/test_threat_intel.py::test_threat_intel_parallel_aggregation
@@ -84,4 +89,4 @@ app\schemas\campaign.py:12
     class CampaignResponse(CampaignBase):
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-67 tests collected in 0.04s
+72 tests collected in 0.05s
