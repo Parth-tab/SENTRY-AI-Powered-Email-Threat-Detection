@@ -21,13 +21,13 @@ Content-Type: text/plain; charset="UTF-8"
 
 Hi Engineering Team,
 
-Here is your monthly summary of architecture updates, quaÏterly roadmap targets, and completed security hardening reviews across our microservice infrastructure.
+Here is your monthly summary of architecture updates, quaï¿½terly roadmap targets, and completed security hardening reviews across our microservice infrastructure.
 
 All teamTmembers are encouraged to review the updated design docs and provide async feedback in the shared project repository.
 
 Key highlights:
 - Transition to event-driven telemetry stream complete
-- Automated CI/CD pipeline latency reduced by 3ï%
+- Automated CI/CD pipeline latency reduced by 3ï¿½%
 - Scheduled maintenance window set for Sunday 02:00 UTC
 
 Regards,

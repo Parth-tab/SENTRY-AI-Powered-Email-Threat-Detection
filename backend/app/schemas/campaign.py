@@ -1,6 +1,6 @@
 from typing import Dict, Any, List, Optional
 from datetime import datetime
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 class CampaignBase(BaseModel):
     id: str
@@ -16,5 +16,4 @@ class CampaignResponse(CampaignBase):
     total_emails: int
     iocs: Optional[Dict[str, Any]] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

@@ -1,7 +1,7 @@
 import io
 import hashlib
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, Any, List, Tuple, Optional
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
@@ -61,7 +61,7 @@ class ReportingService:
         Creates an RFC 3227 compliant evidence chain-of-custody audit log.
         """
         coc_id = f"COC-{email_id[:8].upper()}"
-        t0 = datetime.utcnow().isoformat() + "Z"
+        t0 = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         
         # Genesis block of evidence
         genesis_prev = "0000000000000000000000000000000000000000000000000000000000000000"
@@ -94,7 +94,7 @@ class ReportingService:
         Appends a verifiable step to the RFC 3227 audit chain.
         """
         prev_hash = entries[-1]["entry_hash"] if entries else "0000000000000000000000000000000000000000000000000000000000000000"
-        t = datetime.utcnow().isoformat() + "Z"
+        t = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         step = len(entries) + 1
         
         entry_hash = cls.compute_entry_hash(prev_hash, action, actor, t, details)
@@ -210,7 +210,7 @@ class ReportingService:
             [
                 [
                     Paragraph("<b>SENTRY FORENSIC INTELLIGENCE PLATFORM</b><br/><font size=7.5 color='#64748B'>EVIDENTIARY-GRADE EMAIL THREAT ASSESSMENT & ORIGIN ATTRIBUTION REPORT</font>", title_style),
-                    Paragraph(f"<b>CASE ID:</b> {evidence_data.get('chain_of_custody_id', 'COC-001')}<br/><b>DATE:</b> {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%SZ')}<br/><b>CLASSIFICATION:</b> LAW ENFORCEMENT SENSITIVE", subtitle_style)
+                    Paragraph(f"<b>CASE ID:</b> {evidence_data.get('chain_of_custody_id', 'COC-001')}<br/><b>DATE:</b> {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%SZ')}<br/><b>CLASSIFICATION:</b> LAW ENFORCEMENT SENSITIVE", subtitle_style)
                 ]
             ],
             colWidths=[360, 180]

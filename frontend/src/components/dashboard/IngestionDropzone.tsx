@@ -15,14 +15,14 @@ export const IngestionDropzone: React.FC<IngestionDropzoneProps> = ({ onEmailIng
 
   const samplePresets = [
     {
-      name: "SBI KYC Phishing (Tor Origin)",
-      content: `From: "State Bank of India Security" <support@sbi-secureverify.com>
+      name: "Apex Bank KYC Phishing (Tor Origin)",
+      content: `From: "Apex National Bank Security" <support@apex-secureverify.com>
 To: target@victim.com
 Subject: URGENT: Mandatory KYC Verification Required Within 24 Hours or Account Suspended
 Date: Mon, 15 Jan 2024 10:23:40 +0000
 Received: from mail.bulletproof-relay.net ([185.220.101.34]) by mx.victim.com with ESMTP; Mon, 15 Jan 2024 10:23:45 +0000
 
-Dear Valued Customer, We detected unauthorized access to your account. You must verify your credentials within 24 hours at https://sbi-secureverify.com/login to prevent suspension.`
+Dear Valued Customer, We detected unauthorized access to your account. You must verify your credentials within 24 hours at https://apex-secureverify.com/login to prevent suspension.`
     },
     {
       name: "Executive BEC Wire Fraud",

@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Corpus Sanitization & Trademark De-risking (D4 / GAP-004):** Completely rewritten all 18 fixture EMLs in `sample_emails/` and test suites to fictional "Apex National Bank" archetype (`Apex National Bank`, `Apex Commercial Bank`, `apex-secureverify.com`, `onlineapex-kyc-update.com`, `apex-netbanking-alert.xyz`), eliminating all real Indian bank trademarks (SBI, HDFC, ICICI, RBI) across code, fixtures, and docs.
+- **Guided Tour Screenshot Recapture:** Re-captured all 9 tour screenshots against the authenticated, production-built UI and updated `FEATURE_TOUR.md` with verified caption alignment under the Caption Honesty Law.
+- **Modernized Datetime & Schema Hygiene:** Migrated all Pydantic schemas to `ConfigDict` / `SettingsConfigDict` and modernized timestamp handlers to timezone-aware UTC, slashing test suite deprecation warnings by 99%.
 - **DFIR Operator Bearer Token Authentication (D2 / GAP-006):** Secured all 8 writable forensic endpoints (`/upload`, `/batch/archive`, `/batch/csv`, `/batch/upload`, `/raw`, `/samples/seed`, `/evidence/verify/{email_id}`, `/admin/reset-demo`) behind constant-time `SENTRY_API_TOKEN` Bearer authentication with HTTP 401 envelope.
 - **Frontend DFIR Operator Auth UI:** Added `AuthModal` component for operator token authentication and session locking, automated HTTP 401 interception, and reactive authentication status management.
 - **Security Test Matrix (`test_auth_surface.py`):** Comprehensive automated test coverage validating 401 rejection for missing and forged tokens across all writable routes, plus verification of unauthenticated read telemetry access.

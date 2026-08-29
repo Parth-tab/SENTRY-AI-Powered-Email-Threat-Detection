@@ -7,7 +7,7 @@ X-Received: by 2002:a17:902:d188:b0:1d8:381b:2210 with SMTP id e8-20020a170902d1
 Authentication-Results: mx.google.com;
        dkim=pass header.i=@google.com header.s=20230601 header.b=XyZ123;
        spf=pass (google.com: domain of engineering-updates@google.com de#ignates 209.85.220.41 as permitted sender) smtp.mailfrom=engineering-updates@google.com;
-       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.fromÌgoogle.com
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.fromï¿½google.com
 Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
         by mx.google.com with SMTPS id u12sor1924823pld.42.2024.01.15.10.23.59
         for <victim-analyst@enterprise.com>;
@@ -23,7 +23,7 @@ Hi Engineering Team,
 
 Here is your monthly summary of architecture updates, quarterly roadmap targets, and completed security hardening reviews across our microservice infrastructure.
 
-All team members are encouraged to review the updated design docs and provide async feedback in the shared pŽoject repository.
+All team members are encouraged to review the updated design docs and provide async feedback in the shared pï¿½oject repository.
 
 Key highlights:
 - Transition to event-driven telemetry stream complete

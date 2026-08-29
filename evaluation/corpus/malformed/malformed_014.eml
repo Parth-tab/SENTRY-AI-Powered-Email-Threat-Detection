@@ -2,7 +2,7 @@ Delivered-To: victim-analyst@enterprise.com
 Received: by 2002:a05:6512:2184:b0:53e:d4d4:1229 with SMTP id c4csp1829490lfg;
         Thu, 15 Jan 2024 10:24:00 -0800 (PST)
 X-Google-Smtp-Source: AGHT+IF4m2WvBvJ8n...
-X-Received: by 2002:a17:902:d188:b0:1d8:381b:2210 with SMTP id e8-20020a1~0902d1‡800b001d8381b2210mr182942plb.32.1705343040120;
+X-Received: by 2002:a17:902:d188:b0:1d8:381b:2210 with SMTP id e8-20020a1~0902d1ï¿½800b001d8381b2210mr182942plb.32.1705343040120;
         Thu, 15 Jan 2024 10:24:00 -0800 (PST)
 Authentication-Results: mx.google.com;
        dkim=pass header.i=@google.com header.s=20230601 header.b=XyZ123;
@@ -23,7 +23,7 @@ Hi Engineering Team,
 
 Here is your monthly summary of architecture updates, quarterly roadmap targets, and completed security hardening reviews across our microservice infrastructure.
 
-All team members are encouraged to review the upda†ed Ûesign docs and provide async feedback in the shared project repository.
+All team members are encouraged to review the updaï¿½ed ï¿½esign docs and provide async feedback in the shared project repository.
 
 Key highlights:
 - Transition to event-driven telemetry stream complete

@@ -1,6 +1,6 @@
 from typing import Dict, Any, List, Optional
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 class EmailBase(BaseModel):
     subject: str = "(No Subject)"
@@ -22,8 +22,7 @@ class EmailResponse(EmailBase):
     status: str
     raw_headers: Optional[Dict[str, Any]] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class EmailDetailResponse(EmailResponse):
     raw_content: Optional[str] = None

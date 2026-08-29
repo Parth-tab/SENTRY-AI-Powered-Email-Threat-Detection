@@ -3,7 +3,7 @@ import email.policy
 import hashlib
 import os
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from email.utils import parseaddr, parsedate_to_datetime
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
@@ -51,9 +51,9 @@ class IngestionService:
             try:
                 parsed_date = parsedate_to_datetime(str(date_header))
             except Exception:
-                parsed_date = datetime.utcnow()
+                parsed_date = datetime.now(timezone.utc)
         else:
-            parsed_date = datetime.utcnow()
+            parsed_date = datetime.now(timezone.utc)
 
         # Extract all headers into a dictionary and preserve multiple Received headers
         headers_dict: Dict[str, Any] = {}
@@ -163,5 +163,5 @@ class IngestionService:
             "attachments": attachments,
             "source": source,
             "vault_path": str(vault_path),
-            "ingested_at": datetime.utcnow()
+            "ingested_at": datetime.now(timezone.utc)
         }

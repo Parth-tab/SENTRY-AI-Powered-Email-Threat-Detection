@@ -1,0 +1,13 @@
+From: Apex Bank Alert <no-reply@apex-update-portal.com>
+To: accounts.payable@victim-domain.internal
+Subject: Mandatory Action: Apex Mobile Pay Account Verification
+Date: Sun, 14 Jan 2024 16:45:00 +0000
+Message-ID: <20240114164500.5512.mail@apex-update-portal.com>
+Received: from mx1.victim-domain.internal (10.2.0.1) by mail.victim-domain.internal; Sun, 14 Jan 2024 16:45:06 +0000
+Received: from tor-node-nl.f3netze.de (185.220.101.34) by mx1.victim-domain.internal with ESMTP; Sun, 14 Jan 2024 16:45:02 +0000
+Authentication-Results: mx1.victim-domain.internal; spf=fail; dkim=none; dmarc=fail
+Content-Type: text/html; charset="utf-8"
+
+<p>Dear Valued Customer,</p>
+<p>Link your tax ID to Apex Mobile NetBanking to maintain active debit card privileges before midnight.</p>
+<p>Login securely: <a href="http://apex-update-portal.com/auth">https://online.apexbank.internal/login</a></p>

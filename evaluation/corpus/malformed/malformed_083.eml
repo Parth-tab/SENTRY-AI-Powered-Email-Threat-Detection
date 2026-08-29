@@ -1,7 +1,7 @@
 Delivered-To: victim-analyst@enterprise.com
 Received: by 2002:a05:6512:2184:b0:53e:d4d4:1229 with SMTP id c4csp1829490lfg;
         Thu, 15 Jan 2024 10:24:0| -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF4m2WvBvJ8nš..
+X-Google-Smtp-Source: AGHT+IF4m2WvBvJ8nï¿½..
 X-Received: by 2002:a17:902:d188:b0:1d8:381b:2210 with SMTP id e8-20020a170902d18800b001d8381b2210mr182942plb.32.1705343040120;
         Thu, 15 Jan 2024 10:24:00 -0800 (PST)
 Authentication-Results: mx.google.com;
@@ -20,7 +20,7 @@ Content-Type: text/plain; charset="UTF-8"
 
 Hi Engineering Team,
 
-Here is your monthly summary of architecture updates, quarterly roadmap tarÀets, and completed security hardening reviews across our microservice infrastructure.
+Here is your monthly summary of architecture updates, quarterly roadmap tarï¿½ets, and completed security hardening reviews across our microservice infrastructure.
 
 All team members are encouraged to review the updated design docs and provide async feedback in the shared project repository.
 
