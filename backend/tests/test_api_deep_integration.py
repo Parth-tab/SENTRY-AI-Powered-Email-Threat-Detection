@@ -3,9 +3,12 @@ from httpx import AsyncClient, ASGITransport
 from app.main import app
 from app.db.database import init_db
 
+from app.config import settings
+
 @pytest.mark.asyncio
 async def test_full_api_suite():
     await init_db()
+    auth_headers = {"Authorization": f"Bearer {settings.SENTRY_API_TOKEN}"}
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         # 1. Health check
@@ -14,7 +17,7 @@ async def test_full_api_suite():
         assert r.json()["status"] == "healthy"
 
         # 2. Seed demo samples
-        r_seed = await client.post("/api/v1/samples/seed")
+        r_seed = await client.post("/api/v1/samples/seed", headers=auth_headers)
         assert r_seed.status_code in [200, 201, 409]
 
         # 3. List emails with pagination & search
@@ -34,7 +37,7 @@ async def test_full_api_suite():
         assert "analysis" in detail_json
 
         # 5. Verify RFC 3227 Chain
-        r_chain = await client.post(f"/api/v1/evidence/verify/{email_id}")
+        r_chain = await client.post(f"/api/v1/evidence/verify/{email_id}", headers=auth_headers)
         assert r_chain.status_code == 200
         chain_json = r_chain.json()
         assert chain_json["is_valid"] is True

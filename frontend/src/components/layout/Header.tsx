@@ -5,9 +5,10 @@ interface HeaderProps {
   isConnected: boolean;
   onSeedSamples: () => void;
   isSeeding: boolean;
+  onOpenAuth: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ isConnected, onSeedSamples, isSeeding }) => {
+export const Header: React.FC<HeaderProps> = ({ isConnected, onSeedSamples, isSeeding, onOpenAuth }) => {
   return (
     <header className="h-16 border-b border-[#27272A] bg-[#121215] px-6 flex items-center justify-between sticky top-0 z-40">
       <div className="flex items-center space-x-3">
@@ -45,6 +46,16 @@ export const Header: React.FC<HeaderProps> = ({ isConnected, onSeedSamples, isSe
             {isConnected ? "LIVE STREAM" : "CONNECTING..."}
           </span>
         </div>
+
+        {/* DFIR Operator Auth Status Toggle */}
+        <button
+          onClick={onOpenAuth}
+          className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-zinc-800/80 hover:bg-zinc-700 active:bg-zinc-600 border border-zinc-700 text-xs font-medium text-zinc-200 transition-colors shadow-sm"
+          title="Manage DFIR Operator Authentication Token"
+        >
+          <Shield className="w-3.5 h-3.5 text-rose-400" />
+          <span className="hidden sm:inline">Operator Auth</span>
+        </button>
 
         {/* Demo Scenario Seeder */}
         <button

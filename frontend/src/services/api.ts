@@ -13,6 +13,56 @@ function getApiBase(): string {
 
 const API_BASE = getApiBase();
 
+const AUTH_TOKEN_KEY = "sentry_auth_token";
+const DEFAULT_DEMO_TOKEN = "sentry_operator_token_2025";
+
+export function getAuthToken(): string {
+  if (typeof window !== "undefined") {
+    const stored = localStorage.getItem(AUTH_TOKEN_KEY);
+    if (stored) return stored;
+    // Default demo token fallback for seamless operator experience
+    return DEFAULT_DEMO_TOKEN;
+  }
+  return DEFAULT_DEMO_TOKEN;
+}
+
+export function setAuthToken(token: string): void {
+  if (typeof window !== "undefined") {
+    localStorage.setItem(AUTH_TOKEN_KEY, token.trim());
+    window.dispatchEvent(new CustomEvent("sentry:auth_changed"));
+  }
+}
+
+export function clearAuthToken(): void {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem(AUTH_TOKEN_KEY);
+    window.dispatchEvent(new CustomEvent("sentry:auth_changed"));
+  }
+}
+
+function getAuthHeaders(extraHeaders: Record<string, string> = {}): Record<string, string> {
+  const token = getAuthToken();
+  const headers: Record<string, string> = { ...extraHeaders };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+  return headers;
+}
+
+async function handleResponse(res: Response, fallbackErrorMsg: string): Promise<any> {
+  if (!res.ok) {
+    if (res.status === 401) {
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("sentry:unauthorized", { detail: { url: res.url } }));
+      }
+    }
+    const err = await res.json().catch(() => ({}));
+    const detailMsg = typeof err.detail === "object" ? err.detail.message : err.detail;
+    throw new Error(detailMsg || fallbackErrorMsg);
+  }
+  return res.json();
+}
+
 export async function fetchStats(): Promise<DashboardStats> {
   const res = await fetch(`${API_BASE}/api/v1/dashboard/stats`);
   if (!res.ok) throw new Error("Failed to fetch dashboard stats");
@@ -42,26 +92,19 @@ export async function uploadEmlFile(file: File): Promise<any> {
   
   const res = await fetch(`${API_BASE}/api/v1/emails/upload`, {
     method: "POST",
+    headers: getAuthHeaders(),
     body: formData
   });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.detail || "Failed to upload email");
-  }
-  return res.json();
+  return handleResponse(res, "Failed to upload email");
 }
 
 export async function submitRawEmail(rawText: string): Promise<any> {
   const res = await fetch(`${API_BASE}/api/v1/emails/raw`, {
     method: "POST",
-    headers: { "Content-Type": "text/plain" },
+    headers: getAuthHeaders({ "Content-Type": "text/plain" }),
     body: rawText
   });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.detail || "Failed to analyze raw email");
-  }
-  return res.json();
+  return handleResponse(res, "Failed to analyze raw email");
 }
 
 export async function fetchCampaigns(): Promise<CampaignItem[]> {
@@ -86,18 +129,18 @@ export async function verifyHashChain(emailId: string): Promise<{
   sealed_head_hash: string;
 }> {
   const res = await fetch(`${API_BASE}/api/v1/evidence/verify/${emailId}`, {
-    method: "POST"
+    method: "POST",
+    headers: getAuthHeaders()
   });
-  if (!res.ok) throw new Error("Failed to verify evidence hash chain");
-  return res.json();
+  return handleResponse(res, "Failed to verify evidence hash chain");
 }
 
 export async function seedSampleScenarios(): Promise<any> {
   const res = await fetch(`${API_BASE}/api/v1/samples/seed`, {
-    method: "POST"
+    method: "POST",
+    headers: getAuthHeaders()
   });
-  if (!res.ok) throw new Error("Failed to seed sample threat scenarios");
-  return res.json();
+  return handleResponse(res, "Failed to seed sample threat scenarios");
 }
 
 export function getPdfReportUrl(emailId: string): string {

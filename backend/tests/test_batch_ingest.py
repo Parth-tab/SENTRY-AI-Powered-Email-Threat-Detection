@@ -248,7 +248,7 @@ async def test_demo_reset_unauthenticated_rejected():
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         res = await client.post("/api/v1/admin/reset-demo")
         assert res.status_code == 401
-        assert "Unauthorized" in res.json().get("detail", "")
+        assert "UNAUTHORIZED" in str(res.json())
 
 @pytest.mark.asyncio
 async def test_demo_reset_form_encoded_without_header_rejected():
@@ -280,7 +280,10 @@ async def test_demo_reset_authenticated_success_and_audit_receipt():
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         res = await client.post(
             "/api/v1/admin/reset-demo",
-            headers={"X-Sentry-Admin": settings.ADMIN_TOKEN}
+            headers={
+                "X-Sentry-Admin": settings.ADMIN_TOKEN,
+                "Authorization": f"Bearer {settings.SENTRY_API_TOKEN}"
+            }
         )
         assert res.status_code == 200
         data = res.json()
@@ -312,7 +315,10 @@ async def test_demo_reset_audit_hash_chain_sequential_integrity():
         # Trigger an authenticated reset to guarantee at least one fresh chained entry
         res = await client.post(
             "/api/v1/admin/reset-demo",
-            headers={"X-Sentry-Admin": settings.ADMIN_TOKEN}
+            headers={
+                "X-Sentry-Admin": settings.ADMIN_TOKEN,
+                "Authorization": f"Bearer {settings.SENTRY_API_TOKEN}"
+            }
         )
         assert res.status_code == 200
 

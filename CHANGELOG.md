@@ -8,9 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **DFIR Operator Bearer Token Authentication (D2 / GAP-006):** Secured all 8 writable forensic endpoints (`/upload`, `/batch/archive`, `/batch/csv`, `/batch/upload`, `/raw`, `/samples/seed`, `/evidence/verify/{email_id}`, `/admin/reset-demo`) behind constant-time `SENTRY_API_TOKEN` Bearer authentication with HTTP 401 envelope.
+- **Frontend DFIR Operator Auth UI:** Added `AuthModal` component for operator token authentication and session locking, automated HTTP 401 interception, and reactive authentication status management.
+- **Security Test Matrix (`test_auth_surface.py`):** Comprehensive automated test coverage validating 401 rejection for missing and forged tokens across all writable routes, plus verification of unauthenticated read telemetry access.
 - **Single-Origin Production Serving (D1 / GAP-003):** FastAPI dynamic static mount for pre-compiled React/Vite SPA bundle (`frontend/dist`), eliminating dual-process requirements and CORS barriers in production.
 - **Enterprise On-Premises Deployment Guide:** Added [`DEPLOYMENT.md`](file:///E:/SENTRY/DEPLOYMENT.md) covering build instructions, environment variables, port topology, persistent storage paths, and atomic backup procedures.
-- **Gate 20 Harness Verification (`ui.production_mode_e2e`):** Extended golden verification battery to 20 gates with end-to-end single-origin serving assertion.
+- **Gate 20 Harness Verification (`ui.production_mode_e2e`):** Extended golden verification battery to 20 gates with end-to-end single-origin serving and unauthenticated writable probe 401 rejection assertions.
 - **Auditor's Annex & Errata (Phase 0):** Formalized viability audit corrections, SY-1 scale-out analysis errata, memory profiling notes, and market math reconciliations.
 - **MaxMind GeoLite2 EULA Attribution:** Explicit attribution notice and direct links on UI footer, PDF dossiers, and README.
 - **Trademark & Brand Disclaimers:** Non-affiliation statement regarding `sentry.io` (Functional Software, Inc.) in README and SECURITY.md.

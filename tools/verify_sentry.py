@@ -109,9 +109,13 @@ def http_ok(url, timeout=5):
         return False
 
 
-def http_json(method, url, timeout=15):
+def http_json(method, url, timeout=15, headers=None):
+    hdrs = headers.copy() if headers else {}
+    token = os.environ.get("SENTRY_API_TOKEN", "sentry_operator_token_2025")
+    if token and "Authorization" not in hdrs:
+        hdrs["Authorization"] = f"Bearer {token}"
     req = urllib.request.Request(
-        url, data=b"" if method == "POST" else None, method=method)
+        url, data=b"" if method == "POST" else None, headers=hdrs, method=method)
     with urllib.request.urlopen(req, timeout=timeout) as r:
         raw = r.read().decode("utf-8", "replace")
         return r.status, (json.loads(raw) if raw else None)
@@ -562,13 +566,13 @@ async def run_browser_checks(report, ui_url, api_base=None):
         else:
             report.add("ui.no_http_errors", "PASS")
 
-        # -- Gate 20: Production Mode E2E Single-Origin Serving (D8 / GAP-003) ----
+        # -- Gate 20: Production Mode E2E & Writable Auth Enforcement (D8 / GAP-006) ----
         prod_target = api_base or ui_url
         try:
             prod_page = await browser.new_page(viewport={"width": 1440, "height": 900})
             prod_errors = []
             prod_page.on("console", lambda m: prod_errors.append(m.text)
-                         if m.type == "error" and not any(n in m.text.lower() for n in CONSOLE_NOISE) else None)
+                         if m.type == "error" and not any(n in m.text.lower() for n in CONSOLE_NOISE) and "401" not in m.text else None)
 
             await prod_page.goto(f"{prod_target}/", wait_until="networkidle", timeout=15_000)
             await asyncio.sleep(1.0)
@@ -583,13 +587,29 @@ async def run_browser_checks(report, ui_url, api_base=None):
             if prod_feed_rows < 18:
                 raise AssertionError(f"Expected >= 18 threat feed rows on single-origin mount, got {prod_feed_rows}")
 
+            # 3. Auth Enforcement Assertion (GAP-006): Unauthenticated write probe MUST yield HTTP 401
+            unauth_status = await prod_page.evaluate("""async () => {
+                try {
+                    const res = await fetch('/api/v1/emails/raw', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'text/plain'},
+                        body: 'From: unauth@probe.internal\\r\\nSubject: unauth\\r\\n\\r\\nprobe'
+                    });
+                    return res.status;
+                } catch (e) {
+                    return -1;
+                }
+            }""")
+            if unauth_status != 401:
+                raise AssertionError(f"Expected HTTP 401 on unauthenticated POST /api/v1/emails/raw, got HTTP {unauth_status}")
+
             await prod_page.screenshot(path=str(SHOT_DIR / "20_production_mode.png"), full_page=True)
 
             if prod_errors:
                 raise AssertionError(f"Console errors during single-origin serving: {prod_errors[0][:200]}")
 
             report.add("ui.production_mode_e2e", "PASS",
-                       f"Single-origin static SPA mounted on {prod_target}; title & {prod_feed_rows} feed rows validated")
+                       f"Single-origin static SPA mounted on {prod_target}; auth gating (HTTP 401 on unauth write) & {prod_feed_rows} feed rows validated")
             await prod_page.close()
         except Exception as exc:
             try:

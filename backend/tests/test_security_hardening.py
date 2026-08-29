@@ -1,6 +1,7 @@
 import pytest
 from httpx import AsyncClient, ASGITransport
 from app.main import app
+from app.config import settings
 from app.services.ingestion import IngestionService
 
 @pytest.mark.asyncio
@@ -52,7 +53,8 @@ async def test_security_headers_present():
 @pytest.mark.asyncio
 async def test_unsupported_file_upload_rejected():
     transport = ASGITransport(app=app)
-    async with AsyncClient(transport=transport, base_url="http://test") as client:
+    headers = {"Authorization": f"Bearer {settings.SENTRY_API_TOKEN}"}
+    async with AsyncClient(transport=transport, base_url="http://test", headers=headers) as client:
         files = {"file": ("malware.exe", b"MZ\x90\x00\x03", "application/x-msdownload")}
         response = await client.post("/api/v1/emails/upload", files=files)
         assert response.status_code == 400
@@ -61,7 +63,8 @@ async def test_unsupported_file_upload_rejected():
 @pytest.mark.asyncio
 async def test_empty_file_upload_rejected():
     transport = ASGITransport(app=app)
-    async with AsyncClient(transport=transport, base_url="http://test") as client:
+    headers = {"Authorization": f"Bearer {settings.SENTRY_API_TOKEN}"}
+    async with AsyncClient(transport=transport, base_url="http://test", headers=headers) as client:
         files = {"file": ("empty.eml", b"", "message/rfc822")}
         response = await client.post("/api/v1/emails/upload", files=files)
         assert response.status_code == 400
