@@ -86,3 +86,14 @@ SENTRY correlates disparate emails into unified threat campaigns using graph clu
 - **HTTP Security Headers:** Complete OWASP response header suite on all API responses (`Content-Security-Policy`, `Strict-Transport-Security`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `X-XSS-Protection: 0`).
 - **Telemetry:** Native Prometheus `/metrics` endpoint exposing RED counters, duration histograms, and WebSocket gauges.
 - **Diagnostics:** Deep health check `/health/deep` monitoring database, filesystem storage, ML engine, and threat feeds.
+
+---
+
+## 4. Ingestion & Network Deployment Constraints (IR-5)
+
+- **Vite Dev Server Proxy Boundary:** The `/api` reverse proxy configured in `frontend/vite.config.ts` exists in the local Vite development server runtime only (`http://127.0.0.1:3000 -> http://127.0.0.1:8000`).
+- **Non-Vite & Production Deployments:** Non-Vite production deployments (e.g. Nginx, Docker Compose, standalone static asset hosting) must either:
+  1. Serve frontend static assets and backend API under the same origin domain (e.g., via Nginx `location /api { proxy_pass http://backend:8000; }`), OR
+  2. Configure full CORS preflight handling on the backend (`CORSMiddleware`) for POST requests with `Content-Type: multipart/form-data` and `Content-Type: text/plain`.
+- **Multi-Vector Ingestion Deduplication:** All general ingestion write paths (`/api/v1/emails/upload` and `/api/v1/emails/raw`) enforce multi-vector deduplication (primary SHA-256 digest, fallback Message-ID header, fallback Subject + Sender pair) to guarantee idempotent ingestion and prevent duplicate records in the evidence vault and relational storage.
+
