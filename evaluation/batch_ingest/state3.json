@@ -1,0 +1,38 @@
+{
+  "session": "BATCH-003",
+  "phase": "COMPLETE",
+  "status": "PASS",
+  "test_suite_reconciliation": {
+    "total_tests": 65,
+    "status": "PASS",
+    "reconciled_locations": {
+      "test_earliest_reliable_hop_selection_multi_hop": "backend/tests/test_header_forensics.py::test_earliest_reliable_hop_selection_multi_hop",
+      "test_mixed_timezone_awareness_chronology": "backend/tests/test_header_forensics.py::test_mixed_timezone_awareness_chronology",
+      "test_short_acronym_lookalike_bounds": "backend/tests/test_domain_intel.py::test_short_acronym_lookalike_bounds"
+    },
+    "mutation_proof_of_life": {
+      "target": "HeaderForensicsService.parse_received_chain (reversed loop)",
+      "assassin_test": "tests/test_header_forensics.py::test_earliest_reliable_hop_selection_multi_hop",
+      "result": "KILLED (AssertionError)"
+    }
+  },
+  "reset_demo_hardening": {
+    "auth_header": "X-Sentry-Admin",
+    "token_env_var": "ADMIN_TOKEN",
+    "cors_preflight_enforcement": true,
+    "audit_logging": {
+      "file": "logs/reset_audit.log",
+      "fields": [
+        "timestamp",
+        "trigger",
+        "prior_record_count",
+        "prior_chain_head_hash",
+        "operator"
+      ]
+    }
+  },
+  "docs_and_defects": {
+    "graph_banner_scale_guard": "GRAPH-001 / F-3 documented in docs/ARCHITECTURE.md",
+    "mbox_handling": "F-4 / MBOX-001 open defect filed in evaluation/defects.json with interim single-message behavior documented in docs/ARCHITECTURE.md"
+  }
+}
