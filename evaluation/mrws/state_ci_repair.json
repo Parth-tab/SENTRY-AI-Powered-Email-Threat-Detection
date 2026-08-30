@@ -64,6 +64,29 @@
   "verification": {
     "local_full_suite": "99/99 passing (100%)",
     "fresh_clone_proof": "99/99 passing (100%)",
-    "log_continuity_verified": "63 lines emitted spanning full suite from startup to security matrix"
+    "log_continuity_verified": "63 lines emitted spanning full suite from startup to security matrix",
+    "golden_harness_verdict": "PASS (pass=20, fail=0, timeout=0)"
+  },
+  "git_trail_repair_rider": {
+    "remediation_pr_number": 11,
+    "remediation_pr_url": "https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection/pull/11",
+    "remediation_pr_head_sha": "d9c5f9c1db4b8d78da47fec04db7ba91811e51b3",
+    "main_merge_commit_sha": "30b21f6440bfbd2c72ae441286274ebb87a4c8f9",
+    "notes": "PR #11 formally merged the CI-001..CI-004 remediations into main. Working labels #14..#17 in commit messages refer to MRWS phase iterations; GitHub PR sequence is PR #10 (Release/v1.1.0) and PR #11 (CI repair)."
+  },
+  "ghcr_publish_receipts": {
+    "workflow_run_id": 33302523591,
+    "workflow_run_url": "https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection/actions/runs/33302523591",
+    "workflow_status": "completed",
+    "workflow_conclusion": "success",
+    "triggering_ref": "refs/heads/main",
+    "image_source_sha": "30b21f6440bfbd2c72ae441286274ebb87a4c8f9",
+    "published_images": [
+      "ghcr.io/parth-tab/sentry-backend:1.1.0",
+      "ghcr.io/parth-tab/sentry-backend:latest",
+      "ghcr.io/parth-tab/sentry-frontend:1.1.0",
+      "ghcr.io/parth-tab/sentry-frontend:latest"
+    ],
+    "provenance_relationship": "Container image carries CI-001..CI-004 fixes and post-dates tag v1.1.0 (95d153c). Recommended to cut tag v1.1.1 from 30b21f6."
   }
 }
