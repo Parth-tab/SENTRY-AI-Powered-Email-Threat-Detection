@@ -44,27 +44,56 @@ import uuid
 import logging
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
+from typing import Optional
 from sqlalchemy import text
 from app.services.metrics import get_prometheus_metrics
 
+class CorrelationIdFilter(logging.Filter):
+    """Ensures every LogRecord on the sentry logger has a correlation_id to avoid formatting KeyErrors."""
+    def filter(self, record: logging.LogRecord) -> bool:
+        if not hasattr(record, "correlation_id"):
+            record.correlation_id = "-"
+        return True
+
+def configure_sentry_logging(target_dir: Optional[str] = None) -> logging.Logger:
+    """Configures or reconfigures the sentry logger with absolute path resolution and idempotent handlers."""
+    resolved_dir = Path(target_dir or settings.LOGS_DIR).resolve()
+    resolved_dir.mkdir(parents=True, exist_ok=True)
+    app_log_file = resolved_dir / "app.log"
+
+    sentry_log = logging.getLogger("sentry")
+    sentry_log.setLevel(logging.INFO)
+    sentry_log.disabled = False
+
+    existing_handlers = [h for h in sentry_log.handlers if isinstance(h, RotatingFileHandler) and getattr(h, "baseFilename", "") == str(app_log_file)]
+    if not existing_handlers:
+        for h in list(sentry_log.handlers):
+            if isinstance(h, RotatingFileHandler):
+                sentry_log.removeHandler(h)
+                try:
+                    h.close()
+                except Exception:
+                    pass
+
+        file_handler = RotatingFileHandler(
+            str(app_log_file),
+            maxBytes=10 * 1024 * 1024,
+            backupCount=5,
+            encoding="utf-8"
+        )
+        file_formatter = logging.Formatter("%(asctime)s [%(levelname)s] [%(name)s] [corr=%(correlation_id)s] %(message)s")
+        file_handler.setFormatter(file_formatter)
+        file_handler.addFilter(CorrelationIdFilter())
+        sentry_log.addHandler(file_handler)
+    else:
+        for h in existing_handlers:
+            if not any(isinstance(f, CorrelationIdFilter) for f in h.filters):
+                h.addFilter(CorrelationIdFilter())
+
+    return sentry_log
+
 # Configure Enterprise Rotating Log File Handler (10MB max, 5 backup generations)
-logs_dir = Path(settings.LOGS_DIR)
-logs_dir.mkdir(parents=True, exist_ok=True)
-app_log_file = logs_dir / "app.log"
-
-logger = logging.getLogger("sentry")
-logger.setLevel(logging.INFO)
-
-if not any(isinstance(h, RotatingFileHandler) for h in logger.handlers):
-    file_handler = RotatingFileHandler(
-        str(app_log_file),
-        maxBytes=10 * 1024 * 1024,
-        backupCount=5,
-        encoding="utf-8"
-    )
-    file_formatter = logging.Formatter("%(asctime)s [%(levelname)s] [%(name)s] [corr=%(correlation_id)s] %(message)s")
-    file_handler.setFormatter(file_formatter)
-    logger.addHandler(file_handler)
+logger = configure_sentry_logging()
 
 # Process start time for uptime tracking
 START_TIME = time.time()
