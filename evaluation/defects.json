@@ -692,5 +692,57 @@
     "effort": "M",
     "impact": "M",
     "description": "Restoring SQLite database without physical filesystem vault snapshot (or vice versa) invalidates RFC 3227 hash chains."
+  },
+  {
+    "id": "CI-001",
+    "check": "ci.alembic_fileconfig_disables_sentry_logger",
+    "severity": "blocker",
+    "evidence": "backend/alembic/env.py:L27",
+    "status": "resolved",
+    "target_version": "v1.1.0",
+    "effort": "S",
+    "impact": "H",
+    "fix_commit": "HEAD",
+    "regression_test": "backend/tests/test_observability.py::test_structured_log_file_rotation_and_format",
+    "description": "Alembic fileConfig initialization executed with default disable_existing_loggers=True, silently muting the global sentry logger during test_database_migrations.py and causing downstream logging assertions to fail on clean runners."
+  },
+  {
+    "id": "CI-002",
+    "check": "observability.correlation_id_filter_fallback",
+    "severity": "medium",
+    "evidence": "backend/app/main.py:L45-70",
+    "status": "resolved",
+    "target_version": "v1.1.0",
+    "effort": "S",
+    "impact": "M",
+    "fix_commit": "HEAD",
+    "regression_test": "backend/tests/test_observability.py::test_structured_log_file_rotation_and_format",
+    "description": "Log formatting string %(correlation_id)s failed with KeyError on non-request or non-extra log calls; resolved by adding CorrelationIdFilter and configuring idempotent logger lifecycle helper."
+  },
+  {
+    "id": "CI-003",
+    "check": "test.structured_log_rotation_hermeticity",
+    "severity": "high",
+    "evidence": "backend/tests/test_observability.py:L60-88",
+    "status": "resolved",
+    "target_version": "v1.1.0",
+    "effort": "S",
+    "impact": "H",
+    "fix_commit": "HEAD",
+    "regression_test": "backend/tests/test_observability.py::test_structured_log_file_rotation_and_format",
+    "description": "test_structured_log_file_rotation_and_format used a static correlation ID and checked pre-existing logs, masking mid-suite truncation on dirty environments while failing consistently on clean CI runners."
+  },
+  {
+    "id": "CI-004",
+    "check": "ci.backend_test_single_origin_mount_unskip",
+    "severity": "medium",
+    "evidence": ".github/workflows/ci.yml:L50-58",
+    "status": "resolved",
+    "target_version": "v1.1.0",
+    "effort": "S",
+    "impact": "M",
+    "fix_commit": "HEAD",
+    "regression_test": "backend/tests/test_deployment_serving.py::test_single_origin_static_mount_serving",
+    "description": "test_single_origin_static_mount_serving skipped on CI runners due to missing frontend dist build in backend job; resolved by installing Node and building SPA bundle prior to pytest."
   }
 ]

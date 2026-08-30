@@ -211,6 +211,33 @@ The initial tag push to `v1.1.0` triggered the `release.yml` GitHub Actions work
 ### 3. Commit Range & Image Provenance
 The release container images for `v1.1.0` (`ghcr.io/parth-tab/sentry-backend:1.1.0` and `ghcr.io/parth-tab/sentry-frontend:1.1.0`) encapsulate the verified release state spanning from certified HEAD `95d153c` through the GHCR workflow fix PR merge commit.
 
+---
+
+## Errata 010 — Backend CI Test Suite Truncation Root Cause & Static Mount Un-Skip — recorded at CI-REPAIR
+
+**Applies to:** `backend/alembic/env.py`, `backend/app/main.py`, `backend/tests/test_observability.py`, `.github/workflows/ci.yml`.
+
+### 1. What Happened
+On GitHub Actions CI runners for Python 3.11 and 3.12, the backend pytest step failed on `test_structured_log_file_rotation_and_format` with `AssertionError: assert 'CORR-ROTATION-TEST-12345' in log_content`.
+
+Investigation and cumulative prefix bisection isolated the root cause to `test_database_migrations.py::test_alembic_upgrade_downgrade_lifecycle`:
+- Alembic's `backend/alembic/env.py` invoked `fileConfig(config.config_file_name)` with the Python standard library default `disable_existing_loggers=True`.
+- This silently disabled the global `sentry` logger (`logger.disabled = True`), causing all subsequent HTTP request logs throughout the remainder of the test suite (from test 47 through test 99) to be dropped.
+- In local development runs, pre-existing `logs/app.log` entries from prior runs masked the failure because the test asserted on a static string (`CORR-ROTATION-TEST-12345`) without causal per-run uniqueness. On clean CI runners starting with an empty `logs/` directory, the failure reproduced 100% deterministically.
+- Separately, `test_single_origin_static_mount_serving` was skipped on CI because the backend CI job did not compile the frontend SPA bundle (`frontend/dist`) prior to running pytest.
+
+### 2. The Fix
+- **CI-001 (Alembic logger preservation):** Updated `backend/alembic/env.py` to pass `disable_existing_loggers=False` to `fileConfig`, preventing migrations from muting application loggers.
+- **CI-002 (Correlation ID filter fallback):** Added `CorrelationIdFilter` and `configure_sentry_logging()` in `backend/app/main.py` to guarantee that every `LogRecord` contains a `correlation_id` attribute (preventing formatting KeyErrors on non-request log calls) and ensuring absolute directory resolution.
+- **CI-003 (Hermetic rotation test):** Refactored `test_structured_log_file_rotation_and_format` to generate a per-run unique correlation ID (`uuid.uuid4().hex[:12]`), asserting causal attribution and verifying against empty log baselines.
+- **CI-004 (Full 99/99 CI execution):** Added Node.js setup and `npm run build` to `.github/workflows/ci.yml` in the `backend-ci` matrix job so `test_single_origin_static_mount_serving` is executed and passes on CI without environment-conditional skips.
+
+### 3. Verification & Receipts
+- **Fresh-Clone Proof:** Full test suite verified 99/99 passing on fresh clone with clean logs directory.
+- **Golden Harness:** 20/20 gates verified on local appliance.
+- **CI Execution:** 100% tests executing green across matrix legs (Python 3.11, Python 3.12).
+
+
 
 
 
