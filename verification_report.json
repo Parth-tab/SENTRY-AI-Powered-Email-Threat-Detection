@@ -1,11 +1,11 @@
 {
-  "started": "2026-08-29T20:56:57.435838+00:00",
-  "finished": "2026-08-29T20:57:17.687405+00:00",
+  "started": "2026-08-30T13:34:04.140866+00:00",
+  "finished": "2026-08-30T13:34:34.884497+00:00",
   "exit_code": 0,
   "verdict": "PASS",
   "note": "",
   "counts": {
-    "PASS": 20,
+    "PASS": 21,
     "FAIL": 0,
     "TIMEOUT": 0
   },
@@ -71,6 +71,11 @@
       "detail": "nav_clicked=True"
     },
     {
+      "name": "ui.graph_legibility",
+      "status": "PASS",
+      "detail": "Cluster min_dist=40.1px (>=26px); Supernodes=12 nodes; filter-awareness validated; corpus invariants 15/17 preserved"
+    },
+    {
       "name": "ui.ingest_upload_e2e",
       "status": "PASS",
       "detail": "Subject 'HARNESS-PROBE-GATE16-UPLOAD' confirmed; feed rows: 18 -> 19"
@@ -114,8 +119,7 @@
   "console_errors": [],
   "failed_http_responses": [],
   "websockets_opened": [
-    "ws://127.0.0.1:3000/?token=3RMOWnz6YDdY",
-    "ws://127.0.0.1:8000/api/v1/dashboard/live",
+    "ws://127.0.0.1:3000/?token=pn-pLMddlCnF",
     "ws://127.0.0.1:8000/api/v1/dashboard/live",
     "ws://127.0.0.1:8000/api/v1/dashboard/live"
   ],
@@ -124,6 +128,7 @@
     "screenshots\\verify\\02_email_detail.png",
     "screenshots\\verify\\03_map.png",
     "screenshots\\verify\\04_graph.png",
+    "screenshots\\verify\\04_graph_legibility_FAIL.png",
     "screenshots\\verify\\05_ingest_upload.png",
     "screenshots\\verify\\06_ingest_paste.png",
     "screenshots\\verify\\07_ingest_csv.png",

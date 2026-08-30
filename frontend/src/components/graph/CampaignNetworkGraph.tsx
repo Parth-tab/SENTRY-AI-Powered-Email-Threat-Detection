@@ -253,12 +253,15 @@ export const CampaignNetworkGraph: React.FC = () => {
         if (showLabel && nodeAlpha > 0.4) {
           ctx.fillStyle = isMatched ? "#38BDF8" : isHovered || isHighPriorityHub ? "#F4F4F5" : "#A1A1AA";
           ctx.font = node.type === "CampaignSupernode" ? "bold 11px sans-serif" : isMatched ? "bold 10px monospace" : "10px monospace";
-          ctx.fillText(node.label || node.id, node.x + radius + 4, node.y + 3);
+          const isLeft = node.x < width / 2;
+          ctx.textAlign = isLeft ? "right" : "left";
+          ctx.fillText(node.label || node.id, isLeft ? node.x - radius - 4 : node.x + radius + 4, node.y + 3);
+          ctx.textAlign = "left";
         }
       });
 
-      // Update Legibility Metrics Hook (window.__graphMetrics)
-      const currentMetrics = sim.getMetrics(selectedCampaignId, 42);
+      // Update Legibility Metrics Hook (window.__graphMetrics) - Filter-Aware (P3-B)
+      const currentMetrics = sim.getMetrics(selectedCampaignId, 42, hiddenTypes);
       window.__graphMetrics = currentMetrics;
 
       if (sim.alpha < sim.alphaMin) {

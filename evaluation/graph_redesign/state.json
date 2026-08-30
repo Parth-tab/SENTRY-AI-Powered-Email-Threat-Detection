@@ -2,14 +2,14 @@
   "project": "SENTRY-AI-Powered-Email-Threat-Detection",
   "feature": "GRAPH-REDESIGN",
   "constitution": "Re-entrant constitution: one phase per session; report back; await External Auditor clearance.",
-  "current_phase": "PHASE_3_INTERACTION",
+  "current_phase": "PHASE_4_LEGIBILITY_GATE_AND_LAW_7",
   "phase_status": {
     "PHASE_0": "COMPLETED",
     "PHASE_1": "COMPLETED",
     "PHASE_2": "COMPLETED",
     "PHASE_3": "COMPLETED",
-    "PHASE_4": "PENDING_AUDITOR_CLEARANCE",
-    "PHASE_5": "PENDING"
+    "PHASE_4": "COMPLETED",
+    "PHASE_5": "PENDING_AUDITOR_CLEARANCE"
   },
   "conditions_ledger": {
     "P0-A": {
@@ -44,62 +44,82 @@
       "status": "CLOSED",
       "note": "Corpus supernode fixture metrics documented (15 nodes / 17 links, 54.0px min distance, 0 hub label collisions). Supernode hull separation ratio marked EXEMPT/NA for single aggregated starburst graph."
     },
-    "Directive_1": {
+    "P3-A": {
       "status": "CLOSED",
-      "note": "Pinned fixtures committed in evaluation/graph_redesign/fixtures/ and deterministic PRNG wired."
+      "note": "Explicit disposition: Client-side 1-Hop Neighborhood Isolation isolates existing correlated payload in memory (0ms latency); Server-side expand with refetch is cataloged for roadmap under BP-005."
     },
-    "Directive_2": {
-      "status": "OPEN",
-      "target_phase": "PHASE_4",
-      "note": "sentry_benchmark_corpus_backup.db wired for Phase 4 headless assertions."
+    "P3-B": {
+      "status": "CLOSED",
+      "note": "getMetrics() made strictly filter-aware; verified rendered_nodes drops dynamically upon filter toggle (30 -> 23 on email toggle)."
+    },
+    "P3-C": {
+      "status": "CLOSED",
+      "note": "Pytest suite delta is 0 (111/111 passed unchanged); verification harness expanded from 20 to 21 gates with ui.graph_legibility."
     }
   },
   "defects_tracked": [
     {
       "id": "GRAPH-003",
       "severity": "P1 / HIGH",
-      "check": "ui.campaign_network_graph_legibility",
-      "status": "IN_PROGRESS",
-      "description": "Campaign Network Graph renders as closely threaded beads / dense hairball without cluster separation, dynamic hub aggregation, or entity search, degrading forensic legibility. Cap slices array head without sort or diversity, introducing selection bias at scale."
+      "check": "ui.graph_legibility",
+      "status": "RESOLVED_IN_PHASE_4",
+      "description": "Campaign Network Graph renders as closely threaded beads / dense hairball without cluster separation, dynamic hub aggregation, or entity search, degrading forensic legibility. Resolved via G-D1..G-D8, deterministic physics, and Gate 20."
     },
     {
       "id": "GRAPH-004",
       "severity": "MEDIUM",
       "check": "correlation.synthetic_import_entity_badging",
-      "status": "IN_PROGRESS",
-      "description": "Synthetic pseudo-entities (e.g. person:csv-import@unknown.local at degree 214) distort graph topology; aggregation layer must collapse or badge synthetic import provenance entities distinctly."
+      "status": "RESOLVED_IN_PHASE_4",
+      "description": "Synthetic pseudo-entities distort graph topology; aggregation layer collapses and badges synthetic import provenance entities distinctly."
     },
     {
       "id": "GRAPH-005",
       "severity": "MEDIUM",
       "check": "ui.query_window_selection_criteria_disclosure",
-      "status": "IN_PROGRESS",
-      "description": "At corpus scale, the campaign graph correlates the top-1,000 emails ordered by threat severity and recency. This selection window must be explicitly disclosed in the UI banner rather than remaining silent."
+      "status": "RESOLVED_IN_PHASE_4",
+      "description": "At corpus scale, the campaign graph correlates the top-1,000 emails ordered by threat severity and recency, disclosed explicitly in the UI banner."
     },
     {
       "id": "BP-004",
       "severity": "HIGH",
       "check": "B2.graph_search_filter",
       "status": "RESOLVED_IN_PHASE_3",
-      "description": "Client-side entity search, highlight, and multi-dimensional filter (promoted from deferred to v1.2.0 graph redesign)."
+      "description": "Client-side entity search, highlight, and multi-dimensional filter."
     }
   ],
-  "phase3_receipts": {
-    "friction_log": {
-      "question": "Which infrastructure hosts the most lookalike domains?",
-      "total_clicks": 3,
-      "total_duration_ms": 985,
-      "answer": "AS205100 (Jonas Bunde / F3 Netze) hosting apex-secureverify.com, onlineapex-kyc-update.com, apex-netbanking-alert.xyz targeting Apex National Bank",
-      "verdict": "ANSWERED_IN_3_CLICKS"
-    },
-    "search_scoping_decision": "Client-side multi-field fuzzy search across active payload with match count disclosure and cross-campaign jump affordance.",
-    "legend_filter_policy": "Interactive type toggle pills with smooth dimming/filtering preserving physics stability.",
-    "1hop_expand_policy": "Inspector drawer Focus 1-Hop button isolates neighborhood and dims non-connected nodes/links to 15% opacity.",
-    "screenshots": [
-      "evaluation/graph_redesign/screenshots/phase3_search_highlight.png",
-      "evaluation/graph_redesign/screenshots/phase3_1hop_isolated.png",
-      "evaluation/graph_redesign/screenshots/phase3_legend_toggle.png"
+  "phase4_receipts": {
+    "gate_name": "ui.graph_legibility",
+    "total_gates": "21/21 PASS",
+    "mutation_kills": [
+      {
+        "mutation": "1. Zero collision avoidance padding (collidePadding = 0)",
+        "target_file": "frontend/src/components/graph/graphPhysics.ts",
+        "result": "KILLED",
+        "failure_output": "[ FAIL  ] ui.graph_legibility -- AssertionError('Cluster mode min_pairwise_distance 16.9px is below collision boundary threshold (26.0px)')"
+      },
+      {
+        "mutation": "2. Unconditional hub label collision bypass (const hubNodes = nodes)",
+        "target_file": "frontend/src/components/graph/graphPhysics.ts",
+        "result": "KILLED",
+        "failure_output": "[ FAIL  ] ui.graph_legibility -- AssertionError('Expected 0 hub label collisions in cluster mode, got 15')"
+      },
+      {
+        "mutation": "3. Zero repulsion force (chargeStrength = 0)",
+        "target_file": "frontend/src/components/graph/graphPhysics.ts",
+        "result": "KILLED",
+        "failure_output": "[ FAIL  ] ui.graph_legibility -- AssertionError('Expected 0 hub label collisions in cluster mode, got 1')"
+      }
     ],
+    "idempotency_pair": {
+      "run_1": "PASS (pass=21 fail=0 timeout=0)",
+      "run_2": "PASS (pass=21 fail=0 timeout=0)"
+    },
+    "law_7_re_earn": {
+      "tour_captures": "8/8 captured via tools/capture_tour.py",
+      "tour_stop_05": "docs/assets/tour/06-campaign-graph.png (30 nodes / 38 links)",
+      "feature_tour_md": "docs/FEATURE_TOUR.md updated with Caption Honesty Law compliance",
+      "demo_script_md": "docs/DEMO_SCRIPT.md Stage 4 updated with live / search and 1-hop isolation beats"
+    },
     "pytest_suite": "111/111 passed"
   }
 }

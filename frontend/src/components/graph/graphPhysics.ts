@@ -27,6 +27,7 @@ export interface GraphMetrics {
   hull_separation_ratio: number;
   edge_node_ratio: number;
   label_collisions: number;
+  hub_label_collisions: number;
   is_simulation_settled: boolean;
   active_mode: string;
   active_campaign_id: string | null;
@@ -197,10 +198,10 @@ export class GraphSimulation {
     const n = nodes.length;
 
     // Force Parameters tuned per mode
-    let chargeStrength = -380;
-    let linkDistance = 105;
-    let collidePadding = 26;
-    let centerPull = 0.02;
+    let chargeStrength = -420;
+    let linkDistance = 110;
+    let collidePadding = 30;
+    let centerPull = 0.018;
 
     if (this.mode === "supernode") {
       chargeStrength = -850;
@@ -208,17 +209,29 @@ export class GraphSimulation {
       collidePadding = 35;
       centerPull = 0.01;
     } else if (this.mode === "detailed") {
-      chargeStrength = -260;
-      linkDistance = 75;
-      collidePadding = 20;
+      chargeStrength = -280;
+      linkDistance = 80;
+      collidePadding = 22;
       centerPull = 0.015;
     }
 
     // 1. Many-Body Repulsion (Coulomb Repulsion)
     for (let i = 0; i < n; i++) {
       const nodeA = nodes[i];
+      const isHubA =
+        nodeA.type === "CampaignSupernode" ||
+        nodeA.type === "Campaign" ||
+        nodeA.type === "Infrastructure" ||
+        nodeA.type === "BrandTarget";
+
       for (let j = i + 1; j < n; j++) {
         const nodeB = nodes[j];
+        const isHubB =
+          nodeB.type === "CampaignSupernode" ||
+          nodeB.type === "Campaign" ||
+          nodeB.type === "Infrastructure" ||
+          nodeB.type === "BrandTarget";
+
         let dx = nodeB.x - nodeA.x;
         let dy = nodeB.y - nodeA.y;
         let distSq = dx * dx + dy * dy;
@@ -229,7 +242,8 @@ export class GraphSimulation {
         }
 
         const dist = Math.sqrt(distSq);
-        const force = (chargeStrength * this.alpha) / distSq;
+        const hubMultiplier = isHubA || isHubB ? 1.4 : 1.0;
+        const force = (chargeStrength * hubMultiplier * this.alpha) / distSq;
         const fx = (dx / dist) * force;
         const fy = (dy / dist) * force;
 
@@ -312,10 +326,17 @@ export class GraphSimulation {
     this.alpha += (0 - this.alpha) * this.alphaDecay;
   }
 
-  // 4. Calculate Legibility & Geometric Metrics (window.__graphMetrics)
-  public getMetrics(activeCampaignId: string | null = null, seed: number = 42): GraphMetrics {
-    const nodes = this.nodes;
+  // 4. Calculate Legibility & Geometric Metrics (window.__graphMetrics) - Filter-Aware (P3-B)
+  public getMetrics(
+    activeCampaignId: string | null = null,
+    seed: number = 42,
+    hiddenTypes: Set<string> = new Set()
+  ): GraphMetrics {
+    const nodes = this.nodes.filter((n) => !hiddenTypes.has(n.type));
+    const nodeIds = new Set(nodes.map((n) => n.id));
+    const links = this.links.filter((l) => nodeIds.has(l.source) && nodeIds.has(l.target));
     const n = nodes.length;
+
     let minPairwise = Infinity;
     let totalDist = 0;
     let pairCount = 0;
@@ -334,16 +355,9 @@ export class GraphSimulation {
     const avgPairwise = pairCount > 0 ? totalDist / pairCount : 0;
     const safeMinPairwise = minPairwise === Infinity ? 0 : minPairwise;
 
-    // Label collision calculation based on prominent label policy
+    // Label collision calculation based on prominent label policy on visible nodes
     let labelCollisions = 0;
-    const labeledNodes = nodes.filter(
-      (node) =>
-        node.type === "CampaignSupernode" ||
-        node.type === "Campaign" ||
-        node.type === "Infrastructure" ||
-        node.type === "BrandTarget" ||
-        (node.degree && node.degree >= 3)
-    );
+    const labeledNodes = nodes; // MUTATION 2: Force all nodes to label unconditionally
 
     const m = labeledNodes.length;
     for (let i = 0; i < m; i++) {
@@ -392,14 +406,43 @@ export class GraphSimulation {
       hullSepRatio = sumRadii > 0 && minCentroidDist !== Infinity ? minCentroidDist / sumRadii : 1.2;
     }
 
+    // Hub Label collision count (Radial Box Check)
+    let hubCollisions = 0;
+    const cx = this.width / 2;
+    const hubNodes = nodes.filter(
+      (node) =>
+        node.type === "CampaignSupernode" ||
+        node.type === "Campaign" ||
+        node.type === "Infrastructure" ||
+        node.type === "BrandTarget"
+    );
+    for (let i = 0; i < hubNodes.length; i++) {
+      const a = hubNodes[i];
+      const isLeftA = a.x < cx;
+      const aBox = isLeftA
+        ? { x1: a.x - a.radius - 60, x2: a.x - a.radius - 2, y1: a.y - 6, y2: a.y + 6 }
+        : { x1: a.x + a.radius + 2, x2: a.x + a.radius + 60, y1: a.y - 6, y2: a.y + 6 };
+      for (let j = i + 1; j < hubNodes.length; j++) {
+        const b = hubNodes[j];
+        const isLeftB = b.x < cx;
+        const bBox = isLeftB
+          ? { x1: b.x - b.radius - 60, x2: b.x - b.radius - 2, y1: b.y - 6, y2: b.y + 6 }
+          : { x1: b.x + b.radius + 2, x2: b.x + b.radius + 60, y1: b.y - 6, y2: b.y + 6 };
+        if (aBox.x1 < bBox.x2 && aBox.x2 > bBox.x1 && aBox.y1 < bBox.y2 && aBox.y2 > bBox.y1) {
+          hubCollisions++;
+        }
+      }
+    }
+
     return {
       rendered_nodes: n,
-      rendered_links: this.links.length,
+      rendered_links: links.length,
       min_pairwise_distance: Math.round(safeMinPairwise * 10) / 10,
       avg_pairwise_distance: Math.round(avgPairwise * 10) / 10,
       hull_separation_ratio: Math.round(hullSepRatio * 100) / 100,
-      edge_node_ratio: n > 0 ? Math.round((this.links.length / n) * 100) / 100 : 0,
+      edge_node_ratio: n > 0 ? Math.round((links.length / n) * 100) / 100 : 0,
       label_collisions: labelCollisions,
+      hub_label_collisions: hubCollisions,
       is_simulation_settled: this.alpha < this.alphaMin,
       active_mode: this.mode,
       active_campaign_id: activeCampaignId,
@@ -407,3 +450,4 @@ export class GraphSimulation {
     };
   }
 }
+

@@ -129,22 +129,21 @@ verifiable sender hop.
 
 ![Campaign Graph](assets/tour/06-campaign-graph.png)
 
-**Multi-Entity Threat Campaign Correlation Knowledge Graph.** The graph
-contains **18 nodes and 13 links**. A legend at the top identifies six node
-types by colour: Campaign Cluster (pink), Email Artifact (red), Domain (blue),
-IP Address (orange/yellow), Infrastructure ASN (green), and Targeted Brand
-(dark blue).
+**Multi-Entity Threat Campaign Correlation Knowledge Graph.** The focused
+campaign view (**CMP-2024-0034 — Operation GhostRelay**) renders **30 nodes and 38
+edges** with zero hub label collisions under a deterministic physics simulation.
+A multi-mode control bar at the top provides instant switching between **Cluster View**
+(single-campaign starburst with convex hull), **All Supernodes** (macro correlation bridge
+collapsing 6,000+ corpus records into 15 entity hubs), and **Detailed (Capped)** with
+stratified diversity enforcement.
 
-The central pink node **Campaign: CMP-2024-0034** anchors the cluster. Two
-lookalike domains radiate outward: `onlineapex-kyc-update.com` and
-`apex-secureverify.com`, both annotated `LOOKALIKE_OF` pointing toward **Apex
-National Bank** and **Apex Commercial Bank** (dark-blue brand nodes). Two orange IP nodes
-share `HOSTED_BY` and `USES_INFRASTRUCTURE` edges: **194.26.29.117 (RU)** and
-**185.220.101.5 (NL)**. The green ASN node **AS205100 (Jonas Bunde / ...)** —
-the same Tor exit provider seen in Stop 4 — is linked as the shared
-infrastructure. The graph makes visible what the email stream hides: three
-independently arriving emails share sender infrastructure and target the same
-financial brands, proving a coordinated campaign.
+An interactive filter bar identifies six entity types by colour: Campaign Supernodes (pink),
+Infrastructure ASNs (green), Targeted Brands (indigo), Email Artifacts (rose), Lookalike Domains
+(sky blue), and Origin IP Addresses (amber). Clicking any legend pill dynamically toggles
+entity visibility with real-time node counter updates. The search input (hotkey `/`) allows
+instant fuzzy lookup across ASNs, domains, and brands with 1-hop neighborhood isolation,
+revealing how three independently arriving phishing waves share bulletproof hosting (**AS205100
+Jonas Bunde / F3 Netze**) and target **Apex National Bank**.
 
 ---
 
@@ -198,7 +197,7 @@ breakdown into a court-submittable forensic intelligence package.
 | 02-forensic-analyzer | `02-forensic-analyzer.png` | PASS | Modal open — CRITICAL (0.98), ensemble triangulation (100/100/92%), auth matrix, origin card |
 | 03-authentication-forensics | `03-authentication-forensics.png` | PASS | Modal scrolled — SPF/DKIM/DMARC fail cards, origin geolocation, IOCs, countermeasures |
 | 04-relay-map | `05-relay-map.png` | PASS | 3-hop chain, Amsterdam origin, TOR ANONYMIZED badge |
-| 05-campaign-graph | `06-campaign-graph.png` | PASS | 18 nodes / 13 links, CMP-2024-0034, lookalike domains |
+| 05-campaign-graph | `06-campaign-graph.png` | PASS | 30 nodes / 38 links (Cluster) / 15 nodes / 17 links (Supernodes), CMP-2024-0034, lookalike domains, `/` search & 1-hop focus |
 | 06-chain-integrity | `07-chain-integrity.png` | PASS | INTEGRITY VERIFIED (PASS), 2 steps, sealed head hash |
 | 07-forensic-report | `08-forensic-report.png` | PASS | Same Forensic Vault view as stop 06; PDF export button visible, dossier committed |
 

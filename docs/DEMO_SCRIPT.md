@@ -43,12 +43,13 @@
 
 ## Stage 4: Multi-Entity Campaign Graph Link Analysis (2:45 - 3:45)
 
-**Action:** Click the **Campaign Graph** tab in the top navigation bar.
+**Action:** Click the **Campaign Graph** tab in the top navigation bar $\to$ Press `/` shortcut and type `"AS205100"` (instantly highlights the Tor exit provider with cyan halo and dims surrounding nodes) $\to$ Click node to open the Inspector Drawer and click **"Focus 1-Hop"** $\to$ Point to the isolated lookalike domains and click **"All Supernodes"** to show macro-level syndicate bridges.
 
 **Spoken Narration:**
 > "Isolated emails hide syndicate-level coordination. SENTRY's graph engine correlates this email across our global knowledge graph.
 > Looking at the graph, this email is not an isolated phish: it belongs to **Operation GhostRelay (CMP-2024-0034)**.
-> SENTRY automatically linked 14 separate phishing emails across 3 lookalike domains (`apex-secureverify.com`, `onlineapex-kyc-update.com`, `apex-netbanking-alert.xyz`) because they all share the identical Tor bulletproof relay infrastructure and template linguistics.
+> Notice our interactive triage capabilities: hitting `/` and typing `AS205100` immediately isolates the primary bulletproof hosting provider. With one click on **Focus 1-Hop**, the graph isolates all 3 lookalike domains (`apex-secureverify.com`, `onlineapex-kyc-update.com`, `apex-netbanking-alert.xyz`) and origin IPs hosted under this ASN targeting Apex National Bank — answered in 985 milliseconds.
+> Switching to **All Supernodes** collapses over 6,000 ingested records into a clear 15-node macro bridge with zero label collisions, proving how multiple regional campaigns share backend bulletproof infrastructure.
 > An investigator can now dismantle the entire syndicate infrastructure rather than deleting individual emails."
 
 ---
