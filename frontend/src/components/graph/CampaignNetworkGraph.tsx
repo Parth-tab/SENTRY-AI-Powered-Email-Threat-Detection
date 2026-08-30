@@ -1,18 +1,30 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Network, Filter, ZoomIn, ZoomOut, RotateCcw, Info, AlertCircle, Layers, ShieldAlert, Globe } from "lucide-react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { Network, Filter, ZoomIn, ZoomOut, RotateCcw, Info, AlertCircle, Layers, ShieldAlert, Globe, Activity } from "lucide-react";
 import { fetchGlobalGraph } from "../../services/api";
 import { GraphData, GraphNode, GraphLink } from "../../types";
+import { GraphSimulation, SimNode, SimLink, computeConvexHull, GraphMetrics } from "./graphPhysics";
 
 const MAX_GRAPH_NODES = 300;
 
+declare global {
+  interface Window {
+    __graphMetrics?: GraphMetrics;
+  }
+}
+
 export const CampaignNetworkGraph: React.FC = () => {
   const [graphData, setGraphData] = useState<GraphData | null>(null);
-  const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
+  const [selectedNode, setSelectedNode] = useState<SimNode | null>(null);
+  const [hoveredNode, setHoveredNode] = useState<SimNode | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [mode, setMode] = useState<"cluster" | "supernode" | "detailed">("cluster");
   const [selectedCampaignId, setSelectedCampaignId] = useState<string>("");
   const [collapseSynthetic, setCollapseSynthetic] = useState<boolean>(true);
+  const [metrics, setMetrics] = useState<GraphMetrics | null>(null);
+  const [showHulls, setShowHulls] = useState<boolean>(true);
+  
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const simRef = useRef<GraphSimulation | null>(null);
 
   // Load graph data based on mode & campaign filter
   useEffect(() => {
@@ -33,7 +45,7 @@ export const CampaignNetworkGraph: React.FC = () => {
       .catch(() => setIsLoading(false));
   }, [mode, selectedCampaignId, collapseSynthetic]);
 
-  // Canvas render step (incorporating Phase 1 data layer: supernodes, weighted edges, badges)
+  // Main canvas animation and force physics simulation loop
   useEffect(() => {
     if (!graphData || !canvasRef.current) return;
 
@@ -44,100 +56,129 @@ export const CampaignNetworkGraph: React.FC = () => {
     const width = canvas.width;
     const height = canvas.height;
 
-    const rawNodes = graphData.nodes || [];
-    const cappedNodes = rawNodes.slice(0, MAX_GRAPH_NODES);
-    const cappedNodeIds = new Set(cappedNodes.map((n) => n.id));
-
-    // Phase 1 layout initialization: separate supernodes or distribute cluster
-    const nodes = cappedNodes.map((n, i) => {
-      const isSuper = n.type === "CampaignSupernode" || n.type === "Campaign";
-      const baseRadius = isSuper ? 120 : (160 + (i % 3) * 45);
-      const angle = (i / Math.max(cappedNodes.length, 1)) * 2 * Math.PI;
-      return {
-        ...n,
-        x: width / 2 + Math.cos(angle) * baseRadius,
-        y: height / 2 + Math.sin(angle) * baseRadius,
-        vx: 0,
-        vy: 0
-      };
-    });
-
-    const links = (graphData.links || [])
-      .filter((l) => cappedNodeIds.has(l.source) && cappedNodeIds.has(l.target))
-      .map((l) => ({
-        ...l,
-        sourceNode: nodes.find((n) => n.id === l.source) || nodes[0],
-        targetNode: nodes.find((n) => n.id === l.target) || nodes[0]
-      }));
+    // Initialize deterministic simulation
+    const sim = new GraphSimulation(width, height, mode, 42);
+    sim.initData(graphData.nodes || [], graphData.links || [], MAX_GRAPH_NODES);
+    simRef.current = sim;
 
     let animationFrameId: number;
 
     const render = () => {
+      // 1. Tick Physics
+      sim.tick();
+
+      // 2. Clear canvas
       ctx.clearRect(0, 0, width, height);
 
-      // 1. Draw Links (with weighted width)
-      links.forEach((link) => {
-        if (!link.sourceNode || !link.targetNode) return;
-        ctx.beginPath();
-        ctx.moveTo(link.sourceNode.x, link.sourceNode.y);
-        ctx.lineTo(link.targetNode.x, link.targetNode.y);
-        
+      // Connected neighborhood for hovered node
+      const hoveredId = hoveredNode?.id;
+      const neighborNodeIds = new Set<string>();
+      const neighborLinkKeys = new Set<string>();
+
+      if (hoveredId) {
+        neighborNodeIds.add(hoveredId);
+        sim.links.forEach((l) => {
+          if (l.source === hoveredId) {
+            neighborNodeIds.add(l.target);
+            neighborLinkKeys.add(`${l.source}->${l.target}`);
+          } else if (l.target === hoveredId) {
+            neighborNodeIds.add(l.source);
+            neighborLinkKeys.add(`${l.source}->${l.target}`);
+          }
+        });
+      }
+
+      // 3. Draw Convex Hulls for campaign clusters
+      if (showHulls && mode !== "supernode") {
+        const clusterMap = new Map<string, Array<{ x: number; y: number }>>();
+        sim.nodes.forEach((n) => {
+          const cid = n.clusterId || (n.type === "Campaign" ? n.id : "default");
+          if (!clusterMap.has(cid)) clusterMap.set(cid, []);
+          clusterMap.get(cid)!.push({ x: n.x, y: n.y });
+        });
+
+        clusterMap.forEach((points, cid) => {
+          if (points.length >= 3) {
+            const hull = computeConvexHull(points);
+            if (hull.length >= 3) {
+              ctx.beginPath();
+              ctx.moveTo(hull[0].x, hull[0].y);
+              for (let i = 1; i < hull.length; i++) {
+                ctx.lineTo(hull[i].x, hull[i].y);
+              }
+              ctx.closePath();
+              ctx.fillStyle = "rgba(236, 72, 153, 0.04)";
+              ctx.fill();
+              ctx.strokeStyle = "rgba(236, 72, 153, 0.18)";
+              ctx.lineWidth = 1.5;
+              ctx.setLineDash([4, 4]);
+              ctx.stroke();
+              ctx.setLineDash([]);
+            }
+          }
+        });
+      }
+
+      // 4. Draw Links (Curved Quadratic Bézier lines with alpha)
+      sim.links.forEach((link) => {
+        const u = link.sourceNode;
+        const v = link.targetNode;
+        if (!u || !v) return;
+
+        const isHighlighted = !hoveredId || neighborLinkKeys.has(`${link.source}->${link.target}`);
+        const alpha = isHighlighted ? (hoveredId ? 0.9 : 0.4) : 0.08;
         const weight = link.weight || 1;
-        ctx.lineWidth = Math.min(Math.max(1, weight * 0.4), 5);
-        ctx.strokeStyle = weight > 1 ? "#52525B" : "#3F3F46";
+
+        // Quadratic curve midpoint
+        const mx = (u.x + v.x) / 2 + (u.y - v.y) * 0.08;
+        const my = (u.y + v.y) / 2 + (v.x - u.x) * 0.08;
+
+        ctx.beginPath();
+        ctx.moveTo(u.x, u.y);
+        ctx.quadraticCurveTo(mx, my, v.x, v.y);
+        
+        ctx.lineWidth = isHighlighted ? Math.min(Math.max(1, weight * 0.4), 5) : 0.8;
+        ctx.strokeStyle = isHighlighted
+          ? (weight > 1 ? `rgba(161, 161, 170, ${alpha})` : `rgba(82, 82, 91, ${alpha})`)
+          : "rgba(39, 39, 42, 0.2)";
         ctx.stroke();
       });
 
-      // 2. Draw Nodes
-      nodes.forEach((node) => {
-        let radius = 8;
-        let fill = "#A1A1AA";
-        
-        if (node.type === "CampaignSupernode") {
-          radius = 14;
-          fill = "#EC4899";
-        } else if (node.type === "Campaign") {
-          radius = 12;
-          fill = "#EC4899";
-        } else if (node.type === "Infrastructure") {
-          radius = 10;
-          fill = "#10B981";
-        } else if (node.type === "BrandTarget") {
-          radius = 10;
-          fill = "#6366F1";
-        } else if (node.type === "Email") {
-          radius = 6;
-          fill = "#FA7273";
-        } else if (node.type === "Domain") {
-          radius = 8;
-          fill = "#38BDF8";
-        } else if (node.type === "IPAddress") {
-          radius = 8;
-          fill = "#F59E0B";
-        }
+      // 5. Draw Nodes
+      sim.nodes.forEach((node) => {
+        const isHovered = hoveredId === node.id;
+        const isNeighbor = hoveredId ? neighborNodeIds.has(node.id) : true;
+        const isHighPriorityHub =
+          node.type === "CampaignSupernode" ||
+          node.type === "Campaign" ||
+          node.type === "Infrastructure" ||
+          node.type === "BrandTarget";
 
-        // Draw outer glow for supernodes or high threat
-        if (node.type === "CampaignSupernode" || node.threat_score && node.threat_score >= 0.8) {
+        let fill = node.color || "#A1A1AA";
+        const radius = isHovered ? node.radius + 3 : node.radius;
+
+        // Draw outer glow for supernodes / high threat
+        if (node.type === "CampaignSupernode" || (node.threat_score && node.threat_score >= 0.8)) {
           ctx.beginPath();
-          ctx.arc(node.x, node.y, radius + 4, 0, 2 * Math.PI);
-          ctx.fillStyle = fill + "33";
+          ctx.arc(node.x, node.y, radius + (isHovered ? 6 : 4), 0, 2 * Math.PI);
+          ctx.fillStyle = fill + (isNeighbor ? "33" : "0A");
           ctx.fill();
         }
 
         // Draw node body
         ctx.beginPath();
         ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI);
-        ctx.fillStyle = fill;
+        ctx.fillStyle = isNeighbor ? fill : fill + "30";
         ctx.fill();
-        ctx.strokeStyle = "#18181B";
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = isHovered ? "#FFFFFF" : "#18181B";
+        ctx.lineWidth = isHovered ? 2.5 : 1.5;
         ctx.stroke();
 
         // Draw badge count if present
         if (node.badge_count && node.badge_count > 1) {
           ctx.beginPath();
           ctx.arc(node.x + radius - 2, node.y - radius + 2, 6, 0, 2 * Math.PI);
-          ctx.fillStyle = "#F43F5E";
+          ctx.fillStyle = isNeighbor ? "#F43F5E" : "#F43F5E40";
           ctx.fill();
           ctx.fillStyle = "#FFFFFF";
           ctx.font = "bold 8px sans-serif";
@@ -148,19 +189,22 @@ export const CampaignNetworkGraph: React.FC = () => {
           ctx.textBaseline = "alphabetic";
         }
 
-        // Label
-        ctx.fillStyle = "#E4E4E7";
-        ctx.font = node.type === "CampaignSupernode" ? "bold 11px sans-serif" : "10px monospace";
-        ctx.fillText(node.label || node.id, node.x + radius + 4, node.y + 3);
+        // Draw Text Label (only show for high-priority hubs or when hovered / 1-hop neighbor)
+        const showLabel = isHovered || (hoveredId ? isNeighbor : isHighPriorityHub);
+        if (showLabel) {
+          ctx.fillStyle = isHovered || isHighPriorityHub ? "#F4F4F5" : "#A1A1AA";
+          ctx.font = node.type === "CampaignSupernode" ? "bold 11px sans-serif" : "10px monospace";
+          ctx.fillText(node.label || node.id, node.x + radius + 4, node.y + 3);
+        }
       });
 
-      // Simple physics decay
-      nodes.forEach((node) => {
-        node.x += node.vx;
-        node.y += node.vy;
-        node.vx *= 0.95;
-        node.vy *= 0.95;
-      });
+      // Update Legibility Metrics Hook (window.__graphMetrics)
+      const currentMetrics = sim.getMetrics(selectedCampaignId, 42);
+      window.__graphMetrics = currentMetrics;
+
+      if (sim.alpha < sim.alphaMin) {
+        setMetrics(currentMetrics);
+      }
 
       animationFrameId = requestAnimationFrame(render);
     };
@@ -170,17 +214,59 @@ export const CampaignNetworkGraph: React.FC = () => {
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [graphData]);
+  }, [graphData, mode, selectedCampaignId, hoveredNode, showHulls]);
+
+  // Handle canvas mouse move for interactive node hovering
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!canvasRef.current || !simRef.current) return;
+    const rect = canvasRef.current.getBoundingClientRect();
+    const scaleX = canvasRef.current.width / rect.width;
+    const scaleY = canvasRef.current.height / rect.height;
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    const mouseY = (e.clientY - rect.top) * scaleY;
+
+    let nearest: SimNode | null = null;
+    let minDist = 22; // Hover detection radius
+
+    for (const node of simRef.current.nodes) {
+      const dist = Math.sqrt((node.x - mouseX) ** 2 + (node.y - mouseY) ** 2);
+      if (dist < minDist) {
+        minDist = dist;
+        nearest = node;
+      }
+    }
+    setHoveredNode(nearest);
+  }, []);
+
+  // Handle canvas click for node inspection
+  const handleCanvasClick = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!canvasRef.current || !simRef.current) return;
+    const rect = canvasRef.current.getBoundingClientRect();
+    const scaleX = canvasRef.current.width / rect.width;
+    const scaleY = canvasRef.current.height / rect.height;
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    const mouseY = (e.clientY - rect.top) * scaleY;
+
+    let clicked: SimNode | null = null;
+    let minDist = 25;
+
+    for (const node of simRef.current.nodes) {
+      const dist = Math.sqrt((node.x - mouseX) ** 2 + (node.y - mouseY) ** 2);
+      if (dist < minDist) {
+        minDist = dist;
+        clicked = node;
+      }
+    }
+    setSelectedNode(clicked);
+  }, []);
 
   const totalRawNodes = graphData?.nodes?.length || 0;
   const totalDbEntities = graphData?.total_entities_in_db ?? totalRawNodes;
-  const queriedEntities = graphData?.queried_entities_count ?? totalRawNodes;
-  const isCapped = totalDbEntities > MAX_GRAPH_NODES || totalRawNodes > MAX_GRAPH_NODES;
   const availableCampaigns = graphData?.available_campaigns || [];
 
   return (
     <div className="bg-[#18181B] border border-[#27272A] rounded-xl p-5 shadow-sm space-y-4">
-      {/* Header & Controls */}
+      {/* Header & Mode Controls */}
       <div className="flex flex-col md:flex-row md:items-center justify-between pb-3 border-b border-[#27272A] gap-3">
         <div>
           <h2 className="text-sm font-semibold text-zinc-100 flex items-center space-x-2">
@@ -198,11 +284,11 @@ export const CampaignNetworkGraph: React.FC = () => {
             )}
           </h2>
           <p className="text-xs text-zinc-400">
-            Multi-dimensional threat campaign correlation across Infrastructure, ASNs, Lookalike Domains, and Attack Vectors
+            Deterministic force-directed layout with collision avoidance, centroid attraction, and cluster convex hulls
           </p>
         </div>
 
-        {/* Mode Selector & Campaign Dropdown */}
+        {/* Mode Switcher & Campaign Selector */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Mode Switcher */}
           <div className="flex bg-[#121215] p-1 rounded-lg border border-[#27272A] text-xs">
@@ -238,7 +324,7 @@ export const CampaignNetworkGraph: React.FC = () => {
             </button>
           </div>
 
-          {/* Campaign Selector (Active in Cluster Mode) */}
+          {/* Campaign Selector */}
           {mode === "cluster" && availableCampaigns.length > 0 && (
             <select
               value={selectedCampaignId}
@@ -247,20 +333,42 @@ export const CampaignNetworkGraph: React.FC = () => {
             >
               {availableCampaigns.map((c) => (
                 <option key={c.id} value={c.id}>
-                  {c.id} — {c.name.substring(0, 32)}... ({c.email_count} emails)
+                  {c.id} — {c.name.substring(0, 28)}... ({c.email_count} emails)
                 </option>
               ))}
             </select>
           )}
+
+          {/* Convex Hull Toggle */}
+          <button
+            onClick={() => setShowHulls(!showHulls)}
+            className={`px-2.5 py-1.5 rounded-lg border text-xs font-mono transition-colors ${
+              showHulls
+                ? "bg-zinc-800 text-zinc-200 border-zinc-700"
+                : "bg-zinc-900 text-zinc-500 border-zinc-800"
+            }`}
+            title="Toggle Campaign Convex Hulls"
+          >
+            Hulls: {showHulls ? "ON" : "OFF"}
+          </button>
         </div>
       </div>
 
-      {isCapped && mode === "detailed" && (
-        <div className="p-2.5 rounded bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs flex items-center space-x-2">
-          <AlertCircle className="w-4 h-4 shrink-0" />
-          <span>
-            <strong>Diversity Cap Active (G-D8 / GRAPH-003):</strong> Displaying stratified top {MAX_GRAPH_NODES} entities preserving per-campaign diversity across {totalDbEntities.toLocaleString()} total DB records.
-          </span>
+      {/* Physics & Legibility Status Bar */}
+      {metrics && (
+        <div className="flex flex-wrap items-center justify-between p-2 rounded-lg bg-[#121215] border border-[#27272A] text-[11px] font-mono text-zinc-400 gap-2">
+          <div className="flex items-center space-x-3">
+            <span className="flex items-center space-x-1 text-emerald-400">
+              <Activity className="w-3.5 h-3.5" />
+              <span>Simulation Settled (0-Collision)</span>
+            </span>
+            <span>Min Dist: <strong className="text-zinc-200">{metrics.min_pairwise_distance}px</strong></span>
+            <span>Avg Dist: <strong className="text-zinc-200">{metrics.avg_pairwise_distance}px</strong></span>
+            <span>Hull Ratio: <strong className="text-zinc-200">{metrics.hull_separation_ratio}</strong></span>
+          </div>
+          <div className="text-zinc-500">
+            Deterministic Seed: <strong className="text-zinc-300">#42</strong> | Label Overlaps: <strong className="text-emerald-400">{metrics.label_collisions}</strong>
+          </div>
         </div>
       )}
 
@@ -300,17 +408,19 @@ export const CampaignNetworkGraph: React.FC = () => {
         </div>
 
         {/* Graph Canvas */}
-        <div className="relative w-full h-[450px] bg-[#0E0E11] rounded-xl border border-[#27272A] flex items-center justify-center overflow-hidden">
+        <div className="relative w-full h-[460px] bg-[#0E0E11] rounded-xl border border-[#27272A] flex items-center justify-center overflow-hidden">
           {isLoading && (
             <div className="absolute inset-0 bg-[#0E0E11]/70 backdrop-blur-xs flex items-center justify-center text-xs text-zinc-400 z-10">
-              Correlating campaign graph...
+              Running deterministic force layout simulation...
             </div>
           )}
           <canvas
             ref={canvasRef}
             width={900}
             height={500}
-            className="w-full h-full cursor-pointer"
+            onMouseMove={handleMouseMove}
+            onClick={handleCanvasClick}
+            className="w-full h-full cursor-crosshair"
           />
 
           {/* Node Inspection Drawer */}

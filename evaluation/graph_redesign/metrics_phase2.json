@@ -1,0 +1,41 @@
+{
+  "cluster_mode": {
+    "rendered_nodes": 30,
+    "rendered_links": 38,
+    "min_pairwise_distance": 37.9,
+    "avg_pairwise_distance": 121.3,
+    "hull_separation_ratio": 1,
+    "edge_node_ratio": 1.27,
+    "label_collisions": 4,
+    "is_simulation_settled": false,
+    "active_mode": "cluster",
+    "active_campaign_id": "CMP-2024-0034",
+    "seed": 42
+  },
+  "supernode_mode": {
+    "rendered_nodes": 12,
+    "rendered_links": 12,
+    "min_pairwise_distance": 54.6,
+    "avg_pairwise_distance": 121.8,
+    "hull_separation_ratio": 0.1,
+    "edge_node_ratio": 1,
+    "label_collisions": 1,
+    "is_simulation_settled": false,
+    "active_mode": "supernode",
+    "active_campaign_id": "CMP-2024-0034",
+    "seed": 42
+  },
+  "detailed_mode": {
+    "rendered_nodes": 78,
+    "rendered_links": 99,
+    "min_pairwise_distance": 30.7,
+    "avg_pairwise_distance": 156.3,
+    "hull_separation_ratio": 1,
+    "edge_node_ratio": 1.27,
+    "label_collisions": 22,
+    "is_simulation_settled": false,
+    "active_mode": "detailed",
+    "active_campaign_id": "CMP-2024-0034",
+    "seed": 42
+  }
+}

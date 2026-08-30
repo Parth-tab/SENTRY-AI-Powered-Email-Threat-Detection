@@ -1,0 +1,838 @@
+{
+  "nodes": [
+    {
+      "id": "domain:onlineapex-kyc-update.com",
+      "label": "onlineapex-kyc-update.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:onlineapex-kyc-update.com",
+        "type": "Domain",
+        "label": "onlineapex-kyc-update.com",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:apex-secureverify.com",
+      "label": "apex-secureverify.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:apex-secureverify.com",
+        "type": "Domain",
+        "label": "apex-secureverify.com",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "infra:AS14061",
+      "label": "AS14061 (DigitalOcean, LLC)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS14061",
+        "type": "Infrastructure",
+        "label": "AS14061 (DigitalOcean, LLC)"
+      }
+    },
+    {
+      "id": "ip:194.26.29.120",
+      "label": "194.26.29.120 (GB)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:194.26.29.120",
+        "type": "IPAddress",
+        "label": "194.26.29.120 (GB)",
+        "asn": "AS14061",
+        "isp": "DigitalOcean, LLC",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "person:alerts@onlineapex-kyc-update.com",
+      "label": "alerts@onlineapex-kyc-update.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:alerts@onlineapex-kyc-update.com",
+        "type": "Person",
+        "label": "alerts@onlineapex-kyc-update.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:apex-update-portal.com",
+      "label": "apex-update-portal.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:apex-update-portal.com",
+        "type": "Domain",
+        "label": "apex-update-portal.com",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:185.220.101.5",
+      "label": "185.220.101.5 (NL)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 6,
+      "degree": 6,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:185.220.101.5",
+        "type": "IPAddress",
+        "label": "185.220.101.5 (NL)",
+        "asn": "AS50673",
+        "isp": "Serverius Holding B.V.",
+        "is_tor": true
+      }
+    },
+    {
+      "id": "person:alerts@apex-bank-verify.com",
+      "label": "alerts@apex-bank-verify.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:alerts@apex-bank-verify.com",
+        "type": "Person",
+        "label": "alerts@apex-bank-verify.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:185.220.101.9",
+      "label": "185.220.101.9 (US)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:185.220.101.9",
+        "type": "IPAddress",
+        "label": "185.220.101.9 (US)",
+        "asn": "AS16509",
+        "isp": "Amazon.com, Inc.",
+        "is_tor": true
+      }
+    },
+    {
+      "id": "6925f533-bdcb-4e01-941a-01c31c0b18f5",
+      "label": "Email: Instant Approval: Pre-App...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.55,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "6925f533-bdcb-4e01-941a-01c31c0b18f5",
+        "type": "Email",
+        "label": "Email: Instant Approval: Pre-App...",
+        "threat_score": 0.55,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "campaign:CMP-2024-0034",
+      "label": "Campaign: CMP-2024-0034",
+      "type": "Campaign",
+      "color": "#EC4899",
+      "threat_score": 0.0,
+      "threat_level": "CRITICAL",
+      "badge_count": 14,
+      "degree": 14,
+      "is_synthetic": false,
+      "details": {
+        "id": "campaign:CMP-2024-0034",
+        "type": "Campaign",
+        "label": "Campaign: CMP-2024-0034",
+        "name": "Operation GhostRelay (Credential Harvester)",
+        "threat_level": "CRITICAL"
+      }
+    },
+    {
+      "id": "person:rewards@onlineapex-kyc-update.com",
+      "label": "rewards@onlineapex-kyc-update.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:rewards@onlineapex-kyc-update.com",
+        "type": "Person",
+        "label": "rewards@onlineapex-kyc-update.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "90b557a6-16fb-411b-b009-92ea094a33ec",
+      "label": "Email: Mandatory Action: Apex Mo...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.8,
+      "threat_level": "HIGH",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "90b557a6-16fb-411b-b009-92ea094a33ec",
+        "type": "Email",
+        "label": "Email: Mandatory Action: Apex Mo...",
+        "threat_score": 0.8,
+        "threat_level": "HIGH"
+      }
+    },
+    {
+      "id": "person:security@apex-netbanking-alert.xyz",
+      "label": "security@apex-netbanking-alert.xyz",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:security@apex-netbanking-alert.xyz",
+        "type": "Person",
+        "label": "security@apex-netbanking-alert.xyz",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "infra:AS50673",
+      "label": "AS50673 (Serverius Holding B.V.)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS50673",
+        "type": "Infrastructure",
+        "label": "AS50673 (Serverius Holding B.V.)"
+      }
+    },
+    {
+      "id": "c5efd2f4-5b1a-414b-b616-127710d2ddd0",
+      "label": "Email: Security Notice: Apex Int...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.84,
+      "threat_level": "HIGH",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "c5efd2f4-5b1a-414b-b616-127710d2ddd0",
+        "type": "Email",
+        "label": "Email: Security Notice: Apex Int...",
+        "threat_score": 0.84,
+        "threat_level": "HIGH"
+      }
+    },
+    {
+      "id": "2141200a-d098-436a-b6a8-f56418d04c56",
+      "label": "Email: URGENT: Mandatory KYC Ver...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.98,
+      "threat_level": "CRITICAL",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "2141200a-d098-436a-b6a8-f56418d04c56",
+        "type": "Email",
+        "label": "Email: URGENT: Mandatory KYC Ver...",
+        "threat_score": 0.98,
+        "threat_level": "CRITICAL"
+      }
+    },
+    {
+      "id": "infra:AS205100",
+      "label": "AS205100 (Jonas Bunde / F3 Netze)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS205100",
+        "type": "Infrastructure",
+        "label": "AS205100 (Jonas Bunde / F3 Netze)"
+      }
+    },
+    {
+      "id": "infra:AS16509",
+      "label": "AS16509 (Amazon.com, Inc.)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS16509",
+        "type": "Infrastructure",
+        "label": "AS16509 (Amazon.com, Inc.)"
+      }
+    },
+    {
+      "id": "infra:AS51852",
+      "label": "AS51852 (Chang Way Technologies)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS51852",
+        "type": "Infrastructure",
+        "label": "AS51852 (Chang Way Technologies)"
+      }
+    },
+    {
+      "id": "domain:apex-netbanking-alert.xyz",
+      "label": "apex-netbanking-alert.xyz",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:apex-netbanking-alert.xyz",
+        "type": "Domain",
+        "label": "apex-netbanking-alert.xyz",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "person:no-reply@apex-update-portal.com",
+      "label": "no-reply@apex-update-portal.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:no-reply@apex-update-portal.com",
+        "type": "Person",
+        "label": "no-reply@apex-update-portal.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "fca78041-1b6b-4597-aa1c-7e446ce874a8",
+      "label": "Email: Security Alert: High Valu...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.82,
+      "threat_level": "HIGH",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "fca78041-1b6b-4597-aa1c-7e446ce874a8",
+        "type": "Email",
+        "label": "Email: Security Alert: High Valu...",
+        "threat_score": 0.82,
+        "threat_level": "HIGH"
+      }
+    },
+    {
+      "id": "ip:185.220.101.34",
+      "label": "185.220.101.34 (NL)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 6,
+      "degree": 6,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:185.220.101.34",
+        "type": "IPAddress",
+        "label": "185.220.101.34 (NL)",
+        "asn": "AS205100",
+        "isp": "Jonas Bunde / F3 Netze",
+        "is_tor": true
+      }
+    },
+    {
+      "id": "3058e03e-d083-4a49-b64a-3e8f20326c1d",
+      "label": "Email: Final Notice: Immediate A...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.87,
+      "threat_level": "CRITICAL",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "3058e03e-d083-4a49-b64a-3e8f20326c1d",
+        "type": "Email",
+        "label": "Email: Final Notice: Immediate A...",
+        "threat_score": 0.87,
+        "threat_level": "CRITICAL"
+      }
+    },
+    {
+      "id": "domain:apex-bank-verify.com",
+      "label": "apex-bank-verify.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:apex-bank-verify.com",
+        "type": "Domain",
+        "label": "apex-bank-verify.com",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "20d2a8a4-2535-4a98-b1de-239e72e97d55",
+      "label": "Email: Congratulations! You have...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.83,
+      "threat_level": "HIGH",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "20d2a8a4-2535-4a98-b1de-239e72e97d55",
+        "type": "Email",
+        "label": "Email: Congratulations! You have...",
+        "threat_score": 0.83,
+        "threat_level": "HIGH"
+      }
+    },
+    {
+      "id": "person:limit-enhancement@apex-netbanking-alert.xyz",
+      "label": "limit-enhancement@apex-netbanking-alert.xyz",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:limit-enhancement@apex-netbanking-alert.xyz",
+        "type": "Person",
+        "label": "limit-enhancement@apex-netbanking-alert.xyz",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:194.26.29.117",
+      "label": "194.26.29.117 (RU)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:194.26.29.117",
+        "type": "IPAddress",
+        "label": "194.26.29.117 (RU)",
+        "asn": "AS51852",
+        "isp": "Chang Way Technologies",
+        "is_tor": true
+      }
+    },
+    {
+      "id": "person:support@apex-secureverify.com",
+      "label": "support@apex-secureverify.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:support@apex-secureverify.com",
+        "type": "Person",
+        "label": "support@apex-secureverify.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "ip:194.26.29.120",
+      "target": "infra:AS14061",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:alerts@onlineapex-kyc-update.com",
+      "target": "domain:onlineapex-kyc-update.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:185.220.101.5",
+      "target": "infra:AS50673",
+      "relationship": "HOSTED_BY",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "person:alerts@apex-bank-verify.com",
+      "target": "domain:apex-bank-verify.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:185.220.101.9",
+      "target": "infra:AS16509",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "6925f533-bdcb-4e01-941a-01c31c0b18f5",
+      "target": "person:limit-enhancement@apex-netbanking-alert.xyz",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "6925f533-bdcb-4e01-941a-01c31c0b18f5",
+      "target": "ip:194.26.29.120",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "6925f533-bdcb-4e01-941a-01c31c0b18f5",
+      "target": "campaign:CMP-2024-0034",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0034",
+      "target": "ip:185.220.101.5",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "campaign:CMP-2024-0034",
+      "target": "ip:194.26.29.117",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0034",
+      "target": "ip:185.220.101.34",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "campaign:CMP-2024-0034",
+      "target": "ip:185.220.101.9",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0034",
+      "target": "ip:194.26.29.120",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:rewards@onlineapex-kyc-update.com",
+      "target": "domain:onlineapex-kyc-update.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "90b557a6-16fb-411b-b009-92ea094a33ec",
+      "target": "person:no-reply@apex-update-portal.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "90b557a6-16fb-411b-b009-92ea094a33ec",
+      "target": "ip:185.220.101.34",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "90b557a6-16fb-411b-b009-92ea094a33ec",
+      "target": "campaign:CMP-2024-0034",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:security@apex-netbanking-alert.xyz",
+      "target": "domain:apex-netbanking-alert.xyz",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "c5efd2f4-5b1a-414b-b616-127710d2ddd0",
+      "target": "person:alerts@apex-bank-verify.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "c5efd2f4-5b1a-414b-b616-127710d2ddd0",
+      "target": "ip:185.220.101.5",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "c5efd2f4-5b1a-414b-b616-127710d2ddd0",
+      "target": "campaign:CMP-2024-0034",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "2141200a-d098-436a-b6a8-f56418d04c56",
+      "target": "person:support@apex-secureverify.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "2141200a-d098-436a-b6a8-f56418d04c56",
+      "target": "ip:185.220.101.34",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "2141200a-d098-436a-b6a8-f56418d04c56",
+      "target": "campaign:CMP-2024-0034",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:no-reply@apex-update-portal.com",
+      "target": "domain:apex-update-portal.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "fca78041-1b6b-4597-aa1c-7e446ce874a8",
+      "target": "person:security@apex-netbanking-alert.xyz",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "fca78041-1b6b-4597-aa1c-7e446ce874a8",
+      "target": "ip:194.26.29.117",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "fca78041-1b6b-4597-aa1c-7e446ce874a8",
+      "target": "campaign:CMP-2024-0034",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:185.220.101.34",
+      "target": "infra:AS205100",
+      "relationship": "HOSTED_BY",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "3058e03e-d083-4a49-b64a-3e8f20326c1d",
+      "target": "person:alerts@onlineapex-kyc-update.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "3058e03e-d083-4a49-b64a-3e8f20326c1d",
+      "target": "ip:185.220.101.5",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "3058e03e-d083-4a49-b64a-3e8f20326c1d",
+      "target": "campaign:CMP-2024-0034",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "20d2a8a4-2535-4a98-b1de-239e72e97d55",
+      "target": "person:rewards@onlineapex-kyc-update.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "20d2a8a4-2535-4a98-b1de-239e72e97d55",
+      "target": "ip:185.220.101.9",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "20d2a8a4-2535-4a98-b1de-239e72e97d55",
+      "target": "campaign:CMP-2024-0034",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:limit-enhancement@apex-netbanking-alert.xyz",
+      "target": "domain:apex-netbanking-alert.xyz",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:194.26.29.117",
+      "target": "infra:AS51852",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:support@apex-secureverify.com",
+      "target": "domain:apex-secureverify.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    }
+  ],
+  "cluster_campaign_id": "CMP-2024-0034",
+  "mode": "cluster",
+  "active_campaign_id": "CMP-2024-0034",
+  "available_campaigns": [
+    {
+      "id": "CMP-2024-0034",
+      "name": "Operation GhostRelay (Credential Harvester)",
+      "threat_level": "CRITICAL",
+      "actor_sophistication": "medium-high",
+      "email_count": 7,
+      "description": "Coordinated credential harvesting campaign targeting Apex National Bank customers via bulletproof AS205100 and lookalike domains."
+    },
+    {
+      "id": "CMP-2024-0089",
+      "name": "FinPhish Global Cloud Harvester",
+      "threat_level": "CRITICAL",
+      "actor_sophistication": "high",
+      "email_count": 4,
+      "description": "Cross-tenant OAuth token and Microsoft 365 / DocuSign credential phishing campaign with deceptive hyperlink redirection."
+    },
+    {
+      "id": "CMP-2024-0012",
+      "name": "CEO Wire Fraud BEC Syndicate",
+      "threat_level": "HIGH",
+      "actor_sophistication": "high",
+      "email_count": 2,
+      "description": "Executive display-name impersonation campaign requesting urgent payroll or vendor wire transfers to offshore accounts."
+    }
+  ],
+  "total_entities_in_db": 19,
+  "queried_entities_count": 19
+}

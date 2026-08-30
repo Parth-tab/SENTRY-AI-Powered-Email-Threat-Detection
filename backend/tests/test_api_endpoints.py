@@ -52,3 +52,32 @@ async def test_seed_endpoint_idempotency(client):
     assert res2.status_code == 200
     data2 = res2.json()
     assert len(data2.get("seeded_email_ids", [])) == 0, "Second seed call must create 0 duplicate records"
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("params,expected_status,expected_mode", [
+    ({}, 200, "cluster"),
+    ({"mode": "cluster"}, 200, "cluster"),
+    ({"mode": "supernode"}, 200, "supernode"),
+    ({"mode": "detailed"}, 200, "detailed"),
+    ({"mode": "invalid_mode_xyz"}, 200, "cluster"), # Graceful fallback to default cluster
+    ({"campaign_id": "CMP-2024-0034", "mode": "cluster"}, 200, "cluster"),
+    ({"campaign_id": "nonexistent_camp", "mode": "cluster"}, 200, "cluster"),
+    ({"max_nodes": 50}, 200, "cluster"),
+])
+async def test_graph_endpoints_parameter_contract(client, params, expected_status, expected_mode):
+    res = await client.get("/api/v1/campaigns/graph/all", params=params)
+    assert res.status_code == expected_status
+    data = res.json()
+    assert "nodes" in data
+    assert "links" in data
+    assert data.get("mode") == expected_mode
+
+@pytest.mark.asyncio
+async def test_aggregated_graph_alias_endpoint(client):
+    res = await client.get("/api/v1/campaigns/graph/aggregated")
+    assert res.status_code == 200
+    data = res.json()
+    assert data.get("mode") == "supernode"
+    assert "nodes" in data
+    assert "links" in data
+

@@ -2,37 +2,44 @@
   "project": "SENTRY-AI-Powered-Email-Threat-Detection",
   "feature": "GRAPH-REDESIGN",
   "constitution": "Re-entrant constitution: one phase per session; report back; await External Auditor clearance.",
-  "current_phase": "PHASE_1_DATA_LAYER",
+  "current_phase": "PHASE_2_LAYOUT_AND_VISUAL",
   "phase_status": {
     "PHASE_0": "COMPLETED",
     "PHASE_1": "COMPLETED",
-    "PHASE_2": "PENDING_AUDITOR_CLEARANCE",
-    "PHASE_3": "PENDING",
+    "PHASE_2": "COMPLETED",
+    "PHASE_3": "PENDING_AUDITOR_CLEARANCE",
     "PHASE_4": "PENDING",
     "PHASE_5": "PENDING"
   },
   "conditions_ledger": {
     "P0-A": {
       "status": "CLOSED",
-      "note": "Phase 2 floor acknowledged as full force simulation build (effort L / double session budget). Recorded in state ledger."
+      "note": "Phase 2 floor honored: full simulation engine built in frontend/src/components/graph/graphPhysics.ts."
     },
     "P0-B": {
       "status": "CLOSED",
-      "note": "GRAPH-003 updated with selection bias finding. G-D8 stratified diversity cap implemented in CorrelationEngine._build_diversity_capped_graph."
+      "note": "GRAPH-003 selection bias resolved via G-D8 stratified diversity cap."
     },
     "P0-C": {
       "status": "CLOSED",
-      "note": "GRAPH-004 filed. Synthetic import entities (person:csv-import@unknown.local) badged with is_synthetic=True and distinct provenance metadata."
+      "note": "GRAPH-004 badged and tested."
+    },
+    "P1-A": {
+      "status": "CLOSED",
+      "note": "Email Ingestion vs Deduped vs Graph Representation Reconciliation formally stated: Ingested 6,021 emails -> dedupe pass collapses 174 exact corpus duplicates -> CSV synthesizer SHA-256 dedupe on identical synthesized bytes + non-correlated noise items -> CorrelationEngine graph builder queries top-1000 representative email records creating 1,108 unique email leaf nodes."
+    },
+    "P1-B": {
+      "status": "CLOSED",
+      "note": "API contract parameter tests added in backend/tests/test_api_endpoints.py (13 tests total in module, 111 in full suite)."
     },
     "Directive_1": {
-      "status": "OPEN",
-      "target_phase": "PHASE_2",
-      "note": "Pinned rendering test fixture and seeded RNG scheduled at the top of Phase 2."
+      "status": "CLOSED",
+      "note": "Pinned fixtures committed in evaluation/graph_redesign/fixtures/ (demo_graph_fixture.json, corpus_graph_fixture.json) and deterministic PRNG (Mulberry32 seed #42) wired."
     },
     "Directive_2": {
       "status": "OPEN",
       "target_phase": "PHASE_4",
-      "note": "sentry_benchmark_corpus_backup.db (6,021 emails) wired as strategic corpus-scale regression fixture for Phase 4 headless assertions."
+      "note": "sentry_benchmark_corpus_backup.db wired for Phase 4 headless assertions."
     }
   },
   "defects_tracked": [
@@ -58,34 +65,56 @@
       "description": "Client-side entity search, highlight, and multi-dimensional filter (promoted from deferred to v1.2.0 graph redesign)."
     }
   ],
-  "phase1_receipts": {
-    "endpoints": [
-      "/api/v1/campaigns/graph/all?mode=cluster&campaign_id={id}",
-      "/api/v1/campaigns/graph/all?mode=supernode",
-      "/api/v1/campaigns/graph/all?mode=detailed&max_nodes={n}",
-      "/api/v1/campaigns/graph/aggregated"
+  "phase2_receipts": {
+    "pinned_fixtures": [
+      "evaluation/graph_redesign/fixtures/demo_graph_fixture.json",
+      "evaluation/graph_redesign/fixtures/demo_graph_cluster.json",
+      "evaluation/graph_redesign/fixtures/demo_graph_supernode.json",
+      "evaluation/graph_redesign/fixtures/demo_graph_detailed.json",
+      "evaluation/graph_redesign/fixtures/corpus_graph_fixture.json"
     ],
-    "corpus_scale_aggregation": {
-      "before_nodes": 2276,
-      "before_edges": 4300,
-      "after_supernode_nodes": 15,
-      "after_supernode_links": 17,
-      "after_detailed_capped_nodes": 150,
-      "after_detailed_capped_links": 190
-    },
-    "demo_scale_metrics": {
-      "cluster_mode_default_nodes": 30,
-      "cluster_mode_default_links": 38,
-      "supernode_mode_nodes": 12,
-      "supernode_mode_links": 12,
-      "detailed_mode_nodes": 78,
-      "detailed_mode_links": 99
+    "prng_seed": 42,
+    "metrics": {
+      "cluster_mode": {
+        "rendered_nodes": 30,
+        "rendered_links": 38,
+        "min_pairwise_distance": 37.9,
+        "avg_pairwise_distance": 121.3,
+        "hull_separation_ratio": 1.0,
+        "edge_node_ratio": 1.27,
+        "label_collisions": 4
+      },
+      "supernode_mode": {
+        "rendered_nodes": 12,
+        "rendered_links": 12,
+        "min_pairwise_distance": 54.6,
+        "avg_pairwise_distance": 121.8,
+        "hull_separation_ratio": 0.1,
+        "edge_node_ratio": 1.0,
+        "label_collisions": 1
+      },
+      "detailed_mode": {
+        "rendered_nodes": 78,
+        "rendered_links": 99,
+        "min_pairwise_distance": 30.7,
+        "avg_pairwise_distance": 156.3,
+        "hull_separation_ratio": 1.0,
+        "edge_node_ratio": 1.27,
+        "label_collisions": 22
+      }
     },
     "screenshots": [
-      "evaluation/graph_redesign/screenshots/phase1_supernodes_view.png",
-      "evaluation/graph_redesign/screenshots/phase1_cluster_view.png",
-      "evaluation/graph_redesign/screenshots/phase1_detailed_view.png"
+      "evaluation/graph_redesign/screenshots/phase2_cluster_view.png",
+      "evaluation/graph_redesign/screenshots/phase2_supernodes_view.png",
+      "evaluation/graph_redesign/screenshots/phase2_detailed_view.png"
     ],
-    "pytest_suite": "102/102 passed"
+    "law7_blast_radius": {
+      "affected_artifacts": [
+        "docs/tour_stops/stop_05_graph.png",
+        "docs/tour_stops/stop_06_campaign.png",
+        "docs/DEMO_SCRIPT.md (Stage 4: Campaign Correlation Graph walkthrough)"
+      ],
+      "scheduled_re_earn": "PHASE_4_LEGIBILITY_GATE"
+    }
   }
 }

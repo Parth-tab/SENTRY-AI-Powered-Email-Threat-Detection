@@ -1,0 +1,422 @@
+{
+  "nodes": [
+    {
+      "id": "supernode:CMP-2024-0034",
+      "type": "CampaignSupernode",
+      "label": "Operation GhostRelay (Credential Harvester)",
+      "campaign_id": "CMP-2024-0034",
+      "threat_level": "CRITICAL",
+      "threat_score": 0.92,
+      "color": "#EC4899",
+      "email_count": 7,
+      "domain_count": 5,
+      "ip_count": 5,
+      "infra_count": 5,
+      "badge_count": 7,
+      "details": {
+        "campaign_id": "CMP-2024-0034",
+        "name": "Operation GhostRelay (Credential Harvester)",
+        "threat_level": "CRITICAL",
+        "actor_sophistication": "medium-high",
+        "email_count": 7,
+        "domain_count": 5,
+        "ip_count": 5,
+        "infra_count": 5
+      }
+    },
+    {
+      "id": "supernode:CMP-2024-0089",
+      "type": "CampaignSupernode",
+      "label": "FinPhish Global Cloud Harvester",
+      "campaign_id": "CMP-2024-0089",
+      "threat_level": "CRITICAL",
+      "threat_score": 0.92,
+      "color": "#EC4899",
+      "email_count": 32,
+      "domain_count": 7,
+      "ip_count": 14,
+      "infra_count": 6,
+      "badge_count": 32,
+      "details": {
+        "campaign_id": "CMP-2024-0089",
+        "name": "FinPhish Global Cloud Harvester",
+        "threat_level": "CRITICAL",
+        "actor_sophistication": "high",
+        "email_count": 32,
+        "domain_count": 7,
+        "ip_count": 14,
+        "infra_count": 6
+      }
+    },
+    {
+      "id": "supernode:CMP-2024-0012",
+      "type": "CampaignSupernode",
+      "label": "CEO Wire Fraud BEC Syndicate",
+      "campaign_id": "CMP-2024-0012",
+      "threat_level": "HIGH",
+      "threat_score": 0.78,
+      "color": "#EC4899",
+      "email_count": 2,
+      "domain_count": 1,
+      "ip_count": 2,
+      "infra_count": 2,
+      "badge_count": 2,
+      "details": {
+        "campaign_id": "CMP-2024-0012",
+        "name": "CEO Wire Fraud BEC Syndicate",
+        "threat_level": "HIGH",
+        "actor_sophistication": "high",
+        "email_count": 2,
+        "domain_count": 1,
+        "ip_count": 2,
+        "infra_count": 2
+      }
+    },
+    {
+      "id": "infra:AS24940",
+      "type": "Infrastructure",
+      "label": "AS24940 (Hetzner Online GmbH)",
+      "color": "#10B981",
+      "badge_count": 32,
+      "threat_score": 0.85,
+      "threat_level": "HIGH",
+      "details": {
+        "id": "infra:AS24940",
+        "type": "Infrastructure",
+        "label": "AS24940 (Hetzner Online GmbH)",
+        "usage_count": 32
+      }
+    },
+    {
+      "id": "infra:AS205100",
+      "type": "Infrastructure",
+      "label": "AS205100 (Jonas Bunde / F3 Netze)",
+      "color": "#10B981",
+      "badge_count": 7,
+      "threat_score": 0.85,
+      "threat_level": "HIGH",
+      "details": {
+        "id": "infra:AS205100",
+        "type": "Infrastructure",
+        "label": "AS205100 (Jonas Bunde / F3 Netze)",
+        "usage_count": 7
+      }
+    },
+    {
+      "id": "infra:AS14061",
+      "type": "Infrastructure",
+      "label": "AS14061 (DigitalOcean, LLC)",
+      "color": "#10B981",
+      "badge_count": 41,
+      "threat_score": 0.85,
+      "threat_level": "HIGH",
+      "details": {
+        "id": "infra:AS14061",
+        "type": "Infrastructure",
+        "label": "AS14061 (DigitalOcean, LLC)",
+        "usage_count": 41
+      }
+    },
+    {
+      "id": "infra:AS9498",
+      "type": "Infrastructure",
+      "label": "AS9498 (Bharti Airtel Ltd)",
+      "color": "#10B981",
+      "badge_count": 32,
+      "threat_score": 0.85,
+      "threat_level": "HIGH",
+      "details": {
+        "id": "infra:AS9498",
+        "type": "Infrastructure",
+        "label": "AS9498 (Bharti Airtel Ltd)",
+        "usage_count": 32
+      }
+    },
+    {
+      "id": "infra:AS7473",
+      "type": "Infrastructure",
+      "label": "AS7473 (Singtel Optus)",
+      "color": "#10B981",
+      "badge_count": 32,
+      "threat_score": 0.85,
+      "threat_level": "HIGH",
+      "details": {
+        "id": "infra:AS7473",
+        "type": "Infrastructure",
+        "label": "AS7473 (Singtel Optus)",
+        "usage_count": 32
+      }
+    },
+    {
+      "id": "infra:AS16509",
+      "type": "Infrastructure",
+      "label": "AS16509 (Amazon.com, Inc.)",
+      "color": "#10B981",
+      "badge_count": 39,
+      "threat_score": 0.85,
+      "threat_level": "HIGH",
+      "details": {
+        "id": "infra:AS16509",
+        "type": "Infrastructure",
+        "label": "AS16509 (Amazon.com, Inc.)",
+        "usage_count": 39
+      }
+    },
+    {
+      "id": "infra:AS51852",
+      "type": "Infrastructure",
+      "label": "AS51852 (Chang Way Technologies)",
+      "color": "#10B981",
+      "badge_count": 7,
+      "threat_score": 0.85,
+      "threat_level": "HIGH",
+      "details": {
+        "id": "infra:AS51852",
+        "type": "Infrastructure",
+        "label": "AS51852 (Chang Way Technologies)",
+        "usage_count": 7
+      }
+    },
+    {
+      "id": "infra:AS50673",
+      "type": "Infrastructure",
+      "label": "AS50673 (Serverius Holding B.V.)",
+      "color": "#10B981",
+      "badge_count": 41,
+      "threat_score": 0.85,
+      "threat_level": "HIGH",
+      "details": {
+        "id": "infra:AS50673",
+        "type": "Infrastructure",
+        "label": "AS50673 (Serverius Holding B.V.)",
+        "usage_count": 41
+      }
+    },
+    {
+      "id": "domain:legit_apex_commercial_bank",
+      "type": "BrandTarget",
+      "label": "Apex Commercial Bank",
+      "color": "#6366F1",
+      "badge_count": 5,
+      "threat_score": 0.9,
+      "threat_level": "CRITICAL",
+      "details": {
+        "id": "domain:legit_apex_commercial_bank",
+        "type": "BrandTarget",
+        "label": "Apex Commercial Bank",
+        "target_pressure": 5
+      }
+    },
+    {
+      "id": "domain:legit_google_/_workspace",
+      "type": "BrandTarget",
+      "label": "Google / Workspace",
+      "color": "#6366F1",
+      "badge_count": 7,
+      "threat_score": 0.9,
+      "threat_level": "CRITICAL",
+      "details": {
+        "id": "domain:legit_google_/_workspace",
+        "type": "BrandTarget",
+        "label": "Google / Workspace",
+        "target_pressure": 7
+      }
+    },
+    {
+      "id": "domain:legit_docusign",
+      "type": "BrandTarget",
+      "label": "DocuSign",
+      "color": "#6366F1",
+      "badge_count": 7,
+      "threat_score": 0.9,
+      "threat_level": "CRITICAL",
+      "details": {
+        "id": "domain:legit_docusign",
+        "type": "BrandTarget",
+        "label": "DocuSign",
+        "target_pressure": 7
+      }
+    },
+    {
+      "id": "domain:legit_apex_national_bank",
+      "type": "BrandTarget",
+      "label": "Apex National Bank",
+      "color": "#6366F1",
+      "badge_count": 5,
+      "threat_score": 0.9,
+      "threat_level": "CRITICAL",
+      "details": {
+        "id": "domain:legit_apex_national_bank",
+        "type": "BrandTarget",
+        "label": "Apex National Bank",
+        "target_pressure": 5
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "supernode:CMP-2024-0034",
+      "target": "infra:AS205100",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 7,
+      "count": 7,
+      "relationship_summary": "7 emails routed via infra:AS205100"
+    },
+    {
+      "source": "supernode:CMP-2024-0034",
+      "target": "infra:AS14061",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 7,
+      "count": 7,
+      "relationship_summary": "7 emails routed via infra:AS14061"
+    },
+    {
+      "source": "supernode:CMP-2024-0034",
+      "target": "infra:AS16509",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 7,
+      "count": 7,
+      "relationship_summary": "7 emails routed via infra:AS16509"
+    },
+    {
+      "source": "supernode:CMP-2024-0034",
+      "target": "infra:AS51852",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 7,
+      "count": 7,
+      "relationship_summary": "7 emails routed via infra:AS51852"
+    },
+    {
+      "source": "supernode:CMP-2024-0034",
+      "target": "infra:AS50673",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 7,
+      "count": 7,
+      "relationship_summary": "7 emails routed via infra:AS50673"
+    },
+    {
+      "source": "supernode:CMP-2024-0034",
+      "target": "domain:legit_apex_commercial_bank",
+      "relationship": "TARGETS_BRAND",
+      "weight": 5,
+      "count": 5,
+      "relationship_summary": "Targeting domain:legit_apex_commercial_bank"
+    },
+    {
+      "source": "supernode:CMP-2024-0034",
+      "target": "domain:legit_apex_national_bank",
+      "relationship": "TARGETS_BRAND",
+      "weight": 5,
+      "count": 5,
+      "relationship_summary": "Targeting domain:legit_apex_national_bank"
+    },
+    {
+      "source": "supernode:CMP-2024-0089",
+      "target": "infra:AS24940",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 32,
+      "count": 32,
+      "relationship_summary": "32 emails routed via infra:AS24940"
+    },
+    {
+      "source": "supernode:CMP-2024-0089",
+      "target": "infra:AS14061",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 32,
+      "count": 32,
+      "relationship_summary": "32 emails routed via infra:AS14061"
+    },
+    {
+      "source": "supernode:CMP-2024-0089",
+      "target": "infra:AS9498",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 32,
+      "count": 32,
+      "relationship_summary": "32 emails routed via infra:AS9498"
+    },
+    {
+      "source": "supernode:CMP-2024-0089",
+      "target": "infra:AS7473",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 32,
+      "count": 32,
+      "relationship_summary": "32 emails routed via infra:AS7473"
+    },
+    {
+      "source": "supernode:CMP-2024-0089",
+      "target": "infra:AS16509",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 32,
+      "count": 32,
+      "relationship_summary": "32 emails routed via infra:AS16509"
+    },
+    {
+      "source": "supernode:CMP-2024-0089",
+      "target": "infra:AS50673",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 32,
+      "count": 32,
+      "relationship_summary": "32 emails routed via infra:AS50673"
+    },
+    {
+      "source": "supernode:CMP-2024-0089",
+      "target": "domain:legit_google_/_workspace",
+      "relationship": "TARGETS_BRAND",
+      "weight": 7,
+      "count": 7,
+      "relationship_summary": "Targeting domain:legit_google_/_workspace"
+    },
+    {
+      "source": "supernode:CMP-2024-0089",
+      "target": "domain:legit_docusign",
+      "relationship": "TARGETS_BRAND",
+      "weight": 7,
+      "count": 7,
+      "relationship_summary": "Targeting domain:legit_docusign"
+    },
+    {
+      "source": "supernode:CMP-2024-0012",
+      "target": "infra:AS14061",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 2,
+      "count": 2,
+      "relationship_summary": "2 emails routed via infra:AS14061"
+    },
+    {
+      "source": "supernode:CMP-2024-0012",
+      "target": "infra:AS50673",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 2,
+      "count": 2,
+      "relationship_summary": "2 emails routed via infra:AS50673"
+    }
+  ],
+  "mode": "supernode",
+  "active_campaign_id": "all",
+  "available_campaigns": [
+    {
+      "id": "CMP-2024-0089",
+      "name": "FinPhish Global Cloud Harvester",
+      "threat_level": "CRITICAL",
+      "actor_sophistication": "high",
+      "email_count": 32,
+      "description": "Cross-tenant OAuth token and Microsoft 365 / DocuSign credential phishing campaign with deceptive hyperlink redirection."
+    },
+    {
+      "id": "CMP-2024-0034",
+      "name": "Operation GhostRelay (Credential Harvester)",
+      "threat_level": "CRITICAL",
+      "actor_sophistication": "medium-high",
+      "email_count": 7,
+      "description": "Coordinated credential harvesting campaign targeting Apex National Bank customers via bulletproof AS205100 and lookalike domains."
+    },
+    {
+      "id": "CMP-2024-0012",
+      "name": "CEO Wire Fraud BEC Syndicate",
+      "threat_level": "HIGH",
+      "actor_sophistication": "high",
+      "email_count": 2,
+      "description": "Executive display-name impersonation campaign requesting urgent payroll or vendor wire transfers to offshore accounts."
+    }
+  ]
+}
