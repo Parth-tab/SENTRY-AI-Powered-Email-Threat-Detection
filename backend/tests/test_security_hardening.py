@@ -1,6 +1,7 @@
 import pytest
 from httpx import AsyncClient, ASGITransport
 from app.main import app
+from app.config import settings
 from app.services.ingestion import IngestionService
 
 @pytest.mark.asyncio
@@ -52,7 +53,8 @@ async def test_security_headers_present():
 @pytest.mark.asyncio
 async def test_unsupported_file_upload_rejected():
     transport = ASGITransport(app=app)
-    async with AsyncClient(transport=transport, base_url="http://test") as client:
+    headers = {"Authorization": f"Bearer {settings.SENTRY_API_TOKEN}"}
+    async with AsyncClient(transport=transport, base_url="http://test", headers=headers) as client:
         files = {"file": ("malware.exe", b"MZ\x90\x00\x03", "application/x-msdownload")}
         response = await client.post("/api/v1/emails/upload", files=files)
         assert response.status_code == 400
@@ -61,28 +63,31 @@ async def test_unsupported_file_upload_rejected():
 @pytest.mark.asyncio
 async def test_empty_file_upload_rejected():
     transport = ASGITransport(app=app)
-    async with AsyncClient(transport=transport, base_url="http://test") as client:
+    headers = {"Authorization": f"Bearer {settings.SENTRY_API_TOKEN}"}
+    async with AsyncClient(transport=transport, base_url="http://test", headers=headers) as client:
         files = {"file": ("empty.eml", b"", "message/rfc822")}
         response = await client.post("/api/v1/emails/upload", files=files)
         assert response.status_code == 400
         assert "Uploaded file is empty" in response.json()["detail"]
 
-@pytest.mark.parametrize("env,secret_key,admin_token,should_raise", [
-    ("demo", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", False),
-    ("development", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", False),
-    ("testing", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", False),
-    ("local", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", False),
-    ("production", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", True),
-    ("staging", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", True),
+@pytest.mark.parametrize("env,secret_key,admin_token,api_token,should_raise", [
+    ("demo", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", "sentry_operator_token_2025", False),
+    ("development", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", "sentry_operator_token_2025", False),
+    ("testing", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", "sentry_operator_token_2025", False),
+    ("local", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", "sentry_operator_token_2025", False),
+    ("production", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", "sentry_operator_token_2025", True),
+    ("staging", "sentry_demo_secret_key_2025", "sentry_admin_demo_secret_2025", "sentry_operator_token_2025", True),
+    ("production", "k8s_prod_sec_key_high_entropy_99", "admin_tok_prod_sec_high_entropy_99", "api_tok_prod_sec_high_entropy_99", False),
 ])
-def test_security_validator_decision_matrix(env, secret_key, admin_token, should_raise):
-    """V-2: Verifies fail-fast credential security decision matrix across 6 standard & unrecognized environments."""
+def test_security_validator_decision_matrix(env, secret_key, admin_token, api_token, should_raise):
+    """V-2: Verifies fail-fast credential security decision matrix across standard, production, and custom environments."""
     from app.config import Settings, validate_security_posture
 
     test_settings = Settings(
         ENVIRONMENT=env,
         SECRET_KEY=secret_key,
-        ADMIN_TOKEN=admin_token
+        ADMIN_TOKEN=admin_token,
+        SENTRY_API_TOKEN=api_token
     )
 
     if should_raise:

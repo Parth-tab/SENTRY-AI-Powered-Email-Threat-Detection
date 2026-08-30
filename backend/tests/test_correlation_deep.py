@@ -13,9 +13,9 @@ def test_campaign_correlation_graph_export():
     assert len(graph_data["links"]) >= 4
 
 def test_campaign_ioc_attribution():
-    email_data = {"sender_domain": "sbi-secureverify.com"}
+    email_data = {"sender_domain": "apex-secureverify.com"}
     origin_data = {"probable_origin_ip": "185.220.101.34", "anonymization": {"tor_exit_node": True}, "geolocation": {"asn": "AS205100"}}
-    domain_data = {"impersonated_brand": "State Bank of India"}
+    domain_data = {"impersonated_brand": "Apex National Bank"}
     content_data = {"financial_score": 0.1, "authority_score": 0.1}
 
     match = CorrelationEngine.correlate(email_data, origin_data, domain_data, content_data)

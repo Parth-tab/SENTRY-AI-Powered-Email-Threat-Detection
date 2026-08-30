@@ -4,8 +4,11 @@ function getWebSocketUrl(): string {
   if (import.meta.env.VITE_WS_URL) return import.meta.env.VITE_WS_URL;
   if (typeof window !== "undefined") {
     const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const host = window.location.hostname || "127.0.0.1";
-    return `${proto}//${host}:8000/api/v1/dashboard/live`;
+    if (window.location.port === "3000" || window.location.port === "5173") {
+      return `${proto}//${window.location.hostname}:8000/api/v1/dashboard/live`;
+    }
+    const host = window.location.host || "127.0.0.1:8000";
+    return `${proto}//${host}/api/v1/dashboard/live`;
   }
   return "ws://127.0.0.1:8000/api/v1/dashboard/live";
 }

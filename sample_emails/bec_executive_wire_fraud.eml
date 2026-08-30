@@ -1,43 +1,40 @@
-Delivered-To: cfo-finance@techcorp.com
-Received: by 2002:a17:906:1284:0:0:0:0 with SMTP id y4csp2819024;
-        Tue, 16 Jan 2024 14:12:10 +0000 (UTC)
-Authentication-Results: mx.techcorp.com;
-       dkim=none;
-       spf=softfail (techcorp.com: transitioning domain does not designate 194.26.29.117 as permitted sender);
-       dmarc=fail (p=QUARANTINE) header.from=techcorp.com
-Received: from vps-bulletproof.ch (vps-bulletproof.ch [194.26.29.117])
-        by mx.techcorp.com with ESMTP id f9si2849102klm.2.2024.01.16.14.12.08
-        for <cfo-finance@techcorp.com>;
-        Tue, 16 Jan 2024 14:12:08 +0000 (UTC)
-Received: from [194.26.29.117] by vps-bulletproof.ch with HTTP;
-        Tue, 16 Jan 2024 14:12:00 +0000
-Message-ID: <EXEC-20240116-141200-9921@techcorp.com>
-Date: Tue, 16 Jan 2024 14:12:00 +0000
-From: "Alex Mercer - Chief Executive Officer" <ceo.alexmercer@gmail.com>
-Reply-To: "Alex Mercer Executive" <alex.mercer@executive-corp-mail.com>
-Return-Path: <spoof-bounce@bulletproof-vps.ru>
-To: cfo-finance@techcorp.com
-Subject: Confidential: Immediate Out-of-Band Wire Transfer Request (Project Titan Acquisition)
-X-Mailer: DirectMail 5.2.1
+Delivered-To: accountant@mercertech.com
+Received: by 2002:a17:902:838b:0:0:0:0 with SMTP id b11csp4829103;
+        Mon, 15 Jan 2024 07:15:22 -0500 (EST)
+Authentication-Results: mx.mercertech.com;
+       dkim=pass header.i=@gmail.com;
+       spf=pass smtp.mailfrom=ceo.mercer.corp@gmail.com;
+       dmarc=pass (p=NONE) header.from=gmail.com
+Received: from mail-sor-f65.google.com (mail-sor-f65.google.com [209.85.220.65])
+        by mx.mercertech.com with ESMTP id p18si4910283wmc.21.2024.01.15.07.15.21
+        for <accountant@mercertech.com>;
+        Mon, 15 Jan 2024 07:15:21 -0500 (EST)
+Message-ID: <CABhZ=8xK2=1092819038@mail.gmail.com>
+Date: Mon, 15 Jan 2024 07:15:18 -0500
+From: "Richard Mercer (CEO)" <ceo.mercer.corp@gmail.com>
+Reply-To: "Richard Mercer" <exec.rmercer@executive-corp-mail.com>
+To: accountant@mercertech.com
+Subject: URGENT: Confidential Acquisition Wire Transfer ($1.25M)
 Content-Type: text/plain; charset="UTF-8"
 
-Hi Finance Team,
+Good morning,
 
-I am currently in an executive board meeting and unable to take phone calls. We are finalizing the confidential acquisition settlement for Project Titan today before market close.
+I am currently in an urgent off-site board meeting regarding our Project Apex acquisition. 
 
-Please initiate an urgent wire transfer of $142,500 to the overseas escrow account detailed below. The invoice attached is approved under executive authority.
+We need to process an immediate, time-sensitive closing wire of $1,250,000.00 to our external legal escrow partners today before 11:00 AM EST.
 
-Escrow Beneficiary: Titan Holding Escrow Ltd
-Bank: Barclays International Offshore
-Routing / Sort Code: 20-00-15
-SWIFT / BIC: BARCGB22XXX
-Account Number: 88492019482
-Reference: TITAN-ACQ-SETTLEMENT-2024
+Please find the wiring instructions below:
+Beneficiary: Apex Global Escrow Services Ltd
+Bank: HSBC Corporate London
+IBAN: GB29HBUK40127684920192
+SWIFT: HBUKGB41XXX
+Reference: PROJECT-APEX-CLOSING-TRANCHE-1
 
-Please send me the wire confirmation receipt immediately once processed so I can share with the board.
+Due to strict SEC disclosure restrictions, please do not discuss this transaction over Slack or email anyone else until the press release goes live this afternoon.
+
+Confirm once the wire has been queued with the bank.
 
 Best regards,
 
-Alex Mercer
-Chief Executive Officer (CEO)
-TechCorp Global Holdings
+Richard Mercer
+Chief Executive Officer | Mercer Technologies Corp

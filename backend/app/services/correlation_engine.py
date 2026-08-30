@@ -8,7 +8,7 @@ class CorrelationEngine:
     _campaigns = {
         "CMP-2024-0034": {
             "name": "Operation GhostRelay (Credential Harvester)",
-            "description": "Coordinated credential harvesting campaign targeting Indian banking customers via bulletproof AS205100 and lookalike domains.",
+            "description": "Coordinated credential harvesting campaign targeting Apex National Bank customers via bulletproof AS205100 and lookalike domains.",
             "threat_level": "CRITICAL",
             "actor_sophistication": "medium-high",
             "infrastructure_cluster": {
@@ -18,7 +18,7 @@ class CorrelationEngine:
                 "email_count": 14
             },
             "asns": ["AS205100", "AS51852"],
-            "domains": ["sbi-secureverify.com", "onlinesbi-kyc-update.com", "hdfc-netbanking-alert.xyz"],
+            "domains": ["apex-secureverify.com", "onlineapex-kyc-update.com", "apex-netbanking-alert.xyz"],
             "first_seen": "2024-01-10T08:00:00Z",
             "last_seen": "2024-01-15T10:23:45Z",
             "total_emails": 14
@@ -163,7 +163,7 @@ class CorrelationEngine:
         impersonated_brand = domain_data.get("impersonated_brand")
 
         # 1. Check against GhostRelay Campaign (CMP-2024-0034)
-        if (asn in ["AS205100", "AS51852"] or is_tor or sender_domain in cls._campaigns["CMP-2024-0034"]["domains"] or impersonated_brand in ["State Bank of India", "HDFC Bank", "ICICI Bank"]):
+        if (asn in ["AS205100", "AS51852"] or is_tor or sender_domain in cls._campaigns["CMP-2024-0034"]["domains"] or impersonated_brand in ["Apex National Bank", "Apex Commercial Bank"]):
             camp = cls._campaigns["CMP-2024-0034"]
             return {
                 "campaign_id": "CMP-2024-0034",
@@ -176,7 +176,7 @@ class CorrelationEngine:
                     "email_count": 14
                 },
                 "actor_sophistication": "medium-high",
-                "assessment": "Organized credential harvesting campaign targeting Indian banking customers via Tor/bulletproof infrastructure."
+                "assessment": "Organized credential harvesting campaign targeting Apex National Bank customers via Tor/bulletproof infrastructure."
             }
 
         # 2. Check against Executive BEC Syndicate (CMP-2024-0012)
@@ -296,9 +296,9 @@ class CorrelationEngine:
 
         # Lookalike domains
         domains = [
-            ("domain:sbi-secureverify.com", "sbi-secureverify.com", "State Bank of India"),
-            ("domain:onlinesbi-kyc-update.com", "onlinesbi-kyc-update.com", "State Bank of India"),
-            ("domain:hdfc-netbanking-alert.xyz", "hdfc-netbanking-alert.xyz", "HDFC Bank")
+            ("domain:apex-secureverify.com", "apex-secureverify.com", "Apex National Bank"),
+            ("domain:onlineapex-kyc-update.com", "onlineapex-kyc-update.com", "Apex National Bank"),
+            ("domain:apex-netbanking-alert.xyz", "apex-netbanking-alert.xyz", "Apex Commercial Bank")
         ]
         for d_id, d_label, brand in domains:
             g.add_node(d_id, id=d_id, type="Domain", label=d_label, is_lookalike=True)

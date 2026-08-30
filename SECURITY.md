@@ -10,13 +10,17 @@ Please include detailed reproduction steps, proof-of-concept payloads, and envir
   ships a fixed `SECRET_KEY` for reproducible offline testing, unauthenticated `/metrics`
   and `/health/deep`, and CORS configured for local dev ports (`:3000`, `:8000`).
 - **Production Mode Guard:** The system enforces that running in `ENVIRONMENT=production`
-  fails fast on startup unless a secure, high-entropy `SECRET_KEY` is injected via environment variables.
+  fails fast on startup unless secure, high-entropy values for `SECRET_KEY`, `ADMIN_TOKEN`, and `SENTRY_API_TOKEN` are injected via environment variables.
 - Out of scope: Denial of service on the local demonstration appliance, known dependency advisories already tracked by CI pip-audit, or attacks requiring physical machine access.
 
 ## Implemented Hardening Controls
+- **DFIR Operator Bearer Authentication (`SENTRY_API_TOKEN`):** All 8 writable endpoints (`/upload`, `/batch`, `/raw`, `/samples/seed`, `/evidence/verify`, `/admin/reset-demo`) require `Authorization: Bearer <SENTRY_API_TOKEN>`. Constant-time comparison prevents timing attacks, while read-only telemetry (`/emails`, `/dashboard/stats`, `/campaigns`, `/health`) remains open for dashboard polling.
 - **Input Sanitization:** Multi-pass `bleach.clean()` neutralization on all email HTML bodies with strict tag allowlist.
 - **OWASP Headers:** `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `X-XSS-Protection: 0`, `Strict-Transport-Security`, `Content-Security-Policy`.
 - **Rate Limiting:** `SlowAPI` token-bucket rate limiting (120 req/min burst limits).
 - **Payload Guard:** 25MB maximum request size limit.
 - **RFC 3227 Chain-of-Custody:** Sequential SHA-256 hash chaining with automated tamper verification.
-- **Administrative Endpoint Hardening (`/api/v1/admin/reset-demo`):** Privileged state reset requires an explicit `X-Sentry-Admin` header matching `ADMIN_TOKEN`. Non-safelisted custom headers trigger browser CORS preflights (`OPTIONS`), structurally neutralizing cross-origin drive-by form-POST exploits. All destruction events append a cryptographically attributed audit record to `logs/reset_audit.log` before database purging.
+- **Administrative Endpoint Hardening (`/api/v1/admin/reset-demo`):** Privileged state reset requires an explicit `X-Sentry-Admin` header matching `ADMIN_TOKEN` alongside the operator bearer token. Non-safelisted custom headers trigger browser CORS preflights (`OPTIONS`), structurally neutralizing cross-origin drive-by form-POST exploits. All destruction events append a cryptographically attributed audit record to `logs/reset_audit.log` before database purging.
+
+## Trademark & Non-Affiliation Notice
+SENTRY (this repository) is an independent open-source cybersecurity research and forensic investigation platform. It is not affiliated with, sponsored by, or endorsed by Sentry / sentry.io (Functional Software, Inc.). Full project rebranding is a documented commercialization trigger.

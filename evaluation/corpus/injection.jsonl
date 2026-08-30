@@ -17,7 +17,7 @@
 {"id": "CYP-02", "type": "cypher", "field": "domain_node", "payload": "evil.com'} MATCH (n) DETACH DELETE n //"}
 {"id": "CYP-03", "type": "cypher", "field": "ip_node", "payload": "185.220.101.5' OR 1=1 RETURN n //"}
 {"id": "CYP-04", "type": "cypher", "field": "asn", "payload": "AS205100' WITH 1 AS x MATCH (u:User) RETURN u //"}
-{"id": "CYP-05", "type": "cypher", "field": "brand", "payload": "SBI' RETURN {all: true} //"}
+{"id": "CYP-05", "type": "cypher", "field": "brand", "payload": "Apex' RETURN {all: true} //"}
 {"id": "CYP-06", "type": "cypher", "field": "link_rel", "payload": "DISTRIBUTES_VIA']-(m) DELETE m //"}
 {"id": "CYP-07", "type": "cypher", "field": "cluster_id", "payload": "cluster_1' CALL db.clearQueryCaches() //"}
 {"id": "CYP-08", "type": "cypher", "field": "tag", "payload": "tag'} CREATE (p:Attacker {name: 'Pwned'}) //"}

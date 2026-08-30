@@ -1,10 +1,13 @@
 # SENTRY
-### AI-Powered Email Threat Detection, GeoLocation & Forensic Intelligence Platform
+### Calibrated Machine Learning & Evidentiary Email Forensic Intelligence Platform
 
 > **Every email is a crime scene.** SENTRY doesn't just flag phishing — it
 > reconstructs the transmission path, attributes the origin infrastructure,
 > correlates attacks into campaigns, and produces a chain-of-custody forensic
 > report that stands up to review.
+
+> [!NOTE]
+> **Trademark Notice:** SENTRY (this project) is an independent open-source cybersecurity research and forensic investigation platform built for AICTE SIH 2025 (PS ID 26106). It is not affiliated with, sponsored by, or endorsed by Sentry / sentry.io (Functional Software, Inc.). Full project rebranding is a documented commercialization trigger.
 
 [![CI](https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection/actions/workflows/ci.yml/badge.svg)](https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection/actions)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://python.org)
@@ -18,7 +21,7 @@ malicious email followed from arrival to courtroom, with verified
 screenshots of every subsystem.
 
 Built for **AICTE Smart India Hackathon 2025 — Problem Statement ID 26106**
-(AI-Powered Email Threat Detection, GeoLocation and Forensic Intelligence
+(Email Threat Detection, GeoLocation and Forensic Intelligence
 Platform). Finalist-grade delivery: 12-dimension audited, air-gap proven,
 evidentiary-grade output.
 
@@ -163,5 +166,6 @@ MapLibre GL • D3.js • Playwright (verification) • GitHub Actions (CI/CD)
 MIT — see [LICENSE](LICENSE). Demo corpus authored by the team (synthetic).
 Training pipelines reference the Nazario phishing corpus and Enron dataset
 (downloaded separately under their respective terms — not redistributed).
-Threat-intel integrations: abuse.ch (URLhaus/ThreatFox), VirusTotal, MaxMind
-GeoLite2.
+Threat-intel integrations: abuse.ch (URLhaus/ThreatFox), VirusTotal.
+
+**MaxMind Attribution:** This product includes GeoLite2 data created by MaxMind, available from [https://www.maxmind.com](https://www.maxmind.com).

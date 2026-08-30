@@ -5,7 +5,7 @@ def test_content_linguistic_urgency_and_credentials():
     email_data = {
         "subject": "URGENT: Verify your account immediately",
         "body_plain": "Dear Customer, Your account is suspended. Verify credentials within 24 hours.",
-        "body_html": "<p>Dear Customer</p><a href='https://sbi-secureverify.com/login'>https://onlinesbi.sbi/login</a>",
+        "body_html": "<p>Dear Customer</p><a href='https://apex-secureverify.com/login'>https://online.apexbank.internal/login</a>",
         "attachments": []
     }
 

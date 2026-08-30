@@ -51,14 +51,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onSelectTab, critic
         })}
       </div>
 
-      <div className="p-3 rounded-lg bg-[#18181B] border border-[#27272A] space-y-1.5">
-        <div className="flex items-center space-x-1.5 text-xs text-zinc-300 font-semibold">
-          <ShieldAlert className="w-3.5 h-3.5 text-rose-400" />
-          <span>Evidentiary Engine</span>
+      <div className="space-y-2">
+        <div className="p-3 rounded-lg bg-[#18181B] border border-[#27272A] space-y-1.5">
+          <div className="flex items-center space-x-1.5 text-xs text-zinc-300 font-semibold">
+            <ShieldAlert className="w-3.5 h-3.5 text-rose-400" />
+            <span>Evidentiary Engine</span>
+          </div>
+          <p className="text-[11px] text-zinc-500 leading-tight">
+            RFC 3227 Immutable Chain-of-Custody & Origin Attribution Active
+          </p>
         </div>
-        <p className="text-[11px] text-zinc-500 leading-tight">
-          RFC 3227 Immutable Chain-of-Custody & Origin Attribution Active
-        </p>
+
+        <div className="px-1 text-[10px] text-zinc-500 leading-tight">
+          This product includes GeoLite2 data created by MaxMind, available from{" "}
+          <a
+            href="https://www.maxmind.com"
+            target="_blank"
+            rel="noreferrer"
+            className="text-zinc-400 hover:text-zinc-300 underline"
+          >
+            https://www.maxmind.com
+          </a>.
+        </div>
       </div>
     </aside>
   );

@@ -167,15 +167,77 @@ A review of git history confirmed that [`docs/assets/dashboard.png`](file:///E:/
 A comprehensive search across all git commits, branch heads, and tags revealed no git-level commit hash for `ARCH-001` (an early pre-commit conversational design artifact). In accordance with strict evidential rules requiring 100% git-verifiable provenance, `ARCH-001` was removed from [`evaluation/defects.json`](file:///E:/SENTRY/evaluation/defects.json).
 
 **Final Master Defect Ledger Arithmetic:**
-- **Total Tracked Defects:** 49
-- **Resolved:** 43
-- **Open:** 2 (`DEF-005`, `MBOX-001`)
-- **Deferred:** 1 (`BP-004` - v2.0 roadmap)
-- **Consolidated:** 3 (`BATCH-003`, `CORP-002`, `ING-003`)
-- **Derivation:** $$49 = 43 + 2 + 1 + 3$$
-Zero phantom, vanished, or unverifiable defects exist in the repository.
+---
+
+## Errata 008 — Defect Registry Arithmetic & Lineage Reconciliation (59-Item Master Registry) — recorded at Phase 6A
+
+**Applies to:** `DILIGENCE.md`, `evaluation/defects.json`, `evaluation/mrws/SHIP_GATE_REVIEW.md`.
+
+### 1. What Happened
+Earlier working summaries referenced a "24/24 closed defects" shorthand. That metric was an informal triage aggregate from the early SIH forensic sub-panel rather than the true repository-wide master registry.
+
+### 2. The True Master Registry Derivation
+A full-lineage audit of `evaluation/defects.json` reveals exactly **59 tracked defect and gap objects**:
+- **Pre-MRWS Historical Defects (FINAL-INCH-3 Ledger):** 49 items
+  - Resolved: **43**
+  - Consolidated: **3** (`BATCH-003` $\to$ `BATCH-004`, `CORP-002` $\to$ `CORP-001`, `ING-003` $\to$ `D-1`)
+  - Deferred: **1** (`BP-004` - v2.0 client-side graph dimension filter)
+  - Open (Targeted v1.2 Roadmap): **2** (`DEF-005` forged-header red-team battery, `MBOX-001` multi-message mbox delimiter parser)
+- **Enterprise-MRWS Viability Gaps (GAP-001 through GAP-010):** 10 items
+  - Resolved: **7** (`GAP-003` single-origin build, `GAP-004` synthetic corpus sanitization, `GAP-006` DFIR operator bearer auth, `GAP-007` MaxMind EULA notices, `GAP-008` ML copy calibration, `GAP-009` Alembic migrations, `GAP-010` hot backup tooling)
+  - Interim Mitigated: **1** (`GAP-005` sentry.io trademark disclaimers, targeted v1.2 for formal rebranding)
+  - Open (Targeted v1.2 Roadmap): **2** (`GAP-001` scale-out daemons, `GAP-002` automated IMAP/M365 mailbox connector)
+
+### 3. Master Ledger Equation
+$$\text{Total Objects (59)} = 50 \text{ Resolved} + 1 \text{ Interim Mitigated} + 3 \text{ Consolidated} + 1 \text{ Deferred} + 4 \text{ Open (v1.2)}$$
+
+Zero (0) blockers or high-severity defects remain open for the v1.1.0 release. All four open items are explicitly scoped and scheduled for v1.2.0. `DILIGENCE.md` and `SHIP_GATE_REVIEW.md` are updated to cite the exact 59-item arithmetic.
 
 ---
+
+## Errata 009 — GHCR Image Publish Workflow Lowercase Owner Normalization & Commit Range — recorded at GHCR-FIX
+
+**Applies to:** `.github/workflows/release.yml`, GHCR Packages (`ghcr.io/parth-tab/sentry-backend:1.1.0`, `ghcr.io/parth-tab/sentry-frontend:1.1.0`).
+
+### 1. What Happened
+The initial tag push to `v1.1.0` triggered the `release.yml` GitHub Actions workflow, but the step `Build & Publish Backend Image` failed because Docker and GitHub Container Registry (GHCR) strictly reject uppercase characters in image repository references (`ghcr.io/Parth-tab/...`). The workflow previously referenced `${{ github.repository_owner }}` directly without normalization. Furthermore, the workflow lacked a `workflow_dispatch` manual trigger for out-of-band publishing and used older action versions.
+
+### 2. The Fix
+- Added bash normalization `${GITHUB_REPOSITORY_OWNER,,}` to dynamically derive the lowercase repository owner (`parth-tab`) without hardcoding the owner name (ensuring project rename resilience).
+- Added `workflow_dispatch` trigger with `image_tag` parameter (defaulting to `1.1.0`).
+- Bumped action versions (`docker/build-push-action@v6`, `docker/setup-buildx-action@v3`, `docker/login-action@v3`, `actions/checkout@v4`).
+- Added required permissions (`packages: write`, `id-token: write`, `attestations: write`).
+
+### 3. Commit Range & Image Provenance
+The release container images for `v1.1.0` (`ghcr.io/parth-tab/sentry-backend:1.1.0` and `ghcr.io/parth-tab/sentry-frontend:1.1.0`) encapsulate the verified release state spanning from certified HEAD `95d153c` through the GHCR workflow fix PR merge commit.
+
+---
+
+## Errata 010 — Backend CI Test Suite Truncation Root Cause & Static Mount Un-Skip — recorded at CI-REPAIR
+
+**Applies to:** `backend/alembic/env.py`, `backend/app/main.py`, `backend/tests/test_observability.py`, `.github/workflows/ci.yml`.
+
+### 1. What Happened
+On GitHub Actions CI runners for Python 3.11 and 3.12, the backend pytest step failed on `test_structured_log_file_rotation_and_format` with `AssertionError: assert 'CORR-ROTATION-TEST-12345' in log_content`.
+
+Investigation and cumulative prefix bisection isolated the root cause to `test_database_migrations.py::test_alembic_upgrade_downgrade_lifecycle`:
+- Alembic's `backend/alembic/env.py` invoked `fileConfig(config.config_file_name)` with the Python standard library default `disable_existing_loggers=True`.
+- This silently disabled the global `sentry` logger (`logger.disabled = True`), causing all subsequent HTTP request logs throughout the remainder of the test suite (from test 47 through test 99) to be dropped.
+- In local development runs, pre-existing `logs/app.log` entries from prior runs masked the failure because the test asserted on a static string (`CORR-ROTATION-TEST-12345`) without causal per-run uniqueness. On clean CI runners starting with an empty `logs/` directory, the failure reproduced 100% deterministically.
+- Separately, `test_single_origin_static_mount_serving` was skipped on CI because the backend CI job did not compile the frontend SPA bundle (`frontend/dist`) prior to running pytest.
+
+### 2. The Fix
+- **CI-001 (Alembic logger preservation):** Updated `backend/alembic/env.py` to pass `disable_existing_loggers=False` to `fileConfig`, preventing migrations from muting application loggers.
+- **CI-002 (Correlation ID filter fallback):** Added `CorrelationIdFilter` and `configure_sentry_logging()` in `backend/app/main.py` to guarantee that every `LogRecord` contains a `correlation_id` attribute (preventing formatting KeyErrors on non-request log calls) and ensuring absolute directory resolution.
+- **CI-003 (Hermetic rotation test):** Refactored `test_structured_log_file_rotation_and_format` to generate a per-run unique correlation ID (`uuid.uuid4().hex[:12]`), asserting causal attribution and verifying against empty log baselines.
+- **CI-004 (Full 99/99 CI execution):** Added Node.js setup and `npm run build` to `.github/workflows/ci.yml` in the `backend-ci` matrix job so `test_single_origin_static_mount_serving` is executed and passes on CI without environment-conditional skips.
+
+### 3. Verification & Receipts
+- **Fresh-Clone Proof:** Full test suite verified 99/99 passing on fresh clone with clean logs directory.
+- **Golden Harness:** 20/20 gates verified on local appliance.
+- **CI Execution:** 100% tests executing green across matrix legs (Python 3.11, Python 3.12).
+
+
 
 
 

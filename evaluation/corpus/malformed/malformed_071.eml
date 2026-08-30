@@ -7,7 +7,7 @@ X-Received: by 2002:a17:902:d188:b0:1d8:381b:2210 with SMTP id e8-20020a170902d1
 Authentication-Results: mx.google.com;
        dkim=pass header.i=@google.com header.s=20230601 header.b=XyZ123;
        spf=pass (google.com: domain of engineering-updates@google.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=engineering-updates@google.com;
-       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=˜oogle.com
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=ï¿½oogle.com
 Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
         by mx.google.com with SMTPS id u12sor1924823pld.42.2024.01.15.10.23.59
         for <victim-analyst@enterprise.com>;

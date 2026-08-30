@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-08-29T20:50:22.016785+00:00",
+  "target_url": "http://127.0.0.1:8000",
+  "mode": "single_origin_production_spa",
+  "checks": {
+    "http_status": 200,
+    "page_title": "SENTRY \u2014 Calibrated ML Email Threat & Forensic Intelligence Platform",
+    "has_sentry_title": true,
+    "feed_row_count": 19,
+    "critical_badges_visible": 4,
+    "medium_badges_visible": 9,
+    "maxmind_attribution_present": true,
+    "screenshot_saved": "E:\\SENTRY\\evaluation\\artifacts\\cold_browser_storefront.png",
+    "console_errors": [],
+    "http_errors": []
+  },
+  "status": "COLD_BROWSER_AUDIT_PASS"
+}

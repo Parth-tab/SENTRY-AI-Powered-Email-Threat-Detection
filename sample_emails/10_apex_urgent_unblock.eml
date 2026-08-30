@@ -1,0 +1,12 @@
+From: Apex Online Desk <alerts@apex-bank-verify.com>
+To: customer.ops@enterprisemail.internal
+Subject: Security Notice: Apex Internet Banking Account Temporarily Locked
+Date: Mon, 15 Jan 2024 14:00:00 +0000
+Message-ID: <20240115140000.9981.mail@apex-bank-verify.com>
+Received: from mx.enterprisemail.internal (10.0.0.4) by mail.enterprisemail.internal; Mon, 15 Jan 2024 14:00:05 +0000
+Received: from relay01.f3netze.de (185.220.101.5) by mx.enterprisemail.internal with ESMTP; Mon, 15 Jan 2024 14:00:02 +0000
+Authentication-Results: mx.enterprisemail.internal; spf=fail; dkim=none; dmarc=fail
+Content-Type: text/html; charset="utf-8"
+
+<p>Dear Customer, your Apex Bank internet banking ID has been temporarily locked after 3 failed password attempts.</p>
+<p>Unlock your account now: <a href="http://apex-secureverify.com/apex/unlock">https://online.apexbank.internal/unlock</a></p>

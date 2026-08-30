@@ -48,10 +48,23 @@ jobs:
         run: |
           pip-audit --desc on || true
 
+      - name: Set up Node.js for Frontend Static Mount Testing
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: frontend/package.json
+
+      - name: Build Frontend SPA for Static Mount Verification
+        run: |
+          cd frontend
+          npm install
+          npm run build
+
       - name: Run Backend Pytest Suite with Coverage (>80%)
         run: |
           cd backend
-          python -m pytest tests/ -v --cov=app --cov-report=term --cov-report=xml --cov-fail-under=80
+          PYTHONPATH=. python -m pytest tests/ -v --cov=app --cov-report=term --cov-report=xml --cov-fail-under=80
 
       - name: Upload Test Coverage Artifact
         uses: actions/upload-artifact@v4

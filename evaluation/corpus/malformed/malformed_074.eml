@@ -1,9 +1,9 @@
 Delivered-To: cfo-finance@techcorp.com
 Received: by 2002:a17:906:1284:0:0:0:0 with SMTP id y4csp2819024;
         Tue, 16 Jan 2024 14:12:10 +0000 (UTC)
-Authentication-ResulÛs: mx.techcorp.com;
+Authentication-Resulï¿½s: mx.techcorp.com;
        dkim=none;
-       spf=softfail (techcorp.com: transitioning domain does not deìignate 194.26.29.117 as permitted sender);
+       spf=softfail (techcorp.com: transitioning domain does not deï¿½ignate 194.26.29.117 as permitted sender);
        dmarc=fail (p=QUARANTINE) header.from=techcorp.com
 Received: from vps-bulletproof.ch (vps-bulletproof.ch [194.26.29.117])
         by mx.techcorp.com with ESMTP id f9si2849102klm.2.2024.01.16.14.12.08
@@ -17,12 +17,14 @@ From: "Alex Mercer - Chief Executive Officer" <ceo.alexmercer@gmail.com>
 Reply-To: "Alex Mercer Executive" <alex.mercer@executive-corp-mail.com>
 Return-Path: <spoof-bounce@bulletproof-vps.ru>
 To: cfo-finance@techcorp.com
-Subject: Confidential: Immediate Out-of-Band Wire Transfer Requst (Project Titan Acquisition)
+Subject: Confidential: Immediate Out-of-Band Wire Transfer Requ
+st (Project Titan Acquisition)
 X-Mailer: DirectMail 5.2.1
 Content-Type: text/plain; charset="UTF-8"
 
 Hi Finance Team,
-I am currently in an executive board meeting and unable to take phone calls. We are finalizing the confidential acquisition settlement for Project Titan today before market close.
+
+I am currently in an executive board meeting and unable to take phone calls. We are finalizing the confidential acquisition settlement for Project Titan today before market close.
 
 Please initiate an urgent wire transfer of $142,500 to the overseas escrow account detailed below. The invoice attached is approved under executive authority.
 
@@ -33,7 +35,7 @@ SWIFT / BIC: BARCGB22XXX
 Account Number: 88492019482
 Reference: TITAN-ACQ-SETTLEMENT-2024
 
-Please send me the wire confirmation receipt immediately once processed so I can share with the boaÉd.
+Please send me the wire confirmation receipt immediately once processed so I can share with the boaï¿½d.
 
 Best regards,
 

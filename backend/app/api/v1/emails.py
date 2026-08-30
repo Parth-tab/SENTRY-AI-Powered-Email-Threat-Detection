@@ -1,7 +1,7 @@
 import io
 import json
 from typing import List, Optional, Dict, Any
-from datetime import datetime
+from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, Body, Response, status
 from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -25,6 +25,7 @@ from app.services.sniffer import sniff_payload_format, is_rfc822, is_zip_archive
 from app.services.archive_ingestion import ArchiveIngestionService
 from app.services.csv_synthesizer import CSVSynthesizerService
 from app.ml.classifier import ThreatClassifier
+from app.auth import require_api_token
 
 def model_to_dict(obj):
     if obj is None:
@@ -206,7 +207,7 @@ async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSessio
         attribution_assessment=json_serializable(attribution_res),
         threat_intel_matches=json_serializable(threat_intel_res),
         recommendations=json_serializable(classification_res["recommendations"]),
-        created_at=datetime.utcnow()
+        created_at=datetime.now(timezone.utc)
     )
     db.add(analysis_record)
 
@@ -218,7 +219,7 @@ async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSessio
         chain_entries=json_serializable(chain_entries),
         last_entry_hash=last_hash,
         is_sealed=True,
-        created_at=datetime.utcnow()
+        created_at=datetime.now(timezone.utc)
     )
     db.add(evidence_record)
 
@@ -232,7 +233,7 @@ async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSessio
             message=f"Detected {classification_res['primary_classification'].upper()} from {email_data['sender']} (Score: {classification_res['overall_threat_score']:.2f})",
             threat_score=float(classification_res["overall_threat_score"]),
             is_acknowledged=False,
-            created_at=datetime.utcnow()
+            created_at=datetime.now(timezone.utc)
         )
         db.add(alert_record)
 
@@ -278,7 +279,8 @@ async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSessio
 @router.post("/upload", response_model=Dict[str, Any], status_code=status.HTTP_201_CREATED)
 async def upload_eml_file(
     file: UploadFile = File(...),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    _token: str = Depends(require_api_token)
 ):
     """
     Accepts RFC 822 emails (.eml, .msg, .mbox, extensionless), ZIP archives (.zip),
@@ -340,7 +342,8 @@ async def upload_eml_file(
 @router.post("/batch/archive", response_model=Dict[str, Any], status_code=status.HTTP_201_CREATED)
 async def upload_batch_archive(
     file: UploadFile = File(...),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    _token: str = Depends(require_api_token)
 ):
     """Processes ZIP archive containing RFC 822 email files in-memory."""
     content_bytes = await file.read()
@@ -351,7 +354,8 @@ async def upload_batch_archive(
 @router.post("/batch/csv", response_model=Dict[str, Any], status_code=status.HTTP_201_CREATED)
 async def upload_batch_csv(
     file: UploadFile = File(...),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    _token: str = Depends(require_api_token)
 ):
     """Processes tabular dataset (CSV/TSV) and synthesizes RFC 822 artifacts."""
     content_bytes = await file.read()
@@ -362,7 +366,8 @@ async def upload_batch_csv(
 @router.post("/batch/upload", response_model=Dict[str, Any], status_code=status.HTTP_201_CREATED)
 async def upload_multiple_files(
     files: List[UploadFile] = File(...),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    _token: str = Depends(require_api_token)
 ):
     """Batch ingestion endpoint for multiple files simultaneously."""
     import time
@@ -421,7 +426,8 @@ async def upload_multiple_files(
 @router.post("/raw", response_model=EmailDetailResponse, status_code=status.HTTP_201_CREATED)
 async def upload_raw_email(
     raw_content: str = Body(..., media_type="text/plain"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    _token: str = Depends(require_api_token)
 ):
     """Submits raw RFC 5322 text string for instant forensic triage."""
     content_bytes = raw_content.encode("utf-8")

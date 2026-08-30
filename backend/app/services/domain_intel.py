@@ -104,7 +104,7 @@ class DomainIntelService:
                     "reason": "Verified legitimate brand infrastructure"
                 }
 
-            # Check 1: Brand keyword contained in domain with hyphens or prefixes (e.g. sbi-secureverify.com, paypal-update.com)
+            # Check 1: Brand keyword contained in domain with hyphens or prefixes (e.g. apex-secureverify.com, paypal-update.com)
             for kw in keywords:
                 clean_kw = kw.replace(" ", "")
                 if clean_kw in base_name and base_domain not in legit_domains:
@@ -129,7 +129,7 @@ class DomainIntelService:
                 # Match 1: Normalized homoglyph substitution (e.g. paypa1 -> paypal, or IDN punycode spoof)
                 is_homoglyph_spoof = (norm_name == legit_base and (is_punycode or dec_base_name != legit_base))
                 
-                # Match 2: Close typo edit distance on brands of length >= 4 (prevents false matches on 2-3 char acronyms like sbi)
+                # Match 2: Close typo edit distance on brands of length >= 4 (prevents false matches on 2-3 char acronyms)
                 is_typo_spoof = (1 <= dist <= 2 and len(legit_base) >= 4 and abs(len(norm_name) - len(legit_base)) <= 2 and (dist / max_len) <= 0.35)
                 
                 if is_homoglyph_spoof or is_typo_spoof:

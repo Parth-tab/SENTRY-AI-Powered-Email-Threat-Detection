@@ -1,0 +1,33 @@
+{
+  "phase": "GHCR_FIX",
+  "phase_completed": false,
+  "current_status": "WORKFLOW_FIX_IMPLEMENTED",
+  "diagnosis": {
+    "original_triggers": [
+      "push.tags: ['v*.*.*']"
+    ],
+    "flaw": "Direct usage of ${{ github.repository_owner }} evaluated to uppercase 'Parth-tab', rejected by GHCR; missing workflow_dispatch trigger."
+  },
+  "fix_details": {
+    "owner_normalization": "${GITHUB_REPOSITORY_OWNER,,}",
+    "triggers_added": [
+      "release: [published]",
+      "workflow_dispatch: inputs.image_tag"
+    ],
+    "action_versions": {
+      "actions/checkout": "v4",
+      "docker/login-action": "v3",
+      "docker/setup-qemu-action": "v3",
+      "docker/setup-buildx-action": "v3",
+      "docker/build-push-action": "v6",
+      "softprops/action-gh-release": "v2"
+    },
+    "permissions": [
+      "contents: write",
+      "packages: write",
+      "id-token: write",
+      "attestations: write"
+    ]
+  },
+  "timestamp": "2026-08-30T02:58:15Z"
+}

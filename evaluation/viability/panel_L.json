@@ -1,0 +1,109 @@
+{
+  "panel": "PANEL_L_PRODUCTION_ENGINEERING",
+  "timestamp": "2026-08-30T00:58:00Z",
+  "verdict": "SHIP-AFTER",
+  "summary": "The certified air-gapped appliance (SQLite + in-memory NetworkX) is stable, high-throughput (51.7 emails/sec, p95 517ms), and robust for single-node deployment. However, the scale-out topology (Postgres/Neo4j/Redis/Celery) is largely un-invoked 'diagram-ware', frontend production build has CORS/routing blockers on non-Vite origins, 8 writable API endpoints are completely unauthenticated on network interfaces, and DB migrations/vault backup sync lack operational runbooks.",
+  "experiments": {
+    "1.1_scale_out_topology": {
+      "status": "DIAGRAM_WARE_UNINVOKED",
+      "findings": {
+        "neo4j": "DOES NOT RUN IN LIVE PATH. Only defined in config.py and requirements.txt. backend/app/services/correlation_engine.py executes 100% on in-memory networkx.MultiDiGraph.",
+        "redis_celery": "BOOTS BUT UNINVOKED IN LIVE PATH. backend/app/services/celery_app.py defines analyze_email_task, but zero FastAPI routes in backend/app/api/v1/ dispatch to Celery. All ingest runs inline synchronous.",
+        "postgres": "SQLALCHEMY COMPATIBLE BUT UNTESTED IN GOLDEN HARNESS. Base models use standard SQLAlchemy types, but live path defaults strictly to sqlite+aiosqlite."
+      },
+      "citations": [
+        "docker-compose.yml:L5-114",
+        "backend/app/config.py:L14-25",
+        "backend/app/services/correlation_engine.py:L1-60",
+        "backend/app/services/celery_app.py:L1-46"
+      ],
+      "auditor_errata": "SY-1 Errata: The scale-out verdict was determined via comprehensive static code-path analysis (verifying zero Neo4j imports in live graph routes and zero Celery task dispatches from FastAPI endpoints) rather than a physical multi-container docker-compose up."
+    },
+    "1.2_production_build_deployment_sim": {
+      "status": "FAILED_CORS_AND_404_ON_STATIC_ORIGIN",
+      "findings": {
+        "vite_api_base": "frontend/src/services/api.ts defaults API_BASE to empty string if VITE_API_URL is unset at build time. Serving frontend/dist on 127.0.0.1:4000 causes all API requests to hit http://127.0.0.1:4000/api/v1/dashboard/stats resulting in HTTP 404.",
+        "cors_policy": "backend/app/main.py hardcodes allow_origins strictly to :3000 and :5173. Any standard production origin (e.g. :4000, :80, :443 or reverse proxy hostname) is rejected by CORS.",
+        "ui_state": "Dashboard renders with 0 counts and empty feed when served from static port 4000 without reverse proxy routing."
+      },
+      "citations": [
+        "frontend/src/services/api.ts:L9-14",
+        "backend/app/main.py:L89-101",
+        "C:/temp/sentry-viability/logs/sim_prod_results.json"
+      ]
+    },
+    "1.3_auth_surface_map": {
+      "status": "8_WRITABLE_UNAUTHENTICATED_ENDPOINTS",
+      "total_endpoints": 24,
+      "writable_unauthenticated_count": 8,
+      "findings": {
+        "unprotected_writable_endpoints": [
+          "POST /api/v1/emails/upload",
+          "POST /api/v1/emails/batch/archive",
+          "POST /api/v1/emails/batch/csv",
+          "POST /api/v1/emails/batch/upload",
+          "POST /api/v1/emails/raw",
+          "POST /api/v1/evidence/verify/{email_id}",
+          "POST /api/v1/samples/seed",
+          "POST /api/v1/admin/reset-demo"
+        ],
+        "receipts": "Verified unauthenticated ingestion (POST /raw -> HTTP 201), data exfiltration (GET /emails -> HTTP 200), and metrics inspection (GET /metrics -> HTTP 200) when backend is bound to 0.0.0.0."
+      },
+      "citations": [
+        "backend/app/api/v1/emails.py",
+        "backend/app/api/v1/stats.py:L126-234",
+        "C:/temp/sentry-viability/logs/auth_surface_map.json",
+        "C:/temp/sentry-viability/logs/auth_receipts.json"
+      ]
+    },
+    "1.4_load_concurrency": {
+      "status": "PASSED_HIGH_THROUGHPUT_WITH_AIOSQLITE_QUEUE",
+      "metrics": {
+        "total_ingested": 1998,
+        "target": 2000,
+        "elapsed_seconds": 38.65,
+        "throughput_emails_per_sec": 51.69,
+        "latency_p50_ms": 55.86,
+        "latency_p90_ms": 242.35,
+        "latency_p95_ms": 517.42,
+        "latency_p99_ms": 2220.26,
+        "sqlite_lock_errors": 0,
+        "ws_messages_delivered": 1999,
+        "polling_clients_errors": 0
+      },
+      "citations": [
+        "C:/temp/sentry-viability/logs/load_test_results.json"
+      ],
+      "memory_metric_caveat": "Memory metric caveat: The ~4.0 MB sampled memory represents Windows kernel WorkingSetSize delta for the sub-process during testing. The actual resident set size (RSS) of the full Python backend with scikit-learn and NetworkX in-memory graph resides around 45-65 MB."
+    },
+    "1.5_ops_readiness_ledger": {
+      "status": "CRITICAL_GAPS_IDENTIFIED",
+      "ranked_gaps": [
+        {
+          "rank": 1,
+          "gap": "NO_SCHEMA_MIGRATION_FRAMEWORK",
+          "severity": "BLOCKER",
+          "description": "Zero Alembic setup. Upgrades requiring DB schema modifications will corrupt or require wiping existing SQLite instances."
+        },
+        {
+          "rank": 2,
+          "gap": "DB_VAULT_BACKUP_DESYNCHRONIZATION",
+          "severity": "HIGH",
+          "description": "EvidenceVault records in SQLite reference disk files in evidence_vault/. Restoring DB without filesystem snapshot (or vice versa) breaks RFC 3227 cryptographic verification."
+        },
+        {
+          "rank": 3,
+          "gap": "UNBOUNDED_LOG_GROWTH",
+          "severity": "MEDIUM",
+          "description": "No log rotation handlers configured in Python backend. Long-running appliance risks disk exhaustion."
+        },
+        {
+          "rank": 4,
+          "gap": "ABSENT_DAEMON_SUPERVISION_AND_3AM_ALERTING",
+          "severity": "MEDIUM",
+          "description": "No systemd unit, container orchestrator, or external alerting (PagerDuty/Opsgenie) configured in default appliance mode."
+        }
+      ]
+    }
+  }
+}

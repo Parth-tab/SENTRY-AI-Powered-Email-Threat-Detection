@@ -1,0 +1,77 @@
+{
+  "panel": "PANEL_V_INVESTOR_DILIGENCE",
+  "timestamp": "2026-08-30T01:00:00Z",
+  "verdict": "SHIP-AFTER",
+  "summary": "License inventory is clean (100% permissive MIT/Apache/BSD, zero GPL/AGPL copyleft contamination). However, material legal risks exist: missing MaxMind GeoLite2 EULA attribution in UI, automated takedown risk from Indian bank trademarks in synthetic demo corpus, and trademark collision with sentry.io (Functional Software, Inc.). Business moat lies strictly in evidentiary verification rigor, with an honest niche SAM of $145k-$500k/yr in Indian higher-ed/CERT DFIR labs.",
+  "findings": {
+    "3.1_license_tree": {
+      "status": "CLEAN_PERMISSIVE",
+      "total_python_packages": 100,
+      "copyleft_violations": 0,
+      "runtime_licenses": [
+        "MIT",
+        "Apache-2.0",
+        "BSD-3-Clause",
+        "Python Software Foundation License",
+        "ISC"
+      ],
+      "npm_licenses": "All standard permissive packages (React, Vite, Lucide, Tailwind, D3, MapLibre GL).",
+      "verdict": "Zero copyleft contamination. Suitable for MIT distribution or commercial appliance licensing."
+    },
+    "3.2_data_terms_compliance": {
+      "maxmind_geolite2": {
+        "compliance_status": "NON_COMPLIANT_IN_UI",
+        "finding": "README acknowledges MaxMind, but MaxMind GeoLite2 EULA Section 3 requires explicit attribution on product documentation AND user interface with URL link (https://www.maxmind.com). UI currently has 0 MaxMind references.",
+        "remedy": "Add MaxMind GeoLite2 attribution badge and link to UI footer and about modal."
+      },
+      "abuse_ch": {
+        "compliance_status": "COMPLIANT_NON_COMMERCIAL",
+        "finding": "URLhaus and ThreatFox feeds are integrated for local scoring. Permitted under research/CC-BY-SA terms; commercial bundling requires BYOK or API partner agreements."
+      },
+      "virustotal": {
+        "compliance_status": "RESTRICTED",
+        "finding": "VirusTotal Public API terms explicitly prohibit commercial packaging and multi-tenant redistribution. Commercial appliance must enforce BYOK (Bring Your Own Key) policy."
+      },
+      "enron_ceas_nazario_provenance": {
+        "compliance_status": "VERIFIED_ZERO_BYTES_IN_REPO",
+        "finding": "Git log and repo search confirm zero raw copyrighted training corpus bytes are committed in the repository. All training pipelines ingest separately."
+      },
+      "bank_trademarks_in_demo_corpus": {
+        "compliance_status": "MATERIAL_BRAND_RISK",
+        "finding": "sample_emails/ contains synthetic phishing lures using registered trademarks (State Bank of India, HDFC Bank, ICICI Bank, Reserve Bank of India, Axis Bank). While README has a synthetic disclaimer, automated brand protection crawlers (MarkMonitor, PhishLabs) can flag the repo for hosting phishing materials.",
+        "remedy": "Sanitize synthetic domain/brand names to fictional entities (e.g. Apex National Bank, IndusTrust Bank)."
+      },
+      "trademark_conflict_sentry_io": {
+        "compliance_status": "HIGH_CONFUSION_RISK",
+        "finding": "'SENTRY' directly conflicts with sentry.io (Functional Software, Inc.), a globally registered trademark in IT/developer infrastructure.",
+        "remedy": "Rename project to distinct brand (e.g. SENTRY-DFIR, VIGIL-EMAIL, SENTINEL-FORENSICS) before commercial incorporation or PyPI registration."
+      }
+    },
+    "3.3_moat_analysis": {
+      "commodity_layers": [
+        "FastAPI REST endpoints and React UI",
+        "Python email parsing and scikit-learn LightGBM classifier"
+      ],
+      "defensible_moat": [
+        "The Verification Discipline: 19/19 golden harness, automated D4 degradation contracts, and 97.5 audited GAUNTLET battery.",
+        "RFC 3227 Evidentiary Engine: Cryptographic sequential SHA-256 hash chains, immutable audit logs for destructive operations, and court-admissible PDF forensic dossiers."
+      ]
+    },
+    "3.4_maintenance_economics": {
+      "bus_factor": 1,
+      "maintenance_overhead": "3-5 hours/week for baseline security bumps, dependency updates (Bleach -> nh3, Pydantic V2 config dicts, Python 3.14 datetime.utcnow migrations).",
+      "sprint_to_mrws": "20-25 hours/week over 6-8 weeks (IMAP connectors, JWT/RBAC, Alembic migrations, MaxMind attribution, brand sanitization)."
+    },
+    "3.5_serviceable_market": {
+      "target_niche": "Indian Higher-Ed Cybersecurity SOC Labs (~800 institutions), State CERTs & Law Enforcement Cyber Cells (~50 cells), DFIR Training Academies (~150 labs).",
+      "market_size_calculation": {
+        "full_market_ceiling_inr": 300000000,
+        "full_market_ceiling_description": "\u20b930 Cr ($3.6M USD) theoretical ceiling across 1,000 Indian Higher-Ed SOCs, State Cyber Cells, and DFIR Labs",
+        "realistic_capture_rate_percent": "3% - 5%",
+        "realistic_initial_arr_inr": "\u20b90.9 Cr - \u20b91.5 Cr",
+        "realistic_initial_arr_usd": "$110,000 - $180,000 USD"
+      },
+      "upside_potential": "$500,000 USD/year including hands-on DFIR training certifications and incident response appliance retainers."
+    }
+  }
+}

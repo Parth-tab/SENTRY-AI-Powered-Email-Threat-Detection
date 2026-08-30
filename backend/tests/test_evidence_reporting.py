@@ -41,8 +41,8 @@ def test_pdf_report_generation():
         "auth_dmarc": {"result": "fail"},
         "origin_assessment": {"probable_origin_ip": "185.220.101.34", "geolocation": {"country": "Netherlands", "city": "Amsterdam", "asn": "AS205100", "isp": "Tor Relay"}},
         "attribution_assessment": {"campaign_id": "CMP-2024-0034", "actor_sophistication": "medium-high"},
-        "domain_intel": {"domain": "sbi-secureverify.com", "is_lookalike": True},
-        "content_analysis": {"urls_found": [{"url": "https://sbi-secureverify.com/login"}]},
+        "domain_intel": {"domain": "apex-secureverify.com", "is_lookalike": True},
+        "content_analysis": {"urls_found": [{"url": "https://apex-secureverify.com/login"}]},
         "recommendations": ["Block IP immediately", "Revoke credentials"]
     }
     evidence_dict = {

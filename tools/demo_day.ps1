@@ -43,6 +43,9 @@ if ($PreflightOnly) {
 
 # [5/6] THE VERIFIED BOOT - Gate 0 is the demo gate
 Write-Host "`n[5/6] Booting backend (:8000) & frontend (:3000) via verification harness..."
+if (-not $env:SENTRY_API_TOKEN) {
+    $env:SENTRY_API_TOKEN = "sentry_operator_token_2025"
+}
 & "$repo\.venv\Scripts\python.exe" "$repo\tools\verify_sentry.py" --start --keep-servers --label demo
 if ($LASTEXITCODE -ne 0) {
     Write-Host "  !! GATE 0 FAILED - DO NOT PRESENT. Run cleanup.ps1 and retry." -ForegroundColor Red

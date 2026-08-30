@@ -15,12 +15,12 @@ def test_parse_legitimate_email(sample_emails_dir):
     assert "microservice infrastructure" in data["body_plain"]
 
 def test_parse_phishing_email_with_multiple_received_hops(sample_emails_dir):
-    eml_file = sample_emails_dir / "sbi_phishing_tor_relay.eml"
+    eml_file = sample_emails_dir / "apex_phishing_tor_relay.eml"
     assert eml_file.exists()
     content = eml_file.read_bytes()
 
     data = IngestionService.parse_raw_email(content, source="test_upload")
     assert "Mandatory KYC Verification Required" in data["subject"]
     assert len(data["received_headers"]) == 3
-    assert data["sender_domain"] == "sbi-secureverify.com"
-    assert "https://sbi-secureverify.com/login" in data["body_html"]
+    assert data["sender_domain"] == "apex-secureverify.com"
+    assert "https://apex-secureverify.com/login" in data["body_html"]

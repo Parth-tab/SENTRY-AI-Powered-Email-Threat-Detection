@@ -1,73 +1,62 @@
 {
-  "started": "2026-08-27T16:09:15.903736+00:00",
-  "visual_verification": "2026-08-27T16:12:00+00:00",
-  "visual_verification_method": "agent-side PNG inspection of every committed asset",
+  "started": "2026-08-29T20:27:51.279114+00:00",
   "shots": [
     {
       "name": "01-dashboard",
       "file": "01-dashboard.png",
       "status": "PASS",
-      "visual_verification": "PASS",
-      "caption_hint": "SOC dashboard: 18 artifacts, 4 KPI cards, CRITICAL/BEC/PHISHING rows, LIVE STREAM active",
+      "caption_hint": "SOC dashboard: metric cards, live alert feed, severity badges",
       "detail": ""
     },
     {
       "name": "02-forensic-analyzer",
       "file": "02-forensic-analyzer.png",
       "status": "PASS",
-      "visual_verification": "PASS",
-      "caption_hint": "Modal open: CRITICAL (0.98), ensemble triangulation (100%/100%/92%), auth matrix, origin card (185.220.101.34 Amsterdam NL)",
-      "detail": "Modal confirmed via div.fixed.inset-0.z-50 gate in verify_sentry.py"
+      "caption_hint": "Split-screen analyzer: preserved email vs. dissection",
+      "detail": ""
     },
     {
       "name": "03-authentication-forensics",
       "file": "03-authentication-forensics.png",
       "status": "PASS",
-      "visual_verification": "PASS",
-      "caption_hint": "Modal scrolled: SPF FAIL / DKIM NONE / DMARC FAIL, origin geolocation, IOCs, incident response countermeasures",
-      "detail": "Right column scrollTop=220; auth matrix leads visible area"
+      "caption_hint": "SPF/DKIM/DMARC verdict matrix and origin geolocation",
+      "detail": ""
     },
     {
       "name": "04-attack-language",
       "file": "04-attack-language.png",
       "status": "PASS",
-      "visual_verification": "PASS — same viewport as 02 (scroll-to-0)",
-      "caption_hint": "Modal top (scroll-to-0): ensemble triangulation front and centre alongside threat radial gauge",
-      "detail": "Scroll-to-0 returns to same position as stop 02; noted honestly in FEATURE_TOUR.md"
+      "caption_hint": "3-layer ensemble triangulation and linguistic feature breakdown",
+      "detail": ""
     },
     {
       "name": "05-relay-map",
       "file": "05-relay-map.png",
       "status": "PASS",
-      "visual_verification": "PASS",
-      "caption_hint": "Multi-hop path: 3 hops, 185.220.101.34 Amsterdam origin, TOR ANONYMIZED badge, chronological hop chain",
+      "caption_hint": "Multi-hop transmission map, origin highlighted",
       "detail": ""
     },
     {
       "name": "06-campaign-graph",
       "file": "06-campaign-graph.png",
       "status": "PASS",
-      "visual_verification": "PASS",
-      "caption_hint": "Knowledge graph: 18 nodes / 13 links, CMP-2024-0034, lookalike domains, SBI/HDFC targets, AS205100 infrastructure",
+      "caption_hint": "Correlation graph: emails, domains, IPs, campaign cluster",
       "detail": ""
     },
     {
       "name": "07-chain-integrity",
       "file": "07-chain-integrity.png",
       "status": "PASS",
-      "visual_verification": "PASS",
-      "caption_hint": "RFC 3227 Forensic Vault: INTEGRITY VERIFIED (PASS), 2 SHA-256 steps, sealed head hash, evidentiary standards",
+      "caption_hint": "Hash-chain verification result, live in UI",
       "detail": ""
     },
     {
       "name": "08-forensic-report",
       "file": "08-forensic-report.png",
       "status": "PASS",
-      "visual_verification": "PASS — same viewport as 07",
-      "caption_hint": "Same Forensic Vault view; PDF export button visible; dossier committed alongside this manifest",
-      "detail": "Pixel-identical to stop 07; noted honestly in FEATURE_TOUR.md"
+      "caption_hint": "Report/export UI after dossier generation (PDF dossier saved)",
+      "detail": ""
     }
   ],
-  "summary": "8/8 PASS. Stops 04 and 08 share viewport with stops 02 and 07 respectively — noted in captions, not papered over.",
   "console_errors": []
 }

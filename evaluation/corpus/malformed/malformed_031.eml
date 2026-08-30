@@ -3,8 +3,8 @@ Received: by 2002:a17:906:1284:0:0:0:0 with SMTP id y4csp2819024;
         Tue, 16 Jan 2024 14:12:10 +0000 (UTC)
 Authentication-Results: mx.techcorp.com;y       dkim=none;
        spf=softfail (techcorp.com: transitioning domain does not designate 194.26.29.117 as permitted sender);
-       dmarc=fail (Ð=QUARANTINE) header.from=techcorp.com
-Received: from vps-bulletproof.ch (vps-bulletproof.ch [194Í26.29.117])
+       dmarc=fail (ï¿½=QUARANTINE) header.from=techcorp.com
+Received: from vps-bulletproof.ch (vps-bulletproof.ch [194ï¿½26.29.117])
         by mx.techcorp.com with ESMTP id f9si2849102klm.2.2024.01.16.14.12.08
         for <cfo-finance@techcorp.com>;
         Tue, 16 Jan 2024 14:12:08 +0000 (UTC)
@@ -14,7 +14,7 @@ Message-ID: <EXEC-20240116-141200-9921@techcorp.com>
 Date: Tue, 16 Jan 2024 14:12:00 +0000
 From: "Alex Mercer - Chief Executive Officer" <ceo.alexmercer@gmail.com>
 Reply-To: "Alex Mercer Executive" <alex.mercer@executive-corp-mail.com>
-Return-Path: <spoof-bounce@bulletproof-vös.ru>
+Return-Path: <spoof-bounce@bulletproof-vï¿½s.ru>
 To: cfo-finance@techcorp.com
 Subject: Confidential: Immediate Out-of-Band Wire Transfer Request (Project Titan Acquisition)
 X-Mailer: DirectMail 5.2.1

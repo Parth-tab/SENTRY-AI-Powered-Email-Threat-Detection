@@ -1,3 +1,21 @@
+# SENTRY Test Manifest (v1.1.0)
+# Total Tests: 99 (100% Passing)
+#
+# Manifest Delta Chain (72 -> 99):
+#   1. Baseline (SIH 2025 Frozen Release): 72 tests
+#   2. Phase 1 (GAP-003 Deployment & Static Mount): 72 -> 75 (+3 tests in test_deployment_serving.py)
+#   3. Phase 2 (GAP-006 Auth Hardening & Surface Matrix): 75 -> 91 (+16 tests in test_auth_surface.py)
+#   4. Phase 4 (GAP-009 Alembic + GAP-010 Hot Backups + Log Rotation): 91 -> 97 (+6 tests):
+#      - test_database_migrations.py::test_alembic_upgrade_downgrade_lifecycle
+#      - test_backup_restore.py::test_backup_restore_verifies_chain_integrity
+#      - test_backup_restore.py::test_restore_tampered_payload_fails_safely
+#      - test_backup_restore.py::test_backup_and_restore_cli_tools
+#      - test_observability.py::test_structured_log_file_rotation_and_format (Sixth test)
+#      - test_security_hardening.py::test_security_validator_decision_matrix[...-production-high-entropy-...]
+#   5. Phase 5/6A (Release Prep & Schema Equality + Post-Backup Isolation): 97 -> 99 (+2 tests):
+#      - test_database_migrations.py::test_alembic_schema_matches_models (P4-4 ORM schema equality)
+#      - test_backup_restore.py::test_restore_post_backup_probe_isolation (P4-2 point-in-time snapshot isolation)
+
 tests/test_alerting.py::test_alert_manager_connection_and_broadcast
 tests/test_alerting.py::test_global_alert_manager_instance
 tests/test_api_deep_integration.py::test_full_api_suite
@@ -5,6 +23,26 @@ tests/test_api_endpoints.py::test_health_check_endpoint
 tests/test_api_endpoints.py::test_raw_email_upload_and_analysis_endpoint
 tests/test_api_endpoints.py::test_dashboard_stats_endpoint
 tests/test_api_endpoints.py::test_seed_endpoint_idempotency
+tests/test_auth_surface.py::test_writable_routes_reject_missing_token_401[POST-/api/v1/emails/upload-kwargs0]
+tests/test_auth_surface.py::test_writable_routes_reject_missing_token_401[POST-/api/v1/emails/raw-kwargs1]
+tests/test_auth_surface.py::test_writable_routes_reject_missing_token_401[POST-/api/v1/emails/batch/archive-kwargs2]
+tests/test_auth_surface.py::test_writable_routes_reject_missing_token_401[POST-/api/v1/emails/batch/csv-kwargs3]
+tests/test_auth_surface.py::test_writable_routes_reject_missing_token_401[POST-/api/v1/samples/seed-kwargs4]
+tests/test_auth_surface.py::test_writable_routes_reject_missing_token_401[POST-/api/v1/admin/reset-demo-kwargs5]
+tests/test_auth_surface.py::test_writable_routes_reject_missing_token_401[POST-/api/v1/evidence/verify/nonexistent-id-kwargs6]
+tests/test_auth_surface.py::test_writable_routes_reject_forged_token_401[POST-/api/v1/emails/upload-kwargs0]
+tests/test_auth_surface.py::test_writable_routes_reject_forged_token_401[POST-/api/v1/emails/raw-kwargs1]
+tests/test_auth_surface.py::test_writable_routes_reject_forged_token_401[POST-/api/v1/emails/batch/archive-kwargs2]
+tests/test_auth_surface.py::test_writable_routes_reject_forged_token_401[POST-/api/v1/emails/batch/csv-kwargs3]
+tests/test_auth_surface.py::test_writable_routes_reject_forged_token_401[POST-/api/v1/samples/seed-kwargs4]
+tests/test_auth_surface.py::test_writable_routes_reject_forged_token_401[POST-/api/v1/admin/reset-demo-kwargs5]
+tests/test_auth_surface.py::test_writable_routes_reject_forged_token_401[POST-/api/v1/evidence/verify/nonexistent-id-kwargs6]
+tests/test_auth_surface.py::test_valid_token_allows_raw_ingest
+tests/test_auth_surface.py::test_read_routes_accessible_unauthenticated
+tests/test_backup_restore.py::test_backup_restore_verifies_chain_integrity
+tests/test_backup_restore.py::test_restore_tampered_payload_fails_safely
+tests/test_backup_restore.py::test_backup_and_restore_cli_tools
+tests/test_backup_restore.py::test_restore_post_backup_probe_isolation
 tests/test_batch_ingest.py::test_sniffing_matrix
 tests/test_batch_ingest.py::test_zip_archive_zip_slip_memory_safety
 tests/test_batch_ingest.py::test_zip_archive_safety_caps
@@ -24,7 +62,12 @@ tests/test_content_analysis.py::test_bec_financial_and_authority_detection
 tests/test_correlation.py::test_campaign_correlation_ghostrelay
 tests/test_correlation_deep.py::test_campaign_correlation_graph_export
 tests/test_correlation_deep.py::test_campaign_ioc_attribution
-tests/test_domain_intel.py::test_lookalike_detection_sbi
+tests/test_database_migrations.py::test_alembic_upgrade_downgrade_lifecycle
+tests/test_database_migrations.py::test_alembic_schema_matches_models
+tests/test_deployment_serving.py::test_deployment_api_precedence
+tests/test_deployment_serving.py::test_single_origin_static_mount_serving
+tests/test_deployment_serving.py::test_deployment_mode_configuration
+tests/test_domain_intel.py::test_lookalike_detection_apex
 tests/test_domain_intel.py::test_lookalike_detection_paypal_typosquat
 tests/test_domain_intel.py::test_legitimate_google_domain
 tests/test_domain_intel.py::test_short_acronym_lookalike_bounds
@@ -57,36 +100,20 @@ tests/test_observability.py::test_prometheus_metrics_endpoint
 tests/test_observability.py::test_deep_health_check_endpoint
 tests/test_observability.py::test_correlation_id_header_propagation
 tests/test_observability.py::test_correlation_id_auto_generation
+tests/test_observability.py::test_structured_log_file_rotation_and_format
 tests/test_security_hardening.py::test_xss_email_body_sanitization
 tests/test_security_hardening.py::test_security_headers_present
 tests/test_security_hardening.py::test_unsupported_file_upload_rejected
 tests/test_security_hardening.py::test_empty_file_upload_rejected
-tests/test_security_hardening.py::test_security_validator_decision_matrix[demo-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-False]
-tests/test_security_hardening.py::test_security_validator_decision_matrix[development-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-False]
-tests/test_security_hardening.py::test_security_validator_decision_matrix[testing-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-False]
-tests/test_security_hardening.py::test_security_validator_decision_matrix[local-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-False]
-tests/test_security_hardening.py::test_security_validator_decision_matrix[production-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-True]
-tests/test_security_hardening.py::test_security_validator_decision_matrix[staging-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-True]
+tests/test_security_hardening.py::test_security_validator_decision_matrix[demo-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-sentry_operator_token_2025-False]
+tests/test_security_hardening.py::test_security_validator_decision_matrix[development-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-sentry_operator_token_2025-False]
+tests/test_security_hardening.py::test_security_validator_decision_matrix[testing-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-sentry_operator_token_2025-False]
+tests/test_security_hardening.py::test_security_validator_decision_matrix[local-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-sentry_operator_token_2025-False]
+tests/test_security_hardening.py::test_security_validator_decision_matrix[production-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-sentry_operator_token_2025-True]
+tests/test_security_hardening.py::test_security_validator_decision_matrix[staging-sentry_demo_secret_key_2025-sentry_admin_demo_secret_2025-sentry_operator_token_2025-True]
+tests/test_security_hardening.py::test_security_validator_decision_matrix[production-k8s_prod_sec_key_high_entropy_99-admin_tok_prod_sec_high_entropy_99-api_tok_prod_sec_high_entropy_99-False]
 tests/test_threat_intel.py::test_threat_intel_urlhaus_hit
 tests/test_threat_intel.py::test_threat_intel_threatfox_ip_hit
 tests/test_threat_intel.py::test_threat_intel_parallel_aggregation
 
-============================== warnings summary ===============================
-app\config.py:7
-  E:\SENTRY\backend\app\config.py:7: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
-    class Settings(BaseSettings):
-
-app\schemas\email.py:17
-  E:\SENTRY\backend\app\schemas\email.py:17: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
-    class EmailResponse(EmailBase):
-
-app\schemas\analysis.py:70
-  E:\SENTRY\backend\app\schemas\analysis.py:70: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
-    class AnalysisResultResponse(BaseModel):
-
-app\schemas\campaign.py:12
-  E:\SENTRY\backend\app\schemas\campaign.py:12: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
-    class CampaignResponse(CampaignBase):
-
--- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-72 tests collected in 0.05s
+# 99 tests collected

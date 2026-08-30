@@ -31,7 +31,8 @@ async def client(test_db_session):
 
     app.dependency_overrides[get_db] = override_get_db
     transport = ASGITransport(app=app)
-    async with AsyncClient(transport=transport, base_url="http://testserver") as ac:
+    headers = {"Authorization": f"Bearer {settings.SENTRY_API_TOKEN}"}
+    async with AsyncClient(transport=transport, base_url="http://testserver", headers=headers) as ac:
         yield ac
     app.dependency_overrides.clear()
 

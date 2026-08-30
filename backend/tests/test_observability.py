@@ -55,3 +55,35 @@ async def test_correlation_id_auto_generation():
         corr_id = response.headers.get("x-correlation-id")
         assert corr_id is not None
         assert len(corr_id) >= 16
+
+
+@pytest.mark.asyncio
+async def test_structured_log_file_rotation_and_format():
+    import uuid
+    import logging
+    from logging.handlers import RotatingFileHandler
+    from pathlib import Path
+    from app.config import settings
+
+    custom_corr = f"CORR-ROTATION-{uuid.uuid4().hex[:12]}"
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        resp = await client.get("/health", headers={"X-Correlation-ID": custom_corr})
+        assert resp.status_code == 200
+
+    # Verify RotatingFileHandler presence and configuration
+    sentry_logger = logging.getLogger("sentry")
+    rotating_handlers = [h for h in sentry_logger.handlers if isinstance(h, RotatingFileHandler)]
+    assert len(rotating_handlers) >= 1, "RotatingFileHandler not attached to sentry logger"
+    
+    rfh = rotating_handlers[0]
+    assert rfh.maxBytes == 10 * 1024 * 1024  # 10MB limit
+    assert rfh.backupCount == 5              # 5 backup generations
+
+    # Verify log output file written and contains causality-verified correlation ID
+    log_file = Path(settings.LOGS_DIR) / "app.log"
+    assert log_file.exists(), f"Expected log file {log_file} does not exist"
+    log_content = log_file.read_text(encoding="utf-8", errors="replace")
+    assert custom_corr in log_content
+    assert f"[corr={custom_corr}] GET /health -> 200" in log_content
+

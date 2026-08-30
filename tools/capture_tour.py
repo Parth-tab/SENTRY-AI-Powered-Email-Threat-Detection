@@ -193,11 +193,9 @@ async def run_tour(page, tour, ui):
             await nav_click(page, REPORT_RE)
         dl = await dl_info.value
         await dl.save_as(str(TOUR_DIR / "08-forensic-report.pdf"))
-        tour.record("08-forensic-report", "PASS",
-                    "Exported PDF dossier saved to repo")
         await asyncio.sleep(1)
         await shot(page, tour, "08-forensic-report",
-                   "Report/export UI after dossier generation")
+                   "Report/export UI after dossier generation (PDF dossier saved)")
     except Exception as e:
         await asyncio.sleep(1)
         await shot(page, tour, "08-forensic-report",

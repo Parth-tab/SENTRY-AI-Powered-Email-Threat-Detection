@@ -44,7 +44,7 @@ def test_authentication_evaluation_pass():
 
 def test_authentication_evaluation_fail():
     headers = {
-        "Authentication-Results": "mx.google.com; dkim=none; spf=fail smtp.mailfrom=support@sbi-secureverify.com; dmarc=fail (p=REJECT)",
+        "Authentication-Results": "mx.google.com; dkim=none; spf=fail smtp.mailfrom=support@apex-secureverify.com; dmarc=fail (p=REJECT)",
         "Received-SPF": "fail (domain does not designate IP)"
     }
     auth = HeaderForensicsService.evaluate_authentication(headers)

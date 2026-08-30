@@ -42,8 +42,58 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 import time
 import uuid
 import logging
+from logging.handlers import RotatingFileHandler
+from pathlib import Path
+from typing import Optional
 from sqlalchemy import text
 from app.services.metrics import get_prometheus_metrics
+
+class CorrelationIdFilter(logging.Filter):
+    """Ensures every LogRecord on the sentry logger has a correlation_id to avoid formatting KeyErrors."""
+    def filter(self, record: logging.LogRecord) -> bool:
+        if not hasattr(record, "correlation_id"):
+            record.correlation_id = "-"
+        return True
+
+def configure_sentry_logging(target_dir: Optional[str] = None) -> logging.Logger:
+    """Configures or reconfigures the sentry logger with absolute path resolution and idempotent handlers."""
+    resolved_dir = Path(target_dir or settings.LOGS_DIR).resolve()
+    resolved_dir.mkdir(parents=True, exist_ok=True)
+    app_log_file = resolved_dir / "app.log"
+
+    sentry_log = logging.getLogger("sentry")
+    sentry_log.setLevel(logging.INFO)
+    sentry_log.disabled = False
+
+    existing_handlers = [h for h in sentry_log.handlers if isinstance(h, RotatingFileHandler) and getattr(h, "baseFilename", "") == str(app_log_file)]
+    if not existing_handlers:
+        for h in list(sentry_log.handlers):
+            if isinstance(h, RotatingFileHandler):
+                sentry_log.removeHandler(h)
+                try:
+                    h.close()
+                except Exception:
+                    pass
+
+        file_handler = RotatingFileHandler(
+            str(app_log_file),
+            maxBytes=10 * 1024 * 1024,
+            backupCount=5,
+            encoding="utf-8"
+        )
+        file_formatter = logging.Formatter("%(asctime)s [%(levelname)s] [%(name)s] [corr=%(correlation_id)s] %(message)s")
+        file_handler.setFormatter(file_formatter)
+        file_handler.addFilter(CorrelationIdFilter())
+        sentry_log.addHandler(file_handler)
+    else:
+        for h in existing_handlers:
+            if not any(isinstance(f, CorrelationIdFilter) for f in h.filters):
+                h.addFilter(CorrelationIdFilter())
+
+    return sentry_log
+
+# Configure Enterprise Rotating Log File Handler (10MB max, 5 backup generations)
+logger = configure_sentry_logging()
 
 # Process start time for uptime tracking
 START_TIME = time.time()
@@ -69,6 +119,15 @@ async def observability_and_security_middleware(request: Request, call_next):
     response: Response = await call_next(request)
     duration_ms = round((time.time() - start_t) * 1000, 2)
 
+    # Structured request logging
+    try:
+        logger.info(
+            f"{request.method} {request.url.path} -> {response.status_code} ({duration_ms}ms)",
+            extra={"correlation_id": correlation_id}
+        )
+    except Exception:
+        pass
+
     # Attach Correlation ID & Enterprise Security Headers
     response.headers["X-Correlation-ID"] = correlation_id
     response.headers["X-Content-Type-Options"] = "nosniff"
@@ -79,22 +138,30 @@ async def observability_and_security_middleware(request: Request, call_next):
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; "
         "script-src 'self' 'unsafe-inline' 'unsafe-eval'; "
-        "style-src 'self' 'unsafe-inline'; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' https://fonts.gstatic.com data:; "
         "img-src 'self' data: https:; "
         "connect-src 'self' ws: wss: http: https:;"
     )
 
     return response
 
-# 2. CORS Configuration (Restricted strictly to authorized frontend origins)
+# 2. CORS Configuration (Restricted strictly to authorized origins + single-origin self-calls)
+cors_origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+if getattr(settings, "CORS_ORIGINS", None):
+    extra = [o.strip() for o in settings.CORS_ORIGINS.split(",") if o.strip()]
+    cors_origins.extend(extra)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://localhost:5173",
-        "http://127.0.0.1:5173"
-    ],
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"],
     allow_headers=["*"],
@@ -175,15 +242,28 @@ async def deep_health_check():
         "subsystems": subsystems
     }
 
-@app.get("/", tags=["Root"])
-async def root():
-    return {
-        "platform": settings.PROJECT_NAME,
-        "docs_url": "/docs",
-        "metrics_url": "/metrics",
-        "api_v1": settings.API_V1_STR,
-        "status": "OPERATIONAL"
-    }
+# D1 Production Serving: Mount built SPA assets if SERVE_STATIC or production environment
+from fastapi.staticfiles import StaticFiles
+
+frontend_dist = Path(settings.FRONTEND_DIST_DIR)
+is_prod_serving = (
+    settings.SERVE_STATIC
+    or settings.ENVIRONMENT.lower() in ("production", "standalone", "appliance")
+    or settings.BUILD_MODE.lower() in ("production", "standalone")
+)
+
+if is_prod_serving and frontend_dist.exists() and (frontend_dist / "index.html").exists():
+    app.mount("/", StaticFiles(directory=str(frontend_dist), html=True), name="static")
+else:
+    @app.get("/", tags=["Root"])
+    async def root():
+        return {
+            "platform": settings.PROJECT_NAME,
+            "docs_url": "/docs",
+            "metrics_url": "/metrics",
+            "api_v1": settings.API_V1_STR,
+            "status": "OPERATIONAL"
+        }
 
 if __name__ == "__main__":
     import uvicorn

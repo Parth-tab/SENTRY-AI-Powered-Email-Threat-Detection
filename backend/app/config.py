@@ -1,12 +1,12 @@
 import os
 from pathlib import Path
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "SENTRY - Forensic Email Threat Intelligence Platform"
-    VERSION: str = "1.0.0"
+    VERSION: str = "1.1.0"
     API_V1_STR: str = "/api/v1"
     ENVIRONMENT: str = "demo"
     DEBUG: bool = True
@@ -23,6 +23,13 @@ class Settings(BaseSettings):
     NEO4J_USER: str = "neo4j"
     NEO4J_PASSWORD: str = ""
 
+    # Production Serving & Frontend Static Mount (D1)
+    SERVE_STATIC: bool = False
+    BUILD_MODE: str = "demo"
+    FRONTEND_DIST_DIR: str = str(BASE_DIR.parent / "frontend" / "dist")
+    CORS_ORIGINS: str = ""
+    SENTRY_API_TOKEN: str = "sentry_operator_token_2025"
+
     # Security & Evidence
     SECRET_KEY: str = "sentry_demo_secret_key_2025_evidentiary_standard"
     ADMIN_TOKEN: str = "sentry_admin_demo_secret_2025"
@@ -36,9 +43,7 @@ class Settings(BaseSettings):
     URLHAUS_API_KEY: str = ""
     THREATFOX_API_KEY: str = ""
 
-    class Config:
-        env_file = ".env"
-        extra = "allow"
+    model_config = SettingsConfigDict(env_file=".env", extra="allow")
 
 settings = Settings()
 
@@ -55,6 +60,11 @@ def validate_security_posture(s: Settings):
             raise RuntimeError(
                 "CRITICAL SECURITY CONFIGURATION ERROR: Production/non-demo deployment requires a secure, "
                 "cryptographically random ADMIN_TOKEN injected via environment variable."
+            )
+        if "demo" in s.SENTRY_API_TOKEN.lower() or s.SENTRY_API_TOKEN == "sentry_operator_token_2025":
+            raise RuntimeError(
+                "CRITICAL SECURITY CONFIGURATION ERROR: Production/non-demo deployment requires a secure, "
+                "cryptographically random SENTRY_API_TOKEN injected via environment variable."
             )
 
 # Execute security validation on module load

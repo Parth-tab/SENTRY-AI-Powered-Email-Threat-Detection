@@ -1,7 +1,7 @@
 # SENTRY Architecture & System Design Blueprint
 
 *AICTE Smart India Hackathon 2025 — Problem Statement ID 26106*  
-*AI-Powered Email Threat Detection, GeoLocation & Forensic Intelligence Platform*
+*Calibrated ML Email Threat Detection, GeoLocation & Forensic Intelligence Platform*
 
 ---
 

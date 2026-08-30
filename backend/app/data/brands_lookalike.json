@@ -1,24 +1,19 @@
 {
   "target_brands": [
     {
-      "name": "State Bank of India",
-      "legitimate_domains": ["sbi.co.in", "onlinesbi.sbi", "statebankofindia.com"],
-      "keywords": ["sbi", "onlinesbi", "state bank", "yono"]
+      "name": "Apex National Bank",
+      "legitimate_domains": ["apexbank.internal", "online.apexbank.internal", "apexnationalbank.com"],
+      "keywords": ["apex", "apexbank", "apex national", "apex digital"]
     },
     {
-      "name": "HDFC Bank",
-      "legitimate_domains": ["hdfcbank.com", "hdfc.com"],
-      "keywords": ["hdfc", "netbanking", "hdfcbank"]
+      "name": "Apex Commercial Bank",
+      "legitimate_domains": ["apexcommercial.internal", "apexcorp.com"],
+      "keywords": ["apex commercial", "apexnetbanking", "apex corp"]
     },
     {
-      "name": "ICICI Bank",
-      "legitimate_domains": ["icicibank.com", "icici.com"],
-      "keywords": ["icici", "imobile", "icicibank"]
-    },
-    {
-      "name": "Reserve Bank of India",
-      "legitimate_domains": ["rbi.org.in"],
-      "keywords": ["rbi", "reserve bank", "governor rbi"]
+      "name": "National Banking Regulatory Board",
+      "legitimate_domains": ["banking-regulator.internal"],
+      "keywords": ["regulatory board", "statutory notice", "banking authority"]
     },
     {
       "name": "Google / Workspace",

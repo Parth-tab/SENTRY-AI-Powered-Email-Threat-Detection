@@ -18,10 +18,11 @@
 
 ## Stage 2: Live Ingestion & RFC 3227 Evidentiary Sealing (0:45 - 1:45)
 
-**Action:** Click **"Seed Demo Attack Scenarios"** or upload a raw `.eml` file. Point to live WebSocket counter increments.
+**Action:** Click **"Operator Auth"** (show authenticated token badge) $\to$ Click **"Seed Demo Attack Scenarios"** or upload a raw `.eml` file. Point to live WebSocket counter increments.
 
 **Spoken Narration:**
-> "Watch what happens upon ingestion: within 8 milliseconds, the email payload is parsed byte-for-byte according to RFC 5322.
+> "First, observe our access control posture: the appliance is sealed — nothing writes to the evidence vault without a verified DFIR Operator Bearer Token. Every ingestion, triage action, and forensic mutation is cryptographically attributed.
+> Watch what happens upon ingestion: within 8 milliseconds, the email payload is parsed byte-for-byte according to RFC 5322.
 > Before any inspection occurs, SENTRY calculates the SHA-256 cryptographic digest of the raw bytes and commits it as Genesis Block $H_0$ to an immutable evidence vault.
 > Simultaneously, our multi-pass Bleach sanitizer neutralizes any embedded XSS or hidden tracking pixels before rendering."
 
@@ -32,11 +33,11 @@
 **Action:** Click the top threat row (`URGENT: Mandatory KYC Verification Required`). Open the **Forensic Analyzer Modal** and switch to **Transmission Relay Map**.
 
 **Spoken Narration:**
-> "Notice this email claims to be from `support@sbi-secureverify.com`.
+> "Notice this email claims to be from `support@apex-secureverify.com`.
 > Standard security gateways inspect only the last hop (the victim's MX gateway).
 > SENTRY parses the entire `Received` header chain in chronological order. We flag hop 1 as a private RFC 1918 internal IP, and identify hop 2 (`185.220.101.34`) as the **earliest reliable public origin**.
 > SENTRY instantly cross-references this IP with active threat intelligence: it is a known Tor exit node hosted under AS205100 (Jonas Bunde / F3 Netze in the Netherlands).
-> Because the origin is masked by an anonymization network and the domain is an edit-distance lookalike targeting State Bank of India, our 3-layer ensemble elevates the threat score to **0.95 (CRITICAL)**."
+> Because the origin is masked by an anonymization network and the domain is an edit-distance lookalike targeting Apex National Bank, our 3-layer ensemble elevates the threat score to **0.95 (CRITICAL)**."
 
 ---
 
@@ -47,7 +48,7 @@
 **Spoken Narration:**
 > "Isolated emails hide syndicate-level coordination. SENTRY's graph engine correlates this email across our global knowledge graph.
 > Looking at the graph, this email is not an isolated phish: it belongs to **Operation GhostRelay (CMP-2024-0034)**.
-> SENTRY automatically linked 14 separate phishing emails across 3 lookalike domains (`sbi-secureverify.com`, `onlinesbi-kyc-update.com`, `hdfc-netbanking-alert.xyz`) because they all share the identical Tor bulletproof relay infrastructure and template linguistics.
+> SENTRY automatically linked 14 separate phishing emails across 3 lookalike domains (`apex-secureverify.com`, `onlineapex-kyc-update.com`, `apex-netbanking-alert.xyz`) because they all share the identical Tor bulletproof relay infrastructure and template linguistics.
 > An investigator can now dismantle the entire syndicate infrastructure rather than deleting individual emails."
 
 ---

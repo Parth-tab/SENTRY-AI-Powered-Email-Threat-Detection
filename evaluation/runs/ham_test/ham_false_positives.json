@@ -1,8 +1,8 @@
 [
   {
-    "file": "04_sbi_kyc_escalation.eml",
-    "subject": "Final Notice: Immediate SBI YONO Access Termination Warning",
-    "sender": "alerts@onlinesbi-kyc-update.com",
+    "file": "04_apex_kyc_escalation.eml",
+    "subject": "Final Notice: Immediate Apex NetBanking Access Termination Warning",
+    "sender": "alerts@onlineapex-kyc-update.com",
     "threat_score": 0.87,
     "threat_level": "CRITICAL",
     "primary_classification": "phishing",
@@ -12,9 +12,9 @@
     "origin_country": "Netherlands"
   },
   {
-    "file": "05_hdfc_netbanking_token.eml",
+    "file": "05_apex_netbanking_token.eml",
     "subject": "Security Alert: High Value Transaction Authorization Required",
-    "sender": "security@hdfc-netbanking-alert.xyz",
+    "sender": "security@apex-netbanking-alert.xyz",
     "threat_score": 0.82,
     "threat_level": "HIGH",
     "primary_classification": "phishing",
@@ -24,9 +24,9 @@
     "origin_country": "Russia"
   },
   {
-    "file": "06_icici_pan_link_phish.eml",
-    "subject": "Mandatory Action: ICICI iMobile Pay Account Verification",
-    "sender": "no-reply@icicibank-update-portal.com",
+    "file": "06_apex_pan_link_phish.eml",
+    "subject": "Mandatory Action: Apex Mobile Pay Account Verification",
+    "sender": "no-reply@apex-update-portal.com",
     "threat_score": 0.8,
     "threat_level": "HIGH",
     "primary_classification": "phishing",
@@ -36,9 +36,9 @@
     "origin_country": "Netherlands"
   },
   {
-    "file": "08_sbi_reward_points_lure.eml",
-    "subject": "Congratulations! You have INR 9,850 Unclaimed SBI Reward Points Expiring Today",
-    "sender": "rewards@onlinesbi-kyc-update.com",
+    "file": "08_apex_reward_points_lure.eml",
+    "subject": "Congratulations! You have $985.00 Unclaimed Apex Reward Points Expiring Today",
+    "sender": "rewards@onlineapex-kyc-update.com",
     "threat_score": 0.83,
     "threat_level": "HIGH",
     "primary_classification": "phishing",
@@ -61,8 +61,8 @@
   },
   {
     "file": "bec_executive_wire_fraud.eml",
-    "subject": "Confidential: Immediate Out-of-Band Wire Transfer Request (Project Titan Acquisition)",
-    "sender": "ceo.alexmercer@gmail.com",
+    "subject": "URGENT: Confidential Acquisition Wire Transfer ($1.25M)",
+    "sender": "ceo.mercer.corp@gmail.com",
     "threat_score": 0.93,
     "threat_level": "CRITICAL",
     "primary_classification": "bec",
@@ -72,12 +72,12 @@
     "origin_country": "Russia"
   },
   {
-    "file": "sbi_phishing_tor_relay.eml",
+    "file": "apex_phishing_tor_relay.eml",
     "subject": "URGENT: Mandatory KYC Verification Required Within 24 Hours or Account Suspended",
-    "sender": "support@sbi-secureverify.com",
+    "sender": "support@apex-secureverify.com",
     "threat_score": 0.98,
     "threat_level": "CRITICAL",
-    "primary_classification": "bec",
+    "primary_classification": "phishing",
     "confidence": 0.94,
     "hops_count": 3,
     "origin_ip": "185.220.101.34",

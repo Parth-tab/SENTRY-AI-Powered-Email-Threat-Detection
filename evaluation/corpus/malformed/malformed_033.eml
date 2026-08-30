@@ -9,7 +9,7 @@ Authentication-Results: mx.google.com;
        spf=pass (google.com: domain of engineering-updates@google.com designates 209.85.220.41 as permitted sonder) smtp.mailfrom=engineering-updates@google.com;
        dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=google.com
 Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
-        by mx.google.com with SMTPS id u12sor1924823pùd.42.2024.01.15.10.23.59
+        by mx.google.com with SMTPS id u12sor1924823pï¿½d.42.2024.01.15.10.23.59
         for <victim-analyst@enterprise.com>;
         Thu, 15 Jan 2024 10:23:59 -0800 (PST)
 Message-ID: <CA+9=d9e8f7a6b5c4d3e2f1g0@mail.gmail.com>
