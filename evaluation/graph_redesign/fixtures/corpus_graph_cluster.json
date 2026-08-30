@@ -1,0 +1,2660 @@
+{
+  "nodes": [
+    {
+      "id": "person:service@docusign-secure-review.com",
+      "label": "service@docusign-secure-review.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:service@docusign-secure-review.com",
+        "type": "Person",
+        "label": "service@docusign-secure-review.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "campaign:CMP-2024-0089",
+      "label": "Campaign: CMP-2024-0089",
+      "type": "Campaign",
+      "color": "#EC4899",
+      "threat_score": 0.0,
+      "threat_level": "CRITICAL",
+      "badge_count": 64,
+      "degree": 64,
+      "is_synthetic": false,
+      "details": {
+        "id": "campaign:CMP-2024-0089",
+        "type": "Campaign",
+        "label": "Campaign: CMP-2024-0089",
+        "name": "FinPhish Global Cloud Harvester",
+        "threat_level": "CRITICAL"
+      }
+    },
+    {
+      "id": "1af4e075-a98b-4a92-9b18-efa4e6c5d77f",
+      "label": "Email: What you need for iPaq wi...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "1af4e075-a98b-4a92-9b18-efa4e6c5d77f",
+        "type": "Email",
+        "label": "Email: What you need for iPaq wi...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:Online#3.20570.c8-lctBlQNKdD1A69RR.1@newsletter.online.com",
+      "label": "Online#3.20570.c8-lctBlQNKdD1A69RR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.20570.c8-lctBlQNKdD1A69RR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.20570.c8-lctBlQNKdD1A69RR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "039d58f5-85dc-4e71-875b-0b136e7aaa76",
+      "label": "Email: Take all your music on th...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "039d58f5-85dc-4e71-875b-0b136e7aaa76",
+        "type": "Email",
+        "label": "Email: Take all your music on th...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:circulars@regulatory-notice.internal",
+      "label": "circulars@regulatory-notice.internal",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:circulars@regulatory-notice.internal",
+        "type": "Person",
+        "label": "circulars@regulatory-notice.internal",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "person:Online#3.19910.c5-QoVul7N9F-iPA9RR.1@newsletter.online.com",
+      "label": "Online#3.19910.c5-QoVul7N9F-iPA9RR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.19910.c5-QoVul7N9F-iPA9RR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.19910.c5-QoVul7N9F-iPA9RR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:206.16.0.240",
+      "label": "206.16.0.240 (NL)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 39,
+      "degree": 39,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:206.16.0.240",
+        "type": "IPAddress",
+        "label": "206.16.0.240 (NL)",
+        "asn": "AS50673",
+        "isp": "Serverius Holding B.V.",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "person:Online#3.19816.79-jnsygj5uv8NiX9RR.1@newsletter.online.com",
+      "label": "Online#3.19816.79-jnsygj5uv8NiX9RR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 4,
+      "degree": 4,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.19816.79-jnsygj5uv8NiX9RR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.19816.79-jnsygj5uv8NiX9RR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "person:ticket_jcehaoa1031163663480@sneakemail.com",
+      "label": "ticket_jcehaoa1031163663480@sneakemail.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:ticket_jcehaoa1031163663480@sneakemail.com",
+        "type": "Person",
+        "label": "ticket_jcehaoa1031163663480@sneakemail.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:ummail4.unitedmedia.com",
+      "label": "ummail4.unitedmedia.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:ummail4.unitedmedia.com",
+        "type": "Domain",
+        "label": "ummail4.unitedmedia.com",
+        "is_lookalike": false,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "person:2.20522.db-Q-H_lYIK6LOe.1@ummail4.unitedmedia.com",
+      "label": "2.20522.db-Q-H_lYIK6LOe.1@ummail4.unitedmedia.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:2.20522.db-Q-H_lYIK6LOe.1@ummail4.unitedmedia.com",
+        "type": "Person",
+        "label": "2.20522.db-Q-H_lYIK6LOe.1@ummail4.unitedmedia.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "person:Online#3.20216.56-c0AXgilV9YMFp9RR.1@newsletter.online.com",
+      "label": "Online#3.20216.56-c0AXgilV9YMFp9RR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.20216.56-c0AXgilV9YMFp9RR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.20216.56-c0AXgilV9YMFp9RR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "person:Online#3.20351.c6-p402lCSzguclhRRR.1@newsletter.online.com",
+      "label": "Online#3.20351.c6-p402lCSzguclhRRR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.20351.c6-p402lCSzguclhRRR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.20351.c6-p402lCSzguclhRRR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "29ed11f6-ff23-40e9-b693-d147d64e1455",
+      "label": "Email: CNET DIGITAL DISPATCH: Sa...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "29ed11f6-ff23-40e9-b693-d147d64e1455",
+        "type": "Email",
+        "label": "Email: CNET DIGITAL DISPATCH: Sa...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "873b2386-c0c1-4e1e-ab34-fab43934c19f",
+      "label": "Email: MS/Apple: Can this marria...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "873b2386-c0c1-4e1e-ab34-fab43934c19f",
+        "type": "Email",
+        "label": "Email: MS/Apple: Can this marria...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "ip:65.114.4.73",
+      "label": "65.114.4.73 (NL)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 10,
+      "degree": 10,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:65.114.4.73",
+        "type": "IPAddress",
+        "label": "65.114.4.73 (NL)",
+        "asn": "AS50673",
+        "isp": "Serverius Holding B.V.",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "93136a50-ca4f-4f95-8b18-80566d4ef046",
+      "label": "Email: Security Notice: Review T...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.57,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "93136a50-ca4f-4f95-8b18-80566d4ef046",
+        "type": "Email",
+        "label": "Email: Security Notice: Review T...",
+        "threat_score": 0.57,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:Online#3.20566.1b-g8TkgHOAIazg9sRR.1@newsletter.online.com",
+      "label": "Online#3.20566.1b-g8TkgHOAIazg9sRR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.20566.1b-g8TkgHOAIazg9sRR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.20566.1b-g8TkgHOAIazg9sRR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "f7057e51-83f6-4231-a4da-592da234f477",
+      "label": "Email: Wrox Press Developer's Jo...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "f7057e51-83f6-4231-a4da-592da234f477",
+        "type": "Email",
+        "label": "Email: Wrox Press Developer's Jo...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:Online#3.19801.5a-SW-tgr_JMGPQK9RR.1@newsletter.online.com",
+      "label": "Online#3.19801.5a-SW-tgr_JMGPQK9RR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 4,
+      "degree": 4,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.19801.5a-SW-tgr_JMGPQK9RR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.19801.5a-SW-tgr_JMGPQK9RR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:newsletter.online.com",
+      "label": "newsletter.online.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 24,
+      "degree": 24,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:newsletter.online.com",
+        "type": "Domain",
+        "label": "newsletter.online.com",
+        "is_lookalike": false,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "809e6448-1db2-4834-bf2e-a47ba2f2ecec",
+      "label": "Email: Moore: Speech recognition...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.6,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "809e6448-1db2-4834-bf2e-a47ba2f2ecec",
+        "type": "Email",
+        "label": "Email: Moore: Speech recognition...",
+        "threat_score": 0.6,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "4ad12412-73d3-4548-8c2d-5b772ebcbf91",
+      "label": "Email: Your Daily Dilbert 07/13/...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.48,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "4ad12412-73d3-4548-8c2d-5b772ebcbf91",
+        "type": "Email",
+        "label": "Email: Your Daily Dilbert 07/13/...",
+        "threat_score": 0.48,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "infra:AS9498",
+      "label": "AS9498 (Bharti Airtel Ltd)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 14,
+      "degree": 14,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS9498",
+        "type": "Infrastructure",
+        "label": "AS9498 (Bharti Airtel Ltd)"
+      }
+    },
+    {
+      "id": "c385881c-b191-469e-8121-28c86b8d7c00",
+      "label": "Email: Hey, thief! This laptop i...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "c385881c-b191-469e-8121-28c86b8d7c00",
+        "type": "Email",
+        "label": "Email: Hey, thief! This laptop i...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:2.20964.41-7D35gjBImbOc.1@ummail4.unitedmedia.com",
+      "label": "2.20964.41-7D35gjBImbOc.1@ummail4.unitedmedia.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:2.20964.41-7D35gjBImbOc.1@ummail4.unitedmedia.com",
+        "type": "Person",
+        "label": "2.20964.41-7D35gjBImbOc.1@ummail4.unitedmedia.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "person:Online#3.19971.bf-06fglL9Xsszda9RR.1@newsletter.online.com",
+      "label": "Online#3.19971.bf-06fglL9Xsszda9RR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.19971.bf-06fglL9Xsszda9RR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.19971.bf-06fglL9Xsszda9RR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "1b87f7f9-3889-4f62-a150-16712b575602",
+      "label": "Email: CNET NEWS.COM: File-trade...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.6,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "1b87f7f9-3889-4f62-a150-16712b575602",
+        "type": "Email",
+        "label": "Email: CNET NEWS.COM: File-trade...",
+        "threat_score": 0.6,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "f3e4dadd-f48e-40b8-9d00-ad37de1cf50a",
+      "label": "Email: Great deals on perfect Su...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.46,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "f3e4dadd-f48e-40b8-9d00-ad37de1cf50a",
+        "type": "Email",
+        "label": "Email: Great deals on perfect Su...",
+        "threat_score": 0.46,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "domain:sneakemail.com",
+      "label": "sneakemail.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:sneakemail.com",
+        "type": "Domain",
+        "label": "sneakemail.com",
+        "is_lookalike": false,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "a4f52b54-b669-4827-b344-0040286219ca",
+      "label": "Email: Our new Memory Configurat...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "a4f52b54-b669-4827-b344-0040286219ca",
+        "type": "Email",
+        "label": "Email: Our new Memory Configurat...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "8085cd06-a040-4483-8634-ba6ba57dd1cd",
+      "label": "Email: CNET NEWS.COM: Cable comp...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "8085cd06-a040-4483-8634-ba6ba57dd1cd",
+        "type": "Email",
+        "label": "Email: CNET NEWS.COM: Cable comp...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "43369b5a-5cd9-47ae-aa9e-d37ae5d79331",
+      "label": "Email: This Week: Chilkat Zip, A...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "43369b5a-5cd9-47ae-aa9e-d37ae5d79331",
+        "type": "Email",
+        "label": "Email: This Week: Chilkat Zip, A...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "c1ee713f-f580-4522-bc32-165ad58958d7",
+      "label": "Email: Great deals on perfect Su...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.46,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "c1ee713f-f580-4522-bc32-165ad58958d7",
+        "type": "Email",
+        "label": "Email: Great deals on perfect Su...",
+        "threat_score": 0.46,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:Online#3.20502.53-KAuEgBlRpyKZc9RR.1@newsletter.online.com",
+      "label": "Online#3.20502.53-KAuEgBlRpyKZc9RR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.20502.53-KAuEgBlRpyKZc9RR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.20502.53-KAuEgBlRpyKZc9RR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "infra:AS14061",
+      "label": "AS14061 (DigitalOcean, LLC)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 19,
+      "degree": 19,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS14061",
+        "type": "Infrastructure",
+        "label": "AS14061 (DigitalOcean, LLC)"
+      }
+    },
+    {
+      "id": "ip:206.16.0.225",
+      "label": "206.16.0.225 (US)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 13,
+      "degree": 13,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:206.16.0.225",
+        "type": "IPAddress",
+        "label": "206.16.0.225 (US)",
+        "asn": "AS16509",
+        "isp": "Amazon.com, Inc.",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "023f372a-e28b-42b9-a61c-397626f6c3ad",
+      "label": "Email: CNET: Why I don't use fir...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "023f372a-e28b-42b9-a61c-397626f6c3ad",
+        "type": "Email",
+        "label": "Email: CNET: Why I don't use fir...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:Online#3.20340.74-k8cCgc95N6xNP9RR.1@newsletter.online.com",
+      "label": "Online#3.20340.74-k8cCgc95N6xNP9RR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.20340.74-k8cCgc95N6xNP9RR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.20340.74-k8cCgc95N6xNP9RR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "a893ec19-5e92-44d9-ad10-00003d45c1d5",
+      "label": "Email: SharePoint Online: Q4 Exe...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.54,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "a893ec19-5e92-44d9-ad10-00003d45c1d5",
+        "type": "Email",
+        "label": "Email: SharePoint Online: Q4 Exe...",
+        "threat_score": 0.54,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:Online#3.19578.34-UgGTgZFN19NAr9RR.1@newsletter.online.com",
+      "label": "Online#3.19578.34-UgGTgZFN19NAr9RR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 4,
+      "degree": 4,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.19578.34-UgGTgZFN19NAr9RR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.19578.34-UgGTgZFN19NAr9RR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:docusign-secure-review.com",
+      "label": "docusign-secure-review.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:docusign-secure-review.com",
+        "type": "Domain",
+        "label": "docusign-secure-review.com",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:65.114.4.12",
+      "label": "65.114.4.12 (SG)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 6,
+      "degree": 6,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:65.114.4.12",
+        "type": "IPAddress",
+        "label": "65.114.4.12 (SG)",
+        "asn": "AS7473",
+        "isp": "Singtel Optus",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "person:Online#3.19856.0b-J216gBVtducSysRR.1@newsletter.online.com",
+      "label": "Online#3.19856.0b-J216gBVtducSysRR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.19856.0b-J216gBVtducSysRR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.19856.0b-J216gBVtducSysRR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "d190730e-1f32-4b16-95af-39ebdbd6d3f3",
+      "label": "Email: When search results don't...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "d190730e-1f32-4b16-95af-39ebdbd6d3f3",
+        "type": "Email",
+        "label": "Email: When search results don't...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "ip:206.16.0.223",
+      "label": "206.16.0.223 (IN)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 18,
+      "degree": 18,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:206.16.0.223",
+        "type": "IPAddress",
+        "label": "206.16.0.223 (IN)",
+        "asn": "AS9498",
+        "isp": "Bharti Airtel Ltd",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "e1bdbe1d-d566-4acc-a475-7116b5172aef",
+      "label": "Email: Moore: Speech recognition...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.6,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "e1bdbe1d-d566-4acc-a475-7116b5172aef",
+        "type": "Email",
+        "label": "Email: Moore: Speech recognition...",
+        "threat_score": 0.6,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "ip:206.16.0.226",
+      "label": "206.16.0.226 (GB)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 29,
+      "degree": 29,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:206.16.0.226",
+        "type": "IPAddress",
+        "label": "206.16.0.226 (GB)",
+        "asn": "AS14061",
+        "isp": "DigitalOcean, LLC",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "ip:206.16.0.244",
+      "label": "206.16.0.244 (NL)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 18,
+      "degree": 18,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:206.16.0.244",
+        "type": "IPAddress",
+        "label": "206.16.0.244 (NL)",
+        "asn": "AS50673",
+        "isp": "Serverius Holding B.V.",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "person:journal@wrox.com",
+      "label": "journal@wrox.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:journal@wrox.com",
+        "type": "Person",
+        "label": "journal@wrox.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "0f68699b-a521-4fa4-a16c-d03b58005c67",
+      "label": "Email: CNET NEWS.COM: Cable comp...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "0f68699b-a521-4fa4-a16c-d03b58005c67",
+        "type": "Email",
+        "label": "Email: CNET NEWS.COM: Cable comp...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "f6db2850-db92-4207-950b-c2e743a69400",
+      "label": "Email: CNET: Why I don't use fir...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "f6db2850-db92-4207-950b-c2e743a69400",
+        "type": "Email",
+        "label": "Email: CNET: Why I don't use fir...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "infra:AS50673",
+      "label": "AS50673 (Serverius Holding B.V.)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 43,
+      "degree": 43,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS50673",
+        "type": "Infrastructure",
+        "label": "AS50673 (Serverius Holding B.V.)"
+      }
+    },
+    {
+      "id": "ip:206.16.0.241",
+      "label": "206.16.0.241 (DE)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 19,
+      "degree": 19,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:206.16.0.241",
+        "type": "IPAddress",
+        "label": "206.16.0.241 (DE)",
+        "asn": "AS24940",
+        "isp": "Hetzner Online GmbH",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "ip:185.220.102.8",
+      "label": "185.220.102.8 (US)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:185.220.102.8",
+        "type": "IPAddress",
+        "label": "185.220.102.8 (US)",
+        "asn": "AS16509",
+        "isp": "Amazon.com, Inc.",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "2b039728-c890-4f84-9f21-f9f3b30a676e",
+      "label": "Email: NEWS.COM INVESTOR: Techs ...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.6,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "2b039728-c890-4f84-9f21-f9f3b30a676e",
+        "type": "Email",
+        "label": "Email: NEWS.COM INVESTOR: Techs ...",
+        "threat_score": 0.6,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "f18c5371-d4c6-4484-b1d8-1d76a25ecd4f",
+      "label": "Email: NEWS.COM INVESTOR: Techs ...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "f18c5371-d4c6-4484-b1d8-1d76a25ecd4f",
+        "type": "Email",
+        "label": "Email: NEWS.COM INVESTOR: Techs ...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "4b0f542c-d327-494d-92c4-545158bf1ca7",
+      "label": "Email: NEWS.COM INVESTOR: Techs ...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "4b0f542c-d327-494d-92c4-545158bf1ca7",
+        "type": "Email",
+        "label": "Email: NEWS.COM INVESTOR: Techs ...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "ea2ca107-4b42-4c7b-a6bc-f84ea3beaf37",
+      "label": "Email: Canon USA Reseller News :...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.45,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "ea2ca107-4b42-4c7b-a6bc-f84ea3beaf37",
+        "type": "Email",
+        "label": "Email: Canon USA Reseller News :...",
+        "threat_score": 0.45,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "34237014-fbd0-44a2-9046-ca076819d355",
+      "label": "Email: Your Daily Dilbert 07/19/...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.48,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "34237014-fbd0-44a2-9046-ca076819d355",
+        "type": "Email",
+        "label": "Email: Your Daily Dilbert 07/19/...",
+        "threat_score": 0.48,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:Online#3.20074.fe-hz1flt-yytPTpdRR.1@newsletter.online.com",
+      "label": "Online#3.20074.fe-hz1flt-yytPTpdRR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.20074.fe-hz1flt-yytPTpdRR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.20074.fe-hz1flt-yytPTpdRR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:workspace-auth-verify.com",
+      "label": "workspace-auth-verify.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:workspace-auth-verify.com",
+        "type": "Domain",
+        "label": "workspace-auth-verify.com",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:104.21.45.12",
+      "label": "104.21.45.12 (US)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 6,
+      "degree": 6,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:104.21.45.12",
+        "type": "IPAddress",
+        "label": "104.21.45.12 (US)",
+        "asn": "AS16509",
+        "isp": "Amazon.com, Inc.",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "person:Online#3.19822.84-7a8Hl0_lygzZARRR.1@newsletter.online.com",
+      "label": "Online#3.19822.84-7a8Hl0_lygzZARRR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 4,
+      "degree": 4,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.19822.84-7a8Hl0_lygzZARRR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.19822.84-7a8Hl0_lygzZARRR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:212.250.238.84",
+      "label": "212.250.238.84 (SG)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:212.250.238.84",
+        "type": "IPAddress",
+        "label": "212.250.238.84 (SG)",
+        "asn": "AS7473",
+        "isp": "Singtel Optus",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "infra:AS16509",
+      "label": "AS16509 (Amazon.com, Inc.)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 16,
+      "degree": 16,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS16509",
+        "type": "Infrastructure",
+        "label": "AS16509 (Amazon.com, Inc.)"
+      }
+    },
+    {
+      "id": "ip:104.21.89.201",
+      "label": "104.21.89.201 (SG)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:104.21.89.201",
+        "type": "IPAddress",
+        "label": "104.21.89.201 (SG)",
+        "asn": "AS7473",
+        "isp": "Singtel Optus",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "person:Online#3.19820.a5-ydZylz9lGW0yrsRR.1@newsletter.online.com",
+      "label": "Online#3.19820.a5-ydZylz9lGW0yrsRR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 4,
+      "degree": 4,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.19820.a5-ydZylz9lGW0yrsRR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.19820.a5-ydZylz9lGW0yrsRR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "infra:AS24940",
+      "label": "AS24940 (Hetzner Online GmbH)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 15,
+      "degree": 15,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS24940",
+        "type": "Infrastructure",
+        "label": "AS24940 (Hetzner Online GmbH)"
+      }
+    },
+    {
+      "id": "75f0d0f6-2db6-457b-a832-b3ea6cb23c86",
+      "label": "Email: Olympus Brio D-100 1.3 Me...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "75f0d0f6-2db6-457b-a832-b3ea6cb23c86",
+        "type": "Email",
+        "label": "Email: Olympus Brio D-100 1.3 Me...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "daddb434-af2b-4588-88a3-05baca09f780",
+      "label": "Email: Please DocuSign: Mutual N...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.54,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "daddb434-af2b-4588-88a3-05baca09f780",
+        "type": "Email",
+        "label": "Email: Please DocuSign: Mutual N...",
+        "threat_score": 0.54,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "ip:206.16.0.224",
+      "label": "206.16.0.224 (SG)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 21,
+      "degree": 21,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:206.16.0.224",
+        "type": "IPAddress",
+        "label": "206.16.0.224 (SG)",
+        "asn": "AS7473",
+        "isp": "Singtel Optus",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "domain:wrox.com",
+      "label": "wrox.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:wrox.com",
+        "type": "Domain",
+        "label": "wrox.com",
+        "is_lookalike": false,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "fe4b1aa8-fe84-43da-8f5d-d38f0010bbf6",
+      "label": "Email: Struts 1.1 Article, JavaS...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.49,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "fe4b1aa8-fe84-43da-8f5d-d38f0010bbf6",
+        "type": "Email",
+        "label": "Email: Struts 1.1 Article, JavaS...",
+        "threat_score": 0.49,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "a7117292-3286-4480-98d6-7da9612033e2",
+      "label": "Email: STATUTORY ORDER: Mandator...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.51,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "a7117292-3286-4480-98d6-7da9612033e2",
+        "type": "Email",
+        "label": "Email: STATUTORY ORDER: Mandator...",
+        "threat_score": 0.51,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:Online#3.20341.24-QI_LgZARqA78CdRR.1@newsletter.online.com",
+      "label": "Online#3.20341.24-QI_LgZARqA78CdRR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.20341.24-QI_LgZARqA78CdRR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.20341.24-QI_LgZARqA78CdRR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "person:files@docusign-secure-review.com",
+      "label": "files@docusign-secure-review.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:files@docusign-secure-review.com",
+        "type": "Person",
+        "label": "files@docusign-secure-review.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:regulatory-notice.internal",
+      "label": "regulatory-notice.internal",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:regulatory-notice.internal",
+        "type": "Domain",
+        "label": "regulatory-notice.internal",
+        "is_lookalike": false,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:207.106.87.13",
+      "label": "207.106.87.13 (US)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 4,
+      "degree": 4,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:207.106.87.13",
+        "type": "IPAddress",
+        "label": "207.106.87.13 (US)",
+        "asn": "AS16509",
+        "isp": "Amazon.com, Inc.",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "994bf8cd-ee01-4259-bec3-51f630408938",
+      "label": "Email: Our new Memory Configurat...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "994bf8cd-ee01-4259-bec3-51f630408938",
+        "type": "Email",
+        "label": "Email: Our new Memory Configurat...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:Online#3.19846.2a-726zgP3UI7kTO9RR.1@newsletter.online.com",
+      "label": "Online#3.19846.2a-726zgP3UI7kTO9RR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.19846.2a-726zgP3UI7kTO9RR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.19846.2a-726zgP3UI7kTO9RR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "6b7be15e-2f3a-4d9b-949c-11fbc2dd61aa",
+      "label": "Email: NEWS.COM INVESTOR: Batter...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.5,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "6b7be15e-2f3a-4d9b-949c-11fbc2dd61aa",
+        "type": "Email",
+        "label": "Email: NEWS.COM INVESTOR: Batter...",
+        "threat_score": 0.5,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:Online#3.20467.ac-q5A1l6tzmmPhUdRR.1@newsletter.online.com",
+      "label": "Online#3.20467.ac-q5A1l6tzmmPhUdRR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.20467.ac-q5A1l6tzmmPhUdRR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.20467.ac-q5A1l6tzmmPhUdRR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "infra:AS7473",
+      "label": "AS7473 (Singtel Optus)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 21,
+      "degree": 21,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS7473",
+        "type": "Infrastructure",
+        "label": "AS7473 (Singtel Optus)"
+      }
+    },
+    {
+      "id": "person:no-reply@workspace-auth-verify.com",
+      "label": "no-reply@workspace-auth-verify.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:no-reply@workspace-auth-verify.com",
+        "type": "Person",
+        "label": "no-reply@workspace-auth-verify.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "person:Online#3.19908.0a-BsA8gPyVcnFqAdRR.1@newsletter.online.com",
+      "label": "Online#3.19908.0a-BsA8gPyVcnFqAdRR.1@newsletter.online.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:Online#3.19908.0a-BsA8gPyVcnFqAdRR.1@newsletter.online.com",
+        "type": "Person",
+        "label": "Online#3.19908.0a-BsA8gPyVcnFqAdRR.1@newsletter.online.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "person:service@docusign-secure-review.com",
+      "target": "domain:docusign-secure-review.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:185.220.102.8",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:104.21.45.12",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:104.21.89.201",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:206.16.0.224",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 3,
+      "count": 3
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:206.16.0.226",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 5,
+      "count": 5
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:206.16.0.240",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 8,
+      "count": 8
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:206.16.0.244",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 3,
+      "count": 3
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:206.16.0.223",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:65.114.4.73",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:206.16.0.225",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:206.16.0.241",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:65.114.4.12",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:212.250.238.84",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:207.106.87.13",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "1af4e075-a98b-4a92-9b18-efa4e6c5d77f",
+      "target": "person:Online#3.19910.c5-QoVul7N9F-iPA9RR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "1af4e075-a98b-4a92-9b18-efa4e6c5d77f",
+      "target": "ip:206.16.0.226",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "1af4e075-a98b-4a92-9b18-efa4e6c5d77f",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.20570.c8-lctBlQNKdD1A69RR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "039d58f5-85dc-4e71-875b-0b136e7aaa76",
+      "target": "person:Online#3.19908.0a-BsA8gPyVcnFqAdRR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "039d58f5-85dc-4e71-875b-0b136e7aaa76",
+      "target": "ip:206.16.0.244",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "039d58f5-85dc-4e71-875b-0b136e7aaa76",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:circulars@regulatory-notice.internal",
+      "target": "domain:regulatory-notice.internal",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.19910.c5-QoVul7N9F-iPA9RR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:206.16.0.240",
+      "target": "infra:AS50673",
+      "relationship": "HOSTED_BY",
+      "weight": 23,
+      "count": 23
+    },
+    {
+      "source": "person:Online#3.19816.79-jnsygj5uv8NiX9RR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "person:ticket_jcehaoa1031163663480@sneakemail.com",
+      "target": "domain:sneakemail.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:2.20522.db-Q-H_lYIK6LOe.1@ummail4.unitedmedia.com",
+      "target": "domain:ummail4.unitedmedia.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.20216.56-c0AXgilV9YMFp9RR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.20351.c6-p402lCSzguclhRRR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "29ed11f6-ff23-40e9-b693-d147d64e1455",
+      "target": "person:Online#3.19856.0b-J216gBVtducSysRR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "29ed11f6-ff23-40e9-b693-d147d64e1455",
+      "target": "ip:206.16.0.226",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "29ed11f6-ff23-40e9-b693-d147d64e1455",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "873b2386-c0c1-4e1e-ab34-fab43934c19f",
+      "target": "person:Online#3.20566.1b-g8TkgHOAIazg9sRR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "873b2386-c0c1-4e1e-ab34-fab43934c19f",
+      "target": "ip:206.16.0.224",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "873b2386-c0c1-4e1e-ab34-fab43934c19f",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:65.114.4.73",
+      "target": "infra:AS50673",
+      "relationship": "HOSTED_BY",
+      "weight": 8,
+      "count": 8
+    },
+    {
+      "source": "93136a50-ca4f-4f95-8b18-80566d4ef046",
+      "target": "person:no-reply@workspace-auth-verify.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "93136a50-ca4f-4f95-8b18-80566d4ef046",
+      "target": "ip:104.21.89.201",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "93136a50-ca4f-4f95-8b18-80566d4ef046",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.20566.1b-g8TkgHOAIazg9sRR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "f7057e51-83f6-4231-a4da-592da234f477",
+      "target": "person:journal@wrox.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "f7057e51-83f6-4231-a4da-592da234f477",
+      "target": "ip:212.250.238.84",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "f7057e51-83f6-4231-a4da-592da234f477",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.19801.5a-SW-tgr_JMGPQK9RR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "809e6448-1db2-4834-bf2e-a47ba2f2ecec",
+      "target": "person:Online#3.19801.5a-SW-tgr_JMGPQK9RR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "809e6448-1db2-4834-bf2e-a47ba2f2ecec",
+      "target": "ip:206.16.0.226",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "809e6448-1db2-4834-bf2e-a47ba2f2ecec",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "4ad12412-73d3-4548-8c2d-5b772ebcbf91",
+      "target": "person:2.20522.db-Q-H_lYIK6LOe.1@ummail4.unitedmedia.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "4ad12412-73d3-4548-8c2d-5b772ebcbf91",
+      "target": "ip:65.114.4.73",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "4ad12412-73d3-4548-8c2d-5b772ebcbf91",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "c385881c-b191-469e-8121-28c86b8d7c00",
+      "target": "person:Online#3.20570.c8-lctBlQNKdD1A69RR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "c385881c-b191-469e-8121-28c86b8d7c00",
+      "target": "ip:206.16.0.240",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "c385881c-b191-469e-8121-28c86b8d7c00",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:2.20964.41-7D35gjBImbOc.1@ummail4.unitedmedia.com",
+      "target": "domain:ummail4.unitedmedia.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.19971.bf-06fglL9Xsszda9RR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "1b87f7f9-3889-4f62-a150-16712b575602",
+      "target": "person:Online#3.20074.fe-hz1flt-yytPTpdRR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "1b87f7f9-3889-4f62-a150-16712b575602",
+      "target": "ip:206.16.0.226",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "1b87f7f9-3889-4f62-a150-16712b575602",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "f3e4dadd-f48e-40b8-9d00-ad37de1cf50a",
+      "target": "person:Online#3.19820.a5-ydZylz9lGW0yrsRR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "f3e4dadd-f48e-40b8-9d00-ad37de1cf50a",
+      "target": "ip:206.16.0.240",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "f3e4dadd-f48e-40b8-9d00-ad37de1cf50a",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "a4f52b54-b669-4827-b344-0040286219ca",
+      "target": "person:Online#3.19816.79-jnsygj5uv8NiX9RR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "a4f52b54-b669-4827-b344-0040286219ca",
+      "target": "ip:206.16.0.240",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "a4f52b54-b669-4827-b344-0040286219ca",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "8085cd06-a040-4483-8634-ba6ba57dd1cd",
+      "target": "person:Online#3.19578.34-UgGTgZFN19NAr9RR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "8085cd06-a040-4483-8634-ba6ba57dd1cd",
+      "target": "ip:206.16.0.224",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "8085cd06-a040-4483-8634-ba6ba57dd1cd",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "43369b5a-5cd9-47ae-aa9e-d37ae5d79331",
+      "target": "person:Online#3.20351.c6-p402lCSzguclhRRR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "43369b5a-5cd9-47ae-aa9e-d37ae5d79331",
+      "target": "ip:206.16.0.241",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "43369b5a-5cd9-47ae-aa9e-d37ae5d79331",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "c1ee713f-f580-4522-bc32-165ad58958d7",
+      "target": "person:Online#3.19820.a5-ydZylz9lGW0yrsRR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "c1ee713f-f580-4522-bc32-165ad58958d7",
+      "target": "ip:206.16.0.240",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "c1ee713f-f580-4522-bc32-165ad58958d7",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.20502.53-KAuEgBlRpyKZc9RR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:206.16.0.225",
+      "target": "infra:AS16509",
+      "relationship": "HOSTED_BY",
+      "weight": 11,
+      "count": 11
+    },
+    {
+      "source": "023f372a-e28b-42b9-a61c-397626f6c3ad",
+      "target": "person:Online#3.19822.84-7a8Hl0_lygzZARRR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "023f372a-e28b-42b9-a61c-397626f6c3ad",
+      "target": "ip:206.16.0.240",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "023f372a-e28b-42b9-a61c-397626f6c3ad",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.20340.74-k8cCgc95N6xNP9RR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "a893ec19-5e92-44d9-ad10-00003d45c1d5",
+      "target": "person:files@docusign-secure-review.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "a893ec19-5e92-44d9-ad10-00003d45c1d5",
+      "target": "ip:104.21.45.12",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "a893ec19-5e92-44d9-ad10-00003d45c1d5",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.19578.34-UgGTgZFN19NAr9RR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "ip:65.114.4.12",
+      "target": "infra:AS7473",
+      "relationship": "HOSTED_BY",
+      "weight": 4,
+      "count": 4
+    },
+    {
+      "source": "person:Online#3.19856.0b-J216gBVtducSysRR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "d190730e-1f32-4b16-95af-39ebdbd6d3f3",
+      "target": "person:Online#3.20467.ac-q5A1l6tzmmPhUdRR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "d190730e-1f32-4b16-95af-39ebdbd6d3f3",
+      "target": "ip:206.16.0.223",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "d190730e-1f32-4b16-95af-39ebdbd6d3f3",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:206.16.0.223",
+      "target": "infra:AS9498",
+      "relationship": "HOSTED_BY",
+      "weight": 14,
+      "count": 14
+    },
+    {
+      "source": "e1bdbe1d-d566-4acc-a475-7116b5172aef",
+      "target": "person:Online#3.19801.5a-SW-tgr_JMGPQK9RR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "e1bdbe1d-d566-4acc-a475-7116b5172aef",
+      "target": "ip:206.16.0.226",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "e1bdbe1d-d566-4acc-a475-7116b5172aef",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:206.16.0.226",
+      "target": "infra:AS14061",
+      "relationship": "HOSTED_BY",
+      "weight": 19,
+      "count": 19
+    },
+    {
+      "source": "ip:206.16.0.244",
+      "target": "infra:AS50673",
+      "relationship": "HOSTED_BY",
+      "weight": 12,
+      "count": 12
+    },
+    {
+      "source": "person:journal@wrox.com",
+      "target": "domain:wrox.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "0f68699b-a521-4fa4-a16c-d03b58005c67",
+      "target": "person:Online#3.19578.34-UgGTgZFN19NAr9RR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "0f68699b-a521-4fa4-a16c-d03b58005c67",
+      "target": "ip:206.16.0.224",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "0f68699b-a521-4fa4-a16c-d03b58005c67",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "f6db2850-db92-4207-950b-c2e743a69400",
+      "target": "person:Online#3.19822.84-7a8Hl0_lygzZARRR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "f6db2850-db92-4207-950b-c2e743a69400",
+      "target": "ip:206.16.0.240",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "f6db2850-db92-4207-950b-c2e743a69400",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:206.16.0.241",
+      "target": "infra:AS24940",
+      "relationship": "HOSTED_BY",
+      "weight": 15,
+      "count": 15
+    },
+    {
+      "source": "ip:185.220.102.8",
+      "target": "infra:AS16509",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "2b039728-c890-4f84-9f21-f9f3b30a676e",
+      "target": "person:Online#3.20340.74-k8cCgc95N6xNP9RR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "2b039728-c890-4f84-9f21-f9f3b30a676e",
+      "target": "ip:206.16.0.241",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "2b039728-c890-4f84-9f21-f9f3b30a676e",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "f18c5371-d4c6-4484-b1d8-1d76a25ecd4f",
+      "target": "person:Online#3.19971.bf-06fglL9Xsszda9RR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "f18c5371-d4c6-4484-b1d8-1d76a25ecd4f",
+      "target": "ip:206.16.0.223",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "f18c5371-d4c6-4484-b1d8-1d76a25ecd4f",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "4b0f542c-d327-494d-92c4-545158bf1ca7",
+      "target": "person:Online#3.20216.56-c0AXgilV9YMFp9RR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "4b0f542c-d327-494d-92c4-545158bf1ca7",
+      "target": "ip:206.16.0.225",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "4b0f542c-d327-494d-92c4-545158bf1ca7",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ea2ca107-4b42-4c7b-a6bc-f84ea3beaf37",
+      "target": "person:Online#3.20341.24-QI_LgZARqA78CdRR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ea2ca107-4b42-4c7b-a6bc-f84ea3beaf37",
+      "target": "ip:206.16.0.244",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ea2ca107-4b42-4c7b-a6bc-f84ea3beaf37",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "34237014-fbd0-44a2-9046-ca076819d355",
+      "target": "person:2.20964.41-7D35gjBImbOc.1@ummail4.unitedmedia.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "34237014-fbd0-44a2-9046-ca076819d355",
+      "target": "ip:65.114.4.12",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "34237014-fbd0-44a2-9046-ca076819d355",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.20074.fe-hz1flt-yytPTpdRR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:104.21.45.12",
+      "target": "infra:AS16509",
+      "relationship": "HOSTED_BY",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "person:Online#3.19822.84-7a8Hl0_lygzZARRR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "ip:212.250.238.84",
+      "target": "infra:AS7473",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:104.21.89.201",
+      "target": "infra:AS7473",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.19820.a5-ydZylz9lGW0yrsRR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "75f0d0f6-2db6-457b-a832-b3ea6cb23c86",
+      "target": "person:Online#3.20502.53-KAuEgBlRpyKZc9RR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "75f0d0f6-2db6-457b-a832-b3ea6cb23c86",
+      "target": "ip:206.16.0.244",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "75f0d0f6-2db6-457b-a832-b3ea6cb23c86",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "daddb434-af2b-4588-88a3-05baca09f780",
+      "target": "person:service@docusign-secure-review.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "daddb434-af2b-4588-88a3-05baca09f780",
+      "target": "ip:104.21.45.12",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "daddb434-af2b-4588-88a3-05baca09f780",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:206.16.0.224",
+      "target": "infra:AS7473",
+      "relationship": "HOSTED_BY",
+      "weight": 15,
+      "count": 15
+    },
+    {
+      "source": "fe4b1aa8-fe84-43da-8f5d-d38f0010bbf6",
+      "target": "person:ticket_jcehaoa1031163663480@sneakemail.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "fe4b1aa8-fe84-43da-8f5d-d38f0010bbf6",
+      "target": "ip:207.106.87.13",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "fe4b1aa8-fe84-43da-8f5d-d38f0010bbf6",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "a7117292-3286-4480-98d6-7da9612033e2",
+      "target": "person:circulars@regulatory-notice.internal",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "a7117292-3286-4480-98d6-7da9612033e2",
+      "target": "ip:185.220.102.8",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "a7117292-3286-4480-98d6-7da9612033e2",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.20341.24-QI_LgZARqA78CdRR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:files@docusign-secure-review.com",
+      "target": "domain:docusign-secure-review.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:207.106.87.13",
+      "target": "infra:AS16509",
+      "relationship": "HOSTED_BY",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "994bf8cd-ee01-4259-bec3-51f630408938",
+      "target": "person:Online#3.19816.79-jnsygj5uv8NiX9RR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "994bf8cd-ee01-4259-bec3-51f630408938",
+      "target": "ip:206.16.0.240",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "994bf8cd-ee01-4259-bec3-51f630408938",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.19846.2a-726zgP3UI7kTO9RR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "6b7be15e-2f3a-4d9b-949c-11fbc2dd61aa",
+      "target": "person:Online#3.19846.2a-726zgP3UI7kTO9RR.1@newsletter.online.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "6b7be15e-2f3a-4d9b-949c-11fbc2dd61aa",
+      "target": "ip:206.16.0.240",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "6b7be15e-2f3a-4d9b-949c-11fbc2dd61aa",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.20467.ac-q5A1l6tzmmPhUdRR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:no-reply@workspace-auth-verify.com",
+      "target": "domain:workspace-auth-verify.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:Online#3.19908.0a-BsA8gPyVcnFqAdRR.1@newsletter.online.com",
+      "target": "domain:newsletter.online.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    }
+  ],
+  "cluster_campaign_id": "CMP-2024-0089",
+  "mode": "cluster",
+  "active_campaign_id": "CMP-2024-0089",
+  "available_campaigns": [
+    {
+      "id": "CMP-2024-0089",
+      "name": "FinPhish Global Cloud Harvester",
+      "threat_level": "CRITICAL",
+      "actor_sophistication": "high",
+      "email_count": 32,
+      "description": "Cross-tenant OAuth token and Microsoft 365 / DocuSign credential phishing campaign with deceptive hyperlink redirection."
+    },
+    {
+      "id": "CMP-2024-0034",
+      "name": "Operation GhostRelay (Credential Harvester)",
+      "threat_level": "CRITICAL",
+      "actor_sophistication": "medium-high",
+      "email_count": 7,
+      "description": "Coordinated credential harvesting campaign targeting Apex National Bank customers via bulletproof AS205100 and lookalike domains."
+    },
+    {
+      "id": "CMP-2024-0012",
+      "name": "CEO Wire Fraud BEC Syndicate",
+      "threat_level": "HIGH",
+      "actor_sophistication": "high",
+      "email_count": 2,
+      "description": "Executive display-name impersonation campaign requesting urgent payroll or vendor wire transfers to offshore accounts."
+    }
+  ]
+}

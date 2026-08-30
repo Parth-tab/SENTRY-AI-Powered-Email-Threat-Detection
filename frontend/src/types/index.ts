@@ -265,21 +265,50 @@ export interface CampaignItem {
   total_emails: number;
 }
 
+export interface GraphNode {
+  id: string;
+  label: string;
+  type: string;
+  color: string;
+  threat_score?: number;
+  threat_level?: string;
+  badge_count?: number;
+  degree?: number;
+  is_synthetic?: boolean;
+  campaign_id?: string;
+  email_count?: number;
+  domain_count?: number;
+  ip_count?: number;
+  infra_count?: number;
+  details?: any;
+}
+
+export interface GraphLink {
+  source: string;
+  target: string;
+  relationship: string;
+  weight?: number;
+  count?: number;
+  relationship_summary?: string;
+}
+
+export interface AvailableCampaign {
+  id: string;
+  name: string;
+  threat_level: string;
+  actor_sophistication: string;
+  email_count: number;
+  description: string;
+}
+
 export interface GraphData {
-  nodes: Array<{
-    id: string;
-    label: string;
-    type: string;
-    color: string;
-    threat_score?: number;
-    threat_level?: string;
-    details?: any;
-  }>;
-  links: Array<{
-    source: string;
-    target: string;
-    relationship: string;
-  }>;
+  nodes: GraphNode[];
+  links: GraphLink[];
+  mode?: "cluster" | "supernode" | "detailed";
+  active_campaign_id?: string | null;
+  available_campaigns?: AvailableCampaign[];
   total_entities_in_db?: number;
   queried_entities_count?: number;
+  cluster_campaign_id?: string;
 }
+

@@ -1,0 +1,66 @@
+{
+  "friction_log": {
+    "question": "Which infrastructure hosts the most lookalike domains?",
+    "total_clicks": 3,
+    "total_duration_ms": 999,
+    "steps": [
+      {
+        "step": 1,
+        "action": "Search 'AS205100' in search box (highlights node with cyan focus ring)",
+        "time_ms": 418
+      },
+      {
+        "step": 2,
+        "action": "Click AS205100 node on canvas to open Inspector Drawer",
+        "time_ms": 992
+      },
+      {
+        "step": 3,
+        "action": "Click 'Focus 1-Hop' button to isolate direct lookalike domains and origin IPs",
+        "time_ms": 999
+      }
+    ],
+    "answer": "AS205100 (Jonas Bunde / F3 Netze) hosting apex-secureverify.com, onlineapex-kyc-update.com, apex-netbanking-alert.xyz targeting Apex National Bank",
+    "verdict": "ANSWERED_IN_3_CLICKS"
+  },
+  "metrics": {
+    "post_search_1hop_metrics": {
+      "rendered_nodes": 30,
+      "rendered_links": 38,
+      "min_pairwise_distance": 35.7,
+      "avg_pairwise_distance": 118,
+      "hull_separation_ratio": 1,
+      "edge_node_ratio": 1.27,
+      "label_collisions": 4,
+      "is_simulation_settled": false,
+      "active_mode": "cluster",
+      "active_campaign_id": "CMP-2024-0034",
+      "seed": 42
+    },
+    "post_legend_toggle_metrics": {
+      "rendered_nodes": 23,
+      "rendered_links": 17,
+      "min_pairwise_distance": 29.2,
+      "avg_pairwise_distance": 104.9,
+      "hull_separation_ratio": 1,
+      "edge_node_ratio": 0.74,
+      "label_collisions": 1,
+      "is_simulation_settled": false,
+      "active_mode": "cluster",
+      "active_campaign_id": "CMP-2024-0034",
+      "seed": 42
+    },
+    "corpus_supernode_fixture_metrics": {
+      "fixture_file": "evaluation/graph_redesign/fixtures/corpus_graph_fixture.json",
+      "nodes": 15,
+      "links": 17,
+      "campaign_supernodes": 3,
+      "shared_infra_hubs": 8,
+      "brand_targets": 4,
+      "hub_label_collisions": 0,
+      "min_pairwise_distance": 54.0,
+      "hull_separation_policy": "EXEMPT (Single aggregated supernode bridge graph)",
+      "status": "PASS"
+    }
+  }
+}

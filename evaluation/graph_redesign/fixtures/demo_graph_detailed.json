@@ -1,0 +1,2125 @@
+{
+  "nodes": [
+    {
+      "id": "3058e03e-d083-4a49-b64a-3e8f20326c1d",
+      "label": "Email: Final Notice: Immediate A...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.87,
+      "threat_level": "CRITICAL",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "3058e03e-d083-4a49-b64a-3e8f20326c1d",
+        "type": "Email",
+        "label": "Email: Final Notice: Immediate A...",
+        "threat_score": 0.87,
+        "threat_level": "CRITICAL"
+      }
+    },
+    {
+      "id": "person:alerts@onlineapex-kyc-update.com",
+      "label": "alerts@onlineapex-kyc-update.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:alerts@onlineapex-kyc-update.com",
+        "type": "Person",
+        "label": "alerts@onlineapex-kyc-update.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:onlineapex-kyc-update.com",
+      "label": "onlineapex-kyc-update.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 4,
+      "degree": 4,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:onlineapex-kyc-update.com",
+        "type": "Domain",
+        "label": "onlineapex-kyc-update.com",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:legit_apex_national_bank",
+      "label": "Apex National Bank",
+      "type": "BrandTarget",
+      "color": "#6366F1",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 7,
+      "degree": 7,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:legit_apex_national_bank",
+        "type": "BrandTarget",
+        "label": "Apex National Bank"
+      }
+    },
+    {
+      "id": "ip:185.220.101.5",
+      "label": "185.220.101.5 (NL)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 6,
+      "degree": 6,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:185.220.101.5",
+        "type": "IPAddress",
+        "label": "185.220.101.5 (NL)",
+        "asn": "AS50673",
+        "isp": "Serverius Holding B.V.",
+        "is_tor": true
+      }
+    },
+    {
+      "id": "infra:AS50673",
+      "label": "AS50673 (Serverius Holding B.V.)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 4,
+      "degree": 4,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS50673",
+        "type": "Infrastructure",
+        "label": "AS50673 (Serverius Holding B.V.)"
+      }
+    },
+    {
+      "id": "campaign:CMP-2024-0034",
+      "label": "Campaign: CMP-2024-0034",
+      "type": "Campaign",
+      "color": "#EC4899",
+      "threat_score": 0.0,
+      "threat_level": "CRITICAL",
+      "badge_count": 14,
+      "degree": 14,
+      "is_synthetic": false,
+      "details": {
+        "id": "campaign:CMP-2024-0034",
+        "type": "Campaign",
+        "label": "Campaign: CMP-2024-0034",
+        "name": "Operation GhostRelay (Credential Harvester)",
+        "threat_level": "CRITICAL"
+      }
+    },
+    {
+      "id": "fca78041-1b6b-4597-aa1c-7e446ce874a8",
+      "label": "Email: Security Alert: High Valu...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.82,
+      "threat_level": "HIGH",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "fca78041-1b6b-4597-aa1c-7e446ce874a8",
+        "type": "Email",
+        "label": "Email: Security Alert: High Valu...",
+        "threat_score": 0.82,
+        "threat_level": "HIGH"
+      }
+    },
+    {
+      "id": "person:security@apex-netbanking-alert.xyz",
+      "label": "security@apex-netbanking-alert.xyz",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:security@apex-netbanking-alert.xyz",
+        "type": "Person",
+        "label": "security@apex-netbanking-alert.xyz",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:apex-netbanking-alert.xyz",
+      "label": "apex-netbanking-alert.xyz",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 4,
+      "degree": 4,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:apex-netbanking-alert.xyz",
+        "type": "Domain",
+        "label": "apex-netbanking-alert.xyz",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:194.26.29.117",
+      "label": "194.26.29.117 (RU)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:194.26.29.117",
+        "type": "IPAddress",
+        "label": "194.26.29.117 (RU)",
+        "asn": "AS51852",
+        "isp": "Chang Way Technologies",
+        "is_tor": true
+      }
+    },
+    {
+      "id": "infra:AS51852",
+      "label": "AS51852 (Chang Way Technologies)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS51852",
+        "type": "Infrastructure",
+        "label": "AS51852 (Chang Way Technologies)"
+      }
+    },
+    {
+      "id": "90b557a6-16fb-411b-b009-92ea094a33ec",
+      "label": "Email: Mandatory Action: Apex Mo...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.8,
+      "threat_level": "HIGH",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "90b557a6-16fb-411b-b009-92ea094a33ec",
+        "type": "Email",
+        "label": "Email: Mandatory Action: Apex Mo...",
+        "threat_score": 0.8,
+        "threat_level": "HIGH"
+      }
+    },
+    {
+      "id": "person:no-reply@apex-update-portal.com",
+      "label": "no-reply@apex-update-portal.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:no-reply@apex-update-portal.com",
+        "type": "Person",
+        "label": "no-reply@apex-update-portal.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:apex-update-portal.com",
+      "label": "apex-update-portal.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:apex-update-portal.com",
+        "type": "Domain",
+        "label": "apex-update-portal.com",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:185.220.101.34",
+      "label": "185.220.101.34 (NL)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 6,
+      "degree": 6,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:185.220.101.34",
+        "type": "IPAddress",
+        "label": "185.220.101.34 (NL)",
+        "asn": "AS205100",
+        "isp": "Jonas Bunde / F3 Netze",
+        "is_tor": true
+      }
+    },
+    {
+      "id": "infra:AS205100",
+      "label": "AS205100 (Jonas Bunde / F3 Netze)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS205100",
+        "type": "Infrastructure",
+        "label": "AS205100 (Jonas Bunde / F3 Netze)"
+      }
+    },
+    {
+      "id": "cf27d8b2-6f5a-42c8-9c63-422dba47edc5",
+      "label": "Email: STATUTORY ORDER: Mandator...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.51,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "cf27d8b2-6f5a-42c8-9c63-422dba47edc5",
+        "type": "Email",
+        "label": "Email: STATUTORY ORDER: Mandator...",
+        "threat_score": 0.51,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:circulars@regulatory-notice.internal",
+      "label": "circulars@regulatory-notice.internal",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:circulars@regulatory-notice.internal",
+        "type": "Person",
+        "label": "circulars@regulatory-notice.internal",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:regulatory-notice.internal",
+      "label": "regulatory-notice.internal",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:regulatory-notice.internal",
+        "type": "Domain",
+        "label": "regulatory-notice.internal",
+        "is_lookalike": false,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:185.220.102.8",
+      "label": "185.220.102.8 (US)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:185.220.102.8",
+        "type": "IPAddress",
+        "label": "185.220.102.8 (US)",
+        "asn": "AS16509",
+        "isp": "Amazon.com, Inc.",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "infra:AS16509",
+      "label": "AS16509 (Amazon.com, Inc.)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 4,
+      "degree": 4,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS16509",
+        "type": "Infrastructure",
+        "label": "AS16509 (Amazon.com, Inc.)"
+      }
+    },
+    {
+      "id": "campaign:CMP-2024-0089",
+      "label": "Campaign: CMP-2024-0089",
+      "type": "Campaign",
+      "color": "#EC4899",
+      "threat_score": 0.0,
+      "threat_level": "CRITICAL",
+      "badge_count": 8,
+      "degree": 8,
+      "is_synthetic": false,
+      "details": {
+        "id": "campaign:CMP-2024-0089",
+        "type": "Campaign",
+        "label": "Campaign: CMP-2024-0089",
+        "name": "FinPhish Global Cloud Harvester",
+        "threat_level": "CRITICAL"
+      }
+    },
+    {
+      "id": "20d2a8a4-2535-4a98-b1de-239e72e97d55",
+      "label": "Email: Congratulations! You have...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.83,
+      "threat_level": "HIGH",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "20d2a8a4-2535-4a98-b1de-239e72e97d55",
+        "type": "Email",
+        "label": "Email: Congratulations! You have...",
+        "threat_score": 0.83,
+        "threat_level": "HIGH"
+      }
+    },
+    {
+      "id": "person:rewards@onlineapex-kyc-update.com",
+      "label": "rewards@onlineapex-kyc-update.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:rewards@onlineapex-kyc-update.com",
+        "type": "Person",
+        "label": "rewards@onlineapex-kyc-update.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:185.220.101.9",
+      "label": "185.220.101.9 (US)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:185.220.101.9",
+        "type": "IPAddress",
+        "label": "185.220.101.9 (US)",
+        "asn": "AS16509",
+        "isp": "Amazon.com, Inc.",
+        "is_tor": true
+      }
+    },
+    {
+      "id": "6925f533-bdcb-4e01-941a-01c31c0b18f5",
+      "label": "Email: Instant Approval: Pre-App...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.55,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "6925f533-bdcb-4e01-941a-01c31c0b18f5",
+        "type": "Email",
+        "label": "Email: Instant Approval: Pre-App...",
+        "threat_score": 0.55,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:limit-enhancement@apex-netbanking-alert.xyz",
+      "label": "limit-enhancement@apex-netbanking-alert.xyz",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:limit-enhancement@apex-netbanking-alert.xyz",
+        "type": "Person",
+        "label": "limit-enhancement@apex-netbanking-alert.xyz",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:194.26.29.120",
+      "label": "194.26.29.120 (GB)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:194.26.29.120",
+        "type": "IPAddress",
+        "label": "194.26.29.120 (GB)",
+        "asn": "AS14061",
+        "isp": "DigitalOcean, LLC",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "infra:AS14061",
+      "label": "AS14061 (DigitalOcean, LLC)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 4,
+      "degree": 4,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS14061",
+        "type": "Infrastructure",
+        "label": "AS14061 (DigitalOcean, LLC)"
+      }
+    },
+    {
+      "id": "c5efd2f4-5b1a-414b-b616-127710d2ddd0",
+      "label": "Email: Security Notice: Apex Int...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.84,
+      "threat_level": "HIGH",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "c5efd2f4-5b1a-414b-b616-127710d2ddd0",
+        "type": "Email",
+        "label": "Email: Security Notice: Apex Int...",
+        "threat_score": 0.84,
+        "threat_level": "HIGH"
+      }
+    },
+    {
+      "id": "person:alerts@apex-bank-verify.com",
+      "label": "alerts@apex-bank-verify.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:alerts@apex-bank-verify.com",
+        "type": "Person",
+        "label": "alerts@apex-bank-verify.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:apex-bank-verify.com",
+      "label": "apex-bank-verify.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:apex-bank-verify.com",
+        "type": "Domain",
+        "label": "apex-bank-verify.com",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "4e758823-6c20-444d-9015-3dfea12dee7c",
+      "label": "Email: Urgent: Updated Direct De...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.76,
+      "threat_level": "HIGH",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "4e758823-6c20-444d-9015-3dfea12dee7c",
+        "type": "Email",
+        "label": "Email: Urgent: Updated Direct De...",
+        "threat_score": 0.76,
+        "threat_level": "HIGH"
+      }
+    },
+    {
+      "id": "person:ceo.mercer.corp@gmail.com",
+      "label": "ceo.mercer.corp@gmail.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 6,
+      "degree": 6,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:ceo.mercer.corp@gmail.com",
+        "type": "Person",
+        "label": "ceo.mercer.corp@gmail.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:gmail.com",
+      "label": "gmail.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:gmail.com",
+        "type": "Domain",
+        "label": "gmail.com",
+        "is_lookalike": false,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:198.51.100.42",
+      "label": "198.51.100.42 (GB)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:198.51.100.42",
+        "type": "IPAddress",
+        "label": "198.51.100.42 (GB)",
+        "asn": "AS14061",
+        "isp": "DigitalOcean, LLC",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "campaign:CMP-2024-0012",
+      "label": "Campaign: CMP-2024-0012",
+      "type": "Campaign",
+      "color": "#EC4899",
+      "threat_score": 0.0,
+      "threat_level": "HIGH",
+      "badge_count": 4,
+      "degree": 4,
+      "is_synthetic": false,
+      "details": {
+        "id": "campaign:CMP-2024-0012",
+        "type": "Campaign",
+        "label": "Campaign: CMP-2024-0012",
+        "name": "CEO Wire Fraud BEC Syndicate",
+        "threat_level": "HIGH"
+      }
+    },
+    {
+      "id": "a4cdbc46-66d7-4afe-8032-9e2a7535c6e7",
+      "label": "Email: STRICTLY CONFIDENTIAL // ...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.67,
+      "threat_level": "MEDIUM",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "a4cdbc46-66d7-4afe-8032-9e2a7535c6e7",
+        "type": "Email",
+        "label": "Email: STRICTLY CONFIDENTIAL // ...",
+        "threat_score": 0.67,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:elena.board.chair@management-board-review.com",
+      "label": "elena.board.chair@management-board-review.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:elena.board.chair@management-board-review.com",
+        "type": "Person",
+        "label": "elena.board.chair@management-board-review.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:management-board-review.com",
+      "label": "management-board-review.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:management-board-review.com",
+        "type": "Domain",
+        "label": "management-board-review.com",
+        "is_lookalike": false,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:198.51.100.88",
+      "label": "198.51.100.88 (GB)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:198.51.100.88",
+        "type": "IPAddress",
+        "label": "198.51.100.88 (GB)",
+        "asn": "AS14061",
+        "isp": "DigitalOcean, LLC",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "58b60701-5a4f-47ee-a289-77674f0c5cda",
+      "label": "Email: URGENT: Updated Banking C...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.49,
+      "threat_level": "MEDIUM",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "58b60701-5a4f-47ee-a289-77674f0c5cda",
+        "type": "Email",
+        "label": "Email: URGENT: Updated Banking C...",
+        "threat_score": 0.49,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:billing@acme-cloudsystems-corp.com",
+      "label": "billing@acme-cloudsystems-corp.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:billing@acme-cloudsystems-corp.com",
+        "type": "Person",
+        "label": "billing@acme-cloudsystems-corp.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:acme-cloudsystems-corp.com",
+      "label": "acme-cloudsystems-corp.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:acme-cloudsystems-corp.com",
+        "type": "Domain",
+        "label": "acme-cloudsystems-corp.com",
+        "is_lookalike": false,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:198.51.100.99",
+      "label": "198.51.100.99 (GB)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:198.51.100.99",
+        "type": "IPAddress",
+        "label": "198.51.100.99 (GB)",
+        "asn": "AS14061",
+        "isp": "DigitalOcean, LLC",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "b474d5eb-531d-42aa-afbc-22320cef1de7",
+      "label": "Email: Quick Task // Client Appr...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.07,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "b474d5eb-531d-42aa-afbc-22320cef1de7",
+        "type": "Email",
+        "label": "Email: Quick Task // Client Appr...",
+        "threat_score": 0.07,
+        "threat_level": "LOW"
+      }
+    },
+    {
+      "id": "ip:209.85.220.65",
+      "label": "209.85.220.65 (NL)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 5,
+      "degree": 5,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:209.85.220.65",
+        "type": "IPAddress",
+        "label": "209.85.220.65 (NL)",
+        "asn": "AS50673",
+        "isp": "Serverius Holding B.V.",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "095c7f65-9062-42ea-b50f-8e230ac2c082",
+      "label": "Email: Please DocuSign: Mutual N...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.54,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "095c7f65-9062-42ea-b50f-8e230ac2c082",
+        "type": "Email",
+        "label": "Email: Please DocuSign: Mutual N...",
+        "threat_score": 0.54,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:service@docusign-secure-review.com",
+      "label": "service@docusign-secure-review.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:service@docusign-secure-review.com",
+        "type": "Person",
+        "label": "service@docusign-secure-review.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:docusign-secure-review.com",
+      "label": "docusign-secure-review.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 4,
+      "degree": 4,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:docusign-secure-review.com",
+        "type": "Domain",
+        "label": "docusign-secure-review.com",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:legit_docusign",
+      "label": "DocuSign",
+      "type": "BrandTarget",
+      "color": "#6366F1",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:legit_docusign",
+        "type": "BrandTarget",
+        "label": "DocuSign"
+      }
+    },
+    {
+      "id": "ip:104.21.45.12",
+      "label": "104.21.45.12 (US)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 6,
+      "degree": 6,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:104.21.45.12",
+        "type": "IPAddress",
+        "label": "104.21.45.12 (US)",
+        "asn": "AS16509",
+        "isp": "Amazon.com, Inc.",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "b79aad9b-c1ca-43cf-ba36-98a14ebc6669",
+      "label": "Email: Microsoft 365: Urgent Pas...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.57,
+      "threat_level": "MEDIUM",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "b79aad9b-c1ca-43cf-ba36-98a14ebc6669",
+        "type": "Email",
+        "label": "Email: Microsoft 365: Urgent Pas...",
+        "threat_score": 0.57,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:no-reply@office365-security-portal.net",
+      "label": "no-reply@office365-security-portal.net",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:no-reply@office365-security-portal.net",
+        "type": "Person",
+        "label": "no-reply@office365-security-portal.net",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:office365-security-portal.net",
+      "label": "office365-security-portal.net",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:office365-security-portal.net",
+        "type": "Domain",
+        "label": "office365-security-portal.net",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:legit_microsoft_/_office_365",
+      "label": "Microsoft / Office 365",
+      "type": "BrandTarget",
+      "color": "#6366F1",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:legit_microsoft_/_office_365",
+        "type": "BrandTarget",
+        "label": "Microsoft / Office 365"
+      }
+    },
+    {
+      "id": "ip:172.67.182.90",
+      "label": "172.67.182.90 (SG)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:172.67.182.90",
+        "type": "IPAddress",
+        "label": "172.67.182.90 (SG)",
+        "asn": "AS7473",
+        "isp": "Singtel Optus",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "infra:AS7473",
+      "label": "AS7473 (Singtel Optus)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS7473",
+        "type": "Infrastructure",
+        "label": "AS7473 (Singtel Optus)"
+      }
+    },
+    {
+      "id": "74276f96-846e-44d2-b5ed-3752a1977e8d",
+      "label": "Email: Security Notice: Review T...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.57,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "74276f96-846e-44d2-b5ed-3752a1977e8d",
+        "type": "Email",
+        "label": "Email: Security Notice: Review T...",
+        "threat_score": 0.57,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:no-reply@workspace-auth-verify.com",
+      "label": "no-reply@workspace-auth-verify.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:no-reply@workspace-auth-verify.com",
+        "type": "Person",
+        "label": "no-reply@workspace-auth-verify.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:workspace-auth-verify.com",
+      "label": "workspace-auth-verify.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:workspace-auth-verify.com",
+        "type": "Domain",
+        "label": "workspace-auth-verify.com",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:legit_google_/_workspace",
+      "label": "Google / Workspace",
+      "type": "BrandTarget",
+      "color": "#6366F1",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:legit_google_/_workspace",
+        "type": "BrandTarget",
+        "label": "Google / Workspace"
+      }
+    },
+    {
+      "id": "ip:104.21.89.201",
+      "label": "104.21.89.201 (SG)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:104.21.89.201",
+        "type": "IPAddress",
+        "label": "104.21.89.201 (SG)",
+        "asn": "AS7473",
+        "isp": "Singtel Optus",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "d2c51e35-7202-4e92-b145-88a2654dedd7",
+      "label": "Email: SharePoint Online: Q4 Exe...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.54,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "d2c51e35-7202-4e92-b145-88a2654dedd7",
+        "type": "Email",
+        "label": "Email: SharePoint Online: Q4 Exe...",
+        "threat_score": 0.54,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "person:files@docusign-secure-review.com",
+      "label": "files@docusign-secure-review.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:files@docusign-secure-review.com",
+        "type": "Person",
+        "label": "files@docusign-secure-review.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "2141200a-d098-436a-b6a8-f56418d04c56",
+      "label": "Email: URGENT: Mandatory KYC Ver...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.98,
+      "threat_level": "CRITICAL",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "2141200a-d098-436a-b6a8-f56418d04c56",
+        "type": "Email",
+        "label": "Email: URGENT: Mandatory KYC Ver...",
+        "threat_score": 0.98,
+        "threat_level": "CRITICAL"
+      }
+    },
+    {
+      "id": "person:support@apex-secureverify.com",
+      "label": "support@apex-secureverify.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:support@apex-secureverify.com",
+        "type": "Person",
+        "label": "support@apex-secureverify.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:apex-secureverify.com",
+      "label": "apex-secureverify.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:apex-secureverify.com",
+        "type": "Domain",
+        "label": "apex-secureverify.com",
+        "is_lookalike": true,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ba019503-b906-4777-b1a8-3350d98eb341",
+      "label": "Email: URGENT: Confidential Acqu...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.63,
+      "threat_level": "MEDIUM",
+      "badge_count": 3,
+      "degree": 3,
+      "is_synthetic": false,
+      "details": {
+        "id": "ba019503-b906-4777-b1a8-3350d98eb341",
+        "type": "Email",
+        "label": "Email: URGENT: Confidential Acqu...",
+        "threat_score": 0.63,
+        "threat_level": "MEDIUM"
+      }
+    },
+    {
+      "id": "ea49890f-9757-4b07-9f70-5c8fa8329673",
+      "label": "Email: Monthly Engineering Archi...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.07,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "ea49890f-9757-4b07-9f70-5c8fa8329673",
+        "type": "Email",
+        "label": "Email: Monthly Engineering Archi...",
+        "threat_score": 0.07,
+        "threat_level": "LOW"
+      }
+    },
+    {
+      "id": "person:engineering-updates@google.com",
+      "label": "engineering-updates@google.com",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "person:engineering-updates@google.com",
+        "type": "Person",
+        "label": "engineering-updates@google.com",
+        "display_name": "",
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "domain:google.com",
+      "label": "google.com",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "domain:google.com",
+        "type": "Domain",
+        "label": "google.com",
+        "is_lookalike": false,
+        "is_synthetic": false
+      }
+    },
+    {
+      "id": "ip:209.85.220.41",
+      "label": "209.85.220.41 (US)",
+      "type": "IPAddress",
+      "color": "#F59E0B",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": false,
+      "details": {
+        "id": "ip:209.85.220.41",
+        "type": "IPAddress",
+        "label": "209.85.220.41 (US)",
+        "asn": "AS15169",
+        "isp": "Google LLC",
+        "is_tor": false
+      }
+    },
+    {
+      "id": "infra:AS15169",
+      "label": "AS15169 (Google LLC)",
+      "type": "Infrastructure",
+      "color": "#10B981",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "infra:AS15169",
+        "type": "Infrastructure",
+        "label": "AS15169 (Google LLC)"
+      }
+    },
+    {
+      "id": "445f2220-86f6-4448-afdb-76ed9d867d70",
+      "label": "Email: -Financial Warning 5b8b11...",
+      "type": "Email",
+      "color": "#FA7273",
+      "threat_score": 0.25,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": false,
+      "details": {
+        "id": "445f2220-86f6-4448-afdb-76ed9d867d70",
+        "type": "Email",
+        "label": "Email: -Financial Warning 5b8b11...",
+        "threat_score": 0.25,
+        "threat_level": "LOW"
+      }
+    },
+    {
+      "id": "person:csv-import@unknown.local",
+      "label": "csv-import@unknown.local",
+      "type": "Person",
+      "color": "#A855F7",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 2,
+      "degree": 2,
+      "is_synthetic": true,
+      "details": {
+        "id": "person:csv-import@unknown.local",
+        "type": "Person",
+        "label": "csv-import@unknown.local",
+        "display_name": "",
+        "is_synthetic": true
+      }
+    },
+    {
+      "id": "domain:unknown.local",
+      "label": "unknown.local",
+      "type": "Domain",
+      "color": "#38BDF8",
+      "threat_score": 0.0,
+      "threat_level": "LOW",
+      "badge_count": 1,
+      "degree": 1,
+      "is_synthetic": true,
+      "details": {
+        "id": "domain:unknown.local",
+        "type": "Domain",
+        "label": "unknown.local",
+        "is_lookalike": false,
+        "is_synthetic": true
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "3058e03e-d083-4a49-b64a-3e8f20326c1d",
+      "target": "person:alerts@onlineapex-kyc-update.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "3058e03e-d083-4a49-b64a-3e8f20326c1d",
+      "target": "ip:185.220.101.5",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "3058e03e-d083-4a49-b64a-3e8f20326c1d",
+      "target": "campaign:CMP-2024-0034",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:alerts@onlineapex-kyc-update.com",
+      "target": "domain:onlineapex-kyc-update.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "domain:onlineapex-kyc-update.com",
+      "target": "domain:legit_apex_national_bank",
+      "relationship": "LOOKALIKE_OF",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "ip:185.220.101.5",
+      "target": "infra:AS50673",
+      "relationship": "HOSTED_BY",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "campaign:CMP-2024-0034",
+      "target": "ip:185.220.101.5",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "campaign:CMP-2024-0034",
+      "target": "ip:194.26.29.117",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0034",
+      "target": "ip:185.220.101.34",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "campaign:CMP-2024-0034",
+      "target": "ip:185.220.101.9",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0034",
+      "target": "ip:194.26.29.120",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "fca78041-1b6b-4597-aa1c-7e446ce874a8",
+      "target": "person:security@apex-netbanking-alert.xyz",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "fca78041-1b6b-4597-aa1c-7e446ce874a8",
+      "target": "ip:194.26.29.117",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "fca78041-1b6b-4597-aa1c-7e446ce874a8",
+      "target": "campaign:CMP-2024-0034",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:security@apex-netbanking-alert.xyz",
+      "target": "domain:apex-netbanking-alert.xyz",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "domain:apex-netbanking-alert.xyz",
+      "target": "domain:legit_apex_national_bank",
+      "relationship": "LOOKALIKE_OF",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "ip:194.26.29.117",
+      "target": "infra:AS51852",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "90b557a6-16fb-411b-b009-92ea094a33ec",
+      "target": "person:no-reply@apex-update-portal.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "90b557a6-16fb-411b-b009-92ea094a33ec",
+      "target": "ip:185.220.101.34",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "90b557a6-16fb-411b-b009-92ea094a33ec",
+      "target": "campaign:CMP-2024-0034",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:no-reply@apex-update-portal.com",
+      "target": "domain:apex-update-portal.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "domain:apex-update-portal.com",
+      "target": "domain:legit_apex_national_bank",
+      "relationship": "LOOKALIKE_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:185.220.101.34",
+      "target": "infra:AS205100",
+      "relationship": "HOSTED_BY",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "cf27d8b2-6f5a-42c8-9c63-422dba47edc5",
+      "target": "person:circulars@regulatory-notice.internal",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "cf27d8b2-6f5a-42c8-9c63-422dba47edc5",
+      "target": "ip:185.220.102.8",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "cf27d8b2-6f5a-42c8-9c63-422dba47edc5",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:circulars@regulatory-notice.internal",
+      "target": "domain:regulatory-notice.internal",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:185.220.102.8",
+      "target": "infra:AS16509",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:185.220.102.8",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:104.21.45.12",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "campaign:CMP-2024-0089",
+      "target": "ip:104.21.89.201",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "20d2a8a4-2535-4a98-b1de-239e72e97d55",
+      "target": "person:rewards@onlineapex-kyc-update.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "20d2a8a4-2535-4a98-b1de-239e72e97d55",
+      "target": "ip:185.220.101.9",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "20d2a8a4-2535-4a98-b1de-239e72e97d55",
+      "target": "campaign:CMP-2024-0034",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:rewards@onlineapex-kyc-update.com",
+      "target": "domain:onlineapex-kyc-update.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:185.220.101.9",
+      "target": "infra:AS16509",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "6925f533-bdcb-4e01-941a-01c31c0b18f5",
+      "target": "person:limit-enhancement@apex-netbanking-alert.xyz",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "6925f533-bdcb-4e01-941a-01c31c0b18f5",
+      "target": "ip:194.26.29.120",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "6925f533-bdcb-4e01-941a-01c31c0b18f5",
+      "target": "campaign:CMP-2024-0034",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:limit-enhancement@apex-netbanking-alert.xyz",
+      "target": "domain:apex-netbanking-alert.xyz",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:194.26.29.120",
+      "target": "infra:AS14061",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "c5efd2f4-5b1a-414b-b616-127710d2ddd0",
+      "target": "person:alerts@apex-bank-verify.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "c5efd2f4-5b1a-414b-b616-127710d2ddd0",
+      "target": "ip:185.220.101.5",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "c5efd2f4-5b1a-414b-b616-127710d2ddd0",
+      "target": "campaign:CMP-2024-0034",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:alerts@apex-bank-verify.com",
+      "target": "domain:apex-bank-verify.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "domain:apex-bank-verify.com",
+      "target": "domain:legit_apex_national_bank",
+      "relationship": "LOOKALIKE_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "4e758823-6c20-444d-9015-3dfea12dee7c",
+      "target": "person:ceo.mercer.corp@gmail.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "4e758823-6c20-444d-9015-3dfea12dee7c",
+      "target": "ip:198.51.100.42",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "4e758823-6c20-444d-9015-3dfea12dee7c",
+      "target": "campaign:CMP-2024-0012",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:ceo.mercer.corp@gmail.com",
+      "target": "domain:gmail.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 3,
+      "count": 3
+    },
+    {
+      "source": "ip:198.51.100.42",
+      "target": "infra:AS14061",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0012",
+      "target": "ip:198.51.100.42",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "campaign:CMP-2024-0012",
+      "target": "ip:209.85.220.65",
+      "relationship": "USES_INFRASTRUCTURE",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "a4cdbc46-66d7-4afe-8032-9e2a7535c6e7",
+      "target": "person:elena.board.chair@management-board-review.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "a4cdbc46-66d7-4afe-8032-9e2a7535c6e7",
+      "target": "ip:198.51.100.88",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:elena.board.chair@management-board-review.com",
+      "target": "domain:management-board-review.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:198.51.100.88",
+      "target": "infra:AS14061",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "58b60701-5a4f-47ee-a289-77674f0c5cda",
+      "target": "person:billing@acme-cloudsystems-corp.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "58b60701-5a4f-47ee-a289-77674f0c5cda",
+      "target": "ip:198.51.100.99",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:billing@acme-cloudsystems-corp.com",
+      "target": "domain:acme-cloudsystems-corp.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:198.51.100.99",
+      "target": "infra:AS14061",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "b474d5eb-531d-42aa-afbc-22320cef1de7",
+      "target": "person:ceo.mercer.corp@gmail.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "b474d5eb-531d-42aa-afbc-22320cef1de7",
+      "target": "ip:209.85.220.65",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:209.85.220.65",
+      "target": "infra:AS50673",
+      "relationship": "HOSTED_BY",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "095c7f65-9062-42ea-b50f-8e230ac2c082",
+      "target": "person:service@docusign-secure-review.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "095c7f65-9062-42ea-b50f-8e230ac2c082",
+      "target": "ip:104.21.45.12",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "095c7f65-9062-42ea-b50f-8e230ac2c082",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:service@docusign-secure-review.com",
+      "target": "domain:docusign-secure-review.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "domain:docusign-secure-review.com",
+      "target": "domain:legit_docusign",
+      "relationship": "LOOKALIKE_OF",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "ip:104.21.45.12",
+      "target": "infra:AS16509",
+      "relationship": "HOSTED_BY",
+      "weight": 2,
+      "count": 2
+    },
+    {
+      "source": "b79aad9b-c1ca-43cf-ba36-98a14ebc6669",
+      "target": "person:no-reply@office365-security-portal.net",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "b79aad9b-c1ca-43cf-ba36-98a14ebc6669",
+      "target": "ip:172.67.182.90",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:no-reply@office365-security-portal.net",
+      "target": "domain:office365-security-portal.net",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "domain:office365-security-portal.net",
+      "target": "domain:legit_microsoft_/_office_365",
+      "relationship": "LOOKALIKE_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:172.67.182.90",
+      "target": "infra:AS7473",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "74276f96-846e-44d2-b5ed-3752a1977e8d",
+      "target": "person:no-reply@workspace-auth-verify.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "74276f96-846e-44d2-b5ed-3752a1977e8d",
+      "target": "ip:104.21.89.201",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "74276f96-846e-44d2-b5ed-3752a1977e8d",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:no-reply@workspace-auth-verify.com",
+      "target": "domain:workspace-auth-verify.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "domain:workspace-auth-verify.com",
+      "target": "domain:legit_google_/_workspace",
+      "relationship": "LOOKALIKE_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:104.21.89.201",
+      "target": "infra:AS7473",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "d2c51e35-7202-4e92-b145-88a2654dedd7",
+      "target": "person:files@docusign-secure-review.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "d2c51e35-7202-4e92-b145-88a2654dedd7",
+      "target": "ip:104.21.45.12",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "d2c51e35-7202-4e92-b145-88a2654dedd7",
+      "target": "campaign:CMP-2024-0089",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:files@docusign-secure-review.com",
+      "target": "domain:docusign-secure-review.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "2141200a-d098-436a-b6a8-f56418d04c56",
+      "target": "person:support@apex-secureverify.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "2141200a-d098-436a-b6a8-f56418d04c56",
+      "target": "ip:185.220.101.34",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "2141200a-d098-436a-b6a8-f56418d04c56",
+      "target": "campaign:CMP-2024-0034",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:support@apex-secureverify.com",
+      "target": "domain:apex-secureverify.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "domain:apex-secureverify.com",
+      "target": "domain:legit_apex_national_bank",
+      "relationship": "LOOKALIKE_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ba019503-b906-4777-b1a8-3350d98eb341",
+      "target": "person:ceo.mercer.corp@gmail.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ba019503-b906-4777-b1a8-3350d98eb341",
+      "target": "ip:209.85.220.65",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ba019503-b906-4777-b1a8-3350d98eb341",
+      "target": "campaign:CMP-2024-0012",
+      "relationship": "PART_OF",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ea49890f-9757-4b07-9f70-5c8fa8329673",
+      "target": "person:engineering-updates@google.com",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ea49890f-9757-4b07-9f70-5c8fa8329673",
+      "target": "ip:209.85.220.41",
+      "relationship": "SENT_FROM",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:engineering-updates@google.com",
+      "target": "domain:google.com",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "ip:209.85.220.41",
+      "target": "infra:AS15169",
+      "relationship": "HOSTED_BY",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "445f2220-86f6-4448-afdb-76ed9d867d70",
+      "target": "person:csv-import@unknown.local",
+      "relationship": "CLAIMS_SENDER",
+      "weight": 1,
+      "count": 1
+    },
+    {
+      "source": "person:csv-import@unknown.local",
+      "target": "domain:unknown.local",
+      "relationship": "HAS_ADDRESS",
+      "weight": 1,
+      "count": 1
+    }
+  ],
+  "mode": "detailed",
+  "active_campaign_id": "all",
+  "available_campaigns": [
+    {
+      "id": "CMP-2024-0034",
+      "name": "Operation GhostRelay (Credential Harvester)",
+      "threat_level": "CRITICAL",
+      "actor_sophistication": "medium-high",
+      "email_count": 7,
+      "description": "Coordinated credential harvesting campaign targeting Apex National Bank customers via bulletproof AS205100 and lookalike domains."
+    },
+    {
+      "id": "CMP-2024-0089",
+      "name": "FinPhish Global Cloud Harvester",
+      "threat_level": "CRITICAL",
+      "actor_sophistication": "high",
+      "email_count": 4,
+      "description": "Cross-tenant OAuth token and Microsoft 365 / DocuSign credential phishing campaign with deceptive hyperlink redirection."
+    },
+    {
+      "id": "CMP-2024-0012",
+      "name": "CEO Wire Fraud BEC Syndicate",
+      "threat_level": "HIGH",
+      "actor_sophistication": "high",
+      "email_count": 2,
+      "description": "Executive display-name impersonation campaign requesting urgent payroll or vendor wire transfers to offshore accounts."
+    }
+  ],
+  "total_entities_in_db": 19,
+  "queried_entities_count": 19
+}

@@ -141,14 +141,14 @@
   {
     "id": "BP-004",
     "check": "B2.graph_search_filter",
-    "severity": "low",
+    "severity": "high",
     "evidence": "evaluation/blind/panel_b/B2.json",
-    "status": "deferred",
+    "status": "open",
     "fix_commit": null,
-    "target_version": "v2.0.0",
+    "target_version": "v1.2.0",
     "regression_test": "evaluation/blind/scripts/run_b2.py",
     "effort": "M",
-    "description": "v2.0 roadmap feature request for client-side multi-dimensional graph search and filtering."
+    "description": "Promoted from deferred to v1.2.0 graph redesign: client-side entity search, highlight, and multi-dimensional filter."
   },
   {
     "id": "CICD-001",
@@ -744,5 +744,55 @@
     "fix_commit": "HEAD",
     "regression_test": "backend/tests/test_deployment_serving.py::test_single_origin_static_mount_serving",
     "description": "test_single_origin_static_mount_serving skipped on CI runners due to missing frontend dist build in backend job; resolved by installing Node and building SPA bundle prior to pytest."
+  },
+  {
+    "id": "GRAPH-003",
+    "check": "ui.graph_legibility",
+    "severity": "high",
+    "evidence": "evaluation/graph_redesign/screenshots/regime_a_demo_scale.png + CampaignNetworkGraph.tsx:L35 unsorted array head slice",
+    "status": "resolved",
+    "target_version": "v1.2.0",
+    "effort": "L",
+    "impact": "H",
+    "fix_commit": "HEAD",
+    "regression_test": "tools/verify_sentry.py --start (ui.graph_legibility)",
+    "description": "Campaign Network Graph renders as closely threaded beads / dense hairball without cluster separation, dynamic hub aggregation, or entity search, degrading forensic legibility. Resolved via G-D1..G-D8, deterministic physics, and Gate 21 (ui.graph_legibility)."
+  },
+  {
+    "id": "GRAPH-004",
+    "check": "correlation.synthetic_import_entity_badging",
+    "severity": "medium",
+    "evidence": "Live corpus top-10 hub degree #2: person:csv-import@unknown.local (degree 214)",
+    "status": "resolved",
+    "target_version": "v1.2.0",
+    "effort": "S",
+    "impact": "M",
+    "fix_commit": "HEAD",
+    "regression_test": "backend/tests/test_correlation_deep.py",
+    "description": "Synthetic pseudo-entities (e.g. person:csv-import@unknown.local at degree 214) distort graph topology; aggregation layer collapses and badges synthetic import provenance entities distinctly."
+  },
+  {
+    "id": "GRAPH-005",
+    "check": "ui.query_window_selection_criteria_disclosure",
+    "severity": "medium",
+    "evidence": "CorrelationEngine graph sync queries top-1000 emails by severity and recency",
+    "status": "resolved",
+    "target_version": "v1.2.0",
+    "effort": "S",
+    "impact": "M",
+    "fix_commit": "HEAD",
+    "regression_test": "tools/verify_sentry.py --start (ui.graph_legibility)",
+    "description": "At corpus scale, the campaign graph correlates the top-1,000 emails ordered by threat severity and recency. This selection window is explicitly disclosed in the UI banner rather than remaining silent."
+  },
+  {
+    "id": "BP-005",
+    "check": "B2.graph_server_expand_refetch",
+    "severity": "medium",
+    "evidence": "Phase 3 P3-A disposition",
+    "status": "deferred",
+    "target_version": "v1.3.0",
+    "effort": "M",
+    "impact": "M",
+    "description": "Server-side asynchronous 1-hop expansion and refetch querying raw un-correlated database entities beyond active correlation quota."
   }
 ]

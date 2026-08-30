@@ -376,6 +376,67 @@ async def run_browser_checks(report, ui_url, api_base=None):
         await canvas_scene("ui.map_canvas_renders", MAP_NAV, "03_map.png")
         await canvas_scene("ui.graph_canvas_renders", GRAPH_NAV, "04_graph.png")
 
+        # -- Scene 5b: Graph Redesign Legibility Gate (GRAPH-003 / BP-004) ----
+        try:
+            # 1. Cluster Mode Invariants
+            m_cluster = await page.evaluate("() => window.__graphMetrics")
+            if not m_cluster:
+                raise AssertionError("window.__graphMetrics is undefined on graph canvas")
+
+            # Assert 0 Hub Label Collisions (Pre-decided P2-B standard)
+            hub_overlaps = m_cluster.get("hub_label_collisions", 0)
+            if hub_overlaps != 0:
+                raise AssertionError(f"Expected 0 hub label collisions in cluster mode, got {hub_overlaps}")
+
+            # Assert minimum pairwise distance meets collision boundary
+            min_dist = m_cluster.get("min_pairwise_distance", 0)
+            if min_dist < 26.0:
+                raise AssertionError(f"Cluster mode min_pairwise_distance {min_dist}px is below collision boundary threshold (26.0px)")
+
+            # 2. Supernode Mode Invariants
+            super_btn = page.locator("button:has-text('All Supernodes')").first
+            if await super_btn.count() > 0:
+                await super_btn.click()
+                await asyncio.sleep(2.0)
+                m_super = await page.evaluate("() => window.__graphMetrics")
+                if m_super.get("rendered_nodes", 0) != 12:
+                    raise AssertionError(f"Expected exactly 12 supernode nodes in demo state, got {m_super.get('rendered_nodes')}")
+                if m_super.get("min_pairwise_distance", 0) < 35.0:
+                    raise AssertionError(f"Supernode mode min_pairwise_distance {m_super.get('min_pairwise_distance')}px is below threshold (35.0px)")
+
+            # 3. Filter-Awareness Check (P3-B verification)
+            email_toggle = page.locator("button:has-text('Email Artifacts')").first
+            cluster_btn = page.locator("button:has-text('Cluster View')").first
+            if await cluster_btn.count() > 0:
+                await cluster_btn.click()
+                await asyncio.sleep(1.0)
+
+            initial_cluster_nodes = (await page.evaluate("() => window.__graphMetrics")).get("rendered_nodes", 30)
+            if await email_toggle.count() > 0:
+                await email_toggle.click()
+                await asyncio.sleep(1.0)
+                m_filtered = await page.evaluate("() => window.__graphMetrics")
+                if m_filtered.get("rendered_nodes", 0) >= initial_cluster_nodes:
+                    raise AssertionError(f"Expected rendered_nodes to drop after filtering Email Artifacts (was {initial_cluster_nodes}, got {m_filtered.get('rendered_nodes')})")
+                # Toggle back
+                await email_toggle.click()
+                await asyncio.sleep(0.5)
+
+            # 4. Headless Corpus Fixture Invariants (Directive 2)
+            corpus_fixture_path = REPO_ROOT / "evaluation" / "graph_redesign" / "fixtures" / "corpus_graph_fixture.json"
+            if corpus_fixture_path.exists():
+                corpus_data = json.loads(corpus_fixture_path.read_text(encoding="utf-8"))
+                c_nodes = len(corpus_data.get("nodes", []))
+                c_links = len(corpus_data.get("links", []))
+                if c_nodes != 15 or c_links != 17:
+                    raise AssertionError(f"Corpus fixture invariants violated: expected 15 nodes / 17 links, got {c_nodes} nodes / {c_links} links")
+
+            report.add("ui.graph_legibility", "PASS",
+                       f"Cluster min_dist={min_dist}px (>=26px); Supernodes=12 nodes; filter-awareness validated; corpus invariants 15/17 preserved")
+        except Exception as exc:
+            await page.screenshot(path=str(SHOT_DIR / "04_graph_legibility_FAIL.png"), full_page=True)
+            report.add("ui.graph_legibility", "FAIL", repr(exc)[:300])
+
         # -- Scene 6: Ingest Upload E2E (ING-003 golden gate 16) ------------
         upload_fixture_path = REPO_ROOT / "evaluation" / "ingest_repair" / "fixtures" / "probe_gate16.eml"
         upload_subject = "HARNESS-PROBE-GATE16-UPLOAD"

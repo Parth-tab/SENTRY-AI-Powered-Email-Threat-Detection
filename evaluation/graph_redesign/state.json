@@ -1,0 +1,125 @@
+{
+  "project": "SENTRY-AI-Powered-Email-Threat-Detection",
+  "feature": "GRAPH-REDESIGN",
+  "constitution": "Re-entrant constitution: one phase per session; report back; await External Auditor clearance.",
+  "current_phase": "ARC_CERTIFIED_AND_CLOSED",
+  "phase_status": {
+    "PHASE_0": "COMPLETED",
+    "PHASE_1": "COMPLETED",
+    "PHASE_2": "COMPLETED",
+    "PHASE_3": "COMPLETED",
+    "PHASE_4": "COMPLETED",
+    "PHASE_5": "COMPLETED"
+  },
+  "conditions_ledger": {
+    "P0-A": {
+      "status": "CLOSED",
+      "note": "Phase 2 floor honored: full simulation engine built in frontend/src/components/graph/graphPhysics.ts."
+    },
+    "P0-B": {
+      "status": "CLOSED",
+      "note": "GRAPH-003 selection bias resolved via G-D8 stratified diversity cap."
+    },
+    "P0-C": {
+      "status": "CLOSED",
+      "note": "GRAPH-004 badged and tested."
+    },
+    "P1-A": {
+      "status": "CLOSED",
+      "note": "Email Ingestion vs Deduped vs Graph Representation Reconciliation formally stated."
+    },
+    "P1-B": {
+      "status": "CLOSED",
+      "note": "API contract parameter tests added in backend/tests/test_api_endpoints.py (111 tests passing)."
+    },
+    "P2-A": {
+      "status": "CLOSED",
+      "note": "GRAPH-005 filed in evaluation/defects.json. Honest correlation query selection banner active in UI at corpus scale."
+    },
+    "P2-B": {
+      "status": "CLOSED",
+      "note": "Label-collision gate pre-decision: Hub labels (Campaign Supernodes, Centroids, Infrastructure ASNs, Brand Targets) must maintain strictly 0 collisions (hub_label_collisions == 0). Leaf labels are hover-gated and exempt from static collision count."
+    },
+    "P2-C": {
+      "status": "CLOSED",
+      "note": "Corpus supernode fixture metrics documented (15 nodes / 17 links, 54.0px min distance, 0 hub label collisions). Supernode hull separation ratio marked EXEMPT/NA for single aggregated starburst graph."
+    },
+    "P3-A": {
+      "status": "CLOSED",
+      "note": "Explicit disposition: Client-side 1-Hop Neighborhood Isolation isolates existing correlated payload in memory (0ms latency); Server-side expand with refetch is cataloged for roadmap under BP-005."
+    },
+    "P3-B": {
+      "status": "CLOSED",
+      "note": "getMetrics() made strictly filter-aware; verified rendered_nodes drops dynamically upon filter toggle (30 -> 23 on email toggle)."
+    },
+    "P3-C": {
+      "status": "CLOSED",
+      "note": "Pytest suite delta is 0 (111/111 passed unchanged); verification harness expanded from 20 to 21 gates with ui.graph_legibility."
+    },
+    "P4-A": {
+      "status": "CLOSED",
+      "note": "The legibility gate guards against structural failure states (catastrophic physical collapse, label overlaps, topology breakdown) rather than continuous tuning drift; calibration tuning and boundary stress testing owned in Phase 5 Lead Engineer review."
+    },
+    "F-1": {
+      "status": "CLOSED",
+      "note": "Gate number corrected across all pitch and review documents: Gate 21 (ui.graph_legibility)."
+    },
+    "F-2": {
+      "status": "CLOSED",
+      "note": "Methodological simulation disclaimer restored to blind tester review section in GRAPH_REVIEW.md."
+    },
+    "F-3": {
+      "status": "CLOSED",
+      "note": "Guarantee phrasing tightened to 'structurally bounded by aggregation and verified by CI on every commit'."
+    },
+    "F-4": {
+      "status": "CLOSED",
+      "note": "QA gate-gaming probe clarified regarding valid filtered view states vs default unfiltered state assertions."
+    }
+  },
+  "defects_tracked": [
+    {
+      "id": "GRAPH-003",
+      "severity": "P1 / HIGH",
+      "check": "ui.graph_legibility",
+      "status": "CLOSED_AND_VERIFIED",
+      "description": "Campaign Network Graph renders as closely threaded beads / dense hairball without cluster separation, dynamic hub aggregation, or entity search, degrading forensic legibility. Resolved via G-D1..G-D8, deterministic physics, and Gate 21 (ui.graph_legibility)."
+    },
+    {
+      "id": "GRAPH-004",
+      "severity": "MEDIUM",
+      "check": "correlation.synthetic_import_entity_badging",
+      "status": "CLOSED_AND_VERIFIED",
+      "description": "Synthetic pseudo-entities distort graph topology; aggregation layer collapses and badges synthetic import provenance entities distinctly."
+    },
+    {
+      "id": "GRAPH-005",
+      "severity": "MEDIUM",
+      "check": "ui.query_window_selection_criteria_disclosure",
+      "status": "CLOSED_AND_VERIFIED",
+      "description": "At corpus scale, the campaign graph correlates the top-1,000 emails ordered by threat severity and recency, disclosed explicitly in the UI banner."
+    },
+    {
+      "id": "BP-004",
+      "severity": "HIGH",
+      "check": "B2.graph_search_filter",
+      "status": "CLOSED_AND_VERIFIED",
+      "description": "Client-side entity search, highlight, and multi-dimensional filter."
+    },
+    {
+      "id": "BP-005",
+      "severity": "MEDIUM",
+      "check": "B2.graph_server_expand_refetch",
+      "status": "ROADMAP_FILED",
+      "description": "Server-side asynchronous 1-hop expansion and refetch querying raw un-correlated database entities beyond active correlation quota."
+    }
+  ],
+  "certification": {
+    "status": "CERTIFIED",
+    "certified_by": "EXTERNAL AUDITOR",
+    "certification_date": "2026-08-30",
+    "review_document": "evaluation/graph_redesign/GRAPH_REVIEW.md",
+    "harness_standing": "21/21 PASS (Double Idempotency Pair Verified)",
+    "pytest_suite": "111/111 passed"
+  }
+}

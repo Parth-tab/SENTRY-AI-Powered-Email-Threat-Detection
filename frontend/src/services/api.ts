@@ -113,8 +113,21 @@ export async function fetchCampaigns(): Promise<CampaignItem[]> {
   return res.json();
 }
 
-export async function fetchGlobalGraph(): Promise<GraphData> {
-  const res = await fetch(`${API_BASE}/api/v1/campaigns/graph/all`);
+export async function fetchGlobalGraph(params?: {
+  campaignId?: string;
+  mode?: "cluster" | "supernode" | "detailed";
+  maxNodes?: number;
+  collapseSynthetic?: boolean;
+}): Promise<GraphData> {
+  const query = new URLSearchParams();
+  if (params?.campaignId) query.set("campaign_id", params.campaignId);
+  if (params?.mode) query.set("mode", params.mode);
+  if (params?.maxNodes) query.set("max_nodes", String(params.maxNodes));
+  if (params?.collapseSynthetic !== undefined) query.set("collapse_synthetic", String(params.collapseSynthetic));
+
+  const queryString = query.toString();
+  const url = `${API_BASE}/api/v1/campaigns/graph/all${queryString ? `?${queryString}` : ""}`;
+  const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to fetch network graph");
   return res.json();
 }
