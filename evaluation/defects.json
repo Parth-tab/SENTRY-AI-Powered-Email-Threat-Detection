@@ -770,5 +770,18 @@
     "fix_commit": null,
     "regression_test": "backend/tests/test_correlation_deep.py",
     "description": "Synthetic pseudo-entities (e.g. person:csv-import@unknown.local at degree 214) distort graph topology; aggregation layer must collapse or badge synthetic import provenance entities distinctly."
+  },
+  {
+    "id": "GRAPH-005",
+    "check": "ui.query_window_selection_criteria_disclosure",
+    "severity": "medium",
+    "evidence": "CorrelationEngine graph sync queries top-1000 emails by severity and recency",
+    "status": "open",
+    "target_version": "v1.2.0",
+    "effort": "S",
+    "impact": "M",
+    "fix_commit": null,
+    "regression_test": "tools/verify_sentry.py --start",
+    "description": "At corpus scale, the campaign graph correlates the top-1,000 emails ordered by threat severity and recency. This selection window must be explicitly disclosed in the UI banner rather than remaining silent."
   }
 ]

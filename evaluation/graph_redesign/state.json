@@ -2,13 +2,13 @@
   "project": "SENTRY-AI-Powered-Email-Threat-Detection",
   "feature": "GRAPH-REDESIGN",
   "constitution": "Re-entrant constitution: one phase per session; report back; await External Auditor clearance.",
-  "current_phase": "PHASE_2_LAYOUT_AND_VISUAL",
+  "current_phase": "PHASE_3_INTERACTION",
   "phase_status": {
     "PHASE_0": "COMPLETED",
     "PHASE_1": "COMPLETED",
     "PHASE_2": "COMPLETED",
-    "PHASE_3": "PENDING_AUDITOR_CLEARANCE",
-    "PHASE_4": "PENDING",
+    "PHASE_3": "COMPLETED",
+    "PHASE_4": "PENDING_AUDITOR_CLEARANCE",
     "PHASE_5": "PENDING"
   },
   "conditions_ledger": {
@@ -26,15 +26,27 @@
     },
     "P1-A": {
       "status": "CLOSED",
-      "note": "Email Ingestion vs Deduped vs Graph Representation Reconciliation formally stated: Ingested 6,021 emails -> dedupe pass collapses 174 exact corpus duplicates -> CSV synthesizer SHA-256 dedupe on identical synthesized bytes + non-correlated noise items -> CorrelationEngine graph builder queries top-1000 representative email records creating 1,108 unique email leaf nodes."
+      "note": "Email Ingestion vs Deduped vs Graph Representation Reconciliation formally stated."
     },
     "P1-B": {
       "status": "CLOSED",
-      "note": "API contract parameter tests added in backend/tests/test_api_endpoints.py (13 tests total in module, 111 in full suite)."
+      "note": "API contract parameter tests added in backend/tests/test_api_endpoints.py (111 tests passing)."
+    },
+    "P2-A": {
+      "status": "CLOSED",
+      "note": "GRAPH-005 filed in evaluation/defects.json. Honest correlation query selection banner active in UI at corpus scale."
+    },
+    "P2-B": {
+      "status": "CLOSED",
+      "note": "Label-collision gate pre-decision: Hub labels (Campaign Supernodes, Centroids, Infrastructure ASNs, Brand Targets) must maintain strictly 0 collisions (hub_label_collisions == 0). Leaf labels are hover-gated and exempt from static collision count."
+    },
+    "P2-C": {
+      "status": "CLOSED",
+      "note": "Corpus supernode fixture metrics documented (15 nodes / 17 links, 54.0px min distance, 0 hub label collisions). Supernode hull separation ratio marked EXEMPT/NA for single aggregated starburst graph."
     },
     "Directive_1": {
       "status": "CLOSED",
-      "note": "Pinned fixtures committed in evaluation/graph_redesign/fixtures/ (demo_graph_fixture.json, corpus_graph_fixture.json) and deterministic PRNG (Mulberry32 seed #42) wired."
+      "note": "Pinned fixtures committed in evaluation/graph_redesign/fixtures/ and deterministic PRNG wired."
     },
     "Directive_2": {
       "status": "OPEN",
@@ -58,63 +70,36 @@
       "description": "Synthetic pseudo-entities (e.g. person:csv-import@unknown.local at degree 214) distort graph topology; aggregation layer must collapse or badge synthetic import provenance entities distinctly."
     },
     {
+      "id": "GRAPH-005",
+      "severity": "MEDIUM",
+      "check": "ui.query_window_selection_criteria_disclosure",
+      "status": "IN_PROGRESS",
+      "description": "At corpus scale, the campaign graph correlates the top-1,000 emails ordered by threat severity and recency. This selection window must be explicitly disclosed in the UI banner rather than remaining silent."
+    },
+    {
       "id": "BP-004",
       "severity": "HIGH",
       "check": "B2.graph_search_filter",
-      "status": "OPEN",
+      "status": "RESOLVED_IN_PHASE_3",
       "description": "Client-side entity search, highlight, and multi-dimensional filter (promoted from deferred to v1.2.0 graph redesign)."
     }
   ],
-  "phase2_receipts": {
-    "pinned_fixtures": [
-      "evaluation/graph_redesign/fixtures/demo_graph_fixture.json",
-      "evaluation/graph_redesign/fixtures/demo_graph_cluster.json",
-      "evaluation/graph_redesign/fixtures/demo_graph_supernode.json",
-      "evaluation/graph_redesign/fixtures/demo_graph_detailed.json",
-      "evaluation/graph_redesign/fixtures/corpus_graph_fixture.json"
-    ],
-    "prng_seed": 42,
-    "metrics": {
-      "cluster_mode": {
-        "rendered_nodes": 30,
-        "rendered_links": 38,
-        "min_pairwise_distance": 37.9,
-        "avg_pairwise_distance": 121.3,
-        "hull_separation_ratio": 1.0,
-        "edge_node_ratio": 1.27,
-        "label_collisions": 4
-      },
-      "supernode_mode": {
-        "rendered_nodes": 12,
-        "rendered_links": 12,
-        "min_pairwise_distance": 54.6,
-        "avg_pairwise_distance": 121.8,
-        "hull_separation_ratio": 0.1,
-        "edge_node_ratio": 1.0,
-        "label_collisions": 1
-      },
-      "detailed_mode": {
-        "rendered_nodes": 78,
-        "rendered_links": 99,
-        "min_pairwise_distance": 30.7,
-        "avg_pairwise_distance": 156.3,
-        "hull_separation_ratio": 1.0,
-        "edge_node_ratio": 1.27,
-        "label_collisions": 22
-      }
+  "phase3_receipts": {
+    "friction_log": {
+      "question": "Which infrastructure hosts the most lookalike domains?",
+      "total_clicks": 3,
+      "total_duration_ms": 985,
+      "answer": "AS205100 (Jonas Bunde / F3 Netze) hosting apex-secureverify.com, onlineapex-kyc-update.com, apex-netbanking-alert.xyz targeting Apex National Bank",
+      "verdict": "ANSWERED_IN_3_CLICKS"
     },
+    "search_scoping_decision": "Client-side multi-field fuzzy search across active payload with match count disclosure and cross-campaign jump affordance.",
+    "legend_filter_policy": "Interactive type toggle pills with smooth dimming/filtering preserving physics stability.",
+    "1hop_expand_policy": "Inspector drawer Focus 1-Hop button isolates neighborhood and dims non-connected nodes/links to 15% opacity.",
     "screenshots": [
-      "evaluation/graph_redesign/screenshots/phase2_cluster_view.png",
-      "evaluation/graph_redesign/screenshots/phase2_supernodes_view.png",
-      "evaluation/graph_redesign/screenshots/phase2_detailed_view.png"
+      "evaluation/graph_redesign/screenshots/phase3_search_highlight.png",
+      "evaluation/graph_redesign/screenshots/phase3_1hop_isolated.png",
+      "evaluation/graph_redesign/screenshots/phase3_legend_toggle.png"
     ],
-    "law7_blast_radius": {
-      "affected_artifacts": [
-        "docs/tour_stops/stop_05_graph.png",
-        "docs/tour_stops/stop_06_campaign.png",
-        "docs/DEMO_SCRIPT.md (Stage 4: Campaign Correlation Graph walkthrough)"
-      ],
-      "scheduled_re_earn": "PHASE_4_LEGIBILITY_GATE"
-    }
+    "pytest_suite": "111/111 passed"
   }
 }

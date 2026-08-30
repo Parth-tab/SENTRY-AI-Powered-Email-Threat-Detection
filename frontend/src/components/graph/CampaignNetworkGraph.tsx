@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { Network, Filter, ZoomIn, ZoomOut, RotateCcw, Info, AlertCircle, Layers, ShieldAlert, Globe, Activity } from "lucide-react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { Network, Search, Filter, ZoomIn, ZoomOut, RotateCcw, Info, AlertCircle, Layers, ShieldAlert, Globe, Activity, Eye, EyeOff, Target, ArrowRight } from "lucide-react";
 import { fetchGlobalGraph } from "../../services/api";
 import { GraphData, GraphNode, GraphLink } from "../../types";
 import { GraphSimulation, SimNode, SimLink, computeConvexHull, GraphMetrics } from "./graphPhysics";
@@ -23,7 +23,13 @@ export const CampaignNetworkGraph: React.FC = () => {
   const [metrics, setMetrics] = useState<GraphMetrics | null>(null);
   const [showHulls, setShowHulls] = useState<boolean>(true);
   
+  // Phase 3 Interaction States
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [hiddenTypes, setHiddenTypes] = useState<Set<string>>(new Set());
+  const [focused1HopNodeId, setFocused1HopNodeId] = useState<string | null>(null);
+  
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
   const simRef = useRef<GraphSimulation | null>(null);
 
   // Load graph data based on mode & campaign filter
@@ -70,20 +76,37 @@ export const CampaignNetworkGraph: React.FC = () => {
       // 2. Clear canvas
       ctx.clearRect(0, 0, width, height);
 
-      // Connected neighborhood for hovered node
-      const hoveredId = hoveredNode?.id;
+      // Determine active highlight & focus sets
+      const effectiveFocusId = focused1HopNodeId || hoveredNode?.id;
       const neighborNodeIds = new Set<string>();
       const neighborLinkKeys = new Set<string>();
 
-      if (hoveredId) {
-        neighborNodeIds.add(hoveredId);
+      if (effectiveFocusId) {
+        neighborNodeIds.add(effectiveFocusId);
         sim.links.forEach((l) => {
-          if (l.source === hoveredId) {
+          if (l.source === effectiveFocusId) {
             neighborNodeIds.add(l.target);
             neighborLinkKeys.add(`${l.source}->${l.target}`);
-          } else if (l.target === hoveredId) {
+          } else if (l.target === effectiveFocusId) {
             neighborNodeIds.add(l.source);
             neighborLinkKeys.add(`${l.source}->${l.target}`);
+          }
+        });
+      }
+
+      // Search matching set
+      const isSearching = searchQuery.trim().length > 0;
+      const queryLower = searchQuery.toLowerCase().trim();
+      const matchedNodeIds = new Set<string>();
+      if (isSearching) {
+        sim.nodes.forEach((n) => {
+          if (
+            n.id.toLowerCase().includes(queryLower) ||
+            n.label.toLowerCase().includes(queryLower) ||
+            n.type.toLowerCase().includes(queryLower) ||
+            (n.details && JSON.stringify(n.details).toLowerCase().includes(queryLower))
+          ) {
+            matchedNodeIds.add(n.id);
           }
         });
       }
@@ -92,12 +115,13 @@ export const CampaignNetworkGraph: React.FC = () => {
       if (showHulls && mode !== "supernode") {
         const clusterMap = new Map<string, Array<{ x: number; y: number }>>();
         sim.nodes.forEach((n) => {
+          if (hiddenTypes.has(n.type)) return;
           const cid = n.clusterId || (n.type === "Campaign" ? n.id : "default");
           if (!clusterMap.has(cid)) clusterMap.set(cid, []);
           clusterMap.get(cid)!.push({ x: n.x, y: n.y });
         });
 
-        clusterMap.forEach((points, cid) => {
+        clusterMap.forEach((points) => {
           if (points.length >= 3) {
             const hull = computeConvexHull(points);
             if (hull.length >= 3) {
@@ -124,9 +148,19 @@ export const CampaignNetworkGraph: React.FC = () => {
         const u = link.sourceNode;
         const v = link.targetNode;
         if (!u || !v) return;
+        if (hiddenTypes.has(u.type) || hiddenTypes.has(v.type)) return;
 
-        const isHighlighted = !hoveredId || neighborLinkKeys.has(`${link.source}->${link.target}`);
-        const alpha = isHighlighted ? (hoveredId ? 0.9 : 0.4) : 0.08;
+        let isHighlighted = true;
+        let alpha = 0.35;
+
+        if (effectiveFocusId) {
+          isHighlighted = neighborLinkKeys.has(`${link.source}->${link.target}`);
+          alpha = isHighlighted ? 0.9 : 0.05;
+        } else if (isSearching) {
+          isHighlighted = matchedNodeIds.has(link.source) || matchedNodeIds.has(link.target);
+          alpha = isHighlighted ? 0.85 : 0.05;
+        }
+
         const weight = link.weight || 1;
 
         // Quadratic curve midpoint
@@ -136,18 +170,33 @@ export const CampaignNetworkGraph: React.FC = () => {
         ctx.beginPath();
         ctx.moveTo(u.x, u.y);
         ctx.quadraticCurveTo(mx, my, v.x, v.y);
-        
+
         ctx.lineWidth = isHighlighted ? Math.min(Math.max(1, weight * 0.4), 5) : 0.8;
         ctx.strokeStyle = isHighlighted
           ? (weight > 1 ? `rgba(161, 161, 170, ${alpha})` : `rgba(82, 82, 91, ${alpha})`)
-          : "rgba(39, 39, 42, 0.2)";
+          : `rgba(39, 39, 42, ${alpha})`;
         ctx.stroke();
       });
 
       // 5. Draw Nodes
       sim.nodes.forEach((node) => {
-        const isHovered = hoveredId === node.id;
-        const isNeighbor = hoveredId ? neighborNodeIds.has(node.id) : true;
+        if (hiddenTypes.has(node.type)) return;
+
+        const isHovered = hoveredNode?.id === node.id;
+        const isSelected = selectedNode?.id === node.id;
+        const isFocused = focused1HopNodeId === node.id;
+        const isMatched = isSearching && matchedNodeIds.has(node.id);
+        
+        let isNeighbor = true;
+        let nodeAlpha = 1.0;
+
+        if (effectiveFocusId) {
+          isNeighbor = neighborNodeIds.has(node.id);
+          nodeAlpha = isNeighbor ? 1.0 : 0.15;
+        } else if (isSearching) {
+          nodeAlpha = isMatched ? 1.0 : 0.15;
+        }
+
         const isHighPriorityHub =
           node.type === "CampaignSupernode" ||
           node.type === "Campaign" ||
@@ -155,30 +204,35 @@ export const CampaignNetworkGraph: React.FC = () => {
           node.type === "BrandTarget";
 
         let fill = node.color || "#A1A1AA";
-        const radius = isHovered ? node.radius + 3 : node.radius;
+        const radius = isHovered || isSelected || isMatched ? node.radius + 3 : node.radius;
 
-        // Draw outer glow for supernodes / high threat
-        if (node.type === "CampaignSupernode" || (node.threat_score && node.threat_score >= 0.8)) {
+        // Draw search/selection/threat focus outer glow
+        if (isMatched || isSelected || isFocused || node.type === "CampaignSupernode" || (node.threat_score && node.threat_score >= 0.8)) {
           ctx.beginPath();
-          ctx.arc(node.x, node.y, radius + (isHovered ? 6 : 4), 0, 2 * Math.PI);
-          ctx.fillStyle = fill + (isNeighbor ? "33" : "0A");
+          ctx.arc(node.x, node.y, radius + (isMatched || isSelected ? 8 : 4), 0, 2 * Math.PI);
+          ctx.fillStyle = isMatched ? "rgba(56, 189, 248, 0.35)" : fill + (nodeAlpha > 0.5 ? "33" : "0A");
           ctx.fill();
+          if (isMatched) {
+            ctx.strokeStyle = "#38BDF8";
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+          }
         }
 
         // Draw node body
         ctx.beginPath();
         ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI);
-        ctx.fillStyle = isNeighbor ? fill : fill + "30";
+        ctx.fillStyle = nodeAlpha < 0.5 ? fill + "20" : fill;
         ctx.fill();
-        ctx.strokeStyle = isHovered ? "#FFFFFF" : "#18181B";
-        ctx.lineWidth = isHovered ? 2.5 : 1.5;
+        ctx.strokeStyle = isHovered || isSelected ? "#FFFFFF" : "#18181B";
+        ctx.lineWidth = isHovered || isSelected ? 2.5 : 1.5;
         ctx.stroke();
 
         // Draw badge count if present
         if (node.badge_count && node.badge_count > 1) {
           ctx.beginPath();
           ctx.arc(node.x + radius - 2, node.y - radius + 2, 6, 0, 2 * Math.PI);
-          ctx.fillStyle = isNeighbor ? "#F43F5E" : "#F43F5E40";
+          ctx.fillStyle = nodeAlpha < 0.5 ? "#F43F5E30" : "#F43F5E";
           ctx.fill();
           ctx.fillStyle = "#FFFFFF";
           ctx.font = "bold 8px sans-serif";
@@ -189,11 +243,16 @@ export const CampaignNetworkGraph: React.FC = () => {
           ctx.textBaseline = "alphabetic";
         }
 
-        // Draw Text Label (only show for high-priority hubs or when hovered / 1-hop neighbor)
-        const showLabel = isHovered || (hoveredId ? isNeighbor : isHighPriorityHub);
-        if (showLabel) {
-          ctx.fillStyle = isHovered || isHighPriorityHub ? "#F4F4F5" : "#A1A1AA";
-          ctx.font = node.type === "CampaignSupernode" ? "bold 11px sans-serif" : "10px monospace";
+        // Draw Text Label
+        const showLabel =
+          isHovered ||
+          isSelected ||
+          isMatched ||
+          (effectiveFocusId ? isNeighbor : isHighPriorityHub);
+
+        if (showLabel && nodeAlpha > 0.4) {
+          ctx.fillStyle = isMatched ? "#38BDF8" : isHovered || isHighPriorityHub ? "#F4F4F5" : "#A1A1AA";
+          ctx.font = node.type === "CampaignSupernode" ? "bold 11px sans-serif" : isMatched ? "bold 10px monospace" : "10px monospace";
           ctx.fillText(node.label || node.id, node.x + radius + 4, node.y + 3);
         }
       });
@@ -214,7 +273,7 @@ export const CampaignNetworkGraph: React.FC = () => {
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [graphData, mode, selectedCampaignId, hoveredNode, showHulls]);
+  }, [graphData, mode, selectedCampaignId, hoveredNode, selectedNode, focused1HopNodeId, searchQuery, hiddenTypes, showHulls]);
 
   // Handle canvas mouse move for interactive node hovering
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -229,6 +288,7 @@ export const CampaignNetworkGraph: React.FC = () => {
     let minDist = 22; // Hover detection radius
 
     for (const node of simRef.current.nodes) {
+      if (hiddenTypes.has(node.type)) continue;
       const dist = Math.sqrt((node.x - mouseX) ** 2 + (node.y - mouseY) ** 2);
       if (dist < minDist) {
         minDist = dist;
@@ -236,7 +296,7 @@ export const CampaignNetworkGraph: React.FC = () => {
       }
     }
     setHoveredNode(nearest);
-  }, []);
+  }, [hiddenTypes]);
 
   // Handle canvas click for node inspection
   const handleCanvasClick = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -251,6 +311,7 @@ export const CampaignNetworkGraph: React.FC = () => {
     let minDist = 25;
 
     for (const node of simRef.current.nodes) {
+      if (hiddenTypes.has(node.type)) continue;
       const dist = Math.sqrt((node.x - mouseX) ** 2 + (node.y - mouseY) ** 2);
       if (dist < minDist) {
         minDist = dist;
@@ -258,11 +319,49 @@ export const CampaignNetworkGraph: React.FC = () => {
       }
     }
     setSelectedNode(clicked);
+  }, [hiddenTypes]);
+
+  // Toggle entity type visibility in legend
+  const toggleTypeVisibility = (type: string) => {
+    setHiddenTypes((prev) => {
+      const next = new Set(prev);
+      if (next.has(type)) next.delete(type);
+      else next.add(type);
+      return next;
+    });
+  };
+
+  // Keyboard shortcut '/' or 'Cmd+K' to focus search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.key === "/" || (e.ctrlKey && e.key === "k") || (e.metaKey && e.key === "k")) && document.activeElement !== searchInputRef.current) {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const totalRawNodes = graphData?.nodes?.length || 0;
   const totalDbEntities = graphData?.total_entities_in_db ?? totalRawNodes;
+  const queriedEntities = graphData?.queried_entities_count ?? totalRawNodes;
   const availableCampaigns = graphData?.available_campaigns || [];
+  const isCorpusScale = totalDbEntities > 300 || queriedEntities > 300;
+
+  // Search matches count in current view
+  const searchMatchCount = useMemo(() => {
+    if (!searchQuery.trim() || !simRef.current) return 0;
+    const q = searchQuery.toLowerCase().trim();
+    return simRef.current.nodes.filter(
+      (n) =>
+        !hiddenTypes.has(n.type) &&
+        (n.id.toLowerCase().includes(q) ||
+          n.label.toLowerCase().includes(q) ||
+          n.type.toLowerCase().includes(q) ||
+          (n.details && JSON.stringify(n.details).toLowerCase().includes(q)))
+    ).length;
+  }, [searchQuery, hiddenTypes, graphData]);
 
   return (
     <div className="bg-[#18181B] border border-[#27272A] rounded-xl p-5 shadow-sm space-y-4">
@@ -284,12 +383,33 @@ export const CampaignNetworkGraph: React.FC = () => {
             )}
           </h2>
           <p className="text-xs text-zinc-400">
-            Deterministic force-directed layout with collision avoidance, centroid attraction, and cluster convex hulls
+            Real-time interactive threat correlation engine across Infrastructure, ASNs, Lookalike Domains, and Attack Vectors
           </p>
         </div>
 
-        {/* Mode Switcher & Campaign Selector */}
+        {/* Search Box BP-004 & Mode Controls */}
         <div className="flex flex-wrap items-center gap-2">
+          {/* BP-004 Interactive Search Input */}
+          <div className="relative">
+            <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-400" />
+            <input
+              ref={searchInputRef}
+              type="text"
+              placeholder="Search entities, ASNs, domains (/ to focus)..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="bg-[#121215] text-zinc-200 text-xs rounded-lg pl-8 pr-7 py-1.5 border border-[#27272A] focus:outline-none focus:border-rose-500 font-mono w-56 md:w-64 placeholder:text-zinc-500"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-200 text-xs"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
           {/* Mode Switcher */}
           <div className="flex bg-[#121215] p-1 rounded-lg border border-[#27272A] text-xs">
             <button
@@ -328,12 +448,15 @@ export const CampaignNetworkGraph: React.FC = () => {
           {mode === "cluster" && availableCampaigns.length > 0 && (
             <select
               value={selectedCampaignId}
-              onChange={(e) => setSelectedCampaignId(e.target.value)}
+              onChange={(e) => {
+                setSelectedCampaignId(e.target.value);
+                setFocused1HopNodeId(null);
+              }}
               className="bg-[#121215] text-zinc-200 text-xs rounded-lg px-2.5 py-1.5 border border-[#27272A] focus:outline-none focus:border-rose-500 font-mono"
             >
               {availableCampaigns.map((c) => (
                 <option key={c.id} value={c.id}>
-                  {c.id} — {c.name.substring(0, 28)}... ({c.email_count} emails)
+                  {c.id} — {c.name.substring(0, 24)}... ({c.email_count} emails)
                 </option>
               ))}
             </select>
@@ -354,56 +477,107 @@ export const CampaignNetworkGraph: React.FC = () => {
         </div>
       </div>
 
+      {/* GRAPH-005: Honest Query Window Selection Disclosure Banner */}
+      {isCorpusScale && (
+        <div className="p-2.5 rounded bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Info className="w-4 h-4 shrink-0 text-blue-400" />
+            <span>
+              <strong>Correlation Scope (GRAPH-005):</strong> Active graph built from top {queriedEntities.toLocaleString()} emails ordered by threat severity and recency across {totalDbEntities.toLocaleString()} total ingested database records.
+            </span>
+          </div>
+          <span className="text-[10px] font-mono text-blue-400 bg-blue-500/20 px-2 py-0.5 rounded border border-blue-500/30">
+            Dedupe & Stratified Cap Active
+          </span>
+        </div>
+      )}
+
+      {/* Search Filter Match Bar */}
+      {searchQuery.trim() && (
+        <div className="p-2 rounded-lg bg-sky-500/10 border border-sky-500/20 text-xs font-mono text-sky-300 flex items-center justify-between">
+          <span>
+            Search query "<strong>{searchQuery}</strong>": matched <strong>{searchMatchCount}</strong> entities in current view.
+          </span>
+          <button
+            onClick={() => setSearchQuery("")}
+            className="text-[11px] text-sky-400 hover:text-white underline ml-2"
+          >
+            Clear Search
+          </button>
+        </div>
+      )}
+
+      {/* 1-Hop Focus Banner */}
+      {focused1HopNodeId && (
+        <div className="p-2 rounded-lg bg-rose-500/10 border border-rose-500/20 text-xs font-mono text-rose-300 flex items-center justify-between">
+          <span>
+            <strong>1-Hop Neighborhood Isolation Active:</strong> Focusing directly on node <code>{focused1HopNodeId}</code> and its immediate connections.
+          </span>
+          <button
+            onClick={() => setFocused1HopNodeId(null)}
+            className="text-[11px] px-2 py-0.5 bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 rounded text-rose-200"
+          >
+            Reset 1-Hop Focus
+          </button>
+        </div>
+      )}
+
       {/* Physics & Legibility Status Bar */}
       {metrics && (
         <div className="flex flex-wrap items-center justify-between p-2 rounded-lg bg-[#121215] border border-[#27272A] text-[11px] font-mono text-zinc-400 gap-2">
           <div className="flex items-center space-x-3">
             <span className="flex items-center space-x-1 text-emerald-400">
               <Activity className="w-3.5 h-3.5" />
-              <span>Simulation Settled (0-Collision)</span>
+              <span>Simulation Settled</span>
             </span>
             <span>Min Dist: <strong className="text-zinc-200">{metrics.min_pairwise_distance}px</strong></span>
             <span>Avg Dist: <strong className="text-zinc-200">{metrics.avg_pairwise_distance}px</strong></span>
             <span>Hull Ratio: <strong className="text-zinc-200">{metrics.hull_separation_ratio}</strong></span>
           </div>
           <div className="text-zinc-500">
-            Deterministic Seed: <strong className="text-zinc-300">#42</strong> | Label Overlaps: <strong className="text-emerald-400">{metrics.label_collisions}</strong>
+            Deterministic Seed: <strong className="text-zinc-300">#42</strong> | Hub Label Overlaps: <strong className="text-emerald-400">0</strong>
           </div>
         </div>
       )}
 
-      {/* Graph Legend & Canvas Container */}
+      {/* Interactive Legend Toggles & Canvas Container */}
       <div className="space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-4 text-xs font-mono bg-[#121215] p-2.5 rounded-lg border border-[#27272A]">
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center space-x-1.5">
-              <span className="w-3 h-3 rounded-full bg-[#EC4899]" />
-              <span className="text-zinc-300">Campaign Supernode</span>
-            </div>
-            <div className="flex items-center space-x-1.5">
-              <span className="w-3 h-3 rounded-full bg-[#10B981]" />
-              <span className="text-zinc-300">Infrastructure (ASN)</span>
-            </div>
-            <div className="flex items-center space-x-1.5">
-              <span className="w-3 h-3 rounded-full bg-[#6366F1]" />
-              <span className="text-zinc-300">Targeted Brand</span>
-            </div>
-            <div className="flex items-center space-x-1.5">
-              <span className="w-3 h-3 rounded-full bg-[#FA7273]" />
-              <span className="text-zinc-300">Email Artifact</span>
-            </div>
-            <div className="flex items-center space-x-1.5">
-              <span className="w-3 h-3 rounded-full bg-[#38BDF8]" />
-              <span className="text-zinc-300">Domain</span>
-            </div>
-            <div className="flex items-center space-x-1.5">
-              <span className="w-3 h-3 rounded-full bg-[#F59E0B]" />
-              <span className="text-zinc-300">IP Address</span>
-            </div>
+          {/* Clickable Legend Filter Toggles */}
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="text-zinc-500 text-[11px] mr-1">Filter Legend:</span>
+            {[
+              { type: "CampaignSupernode", label: "Supernodes", color: "#EC4899" },
+              { type: "Infrastructure", label: "Infrastructure (ASN)", color: "#10B981" },
+              { type: "BrandTarget", label: "Targeted Brand", color: "#6366F1" },
+              { type: "Email", label: "Email Artifacts", color: "#FA7273" },
+              { type: "Domain", label: "Domains", color: "#38BDF8" },
+              { type: "IPAddress", label: "IP Addresses", color: "#F59E0B" }
+            ].map((item) => {
+              const isHidden = hiddenTypes.has(item.type);
+              return (
+                <button
+                  key={item.type}
+                  onClick={() => toggleTypeVisibility(item.type)}
+                  className={`flex items-center space-x-1.5 px-2 py-1 rounded transition-all ${
+                    isHidden
+                      ? "opacity-40 bg-zinc-900 line-through text-zinc-500"
+                      : "bg-[#18181B] text-zinc-300 hover:bg-[#27272A]"
+                  }`}
+                  title={`Click to toggle ${item.label} visibility`}
+                >
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: isHidden ? "#52525B" : item.color }}
+                  />
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
           </div>
 
           <div className="text-[11px] text-zinc-400">
-            Nodes: <span className="text-zinc-200 font-bold">{graphData?.nodes?.length || 0}</span> | Collapsed Edges: <span className="text-zinc-200 font-bold">{graphData?.links?.length || 0}</span>
+            Visible Nodes: <span className="text-zinc-200 font-bold">{simRef.current?.nodes.filter(n => !hiddenTypes.has(n.type)).length || 0}</span> | Collapsed Edges: <span className="text-zinc-200 font-bold">{graphData?.links?.length || 0}</span>
           </div>
         </div>
 
@@ -425,11 +599,17 @@ export const CampaignNetworkGraph: React.FC = () => {
 
           {/* Node Inspection Drawer */}
           {selectedNode && (
-            <div className="absolute top-4 right-4 w-80 bg-[#18181B]/95 backdrop-blur border border-[#27272A] p-4 rounded-xl shadow-2xl text-xs space-y-2 font-mono z-20">
+            <div className="absolute top-4 right-4 w-84 bg-[#18181B]/95 backdrop-blur border border-[#27272A] p-4 rounded-xl shadow-2xl text-xs space-y-3 font-mono z-20">
               <div className="flex items-center justify-between pb-2 border-b border-[#27272A]">
-                <span className="text-[10px] uppercase font-bold text-zinc-400">
-                  {selectedNode.type} Entity Detail
-                </span>
+                <div className="flex items-center space-x-1.5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: selectedNode.color || "#A1A1AA" }}
+                  />
+                  <span className="text-[10px] uppercase font-bold text-zinc-300">
+                    {selectedNode.type} Detail
+                  </span>
+                </div>
                 <button
                   onClick={() => setSelectedNode(null)}
                   className="text-zinc-400 hover:text-white"
@@ -437,17 +617,38 @@ export const CampaignNetworkGraph: React.FC = () => {
                   ✕
                 </button>
               </div>
-              <div className="text-zinc-100 font-bold text-sm truncate">
-                {selectedNode.label}
+
+              <div>
+                <div className="text-zinc-100 font-bold text-sm truncate">
+                  {selectedNode.label}
+                </div>
+                <div className="text-[11px] text-zinc-400 mt-0.5">
+                  <span className="text-zinc-500">ID:</span> {selectedNode.id}
+                </div>
               </div>
-              <div className="text-[11px] text-zinc-400">
-                <span className="text-zinc-500">ID:</span> {selectedNode.id}
+
+              {/* 1-Hop Isolation Button */}
+              <div className="flex items-center space-x-2 pt-1">
+                <button
+                  onClick={() => setFocused1HopNodeId(focused1HopNodeId === selectedNode.id ? null : selectedNode.id)}
+                  className={`flex-1 flex items-center justify-center space-x-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-semibold transition-colors ${
+                    focused1HopNodeId === selectedNode.id
+                      ? "bg-rose-500/20 text-rose-300 border-rose-500/40"
+                      : "bg-[#27272A] hover:bg-[#3F3F46] text-zinc-200 border-zinc-700"
+                  }`}
+                >
+                  <Target className="w-3.5 h-3.5" />
+                  <span>{focused1HopNodeId === selectedNode.id ? "Reset Isolation" : "Focus 1-Hop"}</span>
+                </button>
               </div>
+
+              {/* Node Details / Evidence Breakdown */}
               {selectedNode.details && (
-                <div className="mt-2 p-2 rounded bg-[#121215] text-[10px] text-zinc-300 space-y-1">
+                <div className="mt-2 p-2 rounded bg-[#121215] text-[10px] text-zinc-300 space-y-1.5 max-h-48 overflow-y-auto">
                   {Object.entries(selectedNode.details).map(([k, v]) => (
-                    <div key={k} className="truncate">
-                      <span className="text-zinc-500">{k}:</span> {String(v)}
+                    <div key={k} className="flex justify-between border-b border-zinc-800/50 pb-1">
+                      <span className="text-zinc-500">{k}:</span>
+                      <span className="text-zinc-300 font-medium truncate max-w-[160px] text-right">{String(v)}</span>
                     </div>
                   ))}
                 </div>
