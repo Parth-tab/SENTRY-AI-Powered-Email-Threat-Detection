@@ -141,14 +141,14 @@
   {
     "id": "BP-004",
     "check": "B2.graph_search_filter",
-    "severity": "low",
+    "severity": "high",
     "evidence": "evaluation/blind/panel_b/B2.json",
-    "status": "deferred",
+    "status": "open",
     "fix_commit": null,
-    "target_version": "v2.0.0",
+    "target_version": "v1.2.0",
     "regression_test": "evaluation/blind/scripts/run_b2.py",
     "effort": "M",
-    "description": "v2.0 roadmap feature request for client-side multi-dimensional graph search and filtering."
+    "description": "Promoted from deferred to v1.2.0 graph redesign: client-side entity search, highlight, and multi-dimensional filter."
   },
   {
     "id": "CICD-001",
@@ -744,5 +744,18 @@
     "fix_commit": "HEAD",
     "regression_test": "backend/tests/test_deployment_serving.py::test_single_origin_static_mount_serving",
     "description": "test_single_origin_static_mount_serving skipped on CI runners due to missing frontend dist build in backend job; resolved by installing Node and building SPA bundle prior to pytest."
+  },
+  {
+    "id": "GRAPH-003",
+    "check": "ui.campaign_network_graph_legibility",
+    "severity": "high",
+    "evidence": "evaluation/graph_redesign/screenshots/regime_a_demo_scale.png",
+    "status": "open",
+    "target_version": "v1.2.0",
+    "effort": "L",
+    "impact": "H",
+    "fix_commit": null,
+    "regression_test": "tools/verify_sentry.py --start (ui.graph_legibility)",
+    "description": "Campaign Network Graph renders as closely threaded beads / dense hairball without cluster separation, dynamic hub aggregation, or entity search, degrading forensic legibility."
   }
 ]
