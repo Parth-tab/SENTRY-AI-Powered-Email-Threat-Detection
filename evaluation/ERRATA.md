@@ -237,6 +237,21 @@ Investigation and cumulative prefix bisection isolated the root cause to `test_d
 - **Golden Harness:** 20/20 gates verified on local appliance.
 - **CI Execution:** 100% tests executing green across matrix legs (Python 3.11, Python 3.12).
 
+### 4. Image Provenance & Version Reconciliation
+- **GHCR Publish Workflow Run:** [Run ID 33302523591](https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection/actions/runs/33302523591)
+- **Triggering Ref:** `refs/heads/main`
+- **Image Source SHA:** `30b21f6440bfbd2c72ae441286274ebb87a4c8f9`
+- **Commit Range:** `v1.1.0..30b21f6440bfbd2c72ae441286274ebb87a4c8f9`
+  - `09f9432`: fix(ci): normalize GHCR repository owner to lowercase, add workflow_dispatch, and bump action versions (Errata 009)
+  - `105736c`: Merge PR #17 from feat/ghcr-fix-workflow
+  - `e4efc26`: fix(logging): preserve sentry logger during alembic migrations and add correlation filter (CI-001, CI-002)
+  - `5450c31`: test(ci): ensure hermetic log rotation test and build frontend in backend CI (CI-003, CI-004)
+  - `d9c5f9c`: docs(mrws): record CI repair defects CI-001 to CI-004, state, and Errata 010
+  - `30b21f6`: Merge PR #11 from fix/ci-repair-logging-and-mount (CI-001..004 repair, Errata 010)
+- **Artifact Temporal Relation:** The published container images (`ghcr.io/parth-tab/sentry-backend:1.1.0` and `ghcr.io/parth-tab/sentry-frontend:1.1.0`) encapsulate the complete CI and logging repair changeset and therefore post-date git tag `v1.1.0` (`95d153c`).
+- **Reconciliation Recommendation:** It is recommended that release tag `v1.1.1` be cut directly from image source SHA `30b21f6` to reunify the git release tag and the published GHCR container artifact.
+
+
 
 
 
