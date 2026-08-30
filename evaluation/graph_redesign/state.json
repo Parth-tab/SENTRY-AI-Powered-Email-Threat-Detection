@@ -2,22 +2,53 @@
   "project": "SENTRY-AI-Powered-Email-Threat-Detection",
   "feature": "GRAPH-REDESIGN",
   "constitution": "Re-entrant constitution: one phase per session; report back; await External Auditor clearance.",
-  "current_phase": "PHASE_0_DIAGNOSE_AND_REPRODUCE",
+  "current_phase": "PHASE_1_DATA_LAYER",
   "phase_status": {
     "PHASE_0": "COMPLETED",
-    "PHASE_1": "PENDING_AUDITOR_CLEARANCE",
-    "PHASE_2": "PENDING",
+    "PHASE_1": "COMPLETED",
+    "PHASE_2": "PENDING_AUDITOR_CLEARANCE",
     "PHASE_3": "PENDING",
     "PHASE_4": "PENDING",
     "PHASE_5": "PENDING"
+  },
+  "conditions_ledger": {
+    "P0-A": {
+      "status": "CLOSED",
+      "note": "Phase 2 floor acknowledged as full force simulation build (effort L / double session budget). Recorded in state ledger."
+    },
+    "P0-B": {
+      "status": "CLOSED",
+      "note": "GRAPH-003 updated with selection bias finding. G-D8 stratified diversity cap implemented in CorrelationEngine._build_diversity_capped_graph."
+    },
+    "P0-C": {
+      "status": "CLOSED",
+      "note": "GRAPH-004 filed. Synthetic import entities (person:csv-import@unknown.local) badged with is_synthetic=True and distinct provenance metadata."
+    },
+    "Directive_1": {
+      "status": "OPEN",
+      "target_phase": "PHASE_2",
+      "note": "Pinned rendering test fixture and seeded RNG scheduled at the top of Phase 2."
+    },
+    "Directive_2": {
+      "status": "OPEN",
+      "target_phase": "PHASE_4",
+      "note": "sentry_benchmark_corpus_backup.db (6,021 emails) wired as strategic corpus-scale regression fixture for Phase 4 headless assertions."
+    }
   },
   "defects_tracked": [
     {
       "id": "GRAPH-003",
       "severity": "P1 / HIGH",
       "check": "ui.campaign_network_graph_legibility",
-      "status": "OPEN",
-      "description": "Campaign Network Graph renders as closely threaded beads / dense hairball without cluster separation, dynamic hub aggregation, or entity search, degrading forensic legibility."
+      "status": "IN_PROGRESS",
+      "description": "Campaign Network Graph renders as closely threaded beads / dense hairball without cluster separation, dynamic hub aggregation, or entity search, degrading forensic legibility. Cap slices array head without sort or diversity, introducing selection bias at scale."
+    },
+    {
+      "id": "GRAPH-004",
+      "severity": "MEDIUM",
+      "check": "correlation.synthetic_import_entity_badging",
+      "status": "IN_PROGRESS",
+      "description": "Synthetic pseudo-entities (e.g. person:csv-import@unknown.local at degree 214) distort graph topology; aggregation layer must collapse or badge synthetic import provenance entities distinctly."
     },
     {
       "id": "BP-004",
@@ -27,240 +58,34 @@
       "description": "Client-side entity search, highlight, and multi-dimensional filter (promoted from deferred to v1.2.0 graph redesign)."
     }
   ],
-  "instrumentation": {
-    "live_database": {
-      "path": "sentry.db",
-      "backup_path": "sentry_benchmark_corpus_backup.db",
-      "regime_b_corpus_scale": {
-        "total_emails_in_db": 6021,
-        "queried_entities": 1000,
-        "graph_nodes": 2276,
-        "graph_edges": 4300,
-        "node_types": {
-          "Email": 1108,
-          "Person": 465,
-          "IPAddress": 396,
-          "Domain": 291,
-          "Infrastructure": 9,
-          "BrandTarget": 4,
-          "Campaign": 3
-        },
-        "top_10_hub_degrees_verbatim": [
-          {
-            "rank": 1,
-            "degree": 245,
-            "in": 245,
-            "out": 0,
-            "type": "Infrastructure",
-            "id": "infra:AS24940",
-            "label": "AS24940 (Hetzner Online GmbH)"
-          },
-          {
-            "rank": 2,
-            "degree": 214,
-            "in": 107,
-            "out": 107,
-            "type": "Person",
-            "id": "person:csv-import@unknown.local",
-            "label": "csv-import@unknown.local"
-          },
-          {
-            "rank": 3,
-            "degree": 202,
-            "in": 202,
-            "out": 0,
-            "type": "Infrastructure",
-            "id": "infra:AS50673",
-            "label": "AS50673 (Serverius Holding B.V.)"
-          },
-          {
-            "rank": 4,
-            "degree": 158,
-            "in": 158,
-            "out": 0,
-            "type": "Infrastructure",
-            "id": "infra:AS7473",
-            "label": "AS7473 (Singtel Optus)"
-          },
-          {
-            "rank": 5,
-            "degree": 145,
-            "in": 145,
-            "out": 0,
-            "type": "Infrastructure",
-            "id": "infra:AS14061",
-            "label": "AS14061 (DigitalOcean, LLC)"
-          },
-          {
-            "rank": 6,
-            "degree": 133,
-            "in": 133,
-            "out": 0,
-            "type": "Infrastructure",
-            "id": "infra:AS9498",
-            "label": "AS9498 (Bharti Airtel Ltd)"
-          },
-          {
-            "rank": 7,
-            "degree": 109,
-            "in": 109,
-            "out": 0,
-            "type": "Domain",
-            "id": "domain:newsletter.online.com",
-            "label": "newsletter.online.com"
-          },
-          {
-            "rank": 8,
-            "degree": 107,
-            "in": 107,
-            "out": 0,
-            "type": "Domain",
-            "id": "domain:unknown.local",
-            "label": "unknown.local"
-          },
-          {
-            "rank": 9,
-            "degree": 106,
-            "in": 106,
-            "out": 0,
-            "type": "Infrastructure",
-            "id": "infra:AS16509",
-            "label": "AS16509 (Amazon.com, Inc.)"
-          },
-          {
-            "rank": 10,
-            "degree": 70,
-            "in": 35,
-            "out": 35,
-            "type": "Person",
-            "id": "person:subscriptions@lockergnome.com",
-            "label": "subscriptions@lockergnome.com"
-          }
-        ],
-        "screenshot": "evaluation/graph_redesign/screenshots/regime_b_corpus_scale.png"
-      },
-      "regime_a_demo_scale": {
-        "total_emails_in_db": 18,
-        "queried_entities": 18,
-        "graph_nodes": 76,
-        "graph_edges": 122,
-        "node_types": {
-          "Email": 18,
-          "Person": 16,
-          "IPAddress": 14,
-          "Domain": 13,
-          "Infrastructure": 7,
-          "BrandTarget": 5,
-          "Campaign": 3
-        },
-        "top_10_hub_degrees_verbatim": [
-          {
-            "rank": 1,
-            "degree": 21,
-            "in": 7,
-            "out": 14,
-            "type": "Campaign",
-            "id": "campaign:CMP-2024-0034",
-            "label": "Campaign: CMP-2024-0034"
-          },
-          {
-            "rank": 2,
-            "degree": 9,
-            "in": 9,
-            "out": 0,
-            "type": "BrandTarget",
-            "id": "domain:legit_apex_national_bank",
-            "label": "Apex National Bank"
-          },
-          {
-            "rank": 3,
-            "degree": 8,
-            "in": 5,
-            "out": 3,
-            "type": "IPAddress",
-            "id": "ip:185.220.101.34",
-            "label": "185.220.101.34 (NL)"
-          },
-          {
-            "rank": 4,
-            "degree": 8,
-            "in": 5,
-            "out": 3,
-            "type": "IPAddress",
-            "id": "ip:185.220.101.5",
-            "label": "185.220.101.5 (NL)"
-          },
-          {
-            "rank": 5,
-            "degree": 8,
-            "in": 4,
-            "out": 4,
-            "type": "Campaign",
-            "id": "campaign:CMP-2024-0089",
-            "label": "Campaign: CMP-2024-0089"
-          },
-          {
-            "rank": 6,
-            "degree": 6,
-            "in": 6,
-            "out": 0,
-            "type": "Infrastructure",
-            "id": "infra:AS205100",
-            "label": "AS205100 (Jonas Bunde / F3 Netze)"
-          },
-          {
-            "rank": 7,
-            "degree": 6,
-            "in": 3,
-            "out": 3,
-            "type": "Domain",
-            "id": "domain:onlineapex-kyc-update.com",
-            "label": "onlineapex-kyc-update.com"
-          },
-          {
-            "rank": 8,
-            "degree": 6,
-            "in": 3,
-            "out": 3,
-            "type": "Domain",
-            "id": "domain:apex-netbanking-alert.xyz",
-            "label": "apex-netbanking-alert.xyz"
-          },
-          {
-            "rank": 9,
-            "degree": 6,
-            "in": 4,
-            "out": 2,
-            "type": "IPAddress",
-            "id": "ip:104.21.45.12",
-            "label": "104.21.45.12 (US)"
-          },
-          {
-            "rank": 10,
-            "degree": 6,
-            "in": 3,
-            "out": 3,
-            "type": "Person",
-            "id": "person:ceo.mercer.corp@gmail.com",
-            "label": "ceo.mercer.corp@gmail.com"
-          }
-        ],
-        "screenshot": "evaluation/graph_redesign/screenshots/regime_a_demo_scale.png"
-      }
-    }
-  },
-  "code_receipts": {
-    "component": "frontend/src/components/graph/CampaignNetworkGraph.tsx",
-    "layout_forces": "CampaignNetworkGraph.tsx:38-49 (static circular mapping: (i / cappedNodes.length) * 2 * Math.PI, radius = 180 + (i % 3) * 40; no force physics applied)",
-    "force_collide": "ABSENT (0 collision prevention or bounding)",
-    "physics_step": "CampaignNetworkGraph.tsx:98-104 (dummy position increment + 0.95 velocity decay with zero forces computed)",
-    "node_radii": "CampaignNetworkGraph.tsx:77 (hardcoded 8px across all types, threats, and degrees)",
-    "edge_rendering": "CampaignNetworkGraph.tsx:65-72 (straight 1px solid stroke #3F3F46, alpha=1.0, no curvature, no edge weighting)",
-    "cap_selection": "CampaignNetworkGraph.tsx:35 (raw array slice: rawNodes.slice(0, 300); zero degree weighting, threat priority, or per-campaign diversity)",
-    "campaign_clusters": "CampaignNetworkGraph.tsx:39-48 (interleaved along perimeter by array index; zero centroid or clustering logic)"
-  },
-  "product_name_audit": {
-    "codebase_findings": "Consistently SENTRY / SENTRY Forensic SOC across repo slug, package.json, Header.tsx, config.py, README.md, GHCR packages, and git tags.",
-    "forensify_occurrences": 0
+  "phase1_receipts": {
+    "endpoints": [
+      "/api/v1/campaigns/graph/all?mode=cluster&campaign_id={id}",
+      "/api/v1/campaigns/graph/all?mode=supernode",
+      "/api/v1/campaigns/graph/all?mode=detailed&max_nodes={n}",
+      "/api/v1/campaigns/graph/aggregated"
+    ],
+    "corpus_scale_aggregation": {
+      "before_nodes": 2276,
+      "before_edges": 4300,
+      "after_supernode_nodes": 15,
+      "after_supernode_links": 17,
+      "after_detailed_capped_nodes": 150,
+      "after_detailed_capped_links": 190
+    },
+    "demo_scale_metrics": {
+      "cluster_mode_default_nodes": 30,
+      "cluster_mode_default_links": 38,
+      "supernode_mode_nodes": 12,
+      "supernode_mode_links": 12,
+      "detailed_mode_nodes": 78,
+      "detailed_mode_links": 99
+    },
+    "screenshots": [
+      "evaluation/graph_redesign/screenshots/phase1_supernodes_view.png",
+      "evaluation/graph_redesign/screenshots/phase1_cluster_view.png",
+      "evaluation/graph_redesign/screenshots/phase1_detailed_view.png"
+    ],
+    "pytest_suite": "102/102 passed"
   }
 }

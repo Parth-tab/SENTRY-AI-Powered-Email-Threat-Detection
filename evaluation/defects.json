@@ -749,13 +749,26 @@
     "id": "GRAPH-003",
     "check": "ui.campaign_network_graph_legibility",
     "severity": "high",
-    "evidence": "evaluation/graph_redesign/screenshots/regime_a_demo_scale.png",
+    "evidence": "evaluation/graph_redesign/screenshots/regime_a_demo_scale.png + CampaignNetworkGraph.tsx:L35 unsorted array head slice",
     "status": "open",
     "target_version": "v1.2.0",
     "effort": "L",
     "impact": "H",
     "fix_commit": null,
     "regression_test": "tools/verify_sentry.py --start (ui.graph_legibility)",
-    "description": "Campaign Network Graph renders as closely threaded beads / dense hairball without cluster separation, dynamic hub aggregation, or entity search, degrading forensic legibility."
+    "description": "Campaign Network Graph renders as closely threaded beads / dense hairball without cluster separation, dynamic hub aggregation, or entity search, degrading forensic legibility. Cap slices array head without sort or diversity, introducing selection bias at scale."
+  },
+  {
+    "id": "GRAPH-004",
+    "check": "correlation.synthetic_import_entity_badging",
+    "severity": "medium",
+    "evidence": "Live corpus top-10 hub degree #2: person:csv-import@unknown.local (degree 214)",
+    "status": "open",
+    "target_version": "v1.2.0",
+    "effort": "S",
+    "impact": "M",
+    "fix_commit": null,
+    "regression_test": "backend/tests/test_correlation_deep.py",
+    "description": "Synthetic pseudo-entities (e.g. person:csv-import@unknown.local at degree 214) distort graph topology; aggregation layer must collapse or badge synthetic import provenance entities distinctly."
   }
 ]

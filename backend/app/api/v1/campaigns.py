@@ -22,8 +22,19 @@ async def get_campaign(campaign_id: str):
     return campaign
 
 @router.get("/graph/all")
-async def get_global_network_graph(db: AsyncSession = Depends(get_db)):
-    """Returns the full multi-entity knowledge graph for campaign visualization."""
+async def get_global_network_graph(
+    campaign_id: Optional[str] = None,
+    mode: str = "cluster",
+    max_nodes: int = 300,
+    collapse_synthetic: bool = True,
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Returns the multi-entity knowledge graph for campaign visualization:
+    - mode='cluster': Focused single campaign cluster (default to primary campaign)
+    - mode='supernode': Aggregated campaign supernodes with shared infrastructure hubs
+    - mode='detailed': Stratified diversity-capped multi-campaign graph
+    """
     from sqlalchemy import select, func
     from app.db.models import EmailRecord, AnalysisResult
 
@@ -34,7 +45,7 @@ async def get_global_network_graph(db: AsyncSession = Depends(get_db)):
         stmt = select(EmailRecord, AnalysisResult).outerjoin(AnalysisResult, EmailRecord.id == AnalysisResult.email_id).limit(1000)
         res = await db.execute(stmt)
         rows = res.all()
-        if len(rows) > 30:
+        if len(rows) > 0:
             for email_rec, analysis_rec in rows:
                 CorrelationEngine.add_email_to_graph(
                     email_id=email_rec.id,
@@ -51,7 +62,27 @@ async def get_global_network_graph(db: AsyncSession = Depends(get_db)):
                         "domain_intel": analysis_rec.domain_intel if analysis_rec else {}
                     }
                 )
-    data = CorrelationEngine.get_graph_data()
+
+    data = CorrelationEngine.get_graph_data(
+        campaign_id=campaign_id,
+        mode=mode,
+        max_nodes=max_nodes,
+        collapse_synthetic=collapse_synthetic
+    )
     data["total_entities_in_db"] = total_emails_count
     data["queried_entities_count"] = min(total_emails_count, 1000)
     return data
+
+@router.get("/graph/aggregated")
+async def get_aggregated_network_graph(
+    collapse_synthetic: bool = True,
+    db: AsyncSession = Depends(get_db)
+):
+    """Explicit endpoint returning the aggregated campaign supernode graph (G-D1 / G-D2)."""
+    return await get_global_network_graph(
+        campaign_id="all",
+        mode="supernode",
+        collapse_synthetic=collapse_synthetic,
+        db=db
+    )
+
