@@ -4,13 +4,12 @@
   "successful_parses": 18,
   "parse_errors": 0,
   "total_time_seconds": 0.1,
-  "average_latency_ms": 5.8,
-  "throughput_emails_per_sec": 172.5,
+  "average_latency_ms": 5.4,
+  "throughput_emails_per_sec": 185.1,
   "threat_level_distribution": {
-    "CRITICAL": 2,
-    "HIGH": 5,
-    "MEDIUM": 9,
-    "LOW": 2
+    "CRITICAL": 15,
+    "LOW": 2,
+    "MEDIUM": 1
   },
   "primary_classification_distribution": {
     "phishing": 11,
@@ -19,10 +18,9 @@
     "legitimate": 2
   },
   "score_distribution": {
-    "0.80-1.00 (Critical)": 6,
-    "0.40-0.59 (Moderate)": 7,
-    "0.60-0.79 (High)": 3,
-    "0.00-0.19 (Minimal)": 2
+    "0.80-1.00 (Critical)": 15,
+    "0.00-0.19 (Minimal)": 2,
+    "0.60-0.79 (High)": 1
   },
   "top_origin_countries": {
     "Netherlands": 6,
@@ -33,6 +31,6 @@
     "United Kingdom": 1
   },
   "clean_classification_rate_pct": 11.11,
-  "false_positive_rate_pct": 38.89,
+  "false_positive_rate_pct": 83.33,
   "errors": []
 }

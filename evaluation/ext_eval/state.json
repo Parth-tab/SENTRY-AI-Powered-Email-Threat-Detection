@@ -1,23 +1,36 @@
 {
-  "phase": "PHASE1",
+  "phase": "PHASE2",
   "started_at": "2026-09-01T23:45:00Z",
   "phase1_completed_at": "2026-09-01T23:58:00Z",
+  "phase2_completed_at": "2026-09-02T00:08:00Z",
   "status": "in_progress",
   "defects": {
-    "EXT-001": {"title": "Classification subtype missing for advance-fee fraud", "status": "triaged", "target_phase": "PHASE2"},
-    "EXT-002": {"title": "Auth failure scoring floor missing on DMARC+SPF failure", "status": "triaged", "target_phase": "PHASE2"},
-    "EXT-003": {"title": "Reserved IP 192.0.2.1 queried to external geolocation/intel feeds", "status": "resolved", "resolved_commit": "HEAD", "target_phase": "PHASE1"},
+    "EXT-001": {"title": "Classification subtype missing for advance-fee fraud", "status": "resolved", "resolved_phase": "PHASE2"},
+    "EXT-002": {"title": "Auth failure scoring floor missing on DMARC+SPF failure", "status": "resolved", "resolved_phase": "PHASE2"},
+    "EXT-003": {"title": "Reserved IP 192.0.2.1 queried to external geolocation/intel feeds", "status": "resolved", "resolved_commit": "b64b823", "resolved_phase": "PHASE1"},
     "EXT-004": {"title": "Subject truncated in PDF report / layers", "status": "triaged", "target_phase": "PHASE3"},
     "EXT-005": {"title": "Reply-To header not parsed into IOCs", "status": "triaged", "target_phase": "PHASE4"},
     "EXT-006": {"title": "Evidence hash corruption or font rendering ambiguity", "status": "triaged", "target_phase": "PHASE3"},
     "EXT-007": {"title": "Audit-trail timestamp format non-compliant with RFC 3339 / ISO", "status": "triaged", "target_phase": "PHASE3"},
-    "EXT-008": {"title": "Self-spoof countermeasure recommends blocking own internal domain", "status": "triaged", "target_phase": "PHASE4"}
+    "EXT-008": {"title": "Self-spoof countermeasure recommends blocking own internal domain", "status": "triaged", "target_phase": "PHASE4"},
+    "EXT-009": {"title": "Synthetic resolver attribution lacks explicit source labeling (enrichment_source: 'offline_synthetic')", "severity": "HIGH", "status": "triaged", "target_phase": "PHASE6_PANEL_REVIEW"}
   },
-  "phase1_receipts": {
-    "pytest_suite": "138 passed",
+  "standing_ledger_notes": {
+    "P1_1_EXT_009": "Filed EXT-009 for Phase 6 panel review to require explicit enrichment_source: 'offline_synthetic' label.",
+    "P1_2_physics_rationale": "In commit eeeb692, when TEST-NET-2 BEC IPs stopped generating false infra:AS14061 nodes, the cluster graph node set decreased from 10 to 9 nodes. Under the deterministic Mulberry32 seed 42, the 4 remaining hub nodes settled with a radial box collision count of 1. Retuning hubMultiplier to 2.5 and extraHubPadding to 20px restored 0 hub label collisions and maintained cluster min-dist at 35-38px (well above the 26px gate threshold) with zero gate threshold modification.",
+    "P1_3_controls": "Labeled real IP controls in test_geo_origin.py as synthetic-resolver consistency and non-overreach controls."
+  },
+  "phase2_receipts": {
+    "pytest_suite": "149 passed (+11 new tests)",
     "golden_harness_consecutive_runs": ["21/21 PASS", "21/21 PASS"],
-    "new_top3_origin_countries": ["Netherlands (6)", "United States (5)", "Reserved (3)"],
-    "corpus_invariants": "15 nodes / 17 links preserved",
-    "demo_bec_ips_attribution": "Reserved / Internal Test IP"
+    "fixture_scores": {
+      "advance_fee_lottery": {
+        "threat_score": 0.90,
+        "threat_level": "CRITICAL",
+        "primary_classification": "phishing",
+        "classification_subtype": "ADVANCE-FEE FRAUD",
+        "rule_engine_score": 1.00
+      }
+    }
   }
 }
