@@ -249,7 +249,37 @@ Investigation and cumulative prefix bisection isolated the root cause to `test_d
   - `d9c5f9c`: docs(mrws): record CI repair defects CI-001 to CI-004, state, and Errata 010
   - `30b21f6`: Merge PR #11 from fix/ci-repair-logging-and-mount (CI-001..004 repair, Errata 010)
 - **Artifact Temporal Relation:** The published container images (`ghcr.io/parth-tab/sentry-backend:1.1.0` and `ghcr.io/parth-tab/sentry-frontend:1.1.0`) encapsulate the complete CI and logging repair changeset and therefore post-date git tag `v1.1.0` (`95d153c`).
-- **Reconciliation Recommendation:** It is recommended that release tag `v1.1.1` be cut directly from image source SHA `30b21f6` to reunify the git release tag and the published GHCR container artifact.
+---
+
+## Errata 011 — Repository Documentation Drift & Continuous Fact Gating Subsystem — recorded at DOCS-UNIFICATION Phase 4
+
+**Applies to:** Repository markdown documentation (44 files), `docs/PROJECT_FACTS.md`, `tools/validate_facts.py`, `evaluation/defects.json`, `.github/PULL_REQUEST_TEMPLATE.md`, `docs/QA_ARMOR.md`, `DILIGENCE.md`.
+
+### 1. The Phenomenon: The Documentation Twin of BP-002 Lockfile Divergence
+In Errata 007, the repository documented the BP-002 lockfile divergence: two lockfiles existed (`frontend/package-lock.json` and `frontend/pnpm-lock.yaml`), and honest localized patches updated one while Dependabot scanned the other.
+
+During the Documentation Unification Audit (Phase 0–3), an identical phenomenon was discovered across repository documentation:
+- **Four Quantitative Drifts:**
+  1. `docs/QA_ARMOR.md` asserted a "43-test suite" against a live reality of 156 tests across 23 modules (`DOC-002`).
+  2. `.github/PULL_REQUEST_TEMPLATE.md` instructed contributors to verify "41 tests" and "15/15 green gates", surviving fifteen sessions without update while test suites quadrupled (`DOC-002`).
+  3. `docs/ARCHITECTURE.md` marked defect `MBOX-001` as targeted for "v1.1.0" when the active roadmap target is v1.2.0 (`DOC-004`).
+  4. `DILIGENCE.md` asserted 68 total defect objects ($58 + 1 + 3 + 1 + 5 = 68$), omitting the four Graph arc items (`GRAPH-003..005`, `BP-004`) and four CI items (`CI-001..004`), resulting in a true reconciled total of 76 objects ($66 + 1 + 3 + 1 + 5 = 76$) (`DOC-001`).
+- **99 Broken / Non-Portable Links:** 55 non-portable `file:///` URIs in public documents and 44 in internal evaluation notes, preventing offline portability outside the original author's filesystem (`DOC-003`).
+- **Governance Blind Spot:** The oldest incorrect number in the repository ("41 tests") survived inside the pull request template itself — the very instrument that instructed contributors how to verify changes — because no automated tool ever inspected the governance files.
+
+### 2. Root Cause Analysis
+The documentation drift was not caused by neglect, but by the natural entropy of rapid, honest, localized feature development across 39 re-entrant agent sessions:
+1. Each engineering arc (`MRWS`, `Graph Redesign`, `External Evaluation`) updated its immediate code, regression tests, and phase report with extreme rigor.
+2. However, secondary and tertiary documents (PR templates, diligence binders, presenter Q&A armor, architecture diagrams) were updated manually without an automated cross-document verification harness.
+3. In software engineering, **untested code decays; unverified documentation decays faster**.
+
+### 3. The Mechanical Solution: Truth as a Build Artifact
+To guarantee that documentation drift is structurally impossible to reintroduce, SENTRY implemented a 4-tier mechanical defense:
+1. **Dynamic Fact Validator (`tools/validate_facts.py`):** Operates with zero hardcoded constants. It dynamically invokes pytest collection (156 tests), AST-parses verification gates (21 gates), introspects live FastAPI route registries (29 endpoints), parses defect ledger status distributions (76 objects), verifies cross-stack version uniformity (1.1.0), and audits all repository markdown links.
+2. **Master Single Source of Truth (`docs/PROJECT_FACTS.md`):** Master document defining every quantitative fact, tagged explicitly as `[derived]`, `[derived-historical]`, or `[asserted]`.
+3. **Strict CI Gating (`--strict-links`):** Integrated into `.github/workflows/ci.yml`. Any PR that introduces numerical divergence or a broken relative link immediately fails CI.
+4. **Multi-Level Mutation Killing:** Proven at the tool level (Phase 1), document level (Phase 2), and pipeline level (Phase 3) by deliberately mutating numbers and injecting non-portable links, verifying that CI halts execution with exit code 1 naming the exact prevented lie.
+5. **Pattern-Occurrence Matrix:** Verified 100% mathematical coherence across 193 metric mentions in 44 markdown files.
 
 
 

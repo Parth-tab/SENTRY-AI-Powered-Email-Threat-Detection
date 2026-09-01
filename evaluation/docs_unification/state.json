@@ -1,11 +1,12 @@
 {
-  "phase": "PHASE3_CHANGELOG_RELEASE_DILIGENCE_COMPLETED",
+  "phase": "PHASE4_FINAL_VERIFICATION_CERTIFIED",
   "started_at": "2026-09-02T00:54:00Z",
   "phase0_completed_at": "2026-09-02T00:56:00Z",
   "phase1_completed_at": "2026-09-02T01:01:00Z",
   "phase2_completed_at": "2026-09-02T01:06:00Z",
   "phase3_completed_at": "2026-09-02T01:12:00Z",
-  "status": "awaiting_clearance",
+  "phase4_completed_at": "2026-09-02T01:17:00Z",
+  "status": "certified_complete",
   "ground_truth": {
     "pytest_suite_count": 156,
     "pytest_module_count": 23,
@@ -46,21 +47,20 @@
     }
   },
   "filed_defects": {
-    "DOC-001": {"title": "Defect Registry Arithmetic & Diligence Synchronization Drift", "severity": "HIGH", "status": "resolved", "resolved_commit": "HEAD", "resolved_phase": "PHASE3"},
+    "DOC-001": {"title": "Defect Registry Arithmetic & Diligence Synchronization Drift", "severity": "HIGH", "status": "resolved", "resolved_commit": "d42a991", "resolved_phase": "PHASE3"},
     "DOC-002": {"title": "Stale Test Counts in QA Armor and PR Template", "severity": "MEDIUM", "status": "resolved", "resolved_commit": "0f8e1ac", "resolved_phase": "PHASE2"},
-    "DOC-003": {"title": "Dead Relative Markdown Links and file:/// Absolute URIs", "severity": "MEDIUM", "status": "resolved", "resolved_commit": "HEAD", "resolved_phase": "PHASE3"},
+    "DOC-003": {"title": "Dead Relative Markdown Links and file:/// Absolute URIs", "severity": "MEDIUM", "status": "resolved", "resolved_commit": "849e533", "resolved_phase": "PHASE3"},
     "DOC-004": {"title": "MBOX Handling Roadmap Target Stale in ARCHITECTURE.md", "severity": "LOW", "status": "resolved", "resolved_commit": "0ec1fb8", "resolved_phase": "PHASE2"},
     "DOC-005": {"title": "Lack of Machine-Verified Fact Validation Gate in CI", "severity": "HIGH", "status": "resolved", "resolved_commit": "8659b64", "resolved_phase": "PHASE1"}
   },
-  "phase3_receipts": {
-    "link_resolution_99_to_0": "All 99 non-portable URIs converted to repo-relative paths; validate_facts.py --strict-links passing at exit 0",
-    "changelog_v120_entry": "CHANGELOG.md updated with [1.2.0] - 2026-09-02; past entries preserved per LAW D",
-    "release_notes_draft": "docs/RELEASE_NOTES_v1.2.0.md drafted without cutting release tag",
-    "diligence_reconciliation": "DILIGENCE.md reconciled to 76 objects (66+1+3+1+5=76) and defense dossier added",
-    "pipeline_red_run_kill_p2_a": {
-      "mutation_count": "FASTAPI_ROUTES_COUNT altered 29 -> 30 in PROJECT_FACTS.md (Exit 1: declared=30 vs computed=29)",
-      "mutation_link": "Broken file:/// URI injected into RUNBOOK.md (Exit 1: failing on broken links)"
-    },
-    "cross_doc_matrix": "44 markdown documents audited across 12 quantitative patterns with 100% agreement"
+  "arc_summary": {
+    "total_documents_audited": 44,
+    "total_claims_verified": 193,
+    "broken_links_resolved": 99,
+    "test_suite_status": "156/156 PASSED",
+    "golden_harness_status": "21/21 PASSED (2x consecutive)",
+    "fact_gate_status": "5/5 STAGES PASSED (--strict-links active in CI)",
+    "errata_entry": "Errata 011 recorded in evaluation/ERRATA.md",
+    "release_notes_status": "docs/RELEASE_NOTES_v1.2.0.md drafted (tag unreleased)"
   }
 }

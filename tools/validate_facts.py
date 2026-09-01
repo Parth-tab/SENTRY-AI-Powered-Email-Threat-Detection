@@ -341,14 +341,20 @@ def main():
     # 4. Check Repository Link Integrity
     print("\n[4/5] Checking repository link integrity and portability...")
     broken_links = audit_repository_links()
+    strict_mode = "--strict-links" in sys.argv
     if broken_links:
-        print(f"[WARN] Found {len(broken_links)} non-portable file:/// URIs or relative links across repository.")
-        print("       (Advisory during Phase 2; strictly enforced via --strict-links upon DOC-003 closure in Phase 3).")
-        if "--strict-links" in sys.argv:
-            print("[FAIL] Strict link validation active: failing on broken links.")
+        if strict_mode:
+            print(f"[FAIL] Found {len(broken_links)} non-portable file:/// URIs or relative links across repository.")
+            for b in broken_links[:10]:
+                print(f"       * [{b['file']}:{b['line']}] {b['error']}: {b['text']} -> {b['target']}")
+            if len(broken_links) > 10:
+                print(f"       ... and {len(broken_links) - 10} more.")
+            print("       Strict link validation active (--strict-links): failing build.")
             sys.exit(1)
         else:
-            print(f"[PASS (Advisory)] Link audit logged {len(broken_links)} items for Phase 3 remediation.")
+            print(f"[WARN] Found {len(broken_links)} non-portable file:/// URIs or relative links across repository.")
+            print("       (Advisory mode; pass --strict-links to enforce hard build failure).")
+            print(f"[PASS (Advisory)] Link audit logged {len(broken_links)} items.")
     else:
         print("[PASS] All repository markdown links resolve cleanly with zero portability errors.")
 
