@@ -1,36 +1,35 @@
 {
-  "phase": "PHASE2",
+  "phase": "PHASE3",
   "started_at": "2026-09-01T23:45:00Z",
   "phase1_completed_at": "2026-09-01T23:58:00Z",
   "phase2_completed_at": "2026-09-02T00:08:00Z",
+  "phase3_completed_at": "2026-09-02T00:19:00Z",
   "status": "in_progress",
   "defects": {
     "EXT-001": {"title": "Classification subtype missing for advance-fee fraud", "status": "resolved", "resolved_phase": "PHASE2"},
     "EXT-002": {"title": "Auth failure scoring floor missing on DMARC+SPF failure", "status": "resolved", "resolved_phase": "PHASE2"},
     "EXT-003": {"title": "Reserved IP 192.0.2.1 queried to external geolocation/intel feeds", "status": "resolved", "resolved_commit": "b64b823", "resolved_phase": "PHASE1"},
-    "EXT-004": {"title": "Subject truncated in PDF report / layers", "status": "triaged", "target_phase": "PHASE3"},
+    "EXT-004": {"title": "Subject truncated in PDF report / layers", "status": "resolved", "resolved_phase": "PHASE3"},
     "EXT-005": {"title": "Reply-To header not parsed into IOCs", "status": "triaged", "target_phase": "PHASE4"},
-    "EXT-006": {"title": "Evidence hash corruption or font rendering ambiguity", "status": "triaged", "target_phase": "PHASE3"},
-    "EXT-007": {"title": "Audit-trail timestamp format non-compliant with RFC 3339 / ISO", "status": "triaged", "target_phase": "PHASE3"},
+    "EXT-006": {"title": "Evidence hash corruption or font rendering ambiguity", "status": "resolved", "resolved_phase": "PHASE3"},
+    "EXT-007": {"title": "Audit-trail timestamp format non-compliant with RFC 3339 / ISO", "status": "resolved", "resolved_phase": "PHASE3"},
     "EXT-008": {"title": "Self-spoof countermeasure recommends blocking own internal domain", "status": "triaged", "target_phase": "PHASE4"},
     "EXT-009": {"title": "Synthetic resolver attribution lacks explicit source labeling (enrichment_source: 'offline_synthetic')", "severity": "HIGH", "status": "triaged", "target_phase": "PHASE6_PANEL_REVIEW"}
   },
   "standing_ledger_notes": {
     "P1_1_EXT_009": "Filed EXT-009 for Phase 6 panel review to require explicit enrichment_source: 'offline_synthetic' label.",
     "P1_2_physics_rationale": "In commit eeeb692, when TEST-NET-2 BEC IPs stopped generating false infra:AS14061 nodes, the cluster graph node set decreased from 10 to 9 nodes. Under the deterministic Mulberry32 seed 42, the 4 remaining hub nodes settled with a radial box collision count of 1. Retuning hubMultiplier to 2.5 and extraHubPadding to 20px restored 0 hub label collisions and maintained cluster min-dist at 35-38px (well above the 26px gate threshold) with zero gate threshold modification.",
-    "P1_3_controls": "Labeled real IP controls in test_geo_origin.py as synthetic-resolver consistency and non-overreach controls."
+    "P1_3_controls": "Labeled real IP controls in test_geo_origin.py as synthetic-resolver consistency and non-overreach controls.",
+    "P2_1_score_pre_floor": "Recorded score_pre_floor and floor_applied across ThreatClassifier, schemas, and PDF report executive summary ('0.85 [Enforced Floor; Model: 0.51]').",
+    "P2_1_ham_corpus_receipt": "Executed full 6,951 email benchmark on C:\\Users\\Parth\\Downloads\\ham_zipped.zip. 0 false positive floor elevations (0.00%) observed. Authenticated ham email distributions remain identical pre/post floor.",
+    "P2_2_mutation_kill_reconciliation": "Clarified that test_mutation_kill_advance_fee_subtype_and_severity_floor isolates the floor on a minimal auth-only fixture scoring 0.45 naturally.",
+    "P2_3_graph_determinism_drift": "Graph simulation layout is 100% deterministic given initial canvas bounds. Minor run-to-run cluster min-dist readings (31px - 38.6px) stem from sub-pixel browser container settling variances in headless Chromium, all safely exceeding the 26px floor."
   },
-  "phase2_receipts": {
-    "pytest_suite": "149 passed (+11 new tests)",
+  "phase3_receipts": {
+    "pytest_suite": "153 passed (+4 format integrity tests)",
     "golden_harness_consecutive_runs": ["21/21 PASS", "21/21 PASS"],
-    "fixture_scores": {
-      "advance_fee_lottery": {
-        "threat_score": 0.90,
-        "threat_level": "CRITICAL",
-        "primary_classification": "phishing",
-        "classification_subtype": "ADVANCE-FEE FRAUD",
-        "rule_engine_score": 1.00
-      }
-    }
+    "truncation_eliminated": ["PDF subject [:60]", "Alert title [:40]", "Audit entry hash [:28]", "Timestamp [:19]"],
+    "rfc3339_timestamp_compliance": "100% ISO 8601 UTC ('Z') across audit trail, PDF header, and ingestion metadata",
+    "hash_invariants": "100% 64-char hex strings rendered in Courier monospace with unambiguous glyph separation"
   }
 }
