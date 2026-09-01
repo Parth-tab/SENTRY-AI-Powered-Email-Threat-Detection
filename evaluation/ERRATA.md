@@ -161,10 +161,10 @@ Rather than relying on risk-dismissal rationales, all 4 upstream build-toolchain
 - **GitHub Dependabot State:** All 4 alerts transitioned to `Fixed` with 0 open alerts.
 
 ### 2. Hero Image State Transition Explanation
-A review of git history confirmed that [`docs/assets/dashboard.png`](file:///E:/SENTRY/docs/assets/dashboard.png) (184KB) and its markdown link in [`README.md`](file:///E:/SENTRY/README.md) were never modified or missing. The initial broken report in FINAL-INCH-1 was an artifact of the Playwright script testing `naturalWidth > 0` immediately upon `domcontentloaded` before the 184KB PNG completed loading from GitHub's raw CDN. Updating the harness simulation to wait for `networkidle` and trigger scroll-into-view confirmed that the hero image renders with `naturalWidth=1600x1011` on the unauthenticated public view.
+A review of git history confirmed that [`docs/assets/dashboard.png`](../docs/assets/dashboard.png) (184KB) and its markdown link in [`README.md`](../README.md) were never modified or missing. The initial broken report in FINAL-INCH-1 was an artifact of the Playwright script testing `naturalWidth > 0` immediately upon `domcontentloaded` before the 184KB PNG completed loading from GitHub's raw CDN. Updating the harness simulation to wait for `networkidle` and trigger scroll-into-view confirmed that the hero image renders with `naturalWidth=1600x1011` on the unauthenticated public view.
 
 ### 3. Removal of Unverifiable ARCH-001 & Final Ledger Arithmetic
-A comprehensive search across all git commits, branch heads, and tags revealed no git-level commit hash for `ARCH-001` (an early pre-commit conversational design artifact). In accordance with strict evidential rules requiring 100% git-verifiable provenance, `ARCH-001` was removed from [`evaluation/defects.json`](file:///E:/SENTRY/evaluation/defects.json).
+A comprehensive search across all git commits, branch heads, and tags revealed no git-level commit hash for `ARCH-001` (an early pre-commit conversational design artifact). In accordance with strict evidential rules requiring 100% git-verifiable provenance, `ARCH-001` was removed from [`evaluation/defects.json`](defects.json).
 
 **Final Master Defect Ledger Arithmetic:**
 ---
