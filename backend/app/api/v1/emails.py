@@ -187,6 +187,8 @@ async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSessio
     )
     db.add(email_record)
 
+    content_res["classification_subtype"] = classification_res.get("classification_subtype")
+
     analysis_record = AnalysisResult(
         email_id=email_record.id,
         overall_threat_score=float(classification_res["overall_threat_score"]),

@@ -73,6 +73,7 @@ class AnalysisResultResponse(BaseModel):
     overall_threat_score: float
     threat_level: str # LOW, MEDIUM, HIGH, CRITICAL
     primary_classification: str
+    classification_subtype: Optional[str] = None
     classification_confidence: float
     model_contributions: Dict[str, float]
     

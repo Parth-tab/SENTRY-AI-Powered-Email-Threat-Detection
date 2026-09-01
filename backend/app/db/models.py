@@ -66,6 +66,11 @@ class AnalysisResult(Base):
     recommendations = Column(JSON, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
+    # Dynamic accessors
+    @property
+    def classification_subtype(self):
+        return (self.content_analysis or {}).get("classification_subtype")
+
     # Relationships
     email = relationship("EmailRecord", back_populates="analysis")
 
