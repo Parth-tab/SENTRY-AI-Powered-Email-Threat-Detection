@@ -169,15 +169,14 @@ async def main():
 
     # Inspect PDF bytes / stream text directly
     pdf_text = pdf_bytes.decode("latin1", errors="replace")
-    print(f"\n  [Extracted PDF Raw Strings Sample]:\n{pdf_text[:800]}")
 
     # Inspect PDF Subject rendering via raw PDF strings
     subject_match = re.findall(r'\(([^)]+)\)', pdf_text)
-    print(f"\n  PDF String Elements (first 20): {subject_match[:20]}")
+    print(f"\n  PDF String Elements (first 25): {subject_match[:25]}")
     
     # Check hashes in PDF
     pdf_hashes = re.findall(r'[0-9a-f]{64}', pdf_text, re.IGNORECASE)
-    print(f"  PDF 64-char Hex Hashes found: {pdf_hashes}")
+    print(f"  PDF 64-char Hex Hashes found: {len(pdf_hashes)} occurrences ({pdf_hashes})")
 
     # Check IOC Table extracted from PDF
     print(f"\n[11. IOC TABLE CONTENTS (REPORT GENERATOR)]")

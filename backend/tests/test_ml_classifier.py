@@ -281,8 +281,12 @@ def test_mutation_kill_advance_fee_subtype_and_severity_floor():
     EXT-001 & EXT-002 Mutation Kill Assertions:
     Verifies that mutating either the keyword threshold or removing the severity floor
     fails with explicit attribution.
+
+    Note on P2-2: This test deliberately uses a minimal auth-only fixture (with benign body
+    and zero linguistic fraud indicators) whose natural pre-floor score is 0.45. This isolates
+    and proves that the severity floor alone elevates an unauthenticated domain spoof to 0.85 CRITICAL.
     """
-    # 1. Floor kill verification
+    # 1. Floor kill verification on minimal auth-only fixture
     mock_email = {"body_plain": "General text", "subject": "Notice", "sender": "target@domain.example"}
     mock_header = {
         "authentication": {"is_spoofed": True, "spf": {"result": "fail"}, "dmarc": {"result": "fail"}},
