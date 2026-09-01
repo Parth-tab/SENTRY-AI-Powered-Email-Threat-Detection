@@ -1,0 +1,63 @@
+{
+  "phase": "PHASE0_CLAIM_LEDGER_AUDIT_COMPLETED",
+  "started_at": "2026-09-02T00:54:00Z",
+  "phase0_completed_at": "2026-09-02T00:56:00Z",
+  "status": "awaiting_clearance",
+  "ground_truth": {
+    "pytest_suite_count": 156,
+    "pytest_module_count": 23,
+    "golden_harness_gates_count": 21,
+    "app_version": "1.1.0",
+    "project_name": "SENTRY - Forensic Email Threat Intelligence Platform",
+    "demo_seed_email_count": 18,
+    "demo_campaign_count": 3,
+    "demo_threat_distribution": {
+      "CRITICAL": 15,
+      "MEDIUM": 1,
+      "LOW": 2
+    },
+    "feature_vector_dimensions": 47,
+    "ml_ensemble_layers": 3,
+    "ml_metrics": {
+      "accuracy": 0.961,
+      "macro_f1": 0.952,
+      "roc_auc_ovr": 0.988,
+      "validation_sample_count": 15240
+    },
+    "ham_corpus_metrics": {
+      "unique_emails": 6777,
+      "total_archive_files": 6951,
+      "floor_false_positive_elevations": 0,
+      "false_positive_rate": 0.0
+    },
+    "registered_api_endpoints_count": 29,
+    "business_api_endpoints_count": 24,
+    "master_defect_ledger_count": 76,
+    "defect_status_counts": {
+      "resolved": 65,
+      "interim_mitigated": 1,
+      "consolidated": 3,
+      "deferred": 2,
+      "open": 5
+    }
+  },
+  "filed_defects": {
+    "DOC-001": {"title": "Defect Registry Arithmetic & Diligence Synchronization Drift", "severity": "HIGH", "status": "open", "target_phase": "PHASE1_PHASE2"},
+    "DOC-002": {"title": "Stale Test Counts in QA Armor and PR Template", "severity": "MEDIUM", "status": "open", "target_phase": "PHASE2"},
+    "DOC-003": {"title": "Dead Relative Markdown Links and file:/// Absolute URIs", "severity": "MEDIUM", "status": "open", "target_phase": "PHASE2_PHASE3"},
+    "DOC-004": {"title": "MBOX Handling Roadmap Target Stale in ARCHITECTURE.md", "severity": "LOW", "status": "open", "target_phase": "PHASE2"},
+    "DOC-005": {"title": "Lack of Machine-Verified Fact Validation Gate in CI", "severity": "HIGH", "status": "open", "target_phase": "PHASE1"}
+  },
+  "phase0_audit_summary": {
+    "documents_scanned": 31,
+    "claims_audited": 77,
+    "claims_status_breakdown": {
+      "AGREE": 51,
+      "AGREE_HISTORICAL": 22,
+      "DRIFT": 4
+    },
+    "broken_links_identified": 55,
+    "env_vars_audited": 25,
+    "env_var_diffs": 0
+  }
+}
