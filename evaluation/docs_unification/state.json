@@ -1,14 +1,17 @@
 {
-  "phase": "PHASE1_SINGLE_SOURCE_OF_TRUTH_COMPLETED",
+  "phase": "PHASE3_CHANGELOG_RELEASE_DILIGENCE_COMPLETED",
   "started_at": "2026-09-02T00:54:00Z",
   "phase0_completed_at": "2026-09-02T00:56:00Z",
   "phase1_completed_at": "2026-09-02T01:01:00Z",
+  "phase2_completed_at": "2026-09-02T01:06:00Z",
+  "phase3_completed_at": "2026-09-02T01:12:00Z",
   "status": "awaiting_clearance",
   "ground_truth": {
     "pytest_suite_count": 156,
     "pytest_module_count": 23,
     "golden_harness_gates_count": 21,
     "app_version": "1.1.0",
+    "target_release_version": "1.2.0",
     "project_name": "SENTRY - Forensic Email Threat Intelligence Platform",
     "demo_seed_email_count": 18,
     "demo_campaign_count": 3,
@@ -43,34 +46,21 @@
     }
   },
   "filed_defects": {
-    "DOC-001": {"title": "Defect Registry Arithmetic & Diligence Synchronization Drift", "severity": "HIGH", "status": "in_progress", "target_phase": "PHASE1_PHASE2"},
-    "DOC-002": {"title": "Stale Test Counts in QA Armor and PR Template", "severity": "MEDIUM", "status": "open", "target_phase": "PHASE2"},
-    "DOC-003": {"title": "Dead Relative Markdown Links and file:/// Absolute URIs", "severity": "MEDIUM", "status": "open", "target_phase": "PHASE2_PHASE3"},
-    "DOC-004": {"title": "MBOX Handling Roadmap Target Stale in ARCHITECTURE.md", "severity": "LOW", "status": "open", "target_phase": "PHASE2"},
-    "DOC-005": {"title": "Lack of Machine-Verified Fact Validation Gate in CI", "severity": "HIGH", "status": "resolved", "resolved_commit": "HEAD", "resolved_phase": "PHASE1"}
+    "DOC-001": {"title": "Defect Registry Arithmetic & Diligence Synchronization Drift", "severity": "HIGH", "status": "resolved", "resolved_commit": "HEAD", "resolved_phase": "PHASE3"},
+    "DOC-002": {"title": "Stale Test Counts in QA Armor and PR Template", "severity": "MEDIUM", "status": "resolved", "resolved_commit": "0f8e1ac", "resolved_phase": "PHASE2"},
+    "DOC-003": {"title": "Dead Relative Markdown Links and file:/// Absolute URIs", "severity": "MEDIUM", "status": "resolved", "resolved_commit": "HEAD", "resolved_phase": "PHASE3"},
+    "DOC-004": {"title": "MBOX Handling Roadmap Target Stale in ARCHITECTURE.md", "severity": "LOW", "status": "resolved", "resolved_commit": "0ec1fb8", "resolved_phase": "PHASE2"},
+    "DOC-005": {"title": "Lack of Machine-Verified Fact Validation Gate in CI", "severity": "HIGH", "status": "resolved", "resolved_commit": "8659b64", "resolved_phase": "PHASE1"}
   },
-  "phase1_receipts": {
-    "validator_tool": "tools/validate_facts.py (dynamic compute, zero static constants)",
-    "single_source_of_truth_document": "docs/PROJECT_FACTS.md (tagged [derived], [derived-historical], [asserted])",
-    "ci_workflow_wiring": ".github/workflows/ci.yml (step: Validate Machine-Verified Project Facts)",
-    "mutation_kill_a": {
-      "type": "facts_file_mutation",
-      "mutation": "TEST_SUITE_COUNT altered from 156 to 157 in PROJECT_FACTS.md",
-      "result": "tools/validate_facts.py failed with exit code 1 naming TEST_SUITE_COUNT mismatch: declared=157 vs computed=156"
+  "phase3_receipts": {
+    "link_resolution_99_to_0": "All 99 non-portable URIs converted to repo-relative paths; validate_facts.py --strict-links passing at exit 0",
+    "changelog_v120_entry": "CHANGELOG.md updated with [1.2.0] - 2026-09-02; past entries preserved per LAW D",
+    "release_notes_draft": "docs/RELEASE_NOTES_v1.2.0.md drafted without cutting release tag",
+    "diligence_reconciliation": "DILIGENCE.md reconciled to 76 objects (66+1+3+1+5=76) and defense dossier added",
+    "pipeline_red_run_kill_p2_a": {
+      "mutation_count": "FASTAPI_ROUTES_COUNT altered 29 -> 30 in PROJECT_FACTS.md (Exit 1: declared=30 vs computed=29)",
+      "mutation_link": "Broken file:/// URI injected into RUNBOOK.md (Exit 1: failing on broken links)"
     },
-    "mutation_kill_b": {
-      "type": "derivation_input_mutation",
-      "mutation": "BP-004 status altered from resolved to open in evaluation/defects.json",
-      "result": "tools/validate_facts.py failed with exit code 1 naming DEFECT_RESOLVED_COUNT mismatch: declared=66 vs computed=65"
-    },
-    "item_level_derivation_76": {
-      "resolved": 66,
-      "consolidated": 3,
-      "interim_mitigated": 1,
-      "deferred": 1,
-      "open": 5,
-      "total": 76,
-      "sum_invariant_verified": true
-    }
+    "cross_doc_matrix": "44 markdown documents audited across 12 quantitative patterns with 100% agreement"
   }
 }
