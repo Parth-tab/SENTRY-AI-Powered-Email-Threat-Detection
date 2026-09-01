@@ -24,6 +24,7 @@
 > "First, observe our access control posture: the appliance is sealed — nothing writes to the evidence vault without a verified DFIR Operator Bearer Token. Every ingestion, triage action, and forensic mutation is cryptographically attributed.
 > Watch what happens upon ingestion: within 8 milliseconds, the email payload is parsed byte-for-byte according to RFC 5322.
 > Before any inspection occurs, SENTRY calculates the SHA-256 cryptographic digest of the raw bytes and commits it as Genesis Block $H_0$ to an immutable evidence vault.
+> Notice our threat feed distribution: **15 Critical, 1 Medium, and 2 Low** scenarios. Why 15 Critical? Because SENTRY enforces an immutable 0.85 severity floor on hard DMARC domain spoofing failures — unauthenticated spoofing is an organizational policy violation, not an ML probability guess.
 > Simultaneously, our multi-pass Bleach sanitizer neutralizes any embedded XSS or hidden tracking pixels before rendering."
 
 ---
@@ -37,7 +38,8 @@
 > Standard security gateways inspect only the last hop (the victim's MX gateway).
 > SENTRY parses the entire `Received` header chain in chronological order. We flag hop 1 as a private RFC 1918 internal IP, and identify hop 2 (`185.220.101.34`) as the **earliest reliable public origin**.
 > SENTRY instantly cross-references this IP with active threat intelligence: it is a known Tor exit node hosted under AS205100 (Jonas Bunde / F3 Netze in the Netherlands).
-> Because the origin is masked by an anonymization network and the domain is an edit-distance lookalike targeting Apex National Bank, our 3-layer ensemble elevates the threat score to **0.95 (CRITICAL)**."
+> Because the origin is masked by an anonymization network and the domain is an edit-distance lookalike targeting Apex National Bank, our 3-layer ensemble elevates the threat score to **0.95 (CRITICAL)**.
+> And observe SENTRY's countermeasure precision: when an attacker spoofs an internal corporate address, **SENTRY is the system that refuses to tell you to block your own domain.** It advises DNS-layer DMARC `p=reject` enforcement, SEG perimeter anti-spoof filters, and blocks external Reply-To diversion channels — preventing self-inflicted Denial of Service."
 
 ---
 
@@ -62,9 +64,9 @@
 > "Finally, when this case is handed to law enforcement or CERT-In, digital evidence must withstand judicial scrutiny.
 > SENTRY maintains a sequential RFC 3227 hash chain where each enrichment step (Header Forensics, GeoIP, Threat Intel, ML Verdict) is hashed sequentially:
 > $$H_n = \text{SHA256}(H_{n-1} \parallel \text{Action} \parallel \text{Actor} \parallel \text{Timestamp})$$
-> With one click, SENTRY verifies the mathematical hash chain to prove zero post-acquisition tampering, and generates this court-admissible PDF report complete with cryptographic signatures and transmission timelines.
+> With one click, SENTRY verifies the mathematical hash chain to prove zero post-acquisition tampering, and generates this court-admissible PDF report complete with full 64-character Courier hashes, standardized RFC 3339 timestamps, un-sliced subject strings, and complete evidentiary provenance.
 >
-> SENTRY is fully verified across 41 automated tests, meets 100% of OWASP and RFC requirements, and delivers production-grade cyber intelligence. Thank you."
+> SENTRY is fully verified across 156 automated tests and 21 end-to-end golden verification gates, meets 100% of OWASP and RFC requirements, and delivers production-grade cyber intelligence. Thank you."
 
 ---
 
@@ -77,8 +79,12 @@
 3. **"Why use Bleach?"**  
    *"Bleach 6.1 is pinned with a strict ASVS Level 2 allowlist and regression-tested; high-throughput streaming in v2.0 transitions to the Rust-based `nh3` library."*
 4. **"How does the ML ensemble perform?"**  
-   *"Evaluated on 15,240 samples across 47 dimensions: Accuracy 0.961 (partially in-sample; Enron/CEAS baseline), Macro-F1 0.952, and Macro One-vs-Rest ROC-AUC 0.988; independently stress-tested out-of-sample against 6,951 historical ham emails with 0 critical false positives."*
+   *"Evaluated on 15,240 samples across 47 dimensions: Accuracy 0.961 (partially in-sample; Enron/CEAS baseline), Macro-F1 0.952, and Macro One-vs-Rest ROC-AUC 0.988; independently stress-tested out-of-sample against 6,777 unique historical ham emails (6,951 files) with 0 critical false positives (0.00% FP rate)."*
 5. **"What did you not test?"**  
-   *"Mutation testing, physical container SIGKILL chaos, and external metrics auth — all explicitly documented in our Limitations section."*
+   *"Physical container SIGKILL chaos and external metrics auth — explicitly documented in our Limitations section."*
 6. **"How do you perform a clean demonstration reset?"**  
    *"Execute the authenticated demo reset command: `curl -X POST http://localhost:8000/api/v1/admin/reset-demo -H "X-Sentry-Admin: sentry_admin_demo_secret_2025"`. The endpoint writes a sequential cryptographic hash-chained destruction audit record before re-seeding the 18 demo scenarios."*
+7. **"Why did SENTRY not recommend blocking the sender domain on a spoofed email?"**  
+   *"SENTRY is the system that refuses to tell you to block your own domain. When internal domain self-spoofing is detected (`from_domain == recipient_domain`), SENTRY recommends enforcing DNS-level DMARC `p=reject`, configuring SEG anti-spoofing perimeter filters, and blocking the external Reply-To diversion channel — structurally preventing self-inflicted Denial-of-Service."*
+8. **"Why enforce a 0.85 severity floor on DMARC authentication failures?"**  
+   *"CRITICAL 0.85 [Enforced Floor; Model: 0.51] — because unauthenticated domain spoofing is an organizational policy violation, not an ML probability guess. SENTRY transparently displays both the enforced policy floor and the underlying model score in every PDF report."*

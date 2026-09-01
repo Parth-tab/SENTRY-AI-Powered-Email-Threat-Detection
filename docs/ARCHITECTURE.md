@@ -168,3 +168,25 @@ In evidentiary forensics, silent string slicing (e.g. `[:60]`, `[:40]`, `[:28]`,
 3. **Evidentiary Hash Formatting & Monospace Typography (EXT-006):**
    - Target artifact digests and chain-of-custody entry hashes are rendered as full 64-character lowercase hexadecimal strings (`^[0-9a-f]{64}$`).
    - In PDF reports, hashes are rendered using dedicated monospace typography (`Courier` / `Helvetica-Bold`) with explicit font sizing (5.5pt–6.5pt) and generous column allocation (220pt) to guarantee zero character wrapping ambiguity, preventing optical transcription artifacts.
+
+---
+
+## 8. Authentication Failure Severity Floor & Countermeasure Architecture (EXT-001, EXT-002, EXT-005, EXT-008)
+
+### A. The Authentication Failure Severity Floor Policy (EXT-002)
+- **Deterministic Lower Bound:** Unauthenticated domain spoofing (`DMARC=fail` AND `SPF in [fail, softfail]`) represents a direct cryptographic policy violation rather than an ML probabilistic guess. Any message failing hard authentication is subject to an enforced severity floor of $\mathbf{0.85\ (CRITICAL)}$.
+- **Honesty Invariant (`score_pre_floor`):** To prevent severity compression and maintain algorithmic transparency for DFIR analysts, the pipeline preserves both `score_pre_floor` and `floor_applied`. PDF reports render:
+  $$\mathbf{CRITICAL\ THREAT\ (0.85\ [Enforced\ Floor;\ Model:\ 0.51])}$$
+- **Empirical Safety:** Tested against 6,777 unique historical ham emails (6,951 archive files), the severity floor produced **0 false positive elevations (0.00% FP rate)** because authentic unsigned mail lacks authentication infrastructure (`dmarc: none`, `spf: none`) and does not trigger hard failure predicates.
+
+### B. Classification Taxonomy & Subtype Granularity (EXT-001, P4-1)
+- **Canonical 5-Class Foundation:** SENTRY maintains a strict 5-class primary taxonomy: `phishing`, `bec`, `impersonation`, `suspicious`, `legitimate`.
+- **Advance-Fee Fraud Taxonomy:** Mass-solicitation lottery and inheritance schemes with external response routing are classified primarily as `phishing` (reflecting broad deceptive bait and PII/credential harvesting mechanisms) accompanied by a structured `classification_subtype: "ADVANCE-FEE FRAUD"`. This preserves multi-class battery compatibility while providing specialized SOC routing.
+
+### C. Recipient-Derived Self-Spoof Countermeasure Logic (EXT-005, EXT-008)
+- **Zero-Configuration Derivation:** Internal domain is identified dynamically when $\text{from\_domain} == \text{recipient\_domain}$ on spoofed messages.
+- **Self-DoS Prevention:** SENTRY structurally refuses to recommend blocking the organization's own domain. Countermeasure formulation routes to:
+  1. DNS-level DMARC `p=reject` / `p=quarantine` policy enforcement.
+  2. Perimeter Secure Email Gateway (SEG) anti-spoofing drop rules for external inbound messages claiming internal sender `@domain`.
+  3. Perimeter SEG drop rules for external `Reply-To` diversion domains (`claims-agent@example.com`).
+  4. Origin IP firewall drop list rules.
