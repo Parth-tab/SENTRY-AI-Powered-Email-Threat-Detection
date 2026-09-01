@@ -1,7 +1,8 @@
 {
-  "phase": "PHASE0_CLAIM_LEDGER_AUDIT_COMPLETED",
+  "phase": "PHASE1_SINGLE_SOURCE_OF_TRUTH_COMPLETED",
   "started_at": "2026-09-02T00:54:00Z",
   "phase0_completed_at": "2026-09-02T00:56:00Z",
+  "phase1_completed_at": "2026-09-02T01:01:00Z",
   "status": "awaiting_clearance",
   "ground_truth": {
     "pytest_suite_count": 156,
@@ -34,30 +35,42 @@
     "business_api_endpoints_count": 24,
     "master_defect_ledger_count": 76,
     "defect_status_counts": {
-      "resolved": 65,
+      "resolved": 66,
       "interim_mitigated": 1,
       "consolidated": 3,
-      "deferred": 2,
+      "deferred": 1,
       "open": 5
     }
   },
   "filed_defects": {
-    "DOC-001": {"title": "Defect Registry Arithmetic & Diligence Synchronization Drift", "severity": "HIGH", "status": "open", "target_phase": "PHASE1_PHASE2"},
+    "DOC-001": {"title": "Defect Registry Arithmetic & Diligence Synchronization Drift", "severity": "HIGH", "status": "in_progress", "target_phase": "PHASE1_PHASE2"},
     "DOC-002": {"title": "Stale Test Counts in QA Armor and PR Template", "severity": "MEDIUM", "status": "open", "target_phase": "PHASE2"},
     "DOC-003": {"title": "Dead Relative Markdown Links and file:/// Absolute URIs", "severity": "MEDIUM", "status": "open", "target_phase": "PHASE2_PHASE3"},
     "DOC-004": {"title": "MBOX Handling Roadmap Target Stale in ARCHITECTURE.md", "severity": "LOW", "status": "open", "target_phase": "PHASE2"},
-    "DOC-005": {"title": "Lack of Machine-Verified Fact Validation Gate in CI", "severity": "HIGH", "status": "open", "target_phase": "PHASE1"}
+    "DOC-005": {"title": "Lack of Machine-Verified Fact Validation Gate in CI", "severity": "HIGH", "status": "resolved", "resolved_commit": "HEAD", "resolved_phase": "PHASE1"}
   },
-  "phase0_audit_summary": {
-    "documents_scanned": 31,
-    "claims_audited": 77,
-    "claims_status_breakdown": {
-      "AGREE": 51,
-      "AGREE_HISTORICAL": 22,
-      "DRIFT": 4
+  "phase1_receipts": {
+    "validator_tool": "tools/validate_facts.py (dynamic compute, zero static constants)",
+    "single_source_of_truth_document": "docs/PROJECT_FACTS.md (tagged [derived], [derived-historical], [asserted])",
+    "ci_workflow_wiring": ".github/workflows/ci.yml (step: Validate Machine-Verified Project Facts)",
+    "mutation_kill_a": {
+      "type": "facts_file_mutation",
+      "mutation": "TEST_SUITE_COUNT altered from 156 to 157 in PROJECT_FACTS.md",
+      "result": "tools/validate_facts.py failed with exit code 1 naming TEST_SUITE_COUNT mismatch: declared=157 vs computed=156"
     },
-    "broken_links_identified": 55,
-    "env_vars_audited": 25,
-    "env_var_diffs": 0
+    "mutation_kill_b": {
+      "type": "derivation_input_mutation",
+      "mutation": "BP-004 status altered from resolved to open in evaluation/defects.json",
+      "result": "tools/validate_facts.py failed with exit code 1 naming DEFECT_RESOLVED_COUNT mismatch: declared=66 vs computed=65"
+    },
+    "item_level_derivation_76": {
+      "resolved": 66,
+      "consolidated": 3,
+      "interim_mitigated": 1,
+      "deferred": 1,
+      "open": 5,
+      "total": 76,
+      "sum_invariant_verified": true
+    }
   }
 }
