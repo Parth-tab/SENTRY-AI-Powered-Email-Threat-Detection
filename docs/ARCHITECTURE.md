@@ -149,4 +149,22 @@ To prevent this, `GeoOriginService.is_reserved_or_special_use_ip` enforces an ex
    - `country: "Reserved"`, `country_code: "XX"`, `city: "Reserved"`, `latitude: 0.0`, `longitude: 0.0`, `isp: "Reserved / Internal Test IP"`, `asn: "N/A"`, `connection_type: "Special-Purpose / Reserved"`.
    - `confidence: 0.15` with explicit risk factor `"Origin IP belongs to reserved / documentation address space (non-routable)"`.
 
+---
 
+## 7. Universal Truncation & Evidentiary Display Policy (EXT-004, EXT-006, EXT-007)
+
+### A. Zero Silent Truncation Standard
+In evidentiary forensics, silent string slicing (e.g. `[:60]`, `[:40]`, `[:28]`, `[:19]`) corrupts chain-of-custody verification and damages court admissibility. SENTRY mandates that forensic artifacts, timestamps, and cryptographic hashes are never silently truncated in ingestion, storage, API, or generated legal documents (PDF).
+
+1. **Email Subject Integrity (EXT-004):**
+   - Ingestion, database models, analysis payloads, real-time alerts, and PDF document metadata preserve the entire subject string verbatim (e.g. full 111-character subject lines).
+   - In PDF documents, subjects are wrapped naturally using multi-line `Paragraph` flowables rather than arbitrary character slicing.
+   - In UI space-constrained environments (feed badges, compact table cells), truncation is always **deliberate and ellipsis-aware** (e.g., word-boundary truncation with `...` indicator) and never a silent slice.
+
+2. **Universal RFC 3339 UTC Timestamps (EXT-007):**
+   - All timestamps across evidence vaults, hash chain audit entries, PDF reports, and API metadata use standardized ISO 8601 / RFC 3339 format with explicit UTC zero-offset (`YYYY-MM-DDTHH:MM:SS.ffffffZ` or `YYYY-MM-DDTHH:MM:SSZ`).
+   - Hand-rolled string formatting (e.g., `%Y-%m-%d %H:%M:%SZ` or `[:19]`) is forbidden; all timestamps must be parseable via standard `datetime.fromisoformat()`.
+
+3. **Evidentiary Hash Formatting & Monospace Typography (EXT-006):**
+   - Target artifact digests and chain-of-custody entry hashes are rendered as full 64-character lowercase hexadecimal strings (`^[0-9a-f]{64}$`).
+   - In PDF reports, hashes are rendered using dedicated monospace typography (`Courier` / `Helvetica-Bold`) with explicit font sizing (5.5pt–6.5pt) and generous column allocation (220pt) to guarantee zero character wrapping ambiguity, preventing optical transcription artifacts.

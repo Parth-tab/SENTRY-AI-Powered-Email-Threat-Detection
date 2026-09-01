@@ -206,14 +206,15 @@ class ReportingService:
         elements = []
 
         # 1. Header Banner
+        t_now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         header_table = Table(
             [
                 [
                     Paragraph("<b>SENTRY FORENSIC INTELLIGENCE PLATFORM</b><br/><font size=7.5 color='#64748B'>EVIDENTIARY-GRADE EMAIL THREAT ASSESSMENT & ORIGIN ATTRIBUTION REPORT</font>", title_style),
-                    Paragraph(f"<b>CASE ID:</b> {evidence_data.get('chain_of_custody_id', 'COC-001')}<br/><b>DATE:</b> {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%SZ')}<br/><b>CLASSIFICATION:</b> LAW ENFORCEMENT SENSITIVE", subtitle_style)
+                    Paragraph(f"<b>CASE ID:</b> {evidence_data.get('chain_of_custody_id', 'COC-001')}<br/><b>DATE:</b> {t_now}<br/><b>CLASSIFICATION:</b> LAW ENFORCEMENT SENSITIVE", subtitle_style)
                 ]
             ],
-            colWidths=[360, 180]
+            colWidths=[350, 190]
         )
         header_table.setStyle(TableStyle([
             ('VALIGN', (0,0), (-1,-1), 'TOP'),
@@ -225,15 +226,26 @@ class ReportingService:
 
         # 2. Executive Summary Box
         threat_level = analysis_data.get("threat_level", "LOW")
-        threat_score = analysis_data.get("overall_threat_score", 0.0)
+        threat_score = float(analysis_data.get("overall_threat_score", 0.0))
+        score_pre = analysis_data.get("score_pre_floor") or (analysis_data.get("content_analysis") or {}).get("score_pre_floor")
+        subtype = analysis_data.get("classification_subtype") or (analysis_data.get("content_analysis") or {}).get("classification_subtype")
         primary_cls = analysis_data.get("primary_classification", "legitimate").upper()
-        
+        if subtype:
+            cls_display = f"{primary_cls} ({subtype})"
+        else:
+            cls_display = primary_cls
+
+        if score_pre is not None and abs(float(score_pre) - threat_score) > 0.001:
+            score_display = f"{threat_score:.2f} [Enforced Floor; Model: {float(score_pre):.2f}]"
+        else:
+            score_display = f"{threat_score:.2f} / 1.00"
+
         box_bg = colors.HexColor("#FEF2F2") if threat_level == "CRITICAL" else colors.HexColor("#FFFBEB") if threat_level == "HIGH" else colors.HexColor("#F8FAFC")
         border_color = colors.HexColor("#EF4444") if threat_level == "CRITICAL" else colors.HexColor("#F59E0B") if threat_level == "HIGH" else colors.HexColor("#94A3B8")
 
         summary_text = (
             f"<b>EXECUTIVE ASSESSMENT:</b> SENTRY automated forensic triage has assessed this artifact as "
-            f"<b>{threat_level} THREAT ({threat_score:.2f} / 1.00)</b> classified as <b>{primary_cls}</b>. "
+            f"<b>{threat_level} THREAT ({score_display})</b> classified as <b>{cls_display}</b>. "
             f"Authentication checks resulted in SPF: <b>{analysis_data.get('auth_spf', {}).get('result', 'NONE').upper()}</b>, "
             f"DKIM: <b>{analysis_data.get('auth_dkim', {}).get('result', 'NONE').upper()}</b>, and "
             f"DMARC: <b>{analysis_data.get('auth_dmarc', {}).get('result', 'NONE').upper()}</b>."
@@ -254,11 +266,11 @@ class ReportingService:
         # 3. Target Artifact Metadata
         elements.append(Paragraph("1. TARGET ARTIFACT METADATA", heading_style))
         meta_data = [
-            [Paragraph("<b>Subject:</b>", body_style), Paragraph(str(email_data.get("subject", ""))[:60], body_style)],
+            [Paragraph("<b>Subject:</b>", body_style), Paragraph(str(email_data.get("subject", "")), body_style)],
             [Paragraph("<b>Claimed Sender:</b>", body_style), Paragraph(str(email_data.get("from_raw", "")), body_style)],
             [Paragraph("<b>Recipient:</b>", body_style), Paragraph(str(email_data.get("recipient", "")), body_style)],
             [Paragraph("<b>Message-ID:</b>", body_style), Paragraph(str(email_data.get("message_id", "")), mono_style)],
-            [Paragraph("<b>SHA-256 Hash:</b>", body_style), Paragraph(str(email_data.get("sha256_hash", "")), mono_style)]
+            [Paragraph("<b>SHA-256 Hash:</b>", body_style), Paragraph(f"<font size=6.5 fontName='Courier'>{str(email_data.get('sha256_hash', ''))}</font>", mono_style)]
         ]
         meta_table = Table(meta_data, colWidths=[110, 430])
         meta_table.setStyle(TableStyle([
@@ -313,7 +325,7 @@ class ReportingService:
         
         content = analysis_data.get("content_analysis", {})
         for u in content.get("urls_found", [])[:3]:
-            iocs.append(["URL", u.get("url", "")[:50], "Extracted Payload Link"])
+            iocs.append(["URL", u.get("url", ""), "Extracted Payload Link"])
 
         if not iocs:
             iocs.append(["N/A", "No high-confidence malicious IOCs extracted", "Clean"])
@@ -347,11 +359,11 @@ class ReportingService:
             coc_table_data.append([
                 Paragraph(f"#{entry.get('step_number')}", body_style),
                 Paragraph(f"{entry.get('action')}<br/><font size=6.5 color='#64748B'>{entry.get('actor')}</font>", body_style),
-                Paragraph(str(entry.get("timestamp"))[:19], body_style),
-                Paragraph(f"<font size=6.5>{entry.get('entry_hash')[:28]}...</font>", mono_style)
+                Paragraph(f"<font size=6.5 fontName='Courier'>{str(entry.get('timestamp'))}</font>", mono_style),
+                Paragraph(f"<font size=5.5 fontName='Courier'>{entry.get('entry_hash')}</font>", mono_style)
             ])
 
-        coc_table = Table(coc_table_data, colWidths=[35, 175, 110, 220])
+        coc_table = Table(coc_table_data, colWidths=[35, 155, 130, 220])
         coc_table.setStyle(TableStyle([
             ('BACKGROUND', (0,0), (-1,0), colors.HexColor("#E2E8F0")),
             ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor("#CBD5E1")),

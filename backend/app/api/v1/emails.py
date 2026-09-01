@@ -188,6 +188,8 @@ async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSessio
     db.add(email_record)
 
     content_res["classification_subtype"] = classification_res.get("classification_subtype")
+    content_res["score_pre_floor"] = classification_res.get("score_pre_floor")
+    content_res["floor_applied"] = classification_res.get("floor_applied")
 
     analysis_record = AnalysisResult(
         email_id=email_record.id,
@@ -230,7 +232,7 @@ async def process_and_store_email(raw_bytes: bytes, source: str, db: AsyncSessio
     if classification_res["overall_threat_score"] >= 0.70:
         alert_record = Alert(
             email_id=email_record.id,
-            title=f"{classification_res['threat_level']} Threat: {email_data['subject'][:40]}",
+            title=f"{classification_res['threat_level']} Threat: {email_data['subject']}",
             severity=classification_res["threat_level"],
             message=f"Detected {classification_res['primary_classification'].upper()} from {email_data['sender']} (Score: {classification_res['overall_threat_score']:.2f})",
             threat_score=float(classification_res["overall_threat_score"]),
