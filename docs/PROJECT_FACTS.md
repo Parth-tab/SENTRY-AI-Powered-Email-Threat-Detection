@@ -43,7 +43,7 @@ The following metrics are dynamically extracted and validated by `tools/validate
 
 <!-- fact: APP_VERSION -->
 <!-- derivation: backend/app/config.py (VERSION) == frontend/package.json (version) -->
-- **Unified Software Version [derived]:** `APP_VERSION: 1.2.0` (Certified release: graph intelligence, ext-eval defense hardening & continuous fact gating).
+- **Unified Software Version [derived]:** `APP_VERSION: 1.2.1` (Certified release: graph intelligence, ext-eval defense hardening & continuous fact gating).
 
 <!-- fact: FASTAPI_ROUTES_COUNT -->
 <!-- derivation: len([r for r in app.routes if isinstance(r, APIRoute)]) -->
