@@ -23,12 +23,12 @@ SENTRY is an evidentiary-grade cyber forensic intelligence platform that treats 
 
 ```mermaid
 flowchart TD
-    A["Raw Ingestion<br/>RFC 5322 EML / MSG / MBOX"] --> B["Ingestion & Vault Engine<br/>SHA-256 Digest + Bleach Sanitization"]
+    A["Raw Ingestion<br/>RFC 5322 EML / MSG / MBOX / ZIP / CSV"] --> B["Ingestion & Vault Engine<br/>SHA-256 Digest + Bleach Sanitization"]
     B --> C["RFC 3227 Hash Chain<br/>Genesis Block Creation"]
     
     subgraph "Forensic Deep Analysis Pipeline"
-        C --> D1["Header Forensics Engine<br/>Received Hop Chronology, SPF/DKIM/DMARC"]
-        C --> D2["Geo-Origin Engine<br/>Earliest Hop Trace, Tor/VPN/ASN Fingerprint"]
+        C --> D1["Header Forensics Engine<br/>Received Chronology, SPF/DKIM/DMARC"]
+        C --> D2["Geo-Origin Engine<br/>22-Network RFC Special-Use Guard, Tor/VPN/ASN"]
         C --> D3["Domain Intelligence<br/>Levenshtein, Punycode, Homoglyphs"]
         C --> D4["Content NLP & Attention<br/>Urgency, Credential & Financial Vectors"]
         C --> D5["Threat Intel Feeds<br/>URLhaus, ThreatFox, OpenPhish"]
@@ -40,18 +40,19 @@ flowchart TD
     D4 --> E
     D5 --> E
 
-    subgraph "3-Layer ML Classifier Triangulation"
-        E --> F1["Layer 1: Deterministic Heuristics"]
+    subgraph "3-Layer ML Classifier & Policy Floor Triangulation"
+        E --> F1["Layer 1: Deterministic Heuristics & Subtypes"]
         E --> F2["Layer 2: Calibrated XGBoost GBDT"]
         E --> F3["Layer 3: Linguistic Attention Score"]
         F1 --> G["Ensemble Blending Engine"]
         F2 --> G
         F3 --> G
+        G --> G_Floor["0.85 Hard Auth Failure Floor<br/>(Preserves score_pre_floor)"]
     end
 
-    G --> H["Threat Verdict<br/>Score: 0.0-1.0 • Level: CRITICAL/HIGH/MED/LOW"]
-    H --> I["Correlation & Knowledge Graph<br/>NetworkX / Neo4j Campaign Clustering"]
-    H --> J["Court-Admissible PDF Report<br/>ReportLab RFC 3227 Cryptographic Proof"]
+    G_Floor --> H["Threat Verdict & IR Routing<br/>Score: 0.0-1.0 • Subtype: ADVANCE-FEE • Self-Spoof Refusal"]
+    H --> I["Correlation & Knowledge Graph<br/>Deterministic Force Physics & Gate 21 Legibility"]
+    H --> J["Court-Admissible PDF Report<br/>Courier Monospace Hashes & RFC 3339 Timestamps"]
     H --> K["Real-Time SOC Broadcast<br/>WebSocket Token-Bucket Telemetry"]
 ```
 
@@ -109,7 +110,7 @@ Payload format classification (`backend/app/services/sniffer.py`) inspects the i
 1. **ZIP Archive Signature:** `PK\x03\x04` magic bytes $\rightarrow$ In-memory archive pipeline.
 2. **RFC 822 Grammar:** Header key-value grammar (`^[A-Za-z0-9-]+:\s*.+`) with zero null bytes in first 512 bytes $\rightarrow$ Standard forensic pipeline.
 3. **Tabular Dataset Grammar:** Delimited text ($\ge 2$ columns) matching recognized header tokens (`body`, `text`, `subject`, `label`) $\rightarrow$ CSV synthesizer pipeline.
-4. **MBOX Handling (F-4 / MBOX-001):** Single-message `.mbox` files and standard RFC 822 streams are processed directly. Multi-message mailbox archives (concatenated via `From ` envelope delimiters) are currently parsed as single continuous streams; full multi-message mailbox delimiter splitting into discrete batch entities is tracked under defect `MBOX-001` (target v1.1.0) with ZIP archives serving as the primary multi-file ingestion format.
+4. **MBOX Handling (F-4 / MBOX-001):** Single-message `.mbox` files and standard RFC 822 streams are processed directly. Multi-message mailbox archives (concatenated via `From ` envelope delimiters) are currently parsed as single continuous streams; full multi-message mailbox delimiter splitting into discrete batch entities is tracked under defect `MBOX-001` (target v1.2.0 roadmap) with ZIP archives serving as the primary multi-file ingestion format.
 
 ### B. In-Memory Archive Safety & Scale Caps
 - **In-Memory Streaming:** ZIP entries decompressed entirely in memory (`io.BytesIO`). Zero disk extraction eliminates Zip-Slip vulnerabilities.
