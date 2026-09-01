@@ -323,6 +323,19 @@ class ReportingService:
         if domain_intel.get("domain"):
             iocs.append(["Domain", domain_intel.get("domain"), f"Sender Domain (Lookalike: {domain_intel.get('is_lookalike')})"])
         
+        # Structured Reply-To extraction (EXT-005)
+        reply_to_raw = email_data.get("headers", {}).get("reply-to") or email_data.get("reply_to") or ""
+        if reply_to_raw:
+            from email.utils import parseaddr
+            _, r_email = parseaddr(str(reply_to_raw))
+            if r_email:
+                r_domain = r_email.split("@")[-1].lower() if "@" in r_email else ""
+                s_domain = str(email_data.get("sender_domain", "")).lower()
+                is_mismatch = bool(r_domain and s_domain and r_domain != s_domain)
+                iocs.append(["Reply-To Email", r_email, f"Response Routing (Mismatch: {is_mismatch})"])
+                if is_mismatch and r_domain:
+                    iocs.append(["Reply-To Domain", r_domain, f"External Diversion Channel (From: {s_domain})"])
+
         content = analysis_data.get("content_analysis", {})
         for u in content.get("urls_found", [])[:3]:
             iocs.append(["URL", u.get("url", ""), "Extracted Payload Link"])

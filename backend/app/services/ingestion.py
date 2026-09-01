@@ -37,6 +37,7 @@ class IngestionService:
         subject = str(msg.get("Subject", "(No Subject)"))
         from_header = str(msg.get("From", ""))
         to_header = str(msg.get("To", ""))
+        reply_to_header = str(msg.get("Reply-To", ""))
         date_header = msg.get("Date")
         message_id = str(msg.get("Message-ID", f"<{uuid.uuid4()}@sentry.local>")).strip("<>")
         
@@ -44,6 +45,7 @@ class IngestionService:
         _, sender_email = parseaddr(from_header)
         sender_domain = sender_email.split("@")[-1].lower() if "@" in sender_email else ""
         _, recipient_email = parseaddr(to_header)
+        _, reply_to_email = parseaddr(reply_to_header)
 
         # Parse date
         parsed_date = None
@@ -155,6 +157,8 @@ class IngestionService:
             "sender_domain": sender_domain,
             "recipient": recipient_email or to_header,
             "to_raw": to_header,
+            "reply_to": reply_to_header,
+            "reply_to_email": reply_to_email,
             "date": parsed_date,
             "headers": headers_dict,
             "received_headers": received_headers,
