@@ -28,12 +28,9 @@ class HeaderForensicsService:
 
     @staticmethod
     def is_private_ip(ip_str: str) -> bool:
-        """Determines if an IP is RFC 1918 private, loopback, or link-local."""
-        try:
-            ip = ipaddress.ip_address(ip_str.strip())
-            return ip.is_private or ip.is_loopback or ip.is_link_local or ip.is_reserved
-        except ValueError:
-            return True # treat invalid as non-public
+        """Determines if an IP is private, loopback, link-local, or non-routable special-use space."""
+        from app.services.geo_origin import GeoOriginService
+        return GeoOriginService.is_reserved_or_special_use_ip(ip_str)
 
     @classmethod
     def parse_received_chain(cls, received_headers: List[str]) -> Tuple[List[Dict[str, Any]], Optional[Dict[str, Any]], List[str]]:
