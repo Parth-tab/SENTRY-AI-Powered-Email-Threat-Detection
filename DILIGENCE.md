@@ -88,12 +88,14 @@ Every gap tracked from the Viability Audit and Auditor's Annex has been resolved
 
 | Category / Status | Count | Tracked Defect Identifiers / Lineage |
 |---|:---:|---|
-| **Resolved** | **58** | 43 historical release items + 7 MRWS gaps (`GAP-003`, `GAP-004`, `GAP-006`..`GAP-010`) + 8 external evaluation defects (`EXT-001`..`EXT-008`) |
+| **Resolved** | **58** | 43 historical release items + 7 MRWS gaps (`GAP-003`, `GAP-004`, `GAP-006`, `GAP-007`, `GAP-008`, `GAP-009`, `GAP-010`)* + 8 external evaluation defects (`EXT-001`..`EXT-008`) |
 | **Interim Mitigated** | **1** | `GAP-005` (sentry.io trademark disclaimer notices) |
 | **Consolidated** | **3** | `BATCH-003`, `CORP-002`, `ING-003` (subsumed into unified batch ingest pipeline) |
 | **Deferred** | **1** | `BP-004` (v2.0 client-side multi-dimensional graph filter) |
 | **Open (Targeted Roadmap)** | **5** | `DEF-005` (forged-header battery), `MBOX-001` (multi-message mbox delimiter parser), `GAP-001` (scale-out cloud daemons), `GAP-002` (automated IMAP/M365 mailbox connector), and `EXT-009` (synthetic attribution label enhancement) |
 | **Total Tracked Objects** | **68** | **Sum: $58 + 1 + 3 + 1 + 5 = 68$ (100% mathematically reconciled)** |
+
+*\*Note on Lineage: Out of 8 total MRWS gaps (GAP-003 through GAP-010), 7 are fully resolved and 1 (GAP-005) is tracked in Interim Mitigated with zero double-counting.*
 
 - **Release Blocker Closure:** **100% of release blockers and critical findings are closed** ($58 + 1 + 3 + 1 = 63$ resolved/accounted). Zero blockers or high-severity items remain open.
 - **Golden Verification Harness:** **21 / 21 Golden Gates Passing** (`tools/verify_sentry.py --start`).
