@@ -242,7 +242,7 @@ export class GraphSimulation {
         }
 
         const dist = Math.sqrt(distSq);
-        const hubMultiplier = isHubA || isHubB ? 1.4 : 1.0;
+        const hubMultiplier = isHubA && isHubB ? 2.5 : isHubA || isHubB ? 1.5 : 1.0;
         const force = (chargeStrength * hubMultiplier * this.alpha) / distSq;
         const fx = (dx / dist) * force;
         const fy = (dy / dist) * force;
@@ -279,12 +279,23 @@ export class GraphSimulation {
     // 3. Collision Avoidance (forceCollide)
     for (let i = 0; i < n; i++) {
       const nodeA = nodes[i];
+      const isHubA =
+        nodeA.type === "CampaignSupernode" ||
+        nodeA.type === "Campaign" ||
+        nodeA.type === "Infrastructure" ||
+        nodeA.type === "BrandTarget";
       for (let j = i + 1; j < n; j++) {
         const nodeB = nodes[j];
+        const isHubB =
+          nodeB.type === "CampaignSupernode" ||
+          nodeB.type === "Campaign" ||
+          nodeB.type === "Infrastructure" ||
+          nodeB.type === "BrandTarget";
         let dx = nodeB.x - nodeA.x;
         let dy = nodeB.y - nodeA.y;
         let dist = Math.sqrt(dx * dx + dy * dy) || 1;
-        const minDist = nodeA.radius + nodeB.radius + collidePadding;
+        const extraHubPadding = isHubA && isHubB ? 20 : 0;
+        const minDist = nodeA.radius + nodeB.radius + collidePadding + extraHubPadding;
 
         if (dist < minDist) {
           const overlap = (minDist - dist) / dist;
