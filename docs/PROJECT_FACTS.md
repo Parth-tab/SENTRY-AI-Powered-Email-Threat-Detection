@@ -46,8 +46,8 @@ The following metrics are dynamically extracted and validated by `tools/validate
 - **Unified Software Version [derived]:** `APP_VERSION: 1.1.0` (Workstation certified delivery; v1.2.0 graph engine & ext-eval remediation prepared for release).
 
 <!-- fact: FASTAPI_ROUTES_COUNT -->
-<!-- derivation: python -c "from app.main import app; len([r for r in app.routes if hasattr(r, 'methods')])" -->
-- **Registered Application Routes [derived]:** `FASTAPI_ROUTES_COUNT: 29` routes (24 business API routes under `/api/v1/`, `/health`, `/metrics` + 5 system documentation routes).
+<!-- derivation: len([r for r in app.routes if isinstance(r, APIRoute)]) -->
+- **Registered API Routes [derived]:** `FASTAPI_ROUTES_COUNT: 29` endpoints (24 business DFIR routes + 5 system telemetry routes).
 
 <!-- fact: FEATURE_VECTOR_DIMENSIONS -->
 <!-- derivation: backend/app/ml/classifier.py (len(FeatureExtractor.FEATURE_NAMES)) -->
