@@ -1,0 +1,15 @@
+{
+  "phase": "PHASE0",
+  "started_at": "2026-09-01T23:45:00Z",
+  "status": "in_progress",
+  "defects": {
+    "EXT-001": {"title": "Classification subtype missing for advance-fee fraud", "status": "triaged"},
+    "EXT-002": {"title": "Auth failure scoring floor missing on DMARC+SPF failure", "status": "triaged"},
+    "EXT-003": {"title": "Reserved IP 192.0.2.1 queried to external geolocation/intel feeds", "status": "triaged"},
+    "EXT-004": {"title": "Subject truncated in PDF report / layers", "status": "triaged"},
+    "EXT-005": {"title": "Reply-To header not parsed into IOCs", "status": "triaged"},
+    "EXT-006": {"title": "Evidence hash corruption or font rendering ambiguity", "status": "triaged"},
+    "EXT-007": {"title": "Audit-trail timestamp format non-compliant with RFC 3339 / ISO", "status": "triaged"},
+    "EXT-008": {"title": "Self-spoof countermeasure recommends blocking own internal domain", "status": "triaged"}
+  }
+}
