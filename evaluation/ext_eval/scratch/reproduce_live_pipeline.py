@@ -1,7 +1,13 @@
 import asyncio
+import os
+import sys
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO_ROOT / "backend"))
+
 import json
 import re
-from pathlib import Path
 from datetime import datetime, timezone
 import io
 from app.config import settings

@@ -99,8 +99,9 @@ def test_reserved_ip_enrichment_guard_scenario_matrix(reserved_ip, range_name):
 ])
 def test_real_ip_controls_enrich_accurately(real_ip, expected_country, expected_asn, expected_tor):
     """
-    Control: Real public IPs must NOT trigger the reserved guard and must
-    enrich to their authentic geolocation, ISP, ASN, and anonymization status.
+    Control: Synthetic-resolver consistency and non-overreach controls (air-gapped appliance fixtures).
+    Real public IPs must NOT trigger the reserved guard and must enrich to their authentic
+    geolocation, ISP, ASN, and anonymization status.
     """
     assert GeoOriginService.is_reserved_or_special_use_ip(real_ip) is False
     geo = GeoOriginService.lookup_ip_geo(real_ip)
