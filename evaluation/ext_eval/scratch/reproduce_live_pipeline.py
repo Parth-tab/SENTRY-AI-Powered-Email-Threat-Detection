@@ -185,9 +185,23 @@ async def main():
     if origin_res.get("probable_origin_ip") and origin_res.get("probable_origin_ip") != "Unknown":
         iocs.append(["IPv4 Address", origin_res.get("probable_origin_ip"), "Originating SMTP Client"])
     if domain_res.get("domain"):
-        iocs.append(["Domain", domain_intel_domain := domain_res.get("domain"), f"Sender Domain (Lookalike: {domain_res.get('is_lookalike')})"])
+        iocs.append(["Domain", domain_res.get("domain"), f"Sender Domain (Lookalike: {domain_res.get('is_lookalike')})"])
+    
+    # Reply-To structured IOC extraction
+    reply_to_raw = email_data.get("reply_to") or email_data.get("headers", {}).get("Reply-To") or ""
+    if reply_to_raw:
+        from email.utils import parseaddr
+        _, r_email = parseaddr(str(reply_to_raw))
+        if r_email:
+            r_domain = r_email.split("@")[-1].lower() if "@" in r_email else ""
+            s_domain = str(email_data.get("sender_domain", "")).lower()
+            is_mismatch = bool(r_domain and s_domain and r_domain != s_domain)
+            iocs.append(["Reply-To Email", r_email, f"Response Routing (Mismatch: {is_mismatch})"])
+            if is_mismatch and r_domain:
+                iocs.append(["Reply-To Domain", r_domain, f"External Diversion Channel (From: {s_domain})"])
+
     for u in content_res.get("urls_found", [])[:3]:
-        iocs.append(["URL", u.get("url", "")[:50], "Extracted Payload Link"])
+        iocs.append(["URL", u.get("url", ""), "Extracted Payload Link"])
     for ioc_row in iocs:
         print(f"  IOC Row: {ioc_row}")
 
