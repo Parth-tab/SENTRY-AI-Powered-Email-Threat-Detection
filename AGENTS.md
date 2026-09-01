@@ -31,14 +31,23 @@ After ANY change: run the harness before drawing any conclusion.
    `evaluation/defects.json`, an issue number, or a check name from the harness.
    A commit that improves behavior without a reference is suspect.
 3. Protected Branch Protocol: `main` is protected; all work lands via branches + PRs; required checks must be green; the harness runs locally before any PR.
-4. Before PR: pytest (`backend/tests`) AND `tools/verify_sentry.py --start`
-   must pass. CI runs both plus the full GAUNTLET battery — do not push red.
+4. Before PR: pytest (`backend/tests`), `tools/verify_sentry.py --start`, and
+   `tools/validate_facts.py` must pass. CI runs all three plus the full GAUNTLET battery — do not push red.
 5. Fix the app, never the test. Battery/evaluation changes require an
    `eval-change:` commit with written rationale, and may only be made MORE
    strict, never less.
 6. State lives on disk (`evaluation/defects.json`, `evaluation/artifacts/verification_report_*.json`,
    `git log`), not in conversation memory. After compaction, restore context
    from disk — do not re-probe the running system in loops.
+
+## Machine Operating Laws
+
+1. **LAW A (Claim-Derivation Law):** Every quantitative claim (test counts, gate counts, defect counts, versions, metrics) must be derived by command during the session. `docs/PROJECT_FACTS.md` is the sole machine-verified numeric source of truth. No claims from memory.
+2. **LAW B (Conditions Ledger Protocol):** Every phase and session report must open with a status-tracked conditions ledger (CLOSED/OPEN per item).
+3. **LAW C (Link Integrity & Portability Law):** All links within committed markdown must resolve repo-relative. Absolute `file:///` URIs are forbidden. Dead links are tracked as defects (`DOC-xxx`). The validator link stage is advisory during Phase 2 and strictly gated (`--strict-links`) upon `DOC-003` closure.
+4. **LAW D (Immutable History Law):** Past `CHANGELOG.md` entries, released version notes, and certified review artifacts are immutable history. Historical claims must be tagged `[derived-historical]` and never rewritten.
+5. **Caption Honesty & Pixel Fidelity Law:** All screenshots in `docs/assets/tour/` and documentation must match the live rendered pixels of the application via `tools/capture_tour.py`.
+6. **3x Flake Bar Protocol:** Stochastic, force-directed, or visual layout features (e.g. Campaign Network Graph force physics) must demonstrate 3 consecutive green golden harness runs (`tools/verify_sentry.py --start`) before final panel clearance.
 
 ## Sealed release
 `demo-freeze-v2` (`01f8fb4`) is the certified SIH 2025 release with a full
