@@ -1,35 +1,36 @@
 {
-  "dataset": "sample_emails",
+  "dataset": "E:\\SENTRY\\sample_emails",
   "total_files": 18,
   "successful_parses": 18,
   "parse_errors": 0,
-  "total_time_seconds": 0.09,
-  "average_latency_ms": 5.1,
-  "throughput_emails_per_sec": 196.1,
+  "total_time_seconds": 0.1,
+  "average_latency_ms": 5.8,
+  "throughput_emails_per_sec": 172.5,
   "threat_level_distribution": {
-    "CRITICAL": 3,
-    "HIGH": 4,
+    "CRITICAL": 2,
+    "HIGH": 5,
     "MEDIUM": 9,
     "LOW": 2
   },
   "primary_classification_distribution": {
     "phishing": 11,
     "bec": 4,
-    "suspicious": 2,
-    "legitimate": 1
+    "suspicious": 1,
+    "legitimate": 2
   },
   "score_distribution": {
     "0.80-1.00 (Critical)": 6,
-    "0.40-0.59 (Moderate)": 8,
-    "0.60-0.79 (High)": 2,
+    "0.40-0.59 (Moderate)": 7,
+    "0.60-0.79 (High)": 3,
     "0.00-0.19 (Minimal)": 2
   },
   "top_origin_countries": {
-    "Netherlands": 5,
+    "Netherlands": 6,
     "United States": 5,
-    "United Kingdom": 4,
-    "Russia": 2,
-    "Singapore": 2
+    "Reserved": 3,
+    "Singapore": 2,
+    "Russia": 1,
+    "United Kingdom": 1
   },
   "clean_classification_rate_pct": 11.11,
   "false_positive_rate_pct": 38.89,

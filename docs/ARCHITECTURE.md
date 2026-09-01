@@ -129,3 +129,24 @@ Tabular datasets (e.g. Ling-Spam, Kaggle phishing CSVs) provide message text and
 ### D. Visualization Scale Guards (GRAPH-001 / F-3)
 - **Campaign Graph Render Cap:** In multi-thousand entity corpora, the 2D canvas visualization enforces a 300-node display ceiling with an explicit banner indicating *"Showing 300 of {total} nodes (capped)"* / *"Displaying top 300 correlated nodes out of {total} total graph entities"* to maintain 60fps rendering while preserving 100% of underlying graph relationships in database and memory structures.
 
+---
+
+## 6. Geolocation Architecture, Offline Synthetic Resolver & Special-Use IP Guard (EXT-003)
+
+### A. The Offline Synthetic Geo Resolver: Purpose & Mechanics
+In standalone, air-gapped demonstration mode (`GeoOriginService.lookup_ip_geo`), external internet access to live MaxMind GeoLite2 databases or IPinfo REST APIs is absent by design. To enable offline demonstration realism, geographic map rendering, and consistent telemetry without network dependencies, SENTRY employs a deterministic hash-based offline resolver for unmapped **public** IP addresses:
+- **Hashing Function:** An MD5 digest of the public IP modulo a calibrated table of 6 major internet peering exchanges (Amsterdam, Frankfurt, Ashburn, London, Bengaluru, Singapore) assigns deterministic latitude, longitude, city, country, and ASN.
+- **Evidentiary Integrity:** The offline resolver provides stable, repeatable geographic coordinates across runs for public synthetic IPs while maintaining low-confidence provenance flags.
+
+### B. The Special-Purpose / Reserved IP Guard (EXT-003)
+The offline synthetic resolver must **NEVER** be queried for non-routable, private, documentation, or reserved IP addresses. Fabricating geographic or ASN infrastructure attribution for RFC special-use addresses (e.g., attributing RFC 5737 `TEST-NET-1` `192.0.2.1` to Amazon.com / Ashburn) constitutes false evidentiary attribution.
+
+To prevent this, `GeoOriginService.is_reserved_or_special_use_ip` enforces an explicit, pre-compiled network membership guard across all RFC-specified ranges prior to any external or synthetic lookup:
+1. **Guarded IP Spaces:**
+   - **IPv4:** RFC 1918 Private (10/8, 172.16/12, 192.168/16), RFC 5737 Documentation (TEST-NET-1 192.0.2.0/24, TEST-NET-2 198.51.100.0/24, TEST-NET-3 203.0.113.0/24), RFC 6598 Carrier-Grade NAT (100.64.0.0/10), RFC 1122 Loopback (127.0.0.0/8) & Unspecified (0.0.0.0/8), RFC 3927 Link-Local (169.254.0.0/16), RFC 5771 Multicast (224.0.0.0/4), RFC 1112/6890 Reserved/Broadcast (240.0.0.0/4, 255.255.255.255/32), RFC 2544 Benchmarking (198.18.0.0/15), RFC 3068 6to4 Relay (192.88.99.0/24), RFC 7535 AS112 (192.175.48.0/24).
+   - **IPv6:** RFC 4291 Unspecified (`::/128`) & Loopback (`::1/128`), RFC 3849 Documentation (`2001:db8::/32`), RFC 4193 Unique Local (`fc00::/7`), RFC 4291 Link-Local (`fe80::/10`) & Multicast (`ff00::/8`), RFC 6666 Discard (`100::/64`), RFC 4380 Teredo (`2001::/32`), RFC 6052 Translation (`64:ff9b::/96`), RFC 7535 AS112 (`2620:4f:8000::/48`).
+2. **Deterministic Reserved Attribution:** Any IP matching the guard immediately bypasses GeoIP, IPinfo, Tor-exit node lists, VPN subnet matching, and ThreatFox threat intelligence queries. The record returns:
+   - `country: "Reserved"`, `country_code: "XX"`, `city: "Reserved"`, `latitude: 0.0`, `longitude: 0.0`, `isp: "Reserved / Internal Test IP"`, `asn: "N/A"`, `connection_type: "Special-Purpose / Reserved"`.
+   - `confidence: 0.15` with explicit risk factor `"Origin IP belongs to reserved / documentation address space (non-routable)"`.
+
+

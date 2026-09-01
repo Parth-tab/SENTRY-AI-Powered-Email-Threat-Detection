@@ -48,6 +48,18 @@
     "origin_country": "United States"
   },
   {
+    "file": "10_apex_urgent_unblock.eml",
+    "subject": "Security Notice: Apex Internet Banking Account Temporarily Locked",
+    "sender": "alerts@apex-bank-verify.com",
+    "threat_score": 0.84,
+    "threat_level": "HIGH",
+    "primary_classification": "phishing",
+    "confidence": 0.92,
+    "hops_count": 2,
+    "origin_ip": "185.220.101.5",
+    "origin_country": "Netherlands"
+  },
+  {
     "file": "11_bec_payroll_reroute.eml",
     "subject": "Urgent: Updated Direct Deposit / Remittance Account for January Payroll",
     "sender": "ceo.mercer.corp@gmail.com",
@@ -57,19 +69,7 @@
     "confidence": 0.94,
     "hops_count": 2,
     "origin_ip": "198.51.100.42",
-    "origin_country": "United Kingdom"
-  },
-  {
-    "file": "bec_executive_wire_fraud.eml",
-    "subject": "URGENT: Confidential Acquisition Wire Transfer ($1.25M)",
-    "sender": "ceo.mercer.corp@gmail.com",
-    "threat_score": 0.93,
-    "threat_level": "CRITICAL",
-    "primary_classification": "bec",
-    "confidence": 0.94,
-    "hops_count": 3,
-    "origin_ip": "194.26.29.117",
-    "origin_country": "Russia"
+    "origin_country": "Reserved"
   },
   {
     "file": "apex_phishing_tor_relay.eml",
@@ -77,7 +77,7 @@
     "sender": "support@apex-secureverify.com",
     "threat_score": 0.98,
     "threat_level": "CRITICAL",
-    "primary_classification": "phishing",
+    "primary_classification": "bec",
     "confidence": 0.94,
     "hops_count": 3,
     "origin_ip": "185.220.101.34",
