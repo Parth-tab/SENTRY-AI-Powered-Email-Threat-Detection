@@ -82,17 +82,22 @@ Every gap tracked from the Viability Audit and Auditor's Annex has been resolved
 - **Local SQLite Burst Rate:** **51.7 emails/second** sustained batch parsing and cryptographic hashing on 4-core workstation hardware.
 - **Batch Capabilities:** Supports single `.eml` uploads, multi-file drag-and-drop, `.zip` archives (with zip-slip safety), `.csv` datasets (with OWASP formula sanitization), and raw RFC 5322 text.
 
-### 4.3 Defect Arithmetic & Quality Ledger (67-Item Master Registry)
-- **Master Defect Registry (evaluation/defects.json):** Exactly **67 tracked defect and gap objects** across repo history (including 8/8 external evaluation findings `EXT-001..008` resolved).
-- **Status Breakdown:**
-  - **Resolved:** **58** (43 historical + 7 MRWS gaps + 8 EXT-EVAL findings)
-  - **Interim Mitigated:** **1** (`GAP-005` sentry.io trademark disclaimers)
-  - **Consolidated:** **3** (`BATCH-003`, `CORP-002`, `ING-003`)
-  - **Deferred:** **1** (`BP-004` - v2.0 roadmap client-side graph dimension filter)
-  - **Open (Targeted v1.2 Roadmap):** **4** (`DEF-005` forged-header battery, `MBOX-001` multi-message mbox delimiter parser, `GAP-001` scale-out daemons, `GAP-002` automated IMAP/M365 mailbox connector)
-- **Release Gate Derivation:** **100% of release blockers and high-severity defects are closed** ($58 + 1 + 3 + 1 = 63$ resolved/accounted). Zero blockers or high-severity items remain open.
+### 4.3 Defect Arithmetic & Quality Ledger (68-Item Master Registry Derivation)
+- **Master Defect Registry (`evaluation/defects.json`):** Exactly **68 tracked defect and gap objects** across repository history (59 prior baseline + 9 external evaluation objects `EXT-001..009`).
+- **Complete Status Derivation Table:**
+
+| Category / Status | Count | Tracked Defect Identifiers / Lineage |
+|---|:---:|---|
+| **Resolved** | **58** | 43 historical release items + 7 MRWS gaps (`GAP-003`, `GAP-004`, `GAP-006`..`GAP-010`) + 8 external evaluation defects (`EXT-001`..`EXT-008`) |
+| **Interim Mitigated** | **1** | `GAP-005` (sentry.io trademark disclaimer notices) |
+| **Consolidated** | **3** | `BATCH-003`, `CORP-002`, `ING-003` (subsumed into unified batch ingest pipeline) |
+| **Deferred** | **1** | `BP-004` (v2.0 client-side multi-dimensional graph filter) |
+| **Open (Targeted Roadmap)** | **5** | `DEF-005` (forged-header battery), `MBOX-001` (multi-message mbox delimiter parser), `GAP-001` (scale-out cloud daemons), `GAP-002` (automated IMAP/M365 mailbox connector), and `EXT-009` (synthetic attribution label enhancement) |
+| **Total Tracked Objects** | **68** | **Sum: $58 + 1 + 3 + 1 + 5 = 68$ (100% mathematically reconciled)** |
+
+- **Release Blocker Closure:** **100% of release blockers and critical findings are closed** ($58 + 1 + 3 + 1 = 63$ resolved/accounted). Zero blockers or high-severity items remain open.
 - **Golden Verification Harness:** **21 / 21 Golden Gates Passing** (`tools/verify_sentry.py --start`).
-- **Automated Pytest Battery:** **156 / 156 Unit & Integration Tests Passing** (`backend/tests`).
+- **Automated Pytest Battery:** **156 / 156 Unit & Integration Tests Passing** across 23 modules (`backend/tests`).
 - **Deprecation Warnings:** **6 warnings total** (slashed from 544 via Pydantic v2 and UTC datetime migration).
 
 ---
