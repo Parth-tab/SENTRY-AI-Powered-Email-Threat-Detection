@@ -71,6 +71,14 @@ class AnalysisResult(Base):
     def classification_subtype(self):
         return (self.content_analysis or {}).get("classification_subtype")
 
+    @property
+    def score_pre_floor(self):
+        return (self.content_analysis or {}).get("score_pre_floor")
+
+    @property
+    def floor_applied(self):
+        return (self.content_analysis or {}).get("floor_applied", False)
+
     # Relationships
     email = relationship("EmailRecord", back_populates="analysis")
 

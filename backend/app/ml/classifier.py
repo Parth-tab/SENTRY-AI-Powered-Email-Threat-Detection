@@ -147,12 +147,16 @@ class ThreatClassifier:
             overall_threat_score = 0.30 * rule_score + 0.50 * ml_score + 0.20 * transformer_score
 
         overall_threat_score = round(max(0.01, min(0.99, overall_threat_score)), 2)
+        score_pre_floor = overall_threat_score
+        floor_applied = False
 
         # Authentication Failure Severity Floor (EXT-002 / T-3):
         # When DMARC fails and SPF fails or softfails:
         # Enforce minimum composite threat score floor of 0.85 (CRITICAL)
         if dmarc_res == "fail" and spf_res in ["fail", "softfail"]:
-            overall_threat_score = max(overall_threat_score, 0.85)
+            if overall_threat_score < 0.85:
+                floor_applied = True
+                overall_threat_score = 0.85
 
         # Determine Threat Level
         if overall_threat_score >= 0.85:
@@ -208,6 +212,8 @@ class ThreatClassifier:
 
         return {
             "overall_threat_score": overall_threat_score,
+            "score_pre_floor": score_pre_floor,
+            "floor_applied": floor_applied,
             "threat_level": threat_level,
             "primary_classification": primary_classification,
             "classification_subtype": classification_subtype,
