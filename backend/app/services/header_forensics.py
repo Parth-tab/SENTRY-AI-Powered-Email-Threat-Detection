@@ -254,14 +254,14 @@ class HeaderForensicsService:
             anomalies.append("freemail_executive_impersonation")
 
         # 2. Return-Path Mismatch
-        return_path = str(headers.get("Return-Path", "")).strip("<>")
+        return_path = str(email_data.get("return_path") or headers.get("Return-Path") or headers.get("return-path") or "").strip("<>")
         if return_path and "@" in return_path:
             return_domain = return_path.split("@")[-1].lower()
             if sender_domain and return_domain != sender_domain:
                 anomalies.append("return_path_domain_mismatch")
 
         # 3. Reply-To Mismatch
-        reply_to = str(headers.get("Reply-To", "")).strip("<>")
+        reply_to = str(email_data.get("reply_to") or headers.get("Reply-To") or headers.get("reply-to") or "").strip("<>")
         if reply_to and "@" in reply_to:
             _, reply_addr = parseaddr(reply_to)
             reply_domain = reply_addr.split("@")[-1].lower() if "@" in reply_addr else ""

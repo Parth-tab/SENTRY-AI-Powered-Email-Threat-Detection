@@ -190,13 +190,44 @@ class ThreatClassifier:
             primary_classification = "legitimate"
             cls_confidence = 0.95
 
-        # Recommendations formulation
+        # Extract sender, recipient, and reply-to domains for countermeasure routing (EXT-008 & EXT-005)
+        sender_email = email_data.get("sender", "")
+        sender_domain = email_data.get("sender_domain") or (sender_email.split("@")[-1].lower() if "@" in sender_email else "")
+        sender_domain = str(sender_domain).lower()
+
+        recipient_email = email_data.get("recipient", "")
+        recipient_domain = recipient_email.split("@")[-1].lower() if "@" in recipient_email else ""
+
+        reply_to_header = email_data.get("headers", {}).get("reply-to") or email_data.get("reply_to") or ""
+        reply_to_domain = ""
+        if reply_to_header:
+            from email.utils import parseaddr
+            _, r_email = parseaddr(str(reply_to_header))
+            if "@" in r_email:
+                reply_to_domain = r_email.split("@")[-1].lower()
+
+        is_spoofed = auth.get("is_spoofed") or (dmarc_res == "fail" and spf_res in ["fail", "softfail"])
+        is_self_spoof = bool(sender_domain and recipient_domain and sender_domain == recipient_domain and is_spoofed)
+
+        # Recommendations formulation (EXT-008 & EXT-005)
         recommendations = []
         if threat_level in ["CRITICAL", "HIGH"]:
-            if domain_res.get("domain"):
-                recommendations.append(f"Block sender domain '{domain_res.get('domain')}' across perimeter email gateway (SEG).")
-            if origin_res.get("probable_origin_ip") and origin_res.get("probable_origin_ip") != "Unknown":
-                recommendations.append(f"Add IP {origin_res.get('probable_origin_ip')} to firewall drop list.")
+            if is_self_spoof:
+                # Self-spoof countermeasure logic (EXT-008): NEVER recommend blocking internal domain
+                recommendations.append(f"Enforce strict DMARC 'p=reject' / 'p=quarantine' policy for internal domain '{sender_domain}' at DNS layer.")
+                recommendations.append(f"Configure Perimeter Secure Email Gateway (SEG) anti-spoofing filter to reject external inbound mail claiming internal sender '@{sender_domain}'.")
+                if reply_to_domain and reply_to_domain != sender_domain:
+                    recommendations.append(f"Block external diversion Reply-To domain '{reply_to_domain}' across perimeter email gateway (SEG).")
+            else:
+                if domain_res.get("domain"):
+                    recommendations.append(f"Block sender domain '{domain_res.get('domain')}' across perimeter email gateway (SEG).")
+                if reply_to_domain and reply_to_domain != domain_res.get("domain"):
+                    recommendations.append(f"Block external Reply-To domain '{reply_to_domain}' across perimeter email gateway (SEG).")
+
+            origin_ip = origin_res.get("probable_origin_ip")
+            if origin_ip and origin_ip not in ["Unknown", "Reserved"]:
+                recommendations.append(f"Add IP {origin_ip} to firewall drop list.")
+
             if classification_subtype == "ADVANCE-FEE FRAUD":
                 recommendations.append("Alert user to advance-fee lottery / prize fraud scheme; do not provide banking details or remit funds.")
             elif primary_classification == "bec":
