@@ -63,7 +63,7 @@ jobs:
 
       - name: Validate Machine-Verified Project Facts
         run: |
-          python tools/validate_facts.py
+          python tools/validate_facts.py --strict-links
 
       - name: Run Backend Pytest Suite with Coverage (>80%)
         run: |

@@ -174,9 +174,9 @@ def audit_repository_links() -> list[dict]:
     link_re = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 
     for md_path in REPO_ROOT.glob("**/*.md"):
-        # Exclude git, node_modules, venv, cache
+        # Exclude git, node_modules, venv, cache, skills_ref
         rel_str = str(md_path.relative_to(REPO_ROOT))
-        if any(x in rel_str for x in [".venv", "node_modules", ".git", "scratch"]):
+        if any(x in rel_str for x in [".venv", "node_modules", ".git", "scratch", ".skills_ref"]):
             continue
 
         txt = md_path.read_text(encoding="utf-8")
