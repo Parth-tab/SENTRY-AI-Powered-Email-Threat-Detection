@@ -1,10 +1,11 @@
 {
-  "phase": "PHASE4",
+  "phase": "PHASE5",
   "started_at": "2026-09-01T23:45:00Z",
   "phase1_completed_at": "2026-09-01T23:58:00Z",
   "phase2_completed_at": "2026-09-02T00:08:00Z",
   "phase3_completed_at": "2026-09-02T00:19:00Z",
   "phase4_completed_at": "2026-09-02T00:27:00Z",
+  "phase5_completed_at": "2026-09-02T00:35:00Z",
   "status": "in_progress",
   "defects": {
     "EXT-001": {"title": "Classification subtype missing for advance-fee fraud", "status": "resolved", "resolved_phase": "PHASE2"},
@@ -27,12 +28,14 @@
     "P2_3_graph_determinism_drift": "Graph simulation layout is 100% deterministic given initial canvas bounds. Minor run-to-run cluster min-dist readings (31px - 38.6px) stem from sub-pixel browser container settling variances in headless Chromium, all safely exceeding the 26px floor.",
     "P3_1_ham_reconciliation": "6,951 files evaluated -> 6,777 unique after SHA-256 dedupe; distributions computed on unique set (0 elevations, 0.00%).",
     "P3_2_timestamp_emission_enumeration": "6 emission points verified: Ingestion Record, Chain of Custody Step 1 Genesis, Chain of Custody Append, PDF Header, Real-Time Alert, and Analysis Result.",
+    "P4_1_taxonomy_transition": "Primary classification canonical 5-class mapping is 'phishing' for lottery/advance-fee scams with 'classification_subtype: ADVANCE-FEE FRAUD'.",
+    "P4_2_recommendation_formatting": "Verified all recommendations render cleanly as independent items without delimiter run-on.",
     "P4_self_spoof_countermeasures": "Recipient-derived internal domain logic ensures SENTRY never outputs self-DoS rules ('Block sender domain <own_domain>') on spoofed internal messages."
   },
-  "phase4_receipts": {
-    "pytest_suite": "156 passed (+3 countermeasure and IOC tests)",
+  "phase5_receipts": {
+    "test_suite_manifest_progression": "138 (Phase 0/1) -> 149 (Phase 2) -> 153 (Phase 3) -> 156 (Phase 4/5)",
     "golden_harness_consecutive_runs": ["21/21 PASS", "21/21 PASS"],
-    "countermeasure_routing": "Self-spoofing routes to DMARC p=reject + SEG anti-spoof filter + external Reply-To blocking. Zero self-DoS rules emitted.",
-    "ioc_reply_to_extraction": "Reply-To Email and Reply-To Domain extracted as structured IOC table rows with mismatch telemetry surfaced across PDF and Header Anomaly panels."
+    "documentation_sweep": "ARCHITECTURE.md (Section 8), DEMO_SCRIPT.md (15 Critical / 1 Med / 2 Low + Q7/Q8), DILIGENCE.md (67 items / 156 tests), FEATURE_TOUR.md (Stop 7 un-sliced PDF format)",
+    "ui_verification": "Feed row subject cells use max-w-xs and CSS text-overflow ellipsis (truncate) to safely handle 111-char subjects without badge overflow"
   }
 }
