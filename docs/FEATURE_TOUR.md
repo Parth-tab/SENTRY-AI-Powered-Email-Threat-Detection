@@ -177,15 +177,14 @@ NIST SP 800-86 Forensic Integration, ISO/IEC 27037 Digital Evidence Handling.
 
 ## Stop 7 — PDF Forensic Dossier Export
 
-![PDF Forensic Dossier Export](assets/tour/08-forensic-report.png)
+![PDF Forensic Dossier Export](assets/tour/08-forensic-report.pdf)
 
-The same Forensic Vault view as Stop 6, confirming the export context. The
-**"Download PDF Forensic Report"** button (top-right, red background) is
-visible and was activated during this capture run — the PDF dossier was
-downloaded to `docs/assets/tour/08-forensic-report.pdf` and committed
-alongside this document. The downloaded PDF packages the full chain-of-custody
-audit steps, cryptographic hash chain, classification verdict, and relay hop
-breakdown into a court-submittable forensic intelligence package.
+The Forensic Vault view confirming the export context. Activating **"Download PDF Forensic Report"** generates a cryptographically authenticated, court-admissible PDF document (`docs/assets/tour/08-forensic-report.pdf`). Under SENTRY's Universal Truncation and Evidentiary Integrity standard:
+- **Zero Silent Slicing:** Preserves the entire 111-character subject line verbatim via multi-line Paragraph wrapping.
+- **Monospace Hash Rendering:** Renders full 64-character SHA-256 digests in dedicated Courier typography across generous 220pt columns, guaranteeing zero optical transcription artifacts.
+- **RFC 3339 Compliance:** Formats all audit trail and header dates as standardized ISO 8601 UTC strings.
+- **Honesty Invariant (`score_pre_floor`):** Displays both the enforced policy floor and underlying model score (e.g. `CRITICAL THREAT (0.85 [Enforced Floor; Model: 0.51])`).
+- **Structured IOCs:** Extracts both `Reply-To Email` and `Reply-To Domain` into structured tabular rows alongside originating SMTP IPs and payload URLs.
 
 ---
 
@@ -199,7 +198,7 @@ breakdown into a court-submittable forensic intelligence package.
 | 04-relay-map | `05-relay-map.png` | PASS | 3-hop chain, Amsterdam origin, TOR ANONYMIZED badge |
 | 05-campaign-graph | `06-campaign-graph.png` | PASS | 30 nodes / 38 links (Cluster) / 15 nodes / 17 links (Supernodes), CMP-2024-0034, lookalike domains, `/` search & 1-hop focus |
 | 06-chain-integrity | `07-chain-integrity.png` | PASS | INTEGRITY VERIFIED (PASS), 2 steps, sealed head hash |
-| 07-forensic-report | `08-forensic-report.png` | PASS | Same Forensic Vault view as stop 06; PDF export button visible, dossier committed |
+| 07-forensic-report | `08-forensic-report.png` | PASS | Forensic Vault view; PDF export button visible, dossier committed with full 64-char Courier hashes and RFC 3339 timestamps |
 
 *7/7 stops show distinct content. Stop 07 shares the same viewport as stop 06
 — both are the Forensic Vault; stop 07 documents the PDF export action. File

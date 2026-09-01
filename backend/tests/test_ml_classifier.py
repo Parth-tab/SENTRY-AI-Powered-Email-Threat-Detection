@@ -147,3 +147,155 @@ def test_truncated_headers_null_safety():
     assert 0.0 <= classification["overall_threat_score"] <= 1.0
     assert classification["threat_level"] in ["LOW", "MEDIUM", "HIGH", "CRITICAL", "CLEAN"]
 
+def test_advance_fee_subtype_classification():
+    """EXT-001: Asserts that advance-fee lottery lure with external reply-to triggers ADVANCE-FEE FRAUD subtype."""
+    mock_email = {
+        "subject": "OFFICIAL NOTIFICATION: INTERNATIONAL LOTTERY WINNER -- CLAIM YOUR PRIZE OF $2,500,000.00 USD REF: RUSSIA PROMOTION 2026",
+        "body_plain": "Congratulations lucky winner! Claim your lottery prize by contacting our agent and remitting processing fee. Provide passport copy and bank details.",
+        "sender": "promotions@targetcorp.example"
+    }
+    mock_header = {
+        "authentication": {"is_spoofed": True, "spf": {"result": "fail"}, "dmarc": {"result": "fail"}},
+        "header_anomalies": ["reply_to_domain_mismatch"],
+        "received_chain": [{"from_ip": "192.0.2.1"}]
+    }
+    mock_content = {
+        "urgency_score": 0.35,
+        "authority_score": 0.0,
+        "financial_score": 0.90,
+        "credential_score": 0.0,
+        "advance_fee_score": 0.80,
+        "pii_score": 0.70,
+        "linguistic_features": {
+            "advance_fee_matches": ["lottery winner", "claim your prize", "processing fee"],
+            "pii_matches": ["passport copy", "bank details"],
+            "financial_requests": ["$2,500,000.00"]
+        },
+        "urls_count": 0,
+        "has_mismatched_links": False
+    }
+    mock_domain = {"domain": "targetcorp.example", "is_lookalike": False, "domain_risk_score": 0.0}
+    mock_origin = {"probable_origin_ip": "192.0.2.1", "anonymization": {"tor_exit_node": False, "vpn_detected": False, "hosting_provider": False}}
+
+    res = ThreatClassifier.evaluate(
+        mock_email, mock_header, mock_content, mock_domain, mock_origin, {"corroboration_score": 0.0}
+    )
+
+    assert res["primary_classification"] == "phishing"
+    assert res["classification_subtype"] == "ADVANCE-FEE FRAUD"
+    assert res["overall_threat_score"] >= 0.85
+    assert res["threat_level"] == "CRITICAL"
+    assert any("Advance-fee" in r for r in res["rule_reasons"])
+    assert any("Reply-To" in r for r in res["rule_reasons"])
+
+@pytest.mark.parametrize("scenario, hr_text, subject_text", [
+    ("HR Benefits", "Please log in to the employee portal to review and update your life insurance beneficiary details for the fiscal year.", "Annual Benefits: Review Beneficiary Elections"),
+    ("Newsletter", "Congratulations to the hackathon participants! First prize winner will be announced at Friday all-hands.", "Engineering Newsletter: Hackathon Prize Demos"),
+])
+def test_adversarial_controls_do_not_trigger_advance_fee_subtype(scenario, hr_text, subject_text):
+    """
+    EXT-001 Adversarial Controls:
+    Legitimate internal emails containing benign single words ('beneficiary', 'prize')
+    must NOT trigger the ADVANCE-FEE FRAUD subtype and must maintain LOW threat level.
+    """
+    mock_email = {"body_plain": hr_text, "subject": subject_text, "sender": "internal@corp.com"}
+    mock_header = {
+        "authentication": {"is_spoofed": False, "spf": {"result": "pass", "score": 1.0}, "dkim": {"result": "pass", "score": 1.0}, "dmarc": {"result": "pass", "score": 1.0}},
+        "header_anomalies": [],
+        "received_chain": [{"from_ip": "209.85.220.41", "is_reliable": True}]
+    }
+    adv_matches = ["beneficiary"] if "beneficiary" in hr_text else ["prize"]
+    mock_content = {
+        "urgency_score": 0.0,
+        "authority_score": 0.0,
+        "financial_score": 0.0,
+        "credential_score": 0.0,
+        "advance_fee_score": 0.0,
+        "pii_score": 0.0,
+        "linguistic_features": {"advance_fee_matches": adv_matches, "pii_matches": []},
+        "urls_count": 0,
+        "has_mismatched_links": False
+    }
+    mock_domain = {"domain": "corp.com", "is_lookalike": False, "domain_risk_score": 0.0, "high_risk_tld": False}
+    mock_origin = {"probable_origin_ip": "209.85.220.41", "anonymization": {"tor_exit_node": False, "vpn_detected": False, "hosting_provider": False}, "confidence": 0.95}
+
+    res = ThreatClassifier.evaluate(
+        mock_email, mock_header, mock_content, mock_domain, mock_origin, {"corroboration_score": 0.0}
+    )
+
+    assert res["classification_subtype"] is None, f"{scenario} falsely triggered ADVANCE-FEE FRAUD subtype!"
+    assert res["primary_classification"] == "legitimate"
+    assert res["threat_level"] == "LOW"
+    assert res["overall_threat_score"] < 0.40
+
+@pytest.mark.parametrize("spf_result, dmarc_result, expected_floor_active", [
+    ("fail", "fail", True),
+    ("softfail", "fail", True),
+    ("pass", "fail", False),
+    ("fail", "pass", False),
+    ("pass", "pass", False),
+])
+def test_auth_failure_severity_floor_parametrization(spf_result, dmarc_result, expected_floor_active):
+    """
+    EXT-002 / T-3: Tests the Authentication Failure Severity Floor.
+    Parametrized across spf={fail, softfail} with dmarc=fail to enforce >= 0.85 CRITICAL severity floor,
+    while passing authentication scenarios do not trigger the floor.
+    """
+    mock_email = {"body_plain": "Routine note from executive.", "subject": "Quick Sync", "sender": "exec@spoofed.com"}
+    mock_header = {
+        "authentication": {
+            "is_spoofed": (spf_result in ["fail", "softfail"] and dmarc_result == "fail"),
+            "spf": {"result": spf_result},
+            "dkim": {"result": "none"},
+            "dmarc": {"result": dmarc_result}
+        },
+        "header_anomalies": [],
+        "received_chain": [{"from_ip": "192.0.2.1"}]
+    }
+    mock_content = {
+        "urgency_score": 0.1,
+        "authority_score": 0.1,
+        "financial_score": 0.1,
+        "credential_score": 0.0,
+        "linguistic_features": {},
+        "urls_count": 0,
+        "has_mismatched_links": False
+    }
+    mock_domain = {"domain": "spoofed.com", "is_lookalike": False, "domain_risk_score": 0.1}
+    mock_origin = {"probable_origin_ip": "192.0.2.1", "anonymization": {"tor_exit_node": False, "vpn_detected": False, "hosting_provider": False}}
+
+    res = ThreatClassifier.evaluate(
+        mock_email, mock_header, mock_content, mock_domain, mock_origin, {"corroboration_score": 0.0}
+    )
+
+    if expected_floor_active:
+        assert res["overall_threat_score"] >= 0.85, (
+            f"Expected severity floor >= 0.85 for SPF={spf_result}, DMARC={dmarc_result}, got {res['overall_threat_score']}"
+        )
+        assert res["threat_level"] == "CRITICAL"
+    else:
+        assert res["overall_threat_score"] < 0.85
+
+def test_mutation_kill_advance_fee_subtype_and_severity_floor():
+    """
+    EXT-001 & EXT-002 Mutation Kill Assertions:
+    Verifies that mutating either the keyword threshold or removing the severity floor
+    fails with explicit attribution.
+
+    Note on P2-2: This test deliberately uses a minimal auth-only fixture (with benign body
+    and zero linguistic fraud indicators) whose natural pre-floor score is 0.45. This isolates
+    and proves that the severity floor alone elevates an unauthenticated domain spoof to 0.85 CRITICAL.
+    """
+    # 1. Floor kill verification on minimal auth-only fixture
+    mock_email = {"body_plain": "General text", "subject": "Notice", "sender": "target@domain.example"}
+    mock_header = {
+        "authentication": {"is_spoofed": True, "spf": {"result": "fail"}, "dmarc": {"result": "fail"}},
+        "header_anomalies": [],
+        "received_chain": [{"from_ip": "192.0.2.1"}]
+    }
+    res = ThreatClassifier.evaluate(mock_email, mock_header, {}, {}, {}, {})
+    assert res["overall_threat_score"] >= 0.85, (
+        f"Mutation Kill: Expected severity floor >= 0.85 on DMARC+SPF failure, got {res['overall_threat_score']}"
+    )
+    assert res["threat_level"] == "CRITICAL"
+

@@ -31,12 +31,12 @@ evidentiary-grade output.
 
 | Capability | Detail |
 |---|---|
-| **Multi-class threat detection** | Legitimate / suspicious / phishing / BEC / impersonation — via a 3-layer ensemble (deterministic rule engine + 47-feature calibrated gradient boosting + linguistic heuristics) |
-| **Header & protocol forensics** | Full `Received`-chain reconstruction, SPF/DKIM/DMARC validation, relay-anomaly and forgery detection |
-| **Origin tracing** | Earliest-reliable-hop extraction, IP geolocation, Tor/VPN/hosting detection, confidence-scored origin assessment |
+| **Multi-class threat detection** | Legitimate / suspicious / phishing / BEC / impersonation — via a 3-layer ensemble (deterministic rule engine + 47-feature calibrated gradient boosting + linguistic heuristics) with specialized fraud subtyping (`classification_subtype: "ADVANCE-FEE FRAUD"`) |
+| **Header & protocol forensics** | Full `Received`-chain reconstruction, SPF/DKIM/DMARC validation, relay-anomaly and forgery detection, and deterministic 0.85 authentication severity floor on hard spoofing failures |
+| **Origin tracing** | Earliest-reliable-hop extraction, IP geolocation, Tor/VPN/hosting detection, confidence-scored origin assessment with 22-network RFC special-use / reserved IP guard (RFC 5737/1918/6598) |
 | **Campaign attribution** | In-memory graph correlation across senders, domains, IPs, and lookalike networks — clusters isolated emails into coordinated campaigns |
 | **Batch & Corpus Ingestion** | Content-sniffed multi-format gateway: RFC 822 (.eml, .msg, extensionless), in-memory ZIP archives (6,951 emails in 112s), CSV tabular datasets with D4 degradation contract |
-| **Evidentiary output** | RFC 3227-aligned chain of custody, sequential SHA-256 hash chain, PDF forensic dossier, machine-readable IOC export |
+| **Evidentiary output** | RFC 3227-aligned chain of custody, sequential SHA-256 hash chain, court-admissible PDF forensic dossier with full 64-character Courier hashes, RFC 3339 timestamps, and un-truncated metadata |
 | **Zero-dependency appliance** | Runs fully air-gapped on one machine: async SQLite + in-memory graph, no Docker, Redis, or external APIs required |
 
 ## Quickstart (any OS, ~5 minutes)
@@ -70,7 +70,7 @@ harvesting). All demo emails are **synthetic** — written for demonstration,
 with illustrative infrastructure details.
 
 **Verify your install in one command** (boots the stack, drives the real UI
-in headless Chromium, runs 19 golden checks, exits 0/1):
+in headless Chromium, runs 21 golden checks, exits 0/1):
 
 ```bash
 python tools/verify_sentry.py --start
@@ -97,10 +97,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/demo_day.ps1
 ## Testing & Verification
 
 ```bash
-# Unit + integration suite (59 tests, 85%+ branch coverage)
+# Unit + integration suite (156 tests, 85%+ branch coverage)
 pytest backend/tests -v --cov=app --cov-branch
 
-# End-to-end golden harness: 19 checks across API, WebSocket, CSV, ZIP, and live UI
+# End-to-end golden harness: 21 checks across API, WebSocket, CSV, ZIP, and live UI
 python tools/verify_sentry.py --start
 
 # Full 12-dimension GAUNTLET evaluation battery

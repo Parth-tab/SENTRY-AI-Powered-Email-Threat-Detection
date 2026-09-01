@@ -25,6 +25,14 @@ class ContentAnalysisService:
         r"\b(?:dear customer|dear user|dear client|dear member|dear account holder|dear sir/madam|undisclosed recipients)\b"
     ]
 
+    ADVANCE_FEE_KEYWORDS = [
+        r"\b(?:lottery(?:\s+winner|\s+draw|\s+promotion|\s+jackpot)?|lucky\s+winner|claim\s+your\s+prize|award\s+notification|processing\s+fee|advance\s+fee|claim\s+agent|beneficiary\s+(?:fund|payout|claim)|inheritance\s+(?:claim|fund)|grant\s+allocation|consignment\s+box|diplomatic\s+courier|unclaimed\s+(?:funds|assets))\b"
+    ]
+
+    PII_HARVESTING_KEYWORDS = [
+        r"\b(?:passport(?:\s+copy|\s+number)?|national\s+id|driver'?s?\s+license|residential\s+address|date\s+of\s+birth|direct\s+telephone|bank\s+account\s+details|occupation|next\s+of\s+kin)\b"
+    ]
+
     HIGH_RISK_EXTENSIONS = [".exe", ".scr", ".vbs", ".bat", ".ps1", ".iso", ".img", ".html", ".htm", ".docm", ".xlsm", ".js"]
 
     @classmethod
@@ -133,6 +141,14 @@ class ContentAnalysisService:
         for pat in cls.GENERIC_GREETINGS:
             generic_matches.extend(re.findall(pat, full_text, re.IGNORECASE))
 
+        advance_fee_matches = []
+        for pat in cls.ADVANCE_FEE_KEYWORDS:
+            advance_fee_matches.extend(re.findall(pat, full_text, re.IGNORECASE))
+
+        pii_matches = []
+        for pat in cls.PII_HARVESTING_KEYWORDS:
+            pii_matches.extend(re.findall(pat, full_text, re.IGNORECASE))
+
         # 2. Structural Features
         urls = cls.extract_urls(raw_plain, html)
         has_form = bool(re.search(r'<form\b', html, re.IGNORECASE)) if html else False
@@ -151,7 +167,7 @@ class ContentAnalysisService:
 
         # Attention phrases for explainable UI highlights
         attention_tokens = list(set(
-            urgency_matches + authority_matches + financial_matches + credential_matches + generic_matches
+            urgency_matches + authority_matches + financial_matches + credential_matches + generic_matches + advance_fee_matches + pii_matches
         ))
 
         # 3. Calculate category signal scores [0.0 - 1.0]
@@ -159,6 +175,8 @@ class ContentAnalysisService:
         authority_score = min(1.0, len(authority_matches) * 0.4)
         financial_score = min(1.0, len(financial_matches) * 0.4)
         credential_score = min(1.0, len(credential_matches) * 0.45)
+        advance_fee_score = min(1.0, len(advance_fee_matches) * 0.40)
+        pii_score = min(1.0, len(pii_matches) * 0.35)
         structural_risk_score = 0.0
 
         if has_mismatched_links:
@@ -171,7 +189,9 @@ class ContentAnalysisService:
 
         # Determine primary action requested
         action_requested = "informational"
-        if credential_score > 0.3:
+        if advance_fee_score > 0.3 or pii_score > 0.3:
+            action_requested = "advance_fee_pii_solicitation"
+        elif credential_score > 0.3:
             action_requested = "credential_verification"
         elif financial_score > 0.3:
             action_requested = "financial_transaction"
@@ -183,6 +203,8 @@ class ContentAnalysisService:
             "authority_score": round(authority_score, 2),
             "financial_score": round(financial_score, 2),
             "credential_score": round(credential_score, 2),
+            "advance_fee_score": round(advance_fee_score, 2),
+            "pii_score": round(pii_score, 2),
             "structural_risk_score": round(structural_risk_score, 2),
             "action_requested": action_requested,
             "linguistic_features": {
@@ -190,7 +212,9 @@ class ContentAnalysisService:
                 "authority_references": list(set(authority_matches)),
                 "financial_requests": list(set(financial_matches)),
                 "credential_harvesting": list(set(credential_matches)),
-                "generic_greetings": list(set(generic_matches))
+                "generic_greetings": list(set(generic_matches)),
+                "advance_fee_matches": list(set(advance_fee_matches)),
+                "pii_matches": list(set(pii_matches))
             },
             "attention_tokens": attention_tokens[:15],
             "urls_found": urls,
