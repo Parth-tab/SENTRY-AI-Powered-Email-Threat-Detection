@@ -1,0 +1,1315 @@
+{
+  "audit_phase": "PHASE0_CLAIM_LEDGER_AUDIT",
+  "scanned_documents_count": 77,
+  "ground_truth": {
+    "test_suite": {
+      "command": "python -m pytest --collect-only",
+      "value": 156,
+      "modules_count": 23,
+      "execution_time_seconds": 3.87
+    },
+    "golden_harness": {
+      "command": "python tools/verify_sentry.py --start",
+      "value": 21,
+      "status": "PASS (pass=21 fail=0 timeout=0)"
+    },
+    "defect_registry": {
+      "command": "python -c \"import json; d=json.load(open('evaluation/defects.json')); ...\"",
+      "current_defects_json_items": 67,
+      "ext_eval_items": 9,
+      "reconciled_master_total": 76,
+      "status_breakdown": {
+        "resolved": 65,
+        "interim_mitigated": 1,
+        "consolidated": 3,
+        "deferred": 2,
+        "open": 5
+      }
+    },
+    "app_version": {
+      "config_py": "1.1.0",
+      "package_json": "1.1.0",
+      "latest_git_tag": "v1.2.0"
+    },
+    "ml_metrics": {
+      "accuracy": 0.961,
+      "macro_f1": 0.952,
+      "roc_auc_ovr": 0.988,
+      "validation_samples": 15240,
+      "feature_dimensions": 47,
+      "ensemble_layers": 3
+    },
+    "corpora_counts": {
+      "demo_corpus_emails": 18,
+      "demo_campaigns": 3,
+      "demo_threat_breakdown": {
+        "CRITICAL": 15,
+        "MEDIUM": 1,
+        "LOW": 2
+      },
+      "ham_unique_emails": 6777,
+      "ham_archive_files": 6951,
+      "ham_fp_rate": 0.0
+    },
+    "api_endpoints": {
+      "total_fastapi_routes": 29,
+      "business_api_endpoints": 24
+    }
+  },
+  "claims_audited": [
+    {
+      "doc": "README.md",
+      "line": 73,
+      "section": "3. Load the demo corpus (18 emails, 3 attack campaigns)",
+      "claim_type": "gate_count",
+      "claim_text": "in headless Chromium, runs 21 golden checks, exits 0/1):",
+      "current_val": 21,
+      "ground_truth": 21,
+      "status": "AGREE"
+    },
+    {
+      "doc": "README.md",
+      "line": 100,
+      "section": "Unit + integration suite (156 tests, 85%+ branch coverage)",
+      "claim_type": "test_count",
+      "claim_text": "# Unit + integration suite (156 tests, 85%+ branch coverage)",
+      "current_val": 156,
+      "ground_truth": 156,
+      "status": "AGREE"
+    },
+    {
+      "doc": "README.md",
+      "line": 103,
+      "section": "End-to-end golden harness: 21 checks across API, WebSocket, CSV, ZIP, and live UI",
+      "claim_type": "gate_count",
+      "claim_text": "# End-to-end golden harness: 21 checks across API, WebSocket, CSV, ZIP, and live UI",
+      "current_val": 21,
+      "ground_truth": 21,
+      "status": "AGREE"
+    },
+    {
+      "doc": "DILIGENCE.md",
+      "line": 1,
+      "section": "SENTRY v1.1.0 \u2014 Technical & Corporate Diligence Binder",
+      "claim_type": "version_mention",
+      "claim_text": "# SENTRY v1.1.0 \u2014 Technical & Corporate Diligence Binder",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "DILIGENCE.md",
+      "line": 9,
+      "section": "1. Executive Summary",
+      "claim_type": "version_mention",
+      "claim_text": "SENTRY v1.1.0 is an **authenticated, air-gapped, evidentiary-grade DFIR forensic workstation** built for Tier 2/3 Security Operations Centers (SOCs), State Cyber Crime Investigation Cells, and digital forensics laboratories.",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "DILIGENCE.md",
+      "line": 86,
+      "section": "4.3 Defect Arithmetic & Quality Ledger (68-Item Master Registry Derivation)",
+      "claim_type": "defect_count",
+      "claim_text": "- **Master Defect Registry (`evaluation/defects.json`):** Exactly **68 tracked defect and gap objects** across repository history (59 prior baseline + 9 external evaluation objects `EXT-001..009`).",
+      "current_val": 68,
+      "ground_truth": 68,
+      "status": "AGREE"
+    },
+    {
+      "doc": "DILIGENCE.md",
+      "line": 101,
+      "section": "4.3 Defect Arithmetic & Quality Ledger (68-Item Master Registry Derivation)",
+      "claim_type": "gate_count",
+      "claim_text": "- **Golden Verification Harness:** **21 / 21 Golden Gates Passing** (`tools/verify_sentry.py --start`).",
+      "current_val": 21,
+      "ground_truth": 21,
+      "status": "AGREE"
+    },
+    {
+      "doc": "DILIGENCE.md",
+      "line": 137,
+      "section": "6. Honest Limitations & The Binder's \"NO\"s",
+      "claim_type": "version_mention",
+      "claim_text": "v1.1.0 is an evidentiary *forensic workstation* designed for manual and batch ingestion of exported `.eml`, `.msg`, `.mbox`, `.zip`, and `.csv` files. It does **not** yet include background IMAP/OAuth2 Microsoft 365 or Google Workspace polling daemons. Mailbox synchronization is scheduled for v1.2.0.",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "DILIGENCE.md",
+      "line": 137,
+      "section": "6. Honest Limitations & The Binder's \"NO\"s",
+      "claim_type": "version_mention",
+      "claim_text": "v1.1.0 is an evidentiary *forensic workstation* designed for manual and batch ingestion of exported `.eml`, `.msg`, `.mbox`, `.zip`, and `.csv` files. It does **not** yet include background IMAP/OAuth2 Microsoft 365 or Google Workspace polling daemons. Mailbox synchronization is scheduled for v1.2.0.",
+      "current_val": "v1.2.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "INFO"
+    },
+    {
+      "doc": "DILIGENCE.md",
+      "line": 156,
+      "section": "7. Diligence Spot-Audit Checklist",
+      "claim_type": "test_count",
+      "claim_text": "| **Claim 2: 156/156 Pytest Suite** | `pytest backend/tests` | `156 passed, 6 warnings in < 6.0s` |",
+      "current_val": 156,
+      "ground_truth": 156,
+      "status": "AGREE"
+    },
+    {
+      "doc": "DEPLOYMENT.md",
+      "line": 153,
+      "section": "Stamping Legacy Installations",
+      "claim_type": "version_mention",
+      "claim_text": "For v1.0.0 installations initialized prior to migration tracking:",
+      "current_val": "v1.0.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "INFO"
+    },
+    {
+      "doc": "docs/ARCHITECTURE.md",
+      "line": 112,
+      "section": "A. Content-Sniffed Ingestion Precedence",
+      "claim_type": "version_mention",
+      "claim_text": "4. **MBOX Handling (F-4 / MBOX-001):** Single-message `.mbox` files and standard RFC 822 streams are processed directly. Multi-message mailbox archives (concatenated via `From ` envelope delimiters) are currently parsed as single continuous streams; full multi-message mailbox delimiter splitting into discrete batch entities is tracked under defect `MBOX-001` (target v1.1.0) with ZIP archives serving as the primary multi-file ingestion format.",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "docs/RUNBOOK.md",
+      "line": 4,
+      "section": "SENTRY Enterprise Appliance Operations Runbook",
+      "claim_type": "version_mention",
+      "claim_text": "> **Applicable Version:** v1.1.0+ \u2022 **Target:** SOC Tier 2/3 Operators & System Administrators",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "docs/RUNBOOK.md",
+      "line": 114,
+      "section": "4.3 Stamping Existing Appliances",
+      "claim_type": "version_mention",
+      "claim_text": "If upgrading an unmigrated v1.0.0 appliance whose database was initialized without Alembic version metadata:",
+      "current_val": "v1.0.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "INFO"
+    },
+    {
+      "doc": "docs/QA_ARMOR.md",
+      "line": 85,
+      "section": "9. Property-Based Generative MIME Fuzzing (C4 \u2014 Test Auditor)",
+      "claim_type": "version_mention",
+      "claim_text": "> The current 43-test suite utilizes deterministic adversarial fixtures (Unicode homoglyphs, zero-width spaces, RTLO, truncated headers). Generative property-based fuzzing via Hypothesis is on the v1.2.0 test infrastructure roadmap.",
+      "current_val": "v1.2.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "docs/RELEASE_NOTES_v1.1.0.md",
+      "line": 1,
+      "section": "SENTRY v1.1.0 Release Notes",
+      "claim_type": "version_mention",
+      "claim_text": "# SENTRY v1.1.0 Release Notes",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "docs/RELEASE_NOTES_v1.1.0.md",
+      "line": 9,
+      "section": "1. Executive Summary",
+      "claim_type": "version_mention",
+      "claim_text": "SENTRY v1.1.0 transforms the SIH 2025 finalist prototype into an **authenticated, production-built, legally de-risked DFIR forensic workstation** designed for air-gapped on-premises deployment across Security Operations Centers (SOCs), State Cyber Crime Labs, and Incident Response teams.",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "docs/RELEASE_NOTES_v1.1.0.md",
+      "line": 53,
+      "section": "3. Verification & Test Metrics",
+      "claim_type": "gate_count",
+      "claim_text": "- **Golden Harness Battery:** **20/20 Golden Gates Passing** (`tools/verify_sentry.py --start`) with consecutive idempotency proof.",
+      "current_val": 20,
+      "ground_truth": 21,
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "docs/RELEASE_NOTES_v1.1.0.md",
+      "line": 61,
+      "section": "What v1.1.0 Is:",
+      "claim_type": "version_mention",
+      "claim_text": "### What v1.1.0 Is:",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "docs/RELEASE_NOTES_v1.1.0.md",
+      "line": 64,
+      "section": "What v1.1.0 Is Not (v1.2 Roadmap):",
+      "claim_type": "version_mention",
+      "claim_text": "### What v1.1.0 Is Not (v1.2 Roadmap):",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "docs/RELEASE_NOTES_v1.1.0.md",
+      "line": 65,
+      "section": "What v1.1.0 Is Not (v1.2 Roadmap):",
+      "claim_type": "version_mention",
+      "claim_text": "- **Automated Mailbox Polling:** Continuous IMAP/OAuth2 Microsoft 365 / Google Workspace background daemon ingestion is scheduled for the v1.2.0 milestone.",
+      "current_val": "v1.2.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/ERRATA.md",
+      "line": 180,
+      "section": "2. The True Master Registry Derivation",
+      "claim_type": "defect_count",
+      "claim_text": "A full-lineage audit of `evaluation/defects.json` reveals exactly **59 tracked defect and gap objects**:",
+      "current_val": 59,
+      "ground_truth": 68,
+      "status": "DRIFT"
+    },
+    {
+      "doc": "evaluation/ERRATA.md",
+      "line": 194,
+      "section": "3. Master Ledger Equation",
+      "claim_type": "version_mention",
+      "claim_text": "Zero (0) blockers or high-severity defects remain open for the v1.1.0 release. All four open items are explicitly scoped and scheduled for v1.2.0. `DILIGENCE.md` and `SHIP_GATE_REVIEW.md` are updated to cite the exact 59-item arithmetic.",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/ERRATA.md",
+      "line": 194,
+      "section": "3. Master Ledger Equation",
+      "claim_type": "version_mention",
+      "claim_text": "Zero (0) blockers or high-severity defects remain open for the v1.1.0 release. All four open items are explicitly scoped and scheduled for v1.2.0. `DILIGENCE.md` and `SHIP_GATE_REVIEW.md` are updated to cite the exact 59-item arithmetic.",
+      "current_val": "v1.2.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "INFO"
+    },
+    {
+      "doc": "evaluation/ERRATA.md",
+      "line": 203,
+      "section": "1. What Happened",
+      "claim_type": "version_mention",
+      "claim_text": "The initial tag push to `v1.1.0` triggered the `release.yml` GitHub Actions workflow, but the step `Build & Publish Backend Image` failed because Docker and GitHub Container Registry (GHCR) strictly reject uppercase characters in image repository references (`ghcr.io/Parth-tab/...`). The workflow previously referenced `${{ github.repository_owner }}` directly without normalization. Furthermore, the workflow lacked a `workflow_dispatch` manual trigger for out-of-band publishing and used older action versions.",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/ERRATA.md",
+      "line": 212,
+      "section": "3. Commit Range & Image Provenance",
+      "claim_type": "version_mention",
+      "claim_text": "The release container images for `v1.1.0` (`ghcr.io/parth-tab/sentry-backend:1.1.0` and `ghcr.io/parth-tab/sentry-frontend:1.1.0`) encapsulate the verified release state spanning from certified HEAD `95d153c` through the GHCR workflow fix PR merge commit.",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/ERRATA.md",
+      "line": 244,
+      "section": "4. Image Provenance & Version Reconciliation",
+      "claim_type": "version_mention",
+      "claim_text": "- **Commit Range:** `v1.1.0..30b21f6440bfbd2c72ae441286274ebb87a4c8f9`",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/ERRATA.md",
+      "line": 251,
+      "section": "4. Image Provenance & Version Reconciliation",
+      "claim_type": "version_mention",
+      "claim_text": "- **Artifact Temporal Relation:** The published container images (`ghcr.io/parth-tab/sentry-backend:1.1.0` and `ghcr.io/parth-tab/sentry-frontend:1.1.0`) encapsulate the complete CI and logging repair changeset and therefore post-date git tag `v1.1.0` (`95d153c`).",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/HANDOFF.md",
+      "line": 8,
+      "section": "SENTRY Project Handoff",
+      "claim_type": "version_mention",
+      "claim_text": "**Published Release Tags:** `v1.0.0` (`f437a19`), `v1.0.1` (`39e9199`)",
+      "current_val": "v1.0.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/HANDOFF.md",
+      "line": 8,
+      "section": "SENTRY Project Handoff",
+      "claim_type": "version_mention",
+      "claim_text": "**Published Release Tags:** `v1.0.0` (`f437a19`), `v1.0.1` (`39e9199`)",
+      "current_val": "v1.0.1",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/ext_eval/EXT_REVIEW.md",
+      "line": 125,
+      "section": "5. Certification Sign-Off",
+      "claim_type": "test_count",
+      "claim_text": "- **QA Engineer:** *Signed \u2014 156/156 tests & 3/3 flake-free golden gates certified.*",
+      "current_val": 156,
+      "ground_truth": 156,
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/graph_redesign/GRAPH_REVIEW.md",
+      "line": 5,
+      "section": "SENTRY Graph Redesign \u2014 Phase 5: The Panel Review (GRAPH_REVIEW.md)",
+      "claim_type": "gate_count",
+      "claim_text": "**Golden Verification Harness:** 21 / 21 Golden Gates Green (`tools/verify_sentry.py --start`)",
+      "current_val": 21,
+      "ground_truth": 21,
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/graph_redesign/GRAPH_REVIEW.md",
+      "line": 129,
+      "section": "Competitive Positioning vs. Maltego, Bloom, and Palantir Gotham",
+      "claim_type": "version_mention",
+      "claim_text": "| Dimension | Maltego / Legacy Graph UI | Generic D3 / Force Visualizations | SENTRY Graph Engine (v1.2.0) |",
+      "current_val": "v1.2.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "INFO"
+    },
+    {
+      "doc": "evaluation/graph_redesign/GRAPH_REVIEW.md",
+      "line": 171,
+      "section": "External Auditor Final Certification & Sign-Off",
+      "claim_type": "gate_count",
+      "claim_text": "Harness Standing:   21 / 21 Golden Gates Green (Double Idempotency Pair Verified)",
+      "current_val": 21,
+      "ground_truth": 21,
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 1,
+      "section": "SENTRY v1.1.0 \u2014 Four-Person Board SHIP-GATE Review (v2 Re-Issue)",
+      "claim_type": "version_mention",
+      "claim_text": "# SENTRY v1.1.0 \u2014 Four-Person Board SHIP-GATE Review (v2 Re-Issue)",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 30,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `AUD-001` | F-1/R-1 (Data layer cold boot) | **CRITICAL** | `resolved` | v1.0.0 | Commit `e1fd790` (100% in-process async SQLite) |",
+      "current_val": "v1.0.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 31,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `AUD-002` | F-2/R-5 (Score normalization) | **HIGH** | `resolved` | v1.0.0 | Commit `3334298` (Weights normalized to 1.000) |",
+      "current_val": "v1.0.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 32,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `AUD-003` | F-3/R-2 (Battery stability proof) | **HIGH** | `resolved` | v1.0.0 | Consecutive iter_2/iter_3 battery proof |",
+      "current_val": "v1.0.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 33,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `AUD-004` | F-4/R-4 (Demo script narrative) | **MEDIUM** | `resolved` | v1.0.0 | Confusion matrix & taxonomy narrative in DEMO_SCRIPT |",
+      "current_val": "v1.0.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 34,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `AUD-005` | R-3 (Secret key validator) | **HIGH** | `resolved` | v1.0.0 | Dynamic ENVIRONMENT secret enforcement |",
+      "current_val": "v1.0.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 43,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `CICD-001` | PR-4 (Automated CI pipeline) | **MEDIUM** | `resolved` | v1.1.0 | Commit `761ae40` (GitHub Actions test workflow) |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 50,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `CQ-001` | CQ-2 (Static type annotations) | **LOW** | `resolved` | v1.1.0 | Commit `2d2cdc1` (mypy type cleanliness) |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 56,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `DEF-005` | security.red_team_forged_header | **MEDIUM** | `open` | **v1.2.0** | Red-team battery forged-header extension |",
+      "current_val": "v1.2.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 59,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `GAP-001` | topology.scale_out_live_path | **MEDIUM** | `open` | **v1.2.0** | Distributed Redis/Celery/Postgres worker daemons |",
+      "current_val": "v1.2.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 60,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `GAP-002` | product.automated_mailbox_sync | **BLOCKER** | `open` | **v1.2.0** | Continuous IMAP/OAuth2 Microsoft 365 poller |",
+      "current_val": "v1.2.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 61,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `GAP-003` | deploy.production_single_origin | **BLOCKER** | `resolved` | v1.1.0 | Single-origin FastAPI SPA static mount on :8000 |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 62,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `GAP-004` | legal.trademark_corpus_sanitiz | **HIGH** | `resolved` | v1.1.0 | Complete migration to fictional Apex National Bank |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 63,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `GAP-005` | legal.trademark_sentry_io | **MEDIUM** | `interim_mitigated` | **v1.2.0** | Sentry.io non-affiliation disclaimers in README/docs |",
+      "current_val": "v1.2.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 64,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `GAP-006` | security.auth_surface_ingest | **BLOCKER** | `resolved` | v1.1.0 | Constant-time Bearer auth on 8 writable routes |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 65,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `GAP-007` | compliance.maxmind_attribution | **HIGH** | `resolved` | v1.1.0 | MaxMind GeoLite2 EULA notices on UI & docs |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 66,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `GAP-008` | positioning.ml_vs_ai_copy | **MEDIUM** | `resolved` | v1.1.0 | Calibrated ML & forensic terminology alignment |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 67,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `GAP-009` | ops.database_schema_migrations | **BLOCKER** | `resolved` | v1.1.0 | Alembic migration framework & schema equality test |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 68,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `GAP-010` | ops.db_vault_atomic_backups | **HIGH** | `resolved` | v1.1.0 | Hot backup tooling with post-restore chain proof |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 79,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `MBOX-001` | ingest.multi_message_mbox | **LOW** | `open` | **v1.2.0** | Multi-message concatenated mbox archive parser |",
+      "current_val": "v1.2.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 80,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `ML-001` | ML-5 (Adversarial evasion) | **HIGH** | `resolved` | v1.1.0 | Zero-width space & Cyrillic punycode normalization |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 81,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `OBS-001` | PR-3 (Prometheus metrics) | **HIGH** | `resolved` | v1.1.0 | `/metrics` endpoint with counters & latencies (`f09a3f3`) |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 82,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `OBS-002` | PR-2 (Deep health diagnostics) | **MEDIUM** | `resolved` | v1.1.0 | Subsystem-level `/health` diagnostic probe (`f09a3f3`) |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 83,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `SEC-001` | SE-1 (DOM XSS sanitization) | **CRITICAL** | `resolved` | v1.1.0 | Bleach HTML body sanitization with SVG block (`c7fb638`) |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 84,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `SEC-002` | SE-2 (OWASP security headers) | **HIGH** | `resolved` | v1.1.0 | Strict CSP, X-Frame-Options, HSTS middleware (`c7fb638`) |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 85,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `SEC-003` | SE-4 (Upload extension guard) | **MEDIUM** | `resolved` | v1.1.0 | Rejection of unapproved binary payloads (`c7fb638`) |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 86,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `UX-003` | ui.email_detail_dialog_role | **LOW** | `resolved` | v1.0.1 | Added `role='dialog'` and `aria-modal='true'` (`54057fc`) |",
+      "current_val": "v1.0.1",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 88,
+      "section": "2. Complete 59-Item Master Defect & Gap Lineage Table (B-1 / Q Assignment)",
+      "claim_type": "version_mention",
+      "claim_text": "| `WS-001` | ui.websocket_live_connected | **CRITICAL** | `resolved` | v1.1.0 | Direct WebSocket connection matching backend (`c65ebf5`) |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 93,
+      "section": "Master Registry Arithmetic Reconciliation",
+      "claim_type": "version_mention",
+      "claim_text": "- **v1.1.0 Release Blockers Open:** **0**",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 94,
+      "section": "Master Registry Arithmetic Reconciliation",
+      "claim_type": "version_mention",
+      "claim_text": "- **v1.1.0 High-Severity Defects Open:** **0**",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 95,
+      "section": "Master Registry Arithmetic Reconciliation",
+      "claim_type": "version_mention",
+      "claim_text": "- **Release Gating Verdict:** **100% of required v1.1.0 quality requirements are satisfied.**",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 110,
+      "section": "1. Review & Findings",
+      "claim_type": "version_mention",
+      "claim_text": "> *Acknowledgment:* The repository version string is set to `1.1.0` in [`backend/app/config.py:L9`](../../backend/app/config.py#L9) and [`frontend/package.json:L9`](../../frontend/package.json#L9) as a **pre-tag staging state**. A board rejection or BLOCK verdict would require immediate reversion of these two lines. Tagging `v1.1.0` is strictly deferred until External Auditor sign-off.",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 124,
+      "section": "1. Review & Findings",
+      "claim_type": "version_mention",
+      "claim_text": "- *No Automated Mailbox Ingestion:* Workstation is scoped for rapid forensic case triage in v1.1.0; continuous background IMAP/M365 daemon is scheduled for the v1.2.0 roadmap.",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 124,
+      "section": "1. Review & Findings",
+      "claim_type": "version_mention",
+      "claim_text": "- *No Automated Mailbox Ingestion:* Workstation is scoped for rapid forensic case triage in v1.1.0; continuous background IMAP/M365 daemon is scheduled for the v1.2.0 roadmap.",
+      "current_val": "v1.2.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 146,
+      "section": "1. Audit of the Five Weakest Claims in `DILIGENCE.md`",
+      "claim_type": "version_mention",
+      "claim_text": "*Audit:* Inspected [`docs/RELEASE_NOTES_v1.1.0.md`](../../docs/RELEASE_NOTES_v1.1.0.md) and [`DILIGENCE.md:Section 6`](../../DILIGENCE.md#6-honest-limitations--the-binders-nos). Automated IMAP/M365 mailbox synchronization is clearly documented as a roadmap item for v1.2.0, preventing customer expectation mismatch. $\\to$ **RESOLVED TO ARTIFACT (PASS)**.",
+      "current_val": "v1.2.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 157,
+      "section": "1. Review & Findings",
+      "claim_type": "version_mention",
+      "claim_text": "- **B-1 Registry Reconciliation:** Validated the 59-item master lineage table. Confirmed `DEF-005` (medium) and `MBOX-001` (low) remain open and targeted for v1.2.0.",
+      "current_val": "v1.2.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 159,
+      "section": "1. Review & Findings",
+      "claim_type": "test_count",
+      "claim_text": "- **B-3 Test Manifest Regeneration (99 Tests):** Re-generated [`evaluation/test_manifest.txt`](../test_manifest.txt) at 99 tests with the complete delta chain:",
+      "current_val": 99,
+      "ground_truth": 156,
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 159,
+      "section": "1. Review & Findings",
+      "claim_type": "test_count",
+      "claim_text": "- **B-3 Test Manifest Regeneration (99 Tests):** Re-generated [`evaluation/test_manifest.txt`](../test_manifest.txt) at 99 tests with the complete delta chain:",
+      "current_val": 99,
+      "ground_truth": 156,
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 164,
+      "section": "1. Review & Findings",
+      "claim_type": "test_count",
+      "claim_text": "- Phase 5/6A: 97 $\\to$ **99 tests** (+2 tests: `test_alembic_schema_matches_models` and `test_restore_post_backup_probe_isolation`)",
+      "current_val": 99,
+      "ground_truth": 156,
+      "status": "AGREE_HISTORICAL"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 198,
+      "section": "5. External Auditor Sign-Off Certificate",
+      "claim_type": "version_mention",
+      "claim_text": "| Release Target:    SENTRY v1.1.0 Enterprise DFIR Workstation                                     |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/mrws/SHIP_GATE_REVIEW.md",
+      "line": 199,
+      "section": "5. External Auditor Sign-Off Certificate",
+      "claim_type": "version_mention",
+      "claim_text": "| Certified HEAD:    1fcb5163f0983c56c0e87cd1da738fb1de67ac38 (Tag: v1.1.0)                        |",
+      "current_val": "v1.1.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "AGREE"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 52,
+      "section": "*Critical Unauthenticated Ingestion, State Corruption & License EULA Breach in SENTRY*",
+      "claim_type": "version_mention",
+      "claim_text": "A technical audit of SENTRY (v1.0.0) reveals critical attack surface exposure when deployed on any networked host:",
+      "current_val": "v1.0.0",
+      "ground_truth": "v1.1.0 (v1.2.0 on roadmap / graph release)",
+      "status": "INFO"
+    },
+    {
+      "doc": ".github/PULL_REQUEST_TEMPLATE.md",
+      "line": 5,
+      "section": "Verification loop run",
+      "claim_type": "test_count",
+      "claim_text": "- [ ] `pytest backend/tests -v` \u2014 pass (41 tests)",
+      "current_val": 41,
+      "ground_truth": 156,
+      "status": "DRIFT"
+    }
+  ],
+  "broken_links_audited": [
+    {
+      "doc": "DILIGENCE.md",
+      "line": 60,
+      "section": "3. Gap Ledger Final Reconciliation",
+      "link_text": "`backend/app/api/deps.py`",
+      "link_target": "backend/app/api/deps.py",
+      "reason": "Target file does not exist in repo"
+    },
+    {
+      "doc": "CHANGELOG.md",
+      "line": 16,
+      "section": "Added",
+      "link_text": "`docs/RUNBOOK.md`",
+      "link_target": "file:///E:/SENTRY/docs/RUNBOOK.md",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "CHANGELOG.md",
+      "line": 24,
+      "section": "Added",
+      "link_text": "`DEPLOYMENT.md`",
+      "link_target": "file:///E:/SENTRY/DEPLOYMENT.md",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/ERRATA.md",
+      "line": 164,
+      "section": "2. Hero Image State Transition Explanation",
+      "link_text": "`docs/assets/dashboard.png`",
+      "link_target": "file:///E:/SENTRY/docs/assets/dashboard.png",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/ERRATA.md",
+      "line": 164,
+      "section": "2. Hero Image State Transition Explanation",
+      "link_text": "`README.md`",
+      "link_target": "file:///E:/SENTRY/README.md",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/ERRATA.md",
+      "line": 167,
+      "section": "3. Removal of Unverifiable ARCH-001 & Final Ledger Arithmetic",
+      "link_text": "`evaluation/defects.json`",
+      "link_target": "file:///E:/SENTRY/evaluation/defects.json",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/graph_redesign/GRAPH_REVIEW.md",
+      "line": 4,
+      "section": "SENTRY Graph Redesign \u2014 Phase 5: The Panel Review (GRAPH_REVIEW.md)",
+      "link_text": "`evaluation/graph_redesign/state.json`",
+      "link_target": "file:///E:/SENTRY/evaluation/graph_redesign/state.json",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 4,
+      "section": "SENTRY VIABILITY AUDIT REPORT",
+      "link_text": "`evaluation/viability/state.json`",
+      "link_target": "file:///E:/SENTRY/evaluation/viability/state.json",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 28,
+      "section": "2.1 Panel L: Production Engineering Experiments",
+      "link_text": "`backend/app/services/correlation_engine.py:L1-60`",
+      "link_target": "file:///E:/SENTRY/backend/app/services/correlation_engine.py#L1-60",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 28,
+      "section": "2.1 Panel L: Production Engineering Experiments",
+      "link_text": "`backend/app/services/celery_app.py:L1-46`",
+      "link_target": "file:///E:/SENTRY/backend/app/services/celery_app.py#L1-46",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 29,
+      "section": "2.1 Panel L: Production Engineering Experiments",
+      "link_text": "`frontend/src/services/api.ts:L9-14`",
+      "link_target": "file:///E:/SENTRY/frontend/src/services/api.ts#L9-14",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 29,
+      "section": "2.1 Panel L: Production Engineering Experiments",
+      "link_text": "`backend/app/main.py:L89-101`",
+      "link_target": "file:///E:/SENTRY/backend/app/main.py#L89-101",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 30,
+      "section": "2.1 Panel L: Production Engineering Experiments",
+      "link_text": "`logs/auth_receipts.json`",
+      "link_target": "file:///E:/SENTRY/evaluation/viability/panel_L.json",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 31,
+      "section": "2.1 Panel L: Production Engineering Experiments",
+      "link_text": "`logs/load_test_results.json`",
+      "link_target": "file:///E:/SENTRY/evaluation/viability/panel_L.json",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 40,
+      "section": "2.3 Panel V: Investor Diligence & Legal",
+      "link_text": "`logs/license_audit.json`",
+      "link_target": "file:///E:/SENTRY/evaluation/viability/panel_V.json",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 79,
+      "section": "4. The Counter-Memo: The Case FOR Shipping",
+      "link_text": "`backend/app/api/v1/stats.py:L185-196`",
+      "link_target": "file:///E:/SENTRY/backend/app/api/v1/stats.py#L185-196",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 80,
+      "section": "4. The Counter-Memo: The Case FOR Shipping",
+      "link_text": "`logs/load_test_results.json`",
+      "link_target": "file:///E:/SENTRY/evaluation/viability/panel_L.json",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 81,
+      "section": "4. The Counter-Memo: The Case FOR Shipping",
+      "link_text": "`tools/verify_sentry.py`",
+      "link_target": "file:///E:/SENTRY/tools/verify_sentry.py",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 81,
+      "section": "4. The Counter-Memo: The Case FOR Shipping",
+      "link_text": "`backend/tests`",
+      "link_target": "file:///E:/SENTRY/backend/tests",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 92,
+      "section": "5.1 SY-1 Errata: Scale-Out Topology Verdict",
+      "link_text": "`backend/app/api/v1/campaigns.py`",
+      "link_target": "file:///E:/SENTRY/backend/app/api/v1/campaigns.py",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 92,
+      "section": "5.1 SY-1 Errata: Scale-Out Topology Verdict",
+      "link_text": "`backend/app/services/correlation_engine.py`",
+      "link_target": "file:///E:/SENTRY/backend/app/services/correlation_engine.py",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 93,
+      "section": "5.1 SY-1 Errata: Scale-Out Topology Verdict",
+      "link_text": "`backend/app/services/celery_app.py`",
+      "link_target": "file:///E:/SENTRY/backend/app/services/celery_app.py",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/VIABILITY_REPORT.md",
+      "line": 93,
+      "section": "5.1 SY-1 Errata: Scale-Out Topology Verdict",
+      "link_text": "`backend/app/api/v1/`",
+      "link_target": "file:///E:/SENTRY/backend/app/api/v1/",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 14,
+      "section": "*\"SENTRY: A Hackathon Project in a Compliance Costume\"*",
+      "link_text": "`README.md:L12`",
+      "link_target": "file:///E:/SENTRY/README.md#L12",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 16,
+      "section": "*\"SENTRY: A Hackathon Project in a Compliance Costume\"*",
+      "link_text": "`docker-compose.yml:L1-114`",
+      "link_target": "file:///E:/SENTRY/docker-compose.yml#L1-114",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 16,
+      "section": "*\"SENTRY: A Hackathon Project in a Compliance Costume\"*",
+      "link_text": "`backend/app/config.py:L22`",
+      "link_target": "file:///E:/SENTRY/backend/app/config.py#L22",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 16,
+      "section": "*\"SENTRY: A Hackathon Project in a Compliance Costume\"*",
+      "link_text": "`backend/app/services/correlation_engine.py:L7`",
+      "link_target": "file:///E:/SENTRY/backend/app/services/correlation_engine.py#L7",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 16,
+      "section": "*\"SENTRY: A Hackathon Project in a Compliance Costume\"*",
+      "link_text": "`backend/app/services/celery_app.py:L22`",
+      "link_target": "file:///E:/SENTRY/backend/app/services/celery_app.py#L22",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 18,
+      "section": "*\"SENTRY: A Hackathon Project in a Compliance Costume\"*",
+      "link_text": "`backend/app/api/v1/emails.py:L1-200`",
+      "link_target": "file:///E:/SENTRY/backend/app/api/v1/emails.py#L1-200",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 20,
+      "section": "*\"SENTRY: A Hackathon Project in a Compliance Costume\"*",
+      "link_text": "`frontend/src/services/api.ts:L9-14`",
+      "link_target": "file:///E:/SENTRY/frontend/src/services/api.ts#L9-14",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 20,
+      "section": "*\"SENTRY: A Hackathon Project in a Compliance Costume\"*",
+      "link_text": "`backend/app/main.py:L89-101`",
+      "link_target": "file:///E:/SENTRY/backend/app/main.py#L89-101",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 20,
+      "section": "*\"SENTRY: A Hackathon Project in a Compliance Costume\"*",
+      "link_text": "`logs/sim_prod_results.json`",
+      "link_target": "file:///E:/SENTRY/evaluation/viability/panel_L.json",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 23,
+      "section": "Rebuttal / Gap Mapping:",
+      "link_text": "`AGENTS.md:L20-25`",
+      "link_target": "file:///E:/SENTRY/AGENTS.md#L20-25",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 23,
+      "section": "Rebuttal / Gap Mapping:",
+      "link_text": "`README.md:L37`",
+      "link_target": "file:///E:/SENTRY/README.md#L37",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 34,
+      "section": "*Notice of Trademark Infringement & Facilitation of Phishing Assets*",
+      "link_text": "`sample_emails/`",
+      "link_target": "file:///E:/SENTRY/sample_emails/",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 36,
+      "section": "*Notice of Trademark Infringement & Facilitation of Phishing Assets*",
+      "link_text": "`sample_emails/04_sbi_kyc_escalation.eml`",
+      "link_target": "file:///E:/SENTRY/sample_emails/04_sbi_kyc_escalation.eml",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 38,
+      "section": "*Notice of Trademark Infringement & Facilitation of Phishing Assets*",
+      "link_text": "`backend/app/services/correlation_engine.py:L21`",
+      "link_target": "file:///E:/SENTRY/backend/app/services/correlation_engine.py#L21",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 38,
+      "section": "*Notice of Trademark Infringement & Facilitation of Phishing Assets*",
+      "link_text": "`sample_emails/README.md:L5-11`",
+      "link_target": "file:///E:/SENTRY/sample_emails/README.md#L5-11",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 54,
+      "section": "*Critical Unauthenticated Ingestion, State Corruption & License EULA Breach in SENTRY*",
+      "link_text": "`logs/auth_surface_map.json`",
+      "link_target": "file:///E:/SENTRY/evaluation/viability/panel_L.json",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 54,
+      "section": "*Critical Unauthenticated Ingestion, State Corruption & License EULA Breach in SENTRY*",
+      "link_text": "`POST /api/v1/emails/raw`",
+      "link_target": "file:///E:/SENTRY/backend/app/api/v1/emails.py",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 54,
+      "section": "*Critical Unauthenticated Ingestion, State Corruption & License EULA Breach in SENTRY*",
+      "link_text": "`logs/auth_receipts.json`",
+      "link_target": "file:///E:/SENTRY/evaluation/viability/panel_L.json",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 55,
+      "section": "*Critical Unauthenticated Ingestion, State Corruption & License EULA Breach in SENTRY*",
+      "link_text": "`backend/app/config.py:L27-28`",
+      "link_target": "file:///E:/SENTRY/backend/app/config.py#L27-28",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 55,
+      "section": "*Critical Unauthenticated Ingestion, State Corruption & License EULA Breach in SENTRY*",
+      "link_text": "`backend/app/api/v1/stats.py:L138-150`",
+      "link_target": "file:///E:/SENTRY/backend/app/api/v1/stats.py#L138-150",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 56,
+      "section": "*Critical Unauthenticated Ingestion, State Corruption & License EULA Breach in SENTRY*",
+      "link_text": "`backend/app/services/geo_origin.py:L1-50`",
+      "link_target": "file:///E:/SENTRY/backend/app/services/geo_origin.py#L1-50",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 59,
+      "section": "Rebuttal / Gap Mapping:",
+      "link_text": "`backend/app/config.py:L45-61`",
+      "link_target": "file:///E:/SENTRY/backend/app/config.py#L45-61",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 59,
+      "section": "Rebuttal / Gap Mapping:",
+      "link_text": "`backend/app/api/v1/stats.py:L167-202`",
+      "link_target": "file:///E:/SENTRY/backend/app/api/v1/stats.py#L167-202",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 72,
+      "section": "*Investment Committee Assessment: SENTRY Seed Round*",
+      "link_text": "`backend/app/services/ml_metrics.py:L1-100`",
+      "link_target": "file:///E:/SENTRY/backend/app/services/ml_metrics.py#L1-100",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 73,
+      "section": "*Investment Committee Assessment: SENTRY Seed Round*",
+      "link_text": "`README.md:L31`",
+      "link_target": "file:///E:/SENTRY/README.md#L31",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 73,
+      "section": "*Investment Committee Assessment: SENTRY Seed Round*",
+      "link_text": "`backend/app/services/ml_classifier.py`",
+      "link_target": "file:///E:/SENTRY/backend/app/services/ml_classifier.py",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 74,
+      "section": "*Investment Committee Assessment: SENTRY Seed Round*",
+      "link_text": "`evaluation/viability/panel_V.json`",
+      "link_target": "file:///E:/SENTRY/evaluation/viability/panel_V.json",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/viability/kill_memo.md",
+      "line": 74,
+      "section": "*Investment Committee Assessment: SENTRY Seed Round*",
+      "link_text": "`backend/app/db/database.py:L51-54`",
+      "link_target": "file:///E:/SENTRY/backend/app/db/database.py#L51-54",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/final_inch/HUMAN_RUNBOOK.md",
+      "line": 50,
+      "section": "Item 4: Social Preview Image Upload",
+      "link_text": "`docs/assets/tour/05-relay-map.png`",
+      "link_target": "file:///E:/SENTRY/docs/assets/tour/05-relay-map.png",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/final_inch/HUMAN_RUNBOOK.md",
+      "line": 50,
+      "section": "Item 4: Social Preview Image Upload",
+      "link_text": "`docs/assets/dashboard.png`",
+      "link_target": "file:///E:/SENTRY/docs/assets/dashboard.png",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/final_inch/HUMAN_RUNBOOK.md",
+      "line": 59,
+      "section": "Item 5: Stranger Usability Interviews",
+      "link_text": "`evaluation/final_inch/STRANGER_PROTOCOL.md`",
+      "link_target": "file:///E:/SENTRY/evaluation/final_inch/STRANGER_PROTOCOL.md",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    },
+    {
+      "doc": "evaluation/final_inch/HUMAN_RUNBOOK.md",
+      "line": 62,
+      "section": "Item 5: Stranger Usability Interviews",
+      "link_text": "`evaluation/final_inch/stranger_results_template.md`",
+      "link_target": "file:///E:/SENTRY/evaluation/final_inch/stranger_results_template.md",
+      "reason": "Absolute file:/// URI instead of repo-relative path"
+    }
+  ],
+  "filed_defects": [
+    {
+      "id": "DOC-001",
+      "title": "Defect Registry Arithmetic & Diligence Synchronization Drift",
+      "category": "Documentation / Ledger",
+      "severity": "HIGH",
+      "status": "open",
+      "description": "Discrepancy between defects.json (67 items), ext_eval/state.json (9 EXT items), and DILIGENCE.md (68 items derived from 59 baseline + 9 EXT). Total objects across repository must be unified to 76 in defects.json and reconciled across all diligence tables."
+    },
+    {
+      "id": "DOC-002",
+      "title": "Stale Test Counts in QA Armor and PR Template",
+      "category": "Documentation / CI",
+      "severity": "MEDIUM",
+      "status": "open",
+      "description": "docs/QA_ARMOR.md references '43-test suite' and .github/PULL_REQUEST_TEMPLATE.md references '41 tests'. Live suite is 156 tests across 23 modules."
+    },
+    {
+      "id": "DOC-003",
+      "title": "Dead Relative Markdown Links and file:/// Absolute URIs",
+      "category": "Documentation / Integrity",
+      "severity": "MEDIUM",
+      "status": "open",
+      "description": "55 markdown links contain non-portable file:/// absolute paths or point to missing files (backend/app/api/deps.py in DILIGENCE.md, docker-compose.yml in kill_memo.md)."
+    },
+    {
+      "id": "DOC-004",
+      "title": "MBOX Handling Roadmap Target Stale in ARCHITECTURE.md",
+      "category": "Documentation / Architecture",
+      "severity": "LOW",
+      "status": "open",
+      "description": "docs/ARCHITECTURE.md:112 references defect MBOX-001 target as 'v1.1.0' instead of 'v1.2.0 roadmap'."
+    },
+    {
+      "id": "DOC-005",
+      "title": "Lack of Machine-Verified Fact Validation Gate in CI",
+      "category": "Tooling / Verification",
+      "severity": "HIGH",
+      "status": "open",
+      "description": "No automated CI validator exists to regenerate facts from live commands and assert zero drift against documentation."
+    }
+  ]
+}

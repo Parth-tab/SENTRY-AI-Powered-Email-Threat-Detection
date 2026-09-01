@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-29  
 **Session:** BATCH-INGESTION  
-**Defect Filed:** [`CORP-001`](file:///E:/SENTRY/evaluation/defects.json)  
+**Defect Filed:** [`CORP-001`](../defects.json)  
 
 ---
 
@@ -10,8 +10,8 @@
 
 Executed automated diagnostic test suite against the live appliance UI stack:
 - **Test Target:** `http://127.0.0.1:3000` backed by `http://127.0.0.1:8000` (ephemeral scratch DB).
-- **Execution Script:** [`evaluation/batch_ingest/scripts/diagnose_batch_ingest.py`](file:///E:/SENTRY/evaluation/batch_ingest/scripts/diagnose_batch_ingest.py).
-- **Raw Trace Output:** [`evaluation/batch_ingest/diagnosis_raw.json`](file:///E:/SENTRY/evaluation/batch_ingest/diagnosis_raw.json).
+- **Execution Script:** [`evaluation/batch_ingest/scripts/diagnose_batch_ingest.py`](scripts/diagnose_batch_ingest.py).
+- **Raw Trace Output:** [`evaluation/batch_ingest/diagnosis_raw.json`](diagnosis_raw.json).
 
 ### Diagnostic Results Matrix:
 
@@ -28,13 +28,13 @@ Executed automated diagnostic test suite against the live appliance UI stack:
 
 ### Hypothesis A: Extension Allowlist Rejection — **CONFIRMED**
 1. **Frontend Accept List:**  
-   [`frontend/src/components/dashboard/IngestionDropzone.tsx:129`](file:///E:/SENTRY/frontend/src/components/dashboard/IngestionDropzone.tsx#L129):
+   [`frontend/src/components/dashboard/IngestionDropzone.tsx:129`](../../frontend/src/components/dashboard/IngestionDropzone.tsx#L129):
    ```tsx
    accept=".eml,.msg,.mbox,.txt"
    ```
    Extensionless files, `.csv`, and `.zip` files are filtered out of standard file pickers or flagged on drag-and-drop.
 2. **Backend Hard Extension Validation:**  
-   [`backend/app/api/v1/emails.py:253-260`](file:///E:/SENTRY/backend/app/api/v1/emails.py#L253-L260):
+   [`backend/app/api/v1/emails.py:253-260`](../../backend/app/api/v1/emails.py#L253-L260):
    ```python
    filename = file.filename or ""
    allowed_exts = (".eml", ".msg", ".mbox", ".txt")
@@ -50,17 +50,17 @@ Executed automated diagnostic test suite against the live appliance UI stack:
 
 ### Hypothesis B: No Bulk Ingestion Path — **CONFIRMED**
 1. **Frontend Input Element:**  
-   [`frontend/src/components/dashboard/IngestionDropzone.tsx:127-134`](file:///E:/SENTRY/frontend/src/components/dashboard/IngestionDropzone.tsx#L127-L134):
+   [`frontend/src/components/dashboard/IngestionDropzone.tsx:127-134`](../../frontend/src/components/dashboard/IngestionDropzone.tsx#L127-L134):
    `<input type="file">` does not contain the `multiple` attribute and `handleFileUpload` only reads `e.target.files?.[0]`.
 2. **Backend Single-File Handler:**  
-   [`backend/app/api/v1/emails.py:244-246`](file:///E:/SENTRY/backend/app/api/v1/emails.py#L244-L246):
+   [`backend/app/api/v1/emails.py:244-246`](../../backend/app/api/v1/emails.py#L244-L246):
    `upload_eml_file` accepts a single `UploadFile = File(...)` and directly returns `EmailDetailResponse` for a single record. There is no batch endpoint or multi-file stream handler.
 
 ---
 
 ### Hypothesis C: Size Cap Class Discrepancy — **CONFIRMED**
 1. **Per-Request Middleware Cap:**  
-   [`backend/app/main.py:59-64`](file:///E:/SENTRY/backend/app/main.py#L59-L64):
+   [`backend/app/main.py:59-64`](../../backend/app/main.py#L59-L64):
    ```python
    content_length = request.headers.get("content-length")
    if content_length and int(content_length) > 26_214_400:
@@ -68,7 +68,7 @@ Executed automated diagnostic test suite against the live appliance UI stack:
    ```
    Enforces a strict 25MB cap per HTTP request.
 2. **Per-File Ingest Cap:**  
-   [`backend/app/api/v1/emails.py:264-265`](file:///E:/SENTRY/backend/app/api/v1/emails.py#L264-L265):
+   [`backend/app/api/v1/emails.py:264-265`](../../backend/app/api/v1/emails.py#L264-L265):
    ```python
    if len(content_bytes) > 20_971_520:
        raise HTTPException(status_code=413, detail="File exceeds maximum size limit of 20MB.")

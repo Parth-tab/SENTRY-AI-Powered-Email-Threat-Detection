@@ -1,7 +1,7 @@
 # SENTRY Batch Ingestion Architecture & Design Contract (Phase 1)
 
-**Defect ID:** [`CORP-002`](file:///E:/SENTRY/evaluation/defects.json)  
-**Related Defects:** [`CORP-001`](file:///E:/SENTRY/evaluation/defects.json), [`FEED-001`](file:///E:/SENTRY/evaluation/defects.json), [`GRAPH-001`](file:///E:/SENTRY/evaluation/defects.json)  
+**Defect ID:** [`CORP-002`](../defects.json)  
+**Related Defects:** [`CORP-001`](../defects.json), [`FEED-001`](../defects.json), [`GRAPH-001`](../defects.json)  
 
 ---
 
@@ -123,11 +123,11 @@ Batch endpoints return a standardized job summary:
 
 ## 3. Scale Guards & Latent Defect Remediation
 
-### A. Threat Feed Pagination ([`FEED-001`](file:///E:/SENTRY/evaluation/defects.json))
+### A. Threat Feed Pagination ([`FEED-001`](../defects.json))
 - **Finding:** Frontend `LiveThreatFeed.tsx` rendered the full email array without pagination controls, while backend defaulted `limit=50`.
 - **Remediation:** Implement client-side pagination in `LiveThreatFeed.tsx` with selectable page size (25 / 50 / 100) and Next / Prev controls, displaying `"Page X of Y (Total Z items)"`.
 
-### B. Campaign Graph 300-Node Cap ([`GRAPH-001`](file:///E:/SENTRY/evaluation/defects.json))
+### B. Campaign Graph 300-Node Cap ([`GRAPH-001`](../defects.json))
 - **Finding:** `CampaignNetworkGraph.tsx` rendered uncapped nodes on canvas force-layout ($O(N^2)$ force loop).
 - **Remediation:** Enforce a hard ceiling of $300$ active nodes on the canvas:
   ```typescript
