@@ -62,7 +62,7 @@
 4. **"How does your evidence hold up in a court of law?"**
    * *Answer:* *"Every message is sealed with a Genesis SHA-256 hash ($H_0$) upon intake. Every analysis phase creates an append-only RFC 3227 mathematical hash chain. Any tampering invalidates the chain visibly. Reports export in PDF with fixed-width Courier hashes."*
 5. **"What does SENTRY NOT do yet?"**
-   * *Answer:* *"Live Microsoft 365 cloud mailbox sync and nation-state geopolitical attribution are documented on our v2.0 roadmap (ROADMAP-01 and ROADMAP-02). We made the deliberate architectural decision to certify our offline, air-gapped forensic appliance first."*
+   * *Answer:* *"Live Microsoft 365 cloud mailbox sync, nation-state geopolitical attribution, and dynamic archive sandbox detonation are documented roadmap milestones (ROADMAP-01 through ROADMAP-04). We made the deliberate architectural decision to certify our offline, air-gapped forensic appliance first."*
 
 ---
 

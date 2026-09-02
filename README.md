@@ -16,6 +16,8 @@
 
 ![SOC Dashboard](docs/assets/dashboard.png)
 
+> 🧭 **New teammate or non-technical presenter?** Start here: **[Zero-to-Hero Onboarding Guide (00–07)](docs/onboarding/00-START-HERE.md)** — an 8-station learning curriculum taking anyone from zero cybersecurity knowledge to presenting the architecture and surviving judge Q&A in ~90 minutes.
+
 **New here?** Take the **[Guided Tour](docs/FEATURE_TOUR.md)** — one
 malicious email followed from arrival to courtroom, with verified
 screenshots of every subsystem.
