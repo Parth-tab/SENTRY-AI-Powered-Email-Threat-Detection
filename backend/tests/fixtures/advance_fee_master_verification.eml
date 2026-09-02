@@ -1,0 +1,26 @@
+From: "International Grant Commission" <awards@international-grant-program.org>
+To: "TargetCorp Financial Officer" <victim@targetcorp.example>
+Reply-To: "Disbursement Desk" <claims@prize-disbursement.net>
+Subject: OFFICIAL NOTIFICATION: INTERNATIONAL LOTTERY PROMOTION BENEFICIARY PRIZE ALLOCATION AND GRANT DISBURSEMENT ADVISORY - 2026 GLOBAL SETTLEMENT
+Date: Wed, 02 Sep 2026 09:30:00 +0000
+Message-ID: <20260902093000.99482012@international-grant-program.org>
+Received: by mx.targetcorp.example (Postfix) with ESMTP id ABC12345 for <victim@targetcorp.example>; Wed, 02 Sep 2026 09:30:10 +0000
+Received: from mail.prize-disbursement.net (mail.prize-disbursement.net [203.0.113.9]) by mx.targetcorp.example with ESMTP id DEF67890 for <victim@targetcorp.example>; Wed, 02 Sep 2026 09:30:05 +0000
+Received: from localhost (localhost [127.0.0.1]) by mail.prize-disbursement.net (Postfix) with ESMTP id GHI11223 for <victim@targetcorp.example>; Wed, 02 Sep 2026 09:30:00 +0000
+Authentication-Results: mx.targetcorp.example; dmarc=fail (p=none) header.from=international-grant-program.org; spf=fail (sender IP 203.0.113.9) smtp.mailfrom=awards@international-grant-program.org; dkim=none
+Received-SPF: Fail (mx.targetcorp.example: domain of international-grant-program.org does not designate 203.0.113.9 as permitted sender) receiver=mx.targetcorp.example; client-ip=203.0.113.9; envelope-from="awards@international-grant-program.org";
+Content-Type: text/html; charset="utf-8"
+
+<!DOCTYPE html>
+<html>
+<head><title>OFFICIAL NOTIFICATION: INTERNATIONAL LOTTERY PROMOTION BENEFICIARY PRIZE ALLOCATION AND GRANT DISBURSEMENT ADVISORY - 2026 GLOBAL SETTLEMENT</title></head>
+<body>
+<p>Dear Beneficiary,</p>
+<p>You have been selected as the lucky winner under our official award notification for a cash prize grant allocation of <strong>$4,500,000 USD</strong> under the 2026 International Lottery Promotion programme.</p>
+<p>To claim your prize without delay, contact our designated claim agent immediately via our external claims disbursement desk: <a href="mailto:claims@prize-disbursement.net">claims@prize-disbursement.net</a>.</p>
+<p>Please submit your full banking credentials, bank account details, wire transfer routing number, and legal identification along with wire processing fee confirmation to release the disbursement.</p>
+<p>Respectfully,<br/>
+Dr. Arthur Pendelton<br/>
+Senior Claims & Disbursement Director</p>
+</body>
+</html>
