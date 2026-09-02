@@ -593,12 +593,18 @@ async def download_pdf_report(
     analysis = data["analysis"] or {}
     evidence = data["evidence"] or {}
 
+    raw_hdrs = email_rec.get("raw_headers") or {}
     email_dict = {
         "subject": email_rec.get("subject", ""),
         "from_raw": email_rec.get("sender", ""),
+        "sender": email_rec.get("sender", ""),
+        "sender_domain": email_rec.get("sender_domain", ""),
         "recipient": email_rec.get("recipient", ""),
         "message_id": email_rec.get("message_id", ""),
-        "sha256_hash": email_rec.get("sha256_hash", "")
+        "sha256_hash": email_rec.get("sha256_hash", ""),
+        "headers": raw_hdrs,
+        "raw_headers": raw_hdrs,
+        "reply_to": raw_hdrs.get("Reply-To") or raw_hdrs.get("reply-to") or email_rec.get("reply_to", "")
     }
     analysis_dict = {
         "overall_threat_score": analysis.get("overall_threat_score", 0.0),

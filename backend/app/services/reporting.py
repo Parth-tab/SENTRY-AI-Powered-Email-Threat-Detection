@@ -323,14 +323,26 @@ class ReportingService:
         if domain_intel.get("domain"):
             iocs.append(["Domain", domain_intel.get("domain"), f"Sender Domain (Lookalike: {domain_intel.get('is_lookalike')})"])
         
-        # Structured Reply-To extraction (EXT-005)
-        reply_to_raw = email_data.get("headers", {}).get("reply-to") or email_data.get("reply_to") or ""
+        # Structured Reply-To extraction (EXT-005 / DEF-B)
+        headers = email_data.get("headers") or email_data.get("raw_headers") or {}
+        reply_to_raw = email_data.get("reply_to") or ""
+        if not reply_to_raw and isinstance(headers, dict):
+            for k, v in headers.items():
+                if k.lower() == "reply-to":
+                    reply_to_raw = v
+                    break
+
         if reply_to_raw:
             from email.utils import parseaddr
             _, r_email = parseaddr(str(reply_to_raw))
             if r_email:
                 r_domain = r_email.split("@")[-1].lower() if "@" in r_email else ""
                 s_domain = str(email_data.get("sender_domain", "")).lower()
+                if not s_domain:
+                    s_domain = str(domain_intel.get("domain", "")).lower()
+                    if not s_domain:
+                        _, s_addr = parseaddr(str(email_data.get("sender") or email_data.get("from_raw") or ""))
+                        s_domain = s_addr.split("@")[-1].lower() if "@" in s_addr else ""
                 is_mismatch = bool(r_domain and s_domain and r_domain != s_domain)
                 iocs.append(["Reply-To Email", r_email, f"Response Routing (Mismatch: {is_mismatch})"])
                 if is_mismatch and r_domain:
