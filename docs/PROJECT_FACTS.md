@@ -17,7 +17,7 @@ The following metrics are dynamically extracted and validated by `tools/validate
 
 <!-- fact: TEST_SUITE_COUNT -->
 <!-- derivation: python -m pytest --collect-only -q -->
-- **Test Suite Count [derived]:** `TEST_SUITE_COUNT: 156` passing unit and integration tests across 23 modules (`backend/tests`).
+- **Test Suite Count [derived]:** `TEST_SUITE_COUNT: 164` passing unit and integration tests across 24 modules (`backend/tests`).
 
 <!-- fact: GOLDEN_GATES_COUNT -->
 <!-- derivation: python tools/verify_sentry.py --start -->
@@ -25,25 +25,25 @@ The following metrics are dynamically extracted and validated by `tools/validate
 
 <!-- fact: DEFECT_TOTAL_COUNT -->
 <!-- derivation: python -c "import json; len(json.load(open('evaluation/defects.json')))" -->
-- **Master Defect Ledger Total [derived]:** `DEFECT_TOTAL_COUNT: 76` tracked defect and gap objects across repository history.
+- **Master Defect Ledger Total [derived]:** `DEFECT_TOTAL_COUNT: 78` tracked defect and gap objects across repository history.
 
 <!-- fact: DEFECT_RESOLVED_COUNT -->
 <!-- derivation: python -c "import json; len([x for x in json.load(open('evaluation/defects.json')) if x.get('status')=='resolved'])" -->
-- **Resolved Defects [derived]:** `DEFECT_RESOLVED_COUNT: 66` fully resolved and test-guarded defect objects.
+- **Resolved Defects [derived]:** `DEFECT_RESOLVED_COUNT: 68` fully resolved and test-guarded defect objects.
 
 <!-- fact: DEFECT_STATUS_BREAKDOWN -->
-<!-- derivation: 66 resolved + 1 interim + 3 consolidated + 1 deferred + 5 open = 76 -->
+<!-- derivation: 68 resolved + 1 interim + 3 consolidated + 1 deferred + 5 open = 78 -->
 - **Defect Ledger Breakdown [derived]:**
-  - **Resolved:** 66 (43 core + 7 MRWS + 4 CI + 4 Graph + 8 EXT)
+  - **Resolved:** 68 (43 core + 7 MRWS + 4 CI + 4 Graph + 8 EXT + 2 DEF)
   - **Interim Mitigated:** 1 (`GAP-005` trademark notice)
   - **Consolidated:** 3 (`BATCH-003`, `CORP-002`, `ING-003`)
   - **Deferred:** 1 (`BP-005` v1.3.0 server-side graph expand)
   - **Open (Targeted Roadmap):** 5 (`DEF-005` forged-header battery, `MBOX-001` mbox delimiter parser, `GAP-001` scale-out daemons, `GAP-002` automated IMAP/M365 mailbox connector, `EXT-009` synthetic attribution label)
-  - **Sum Invariant:** $66 + 1 + 3 + 1 + 5 = 76$ (100% mathematically reconciled).
+  - **Sum Invariant:** $68 + 1 + 3 + 1 + 5 = 78$ (100% mathematically reconciled).
 
 <!-- fact: APP_VERSION -->
 <!-- derivation: backend/app/config.py (VERSION) == frontend/package.json (version) -->
-- **Unified Software Version [derived]:** `APP_VERSION: 1.2.1` (Certified release: graph intelligence, ext-eval defense hardening & continuous fact gating).
+- **Unified Software Version [derived]:** `APP_VERSION: 1.2.2` (Certified release: master verification, deep forensics, defense hardening & continuous fact gating).
 
 <!-- fact: FASTAPI_ROUTES_COUNT -->
 <!-- derivation: len([r for r in app.routes if isinstance(r, APIRoute)]) -->
