@@ -224,8 +224,9 @@ class ThreatClassifier:
                 if reply_to_domain and reply_to_domain != domain_res.get("domain"):
                     recommendations.append(f"Block external Reply-To domain '{reply_to_domain}' across perimeter email gateway (SEG).")
 
+            from app.services.geo_origin import GeoOriginService
             origin_ip = origin_res.get("probable_origin_ip")
-            if origin_ip and origin_ip not in ["Unknown", "Reserved"]:
+            if origin_ip and origin_ip not in ["Unknown", "Reserved"] and not GeoOriginService.is_reserved_or_special_use_ip(origin_ip):
                 recommendations.append(f"Add IP {origin_ip} to firewall drop list.")
 
             if classification_subtype == "ADVANCE-FEE FRAUD":
