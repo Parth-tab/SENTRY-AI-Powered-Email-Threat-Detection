@@ -918,10 +918,10 @@
     "severity": "high",
     "evidence": "backend/tests/fixtures/advance_fee_master_verification.eml (127.0.0.1 selected over 203.0.113.9 in deep Received chain)",
     "status": "resolved",
-    "target_version": "v1.2.1",
+    "target_version": "v1.2.2",
     "effort": "S",
     "impact": "H",
-    "fix_commit": "pending",
+    "fix_commit": "011b616",
     "regression_test": "backend/tests/test_master_verification_email.py::test_master_verification_pipeline_outcomes_matrix",
     "description": "Earliest reliable hop selection skipped RFC 5737 TEST-NET address and fell back to loopback 127.0.0.1; resolved by prioritizing TEST-NET simulated origins and skipping loopback in all-private fallback, and guarding firewall drop list from RFC-reserved addresses."
   },
@@ -931,10 +931,10 @@
     "severity": "medium",
     "evidence": "backend/app/api/v1/emails.py:596 (report query path dropped raw_headers/sender_domain projecting only 2 IOC rows instead of 4)",
     "status": "resolved",
-    "target_version": "v1.2.1",
+    "target_version": "v1.2.2",
     "effort": "S",
     "impact": "M",
-    "fix_commit": "pending",
+    "fix_commit": "9f0740c",
     "regression_test": "backend/tests/test_master_verification_email.py::test_master_verification_pipeline_outcomes_matrix",
     "description": "Report query path in download_pdf_report omitted raw_headers and sender_domain in email_dict projection causing Reply-To IOC rows to be dropped; resolved by propagating headers and sender_domain through report query path and supporting case-insensitive header extraction."
   }

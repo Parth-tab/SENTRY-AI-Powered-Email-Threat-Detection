@@ -7,7 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.2] - 2026-09-02
+
+### Added
+- **Automated Version Legitimacy Gate (`MV-1`):** Upgraded `tools/validate_facts.py` Stage 5 to mathematically verify that declared cross-stack version equals the highest git release tag in repository history, enforced by 3 mutation kill tests in `backend/tests/test_version_legitimacy.py`.
+- **Master Verification Email Fixture & Regression Suite:** Added `backend/tests/fixtures/advance_fee_master_verification.eml` and `backend/tests/fixtures/newsletter_negative_control.eml` with 5 dedicated pipeline, hop-precedence, and mutation kill tests (`backend/tests/test_master_verification_email.py`).
+
+### Fixed
+- **Earliest Reliable Hop Selection in Deep Received Chains (`DEF-A`):** Resolved selection loop skipping RFC 5737 TEST-NET simulated origin addresses and falling back to loopback `127.0.0.1` in complex Received headers; restored oldest-to-newest precedence prioritizing simulated public origins over private/loopback relays, and guarded firewall drop list recommendations from RFC-reserved address ingestion (`backend/app/services/header_forensics.py`, `backend/app/ml/classifier.py`).
+- **Complete IOC Table Rendering on Forensic Report Path (`DEF-B`):** Resolved query projection in `download_pdf_report` propagating `raw_headers` and `sender_domain`, restoring `Reply-To Email` and `Reply-To Domain` rows (4 rows total) across forensic PDF reports and API payloads (`backend/app/api/v1/emails.py`, `backend/app/services/reporting.py`).
+
+### Changed
+- **Release Artifact & Provenance Reunification (`MV-C-1`, `MV-C-2`):** Reunified published container artifacts with complete codebase state (164 tests, 21 gates, 78 defects), retiring provenance divergence between earlier v1.2.1 image cut (`ac32a9c`) and master verification fixes.
+- **Defect Ledger & Test Suite Expansion:** Reconciled master defect registry (`evaluation/defects.json`) to 78 total objects (68 resolved, 1 interim mitigated, 3 consolidated, 1 deferred, 5 open) with 164 passing tests across 24 modules.
+
 ## [1.2.1] - 2026-09-02
+*[derived-historical]* Published to GHCR (`ghcr.io/parth-tab/sentry-backend:1.2.1`, `sentry-frontend:1.2.1`) at commit `ac32a9c` (following `2afba8d` route aggregation repair). Shipped the External Evaluation Remediation and Documentation Unification arcs; composition fixes (DEF-A, DEF-B) and Stage 5 legitimacy gate follow in v1.2.2.
 
 ### Added
 - **Fraud Subtype Classification Layer (`EXT-001`):** Added specialized advance-fee fraud subtyping (`classification_subtype: "ADVANCE-FEE FRAUD"`) within the primary 5-class taxonomy, triggering dedicated Nigerian 419 / advance-fee incident response playbooks.
@@ -15,8 +30,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Machine-Verified Fact & Link Validator (`DOC-005`):** Created `tools/validate_facts.py` and `docs/PROJECT_FACTS.md` providing dynamic zero-constant verification of test suite counts (156 tests across 23 modules), golden gates (21 gates), master defect ledgers (76 objects), route counts (29 endpoints), cross-stack version uniformity, and repository link integrity with CI gating.
 
 ### Fixed
-- **Earliest Reliable Hop Selection in Deep Received Chains (`DEF-A`):** Resolved selection loop skipping RFC 5737 TEST-NET addresses and falling back to loopback `127.0.0.1`; restored oldest-to-newest precedence prioritizing simulated public origins over private/loopback transit relays, and guarded firewall drop list recommendations from RFC-reserved address ingestion.
-- **Complete IOC Table Rendering on Forensic Report Path (`DEF-B`):** Resolved report query projection in `download_pdf_report` propagating `raw_headers` and `sender_domain`, restoring `Reply-To Email` and `Reply-To Domain` rows (4 rows total) across forensic PDF reports and API payloads.
 - **Full-Length Subject Flowables in Forensic PDF Dossiers (`EXT-004`):** Eliminated silent string slicing (`[:60]`) across ReportLab PDF generation, replacing it with wrapping Paragraph flowables preserving complete 111-character subject lines.
 - **Evidentiary Hash Formatting & Monospace Typography (`EXT-006`):** Dedicated 220pt column allocation in Courier monospace font preventing optical character wrapping ambiguity and transcription distortions in legal proceedings.
 - **Universal RFC 3339 UTC Timestamps (`EXT-007`):** Replaced non-standard strftime formatters with ISO 8601 / RFC 3339 UTC timestamps across all 6 emission points.
@@ -28,8 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Empirical Ham Corpus Baseline Receipt:** Stress-tested across 6,777 unique historical ham emails (6,951 files) with 0 false positive elevations (0.00% FP rate).
 
 ### Changed
-- **Defect Ledger & Test Suite Expansion (`DEF-A`, `DEF-B`):** Integrated composition defect fixes and master verification email regression tests into master defect registry (`evaluation/defects.json`), reconciling arithmetic to 78 total objects (68 resolved, 1 interim mitigated, 3 consolidated, 1 deferred, 5 open) with 164 passing tests.
-- **Version Legitimacy Gate Enforcement (`MV-1`):** Upgraded `tools/validate_facts.py` Stage 5 to mathematically verify that declared cross-stack version is backed by highest git release tag in repository history.
+- **Defect Ledger Unification (`DOC-001`):** Integrated external evaluation items (`EXT-001..009`) into master registry (`evaluation/defects.json`), reconciling arithmetic to 76 total items (66 resolved, 1 interim mitigated, 3 consolidated, 1 deferred, 5 open).
 - **Documentation Unification:** Synchronized all public documentation, PR templates, and QA armor with machine-verified facts from `docs/PROJECT_FACTS.md`.
 
 ## [1.2.0] - 2026-08-30
