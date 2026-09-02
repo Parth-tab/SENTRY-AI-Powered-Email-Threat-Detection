@@ -157,7 +157,7 @@ SENTRY does not rely on a single, fallible artificial intelligence model. It use
 flowchart TD
     E["Incoming Email Analysis"] --> L1["Layer 1: Deterministic Heuristic Rules<br/>⚡ Tor nodes • SPF hard fails • Lookalike banks (<1ms)"]
     E --> L2["Layer 2: Calibrated Machine Learning<br/>📊 47-dimension feature vector • Gradient boosted trees"]
-    E --> L3["Layer 3: Linguistic Attention Profiler<br/>🧠 Urgency • Credential harvesting • Authority pressure"]
+    E --> L3["Layer 3: Linguistic Heuristic Profiler<br/>🧠 Urgency • Credential harvesting • Authority pressure"]
 
     L1 --> B["Ensemble Blending Engine"]
     L2 --> B
@@ -171,7 +171,7 @@ flowchart TD
 
 1. **Layer 1 (Expert Rules):** Instant checks written by cybersecurity experts. If an email comes directly from a known Tor anonymous exit node or uses a lookalike banking domain (like `apex-secur1ty.com`), it is caught in under 1 millisecond.
 2. **Layer 2 (Statistical Pattern Engine):** A machine learning model trained on 📌 `15,240 historical benchmark emails` evaluating 📌 `47 distinct dimensions` (header anomalies, URL formats, punctuation distribution, and structural tags).
-3. **Layer 3 (Linguistic Attention Profiler):** An offline text analysis engine that measures urgency vectors, credential theft prompts, and financial wire keywords.
+3. **Layer 3 (Linguistic Heuristic Profiler):** An offline text analysis engine using calibrated linguistic heuristic scoring to measure urgency cues, credential theft prompts, and financial pressure keywords without neural runtime dependencies.
 
 ![Linguistic Intent and Feature Breakdown](../assets/tour/04-attack-language.png)
 *Live visual from `docs/assets/tour/04-attack-language.png`: Linguistic radar chart showing urgency, credential theft cues, and statistical feature distribution.*
@@ -189,6 +189,10 @@ What happens if a clever attacker writes an email with calm, friendly, polite la
 ### 🛠️ In the Project
 * **Implementation:** [`backend/app/ml/classifier.py`](../../backend/app/ml/classifier.py) (`HybridClassifier.predict`)
 * **Test Protection:** [`backend/tests/test_ml_classifier.py`](../../backend/tests/test_ml_classifier.py) and [`backend/tests/test_model_metrics.py`](../../backend/tests/test_model_metrics.py)
+
+> [!NOTE]
+> ### ⚠️ Honest-Limitations Sidebar: Sub-Second Offline Scoring vs. Cloud LLMs
+> SENTRY deliberately avoids massive external cloud neural networks for live threat scoring. Cloud models require constant internet connectivity, transmit sensitive corporate email text to third-party servers, and take several seconds per message. SENTRY uses lightweight gradient boosted decision trees and calibrated linguistic heuristic scoring that execute in **under 15 milliseconds** on standard laptop hardware with zero internet access.
 
 ---
 

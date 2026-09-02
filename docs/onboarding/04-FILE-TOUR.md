@@ -158,7 +158,7 @@ The Python brain where forensic science and machine learning execute:
   * `countermeasures.py`: Generates firewall rules while enforcing the Self-Spoof Refusal.
 * **`ml/` (2 Files • 3-Layer Triangulated Classifier):**
   * `classifier.py`: Implements the 3-Layer Ensemble and enforces the 0.85 Hard Score Floor.
-  * `features.py`: Extracts the 47-dimension numerical feature vector from raw email text and headers.
+  * `feature_extractor.py`: Extracts the 47-dimension numerical feature vector from raw email text and headers.
 
 ---
 
