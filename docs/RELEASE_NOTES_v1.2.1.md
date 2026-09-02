@@ -35,6 +35,11 @@ Every claim in this release is machine-derived and continuously enforced via `to
 ### 3. Continuous Machine-Verified Fact & Link Gating
 - **`tools/validate_facts.py` & `docs/PROJECT_FACTS.md` (DOC-005):** Eliminates documentation drift across the repository. A dedicated CI gate extracts live test counts, gate counts, defect ledgers, and routes dynamically from code and asserts mathematical alignment on every commit.
 - **Strict Link Portability Gate (`--strict-links`, DOC-003):** Converted 99 non-portable `file:///` URIs across the workspace to portable repo-relative markdown paths, guarded continuously by CI.
+- **Automated Version Legitimacy Enforcement (MV-1):** Validates that declared cross-stack version is backed by highest release tag in git history, preventing unauthorized version bumps.
+
+### 4. Deep-Chain Forensics & Master Verification Hardening (DEF-A, DEF-B)
+- **Routable Origin Selection Precedence (DEF-A):** Resolved earliest-reliable-hop selection loop skipping RFC 5737 TEST-NET simulated origin addresses and falling back to loopback `127.0.0.1`. Restored chronological oldest-to-newest evaluation prioritizing simulated public origins over private/loopback relays, with low-confidence `Reserved / Internal Test IP` attribution and strict firewall drop list guards against RFC-reserved addresses.
+- **Complete IOC Table Rendering on Forensic Report Path (DEF-B):** Resolved report query projection in `download_pdf_report` propagating `raw_headers` and `sender_domain`, restoring `Reply-To Email` and `Reply-To Domain` rows (4 rows total) across forensic PDF reports and API payloads.
 
 ---
 
@@ -44,9 +49,9 @@ All figures below are derived by command in the live repository:
 
 | Metric Category | Ground Truth Value | Derivation Command / Authority |
 |---|:---:|---|
-| **Pytest Test Suite** | **156 tests** (23 modules, 85%+ branch coverage) | `python -m pytest --collect-only -q` |
+| **Pytest Test Suite** | **164 tests** (24 modules, 85%+ branch coverage) | `python -m pytest --collect-only -q` |
 | **Golden Verification Gates** | **21 gates** (API, WebSockets, CSV, ZIP, UI, Legibility) | `python tools/verify_sentry.py --start` |
-| **Master Defect Ledger** | **76 objects** (66 Resolved, 1 Interim, 3 Cons, 1 Def, 5 Open) | `evaluation/defects.json` / `tools/validate_facts.py` |
+| **Master Defect Ledger** | **78 objects** (68 Resolved, 1 Interim, 3 Cons, 1 Def, 5 Open) | `evaluation/defects.json` / `tools/validate_facts.py` |
 | **Registered API Endpoints** | **29 routes** (24 business DFIR routes) | `backend/app/main.py` route introspection |
 | **Cross-Stack Version** | **v1.2.1** | `backend/app/config.py` & `frontend/package.json` |
 | **Ham Benchmark Baseline** | **6,777 unique** (6,951 files, 0 FP elevations) | `tools/benchmark_corpus_ingest.py` |
@@ -59,7 +64,7 @@ All figures below are derived by command in the live repository:
 To verify your installation against the v1.2.1 standard:
 
 ```bash
-# 1. Run unit & integration test suite (156 tests)
+# 1. Run unit & integration test suite (164 tests)
 pytest backend/tests -v
 
 # 2. Run machine-verified single source of truth validator
