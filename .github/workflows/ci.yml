@@ -61,6 +61,10 @@ jobs:
           npm install
           npm run build
 
+      - name: Validate Machine-Verified Project Facts
+        run: |
+          python tools/validate_facts.py --strict-links
+
       - name: Run Backend Pytest Suite with Coverage (>80%)
         run: |
           cd backend

@@ -71,8 +71,11 @@ class AnalysisResultResponse(BaseModel):
     id: str
     email_id: str
     overall_threat_score: float
+    score_pre_floor: Optional[float] = None
+    floor_applied: Optional[bool] = None
     threat_level: str # LOW, MEDIUM, HIGH, CRITICAL
     primary_classification: str
+    classification_subtype: Optional[str] = None
     classification_confidence: float
     model_contributions: Dict[str, float]
     

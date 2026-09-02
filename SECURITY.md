@@ -21,6 +21,11 @@ Please include detailed reproduction steps, proof-of-concept payloads, and envir
 - **Payload Guard:** 25MB maximum request size limit.
 - **RFC 3227 Chain-of-Custody:** Sequential SHA-256 hash chaining with automated tamper verification.
 - **Administrative Endpoint Hardening (`/api/v1/admin/reset-demo`):** Privileged state reset requires an explicit `X-Sentry-Admin` header matching `ADMIN_TOKEN` alongside the operator bearer token. Non-safelisted custom headers trigger browser CORS preflights (`OPTIONS`), structurally neutralizing cross-origin drive-by form-POST exploits. All destruction events append a cryptographically attributed audit record to `logs/reset_audit.log` before database purging.
+- **RFC Special-Use & Reserved Network Guard (RFC 5737 / 1918 / 6598):** Pre-compiled subnet boundary guarding 22 private, documentation, and CGNAT IP ranges (e.g. `192.0.2.0/24`, `198.51.100.0/24`, `100.64.0.0/10`) against external threat-intelligence feed or geolocation API leakage, guaranteeing internal IP addresses are never queried externally.
+- **Incident Response Self-DoS Refusal:** When internal domain spoofing occurs (`from_domain == recipient_domain`), the IR recommendation engine structurally refuses to emit self-destructive domain blocks, routing instead to DNS DMARC `p=reject`, perimeter SEG anti-spoof drops, and external `Reply-To` channel blocks.
+- **Authentication Severity Floor & Algorithmic Transparency:** Enforces an immutable 0.85 severity floor on hard DMARC+SPF cryptographic authentication failure while preserving underlying model scores (`score_pre_floor`) across all API payloads and PDF forensic dossiers.
+- **Evidentiary Monospace Typography:** Full 64-character SHA-256 digests rendered in dedicated 220pt columns using Courier monospace to prevent optical transcription distortion in legal proceedings.
+- **Machine-Verified Fact Gating:** Quantitative security claims and defect ledgers are verified continuously in CI via `tools/validate_facts.py` against `docs/PROJECT_FACTS.md`.
 
 ## Trademark & Non-Affiliation Notice
 SENTRY (this repository) is an independent open-source cybersecurity research and forensic investigation platform. It is not affiliated with, sponsored by, or endorsed by Sentry / sentry.io (Functional Software, Inc.). Full project rebranding is a documented commercialization trigger.

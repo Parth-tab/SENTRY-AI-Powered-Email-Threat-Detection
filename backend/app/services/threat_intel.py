@@ -33,8 +33,10 @@ class ThreatIntelService:
     @classmethod
     async def check_threatfox(cls, ip: str, domain: str) -> List[Dict[str, Any]]:
         matches = []
-        if ip in cls.KNOWN_IOCS["ips"]:
-            matches.append({"ioc": ip, "type": "ip", "source": "ThreatFox", "detail": cls.KNOWN_IOCS["ips"][ip]})
+        from app.services.geo_origin import GeoOriginService
+        if ip and not GeoOriginService.is_reserved_or_special_use_ip(ip):
+            if ip in cls.KNOWN_IOCS["ips"]:
+                matches.append({"ioc": ip, "type": "ip", "source": "ThreatFox", "detail": cls.KNOWN_IOCS["ips"][ip]})
         if domain in cls.KNOWN_IOCS["domains"] and cls.KNOWN_IOCS["domains"][domain]["source"] == "ThreatFox":
             matches.append({"ioc": domain, "type": "domain", "source": "ThreatFox", "detail": cls.KNOWN_IOCS["domains"][domain]})
         return matches
@@ -54,9 +56,12 @@ class ThreatIntelService:
     async def evaluate_threat_intelligence(cls, ip: str, domain: str, urls: List[Dict[str, Any]]) -> Dict[str, Any]:
         """
         Runs parallel IOC correlation across threat intelligence feeds.
+        Guarded: Special-use/reserved IPs skip external queries.
         """
+        from app.services.geo_origin import GeoOriginService
+        clean_ip = "" if GeoOriginService.is_reserved_or_special_use_ip(ip) else ip
         urlhaus_task = cls.check_urlhaus(urls)
-        threatfox_task = cls.check_threatfox(ip, domain)
+        threatfox_task = cls.check_threatfox(clean_ip, domain)
         openphish_task = cls.check_openphish(urls, domain)
 
         results = await asyncio.gather(urlhaus_task, threatfox_task, openphish_task, return_exceptions=True)

@@ -23,12 +23,12 @@ SENTRY is an evidentiary-grade cyber forensic intelligence platform that treats 
 
 ```mermaid
 flowchart TD
-    A["Raw Ingestion<br/>RFC 5322 EML / MSG / MBOX"] --> B["Ingestion & Vault Engine<br/>SHA-256 Digest + Bleach Sanitization"]
+    A["Raw Ingestion<br/>RFC 5322 EML / MSG / MBOX / ZIP / CSV"] --> B["Ingestion & Vault Engine<br/>SHA-256 Digest + Bleach Sanitization"]
     B --> C["RFC 3227 Hash Chain<br/>Genesis Block Creation"]
     
     subgraph "Forensic Deep Analysis Pipeline"
-        C --> D1["Header Forensics Engine<br/>Received Hop Chronology, SPF/DKIM/DMARC"]
-        C --> D2["Geo-Origin Engine<br/>Earliest Hop Trace, Tor/VPN/ASN Fingerprint"]
+        C --> D1["Header Forensics Engine<br/>Received Chronology, SPF/DKIM/DMARC"]
+        C --> D2["Geo-Origin Engine<br/>22-Network RFC Special-Use Guard, Tor/VPN/ASN"]
         C --> D3["Domain Intelligence<br/>Levenshtein, Punycode, Homoglyphs"]
         C --> D4["Content NLP & Attention<br/>Urgency, Credential & Financial Vectors"]
         C --> D5["Threat Intel Feeds<br/>URLhaus, ThreatFox, OpenPhish"]
@@ -40,18 +40,19 @@ flowchart TD
     D4 --> E
     D5 --> E
 
-    subgraph "3-Layer ML Classifier Triangulation"
-        E --> F1["Layer 1: Deterministic Heuristics"]
+    subgraph "3-Layer ML Classifier & Policy Floor Triangulation"
+        E --> F1["Layer 1: Deterministic Heuristics & Subtypes"]
         E --> F2["Layer 2: Calibrated XGBoost GBDT"]
         E --> F3["Layer 3: Linguistic Attention Score"]
         F1 --> G["Ensemble Blending Engine"]
         F2 --> G
         F3 --> G
+        G --> G_Floor["0.85 Hard Auth Failure Floor<br/>(Preserves score_pre_floor)"]
     end
 
-    G --> H["Threat Verdict<br/>Score: 0.0-1.0 • Level: CRITICAL/HIGH/MED/LOW"]
-    H --> I["Correlation & Knowledge Graph<br/>NetworkX / Neo4j Campaign Clustering"]
-    H --> J["Court-Admissible PDF Report<br/>ReportLab RFC 3227 Cryptographic Proof"]
+    G_Floor --> H["Threat Verdict & IR Routing<br/>Score: 0.0-1.0 • Subtype: ADVANCE-FEE • Self-Spoof Refusal"]
+    H --> I["Correlation & Knowledge Graph<br/>Deterministic Force Physics & Gate 21 Legibility"]
+    H --> J["Court-Admissible PDF Report<br/>Courier Monospace Hashes & RFC 3339 Timestamps"]
     H --> K["Real-Time SOC Broadcast<br/>WebSocket Token-Bucket Telemetry"]
 ```
 
@@ -109,7 +110,7 @@ Payload format classification (`backend/app/services/sniffer.py`) inspects the i
 1. **ZIP Archive Signature:** `PK\x03\x04` magic bytes $\rightarrow$ In-memory archive pipeline.
 2. **RFC 822 Grammar:** Header key-value grammar (`^[A-Za-z0-9-]+:\s*.+`) with zero null bytes in first 512 bytes $\rightarrow$ Standard forensic pipeline.
 3. **Tabular Dataset Grammar:** Delimited text ($\ge 2$ columns) matching recognized header tokens (`body`, `text`, `subject`, `label`) $\rightarrow$ CSV synthesizer pipeline.
-4. **MBOX Handling (F-4 / MBOX-001):** Single-message `.mbox` files and standard RFC 822 streams are processed directly. Multi-message mailbox archives (concatenated via `From ` envelope delimiters) are currently parsed as single continuous streams; full multi-message mailbox delimiter splitting into discrete batch entities is tracked under defect `MBOX-001` (target v1.1.0) with ZIP archives serving as the primary multi-file ingestion format.
+4. **MBOX Handling (F-4 / MBOX-001):** Single-message `.mbox` files and standard RFC 822 streams are processed directly. Multi-message mailbox archives (concatenated via `From ` envelope delimiters) are currently parsed as single continuous streams; full multi-message mailbox delimiter splitting into discrete batch entities is tracked under defect `MBOX-001` (target v1.2.0 roadmap) with ZIP archives serving as the primary multi-file ingestion format.
 
 ### B. In-Memory Archive Safety & Scale Caps
 - **In-Memory Streaming:** ZIP entries decompressed entirely in memory (`io.BytesIO`). Zero disk extraction eliminates Zip-Slip vulnerabilities.
@@ -129,3 +130,64 @@ Tabular datasets (e.g. Ling-Spam, Kaggle phishing CSVs) provide message text and
 ### D. Visualization Scale Guards (GRAPH-001 / F-3)
 - **Campaign Graph Render Cap:** In multi-thousand entity corpora, the 2D canvas visualization enforces a 300-node display ceiling with an explicit banner indicating *"Showing 300 of {total} nodes (capped)"* / *"Displaying top 300 correlated nodes out of {total} total graph entities"* to maintain 60fps rendering while preserving 100% of underlying graph relationships in database and memory structures.
 
+---
+
+## 6. Geolocation Architecture, Offline Synthetic Resolver & Special-Use IP Guard (EXT-003)
+
+### A. The Offline Synthetic Geo Resolver: Purpose & Mechanics
+In standalone, air-gapped demonstration mode (`GeoOriginService.lookup_ip_geo`), external internet access to live MaxMind GeoLite2 databases or IPinfo REST APIs is absent by design. To enable offline demonstration realism, geographic map rendering, and consistent telemetry without network dependencies, SENTRY employs a deterministic hash-based offline resolver for unmapped **public** IP addresses:
+- **Hashing Function:** An MD5 digest of the public IP modulo a calibrated table of 6 major internet peering exchanges (Amsterdam, Frankfurt, Ashburn, London, Bengaluru, Singapore) assigns deterministic latitude, longitude, city, country, and ASN.
+- **Evidentiary Integrity:** The offline resolver provides stable, repeatable geographic coordinates across runs for public synthetic IPs while maintaining low-confidence provenance flags.
+
+### B. The Special-Purpose / Reserved IP Guard (EXT-003)
+The offline synthetic resolver must **NEVER** be queried for non-routable, private, documentation, or reserved IP addresses. Fabricating geographic or ASN infrastructure attribution for RFC special-use addresses (e.g., attributing RFC 5737 `TEST-NET-1` `192.0.2.1` to Amazon.com / Ashburn) constitutes false evidentiary attribution.
+
+To prevent this, `GeoOriginService.is_reserved_or_special_use_ip` enforces an explicit, pre-compiled network membership guard across all RFC-specified ranges prior to any external or synthetic lookup:
+1. **Guarded IP Spaces:**
+   - **IPv4:** RFC 1918 Private (10/8, 172.16/12, 192.168/16), RFC 5737 Documentation (TEST-NET-1 192.0.2.0/24, TEST-NET-2 198.51.100.0/24, TEST-NET-3 203.0.113.0/24), RFC 6598 Carrier-Grade NAT (100.64.0.0/10), RFC 1122 Loopback (127.0.0.0/8) & Unspecified (0.0.0.0/8), RFC 3927 Link-Local (169.254.0.0/16), RFC 5771 Multicast (224.0.0.0/4), RFC 1112/6890 Reserved/Broadcast (240.0.0.0/4, 255.255.255.255/32), RFC 2544 Benchmarking (198.18.0.0/15), RFC 3068 6to4 Relay (192.88.99.0/24), RFC 7535 AS112 (192.175.48.0/24).
+   - **IPv6:** RFC 4291 Unspecified (`::/128`) & Loopback (`::1/128`), RFC 3849 Documentation (`2001:db8::/32`), RFC 4193 Unique Local (`fc00::/7`), RFC 4291 Link-Local (`fe80::/10`) & Multicast (`ff00::/8`), RFC 6666 Discard (`100::/64`), RFC 4380 Teredo (`2001::/32`), RFC 6052 Translation (`64:ff9b::/96`), RFC 7535 AS112 (`2620:4f:8000::/48`).
+2. **Deterministic Reserved Attribution:** Any IP matching the guard immediately bypasses GeoIP, IPinfo, Tor-exit node lists, VPN subnet matching, and ThreatFox threat intelligence queries. The record returns:
+   - `country: "Reserved"`, `country_code: "XX"`, `city: "Reserved"`, `latitude: 0.0`, `longitude: 0.0`, `isp: "Reserved / Internal Test IP"`, `asn: "N/A"`, `connection_type: "Special-Purpose / Reserved"`.
+   - `confidence: 0.15` with explicit risk factor `"Origin IP belongs to reserved / documentation address space (non-routable)"`.
+
+---
+
+## 7. Universal Truncation & Evidentiary Display Policy (EXT-004, EXT-006, EXT-007)
+
+### A. Zero Silent Truncation Standard
+In evidentiary forensics, silent string slicing (e.g. `[:60]`, `[:40]`, `[:28]`, `[:19]`) corrupts chain-of-custody verification and damages court admissibility. SENTRY mandates that forensic artifacts, timestamps, and cryptographic hashes are never silently truncated in ingestion, storage, API, or generated legal documents (PDF).
+
+1. **Email Subject Integrity (EXT-004):**
+   - Ingestion, database models, analysis payloads, real-time alerts, and PDF document metadata preserve the entire subject string verbatim (e.g. full 111-character subject lines).
+   - In PDF documents, subjects are wrapped naturally using multi-line `Paragraph` flowables rather than arbitrary character slicing.
+   - In UI space-constrained environments (feed badges, compact table cells), truncation is always **deliberate and ellipsis-aware** (e.g., word-boundary truncation with `...` indicator) and never a silent slice.
+
+2. **Universal RFC 3339 UTC Timestamps (EXT-007):**
+   - All timestamps across evidence vaults, hash chain audit entries, PDF reports, and API metadata use standardized ISO 8601 / RFC 3339 format with explicit UTC zero-offset (`YYYY-MM-DDTHH:MM:SS.ffffffZ` or `YYYY-MM-DDTHH:MM:SSZ`).
+   - Hand-rolled string formatting (e.g., `%Y-%m-%d %H:%M:%SZ` or `[:19]`) is forbidden; all timestamps must be parseable via standard `datetime.fromisoformat()`.
+
+3. **Evidentiary Hash Formatting & Monospace Typography (EXT-006):**
+   - Target artifact digests and chain-of-custody entry hashes are rendered as full 64-character lowercase hexadecimal strings (`^[0-9a-f]{64}$`).
+   - In PDF reports, hashes are rendered using dedicated monospace typography (`Courier` / `Helvetica-Bold`) with explicit font sizing (5.5pt–6.5pt) and generous column allocation (220pt) to guarantee zero character wrapping ambiguity, preventing optical transcription artifacts.
+
+---
+
+## 8. Authentication Failure Severity Floor & Countermeasure Architecture (EXT-001, EXT-002, EXT-005, EXT-008)
+
+### A. The Authentication Failure Severity Floor Policy (EXT-002)
+- **Deterministic Lower Bound:** Unauthenticated domain spoofing (`DMARC=fail` AND `SPF in [fail, softfail]`) represents a direct cryptographic policy violation rather than an ML probabilistic guess. Any message failing hard authentication is subject to an enforced severity floor of $\mathbf{0.85\ (CRITICAL)}$.
+- **Honesty Invariant (`score_pre_floor`):** To prevent severity compression and maintain algorithmic transparency for DFIR analysts, the pipeline preserves both `score_pre_floor` and `floor_applied`. PDF reports render:
+  $$\mathbf{CRITICAL\ THREAT\ (0.85\ [Enforced\ Floor;\ Model:\ 0.51])}$$
+- **Empirical Safety:** Tested against 6,777 unique historical ham emails (6,951 archive files), the severity floor produced **0 false positive elevations (0.00% FP rate)** because authentic unsigned mail lacks authentication infrastructure (`dmarc: none`, `spf: none`) and does not trigger hard failure predicates.
+
+### B. Classification Taxonomy & Subtype Granularity (EXT-001, P4-1)
+- **Canonical 5-Class Foundation:** SENTRY maintains a strict 5-class primary taxonomy: `phishing`, `bec`, `impersonation`, `suspicious`, `legitimate`.
+- **Advance-Fee Fraud Taxonomy:** Mass-solicitation lottery and inheritance schemes with external response routing are classified primarily as `phishing` (reflecting broad deceptive bait and PII/credential harvesting mechanisms) accompanied by a structured `classification_subtype: "ADVANCE-FEE FRAUD"`. This preserves multi-class battery compatibility while providing specialized SOC routing.
+
+### C. Recipient-Derived Self-Spoof Countermeasure Logic (EXT-005, EXT-008)
+- **Zero-Configuration Derivation:** Internal domain is identified dynamically when $\text{from\_domain} == \text{recipient\_domain}$ on spoofed messages.
+- **Self-DoS Prevention:** SENTRY structurally refuses to recommend blocking the organization's own domain. Countermeasure formulation routes to:
+  1. DNS-level DMARC `p=reject` / `p=quarantine` policy enforcement.
+  2. Perimeter Secure Email Gateway (SEG) anti-spoofing drop rules for external inbound messages claiming internal sender `@domain`.
+  3. Perimeter SEG drop rules for external `Reply-To` diversion domains (`claims-agent@example.com`).
+  4. Origin IP firewall drop list rules.

@@ -1,0 +1,26 @@
+From: "TargetCorp Promo Department" <promotions@targetcorp.example>
+To: "TargetCorp Employee" <victim@targetcorp.example>
+Reply-To: "Claims Officer Mikhail" <claims-agent@example.com>
+Subject: OFFICIAL NOTIFICATION: INTERNATIONAL LOTTERY WINNING BENEFICIARY DISBURSEMENT - 2026 RUSSIA PROMOTION PROGRAMME
+Date: Tue, 01 Sep 2026 14:30:00 +0000
+Message-ID: <20260901143000.84930219@targetcorp.example>
+Received: from mail.targetcorp.example (mx.targetcorp.example [10.0.0.1]) by internal-inbox.targetcorp.example with ESMTP id 84930220 for <victim@targetcorp.example>; Tue, 01 Sep 2026 14:30:05 +0000
+Received: from mx.targetcorp.example ([192.0.2.1]) by mail.targetcorp.example with ESMTP id 84930219 for <victim@targetcorp.example>; Tue, 01 Sep 2026 14:30:00 +0000
+Authentication-Results: mx.targetcorp.example; dmarc=fail (p=none) header.from=targetcorp.example; spf=fail (sender IP 192.0.2.1) smtp.mailfrom=promotions@targetcorp.example; dkim=none
+Received-SPF: Fail (mx.targetcorp.example: domain of targetcorp.example does not designate 192.0.2.1 as permitted sender) receiver=mx.targetcorp.example; client-ip=192.0.2.1; envelope-from="promotions@targetcorp.example";
+Content-Type: text/html; charset="utf-8"
+
+<!DOCTYPE html>
+<html>
+<head><title>OFFICIAL NOTIFICATION: INTERNATIONAL LOTTERY WINNING BENEFICIARY DISBURSEMENT - 2026 RUSSIA PROMOTION PROGRAMME</title></head>
+<body>
+<p>Dear Beneficiary,</p>
+<p>We are pleased to officially notify you of the <strong>RUSSIA PROMOTION 2026</strong> lottery winning notification.</p>
+<p>Your email address was selected as the lucky beneficiary of a cash prize grant award of <strong>$2,500,000 USD</strong> under the international inheritance and promotion programme.</p>
+<p>To process your claim without delay, contact our designated claim agent immediately via our external disbursement desk: <a href="mailto:claims-agent@example.com">claims-agent@example.com</a>.</p>
+<p>Please provide your full legal name, telephone number, residential address, bank account number, routing number, and wire transfer fee confirmation to begin the payout disbursement.</p>
+<p>Yours faithfully,<br/>
+Mikhail Petrov<br/>
+Foreign Operations & Disbursement Claim Agent</p>
+</body>
+</html>

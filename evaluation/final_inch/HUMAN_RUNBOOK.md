@@ -47,7 +47,7 @@ git fetch origin
 1. Navigate to: [`https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection/settings`](https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection/settings)
 2. Scroll to the **"Social preview"** section (under General Settings).
 3. Click **"Edit"** $\rightarrow$ **"Upload an image..."**.
-4. Select file from disk: [`docs/assets/tour/05-relay-map.png`](file:///E:/SENTRY/docs/assets/tour/05-relay-map.png) (or [`docs/assets/dashboard.png`](file:///E:/SENTRY/docs/assets/dashboard.png)).
+4. Select file from disk: [`docs/assets/tour/05-relay-map.png`](../../docs/assets/tour/05-relay-map.png) (or [`docs/assets/dashboard.png`](../../docs/assets/dashboard.png)).
 5. Click **Save Changes**.
 
 ---
@@ -56,10 +56,10 @@ git fetch origin
 > **Rationale:** Conduct three 2-minute silent observation evaluations with first-time viewers to gauge strangers' immediate mental model and capture unfiltered friction points.
 
 **Instructions:**
-1. Follow the protocol defined in [`evaluation/final_inch/STRANGER_PROTOCOL.md`](file:///E:/SENTRY/evaluation/final_inch/STRANGER_PROTOCOL.md).
+1. Follow the protocol defined in [`evaluation/final_inch/STRANGER_PROTOCOL.md`](STRANGER_PROTOCOL.md).
 2. Present `https://github.com/Parth-tab/SENTRY-AI-Powered-Email-Threat-Detection`.
 3. Ask verbatim: *"Here's a thing I built — can you look at this page for two minutes and tell me what you think it is?"*
-4. Record verbatim first sentence and debrief answers in [`evaluation/final_inch/stranger_results_template.md`](file:///E:/SENTRY/evaluation/final_inch/stranger_results_template.md).
+4. Record verbatim first sentence and debrief answers in [`evaluation/final_inch/stranger_results_template.md`](stranger_results_template.md).
 
 ---
 

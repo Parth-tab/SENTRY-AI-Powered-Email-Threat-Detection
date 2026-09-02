@@ -1,7 +1,61 @@
 import json
 import ipaddress
 from pathlib import Path
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Dict, Any, List, Optional, Tuple, Union
+
+# Explicit Special-Purpose / Reserved IP Networks (RFC 6890, RFC 5737, RFC 1918, RFC 6598, RFC 3849, etc.)
+SPECIAL_USE_NETWORKS: List[Union[ipaddress.IPv4Network, ipaddress.IPv6Network]] = [
+    # RFC 1918 Private Address Space
+    ipaddress.ip_network("10.0.0.0/8"),
+    ipaddress.ip_network("172.16.0.0/12"),
+    ipaddress.ip_network("192.168.0.0/16"),
+    # RFC 5737 Documentation Address Blocks (TEST-NET-1, TEST-NET-2, TEST-NET-3)
+    ipaddress.ip_network("192.0.2.0/24"),
+    ipaddress.ip_network("198.51.100.0/24"),
+    ipaddress.ip_network("203.0.113.0/24"),
+    # RFC 6598 Carrier-Grade NAT (Shared Address Space)
+    ipaddress.ip_network("100.64.0.0/10"),
+    # RFC 1122 Loopback
+    ipaddress.ip_network("127.0.0.0/8"),
+    # RFC 3927 Link-Local
+    ipaddress.ip_network("169.254.0.0/16"),
+    # RFC 5771 Multicast
+    ipaddress.ip_network("224.0.0.0/4"),
+    # RFC 1122 Unspecified / This host on this network
+    ipaddress.ip_network("0.0.0.0/8"),
+    # RFC 1112 / RFC 6890 Reserved for Future Use & Broadcast
+    ipaddress.ip_network("240.0.0.0/4"),
+    ipaddress.ip_network("255.255.255.255/32"),
+    # RFC 2544 / RFC 6815 Benchmarking
+    ipaddress.ip_network("198.18.0.0/15"),
+    # RFC 3068 6to4 Anycast Relay
+    ipaddress.ip_network("192.88.99.0/24"),
+    # RFC 7335 / RFC 6890 IETF Protocol Assignments
+    ipaddress.ip_network("192.0.0.0/24"),
+    # RFC 7535 AS112-v4
+    ipaddress.ip_network("192.175.48.0/24"),
+
+    # IPv6 Special-Purpose & Reserved Networks (RFC 4291, RFC 3849, RFC 4193, RFC 6890)
+    # RFC 4291 Unspecified & Loopback
+    ipaddress.ip_network("::/128"),
+    ipaddress.ip_network("::1/128"),
+    # RFC 3849 IPv6 Documentation Prefix
+    ipaddress.ip_network("2001:db8::/32"),
+    # RFC 4193 Unique Local IPv6 (ULA)
+    ipaddress.ip_network("fc00::/7"),
+    # RFC 4291 Link-Local IPv6
+    ipaddress.ip_network("fe80::/10"),
+    # RFC 4291 Multicast IPv6
+    ipaddress.ip_network("ff00::/8"),
+    # RFC 6666 Discard-Only Prefix
+    ipaddress.ip_network("100::/64"),
+    # RFC 4380 Teredo
+    ipaddress.ip_network("2001::/32"),
+    # RFC 6052 IPv4/IPv6 Translation
+    ipaddress.ip_network("64:ff9b::/96"),
+    # RFC 7535 AS112-v6
+    ipaddress.ip_network("2620:4f:8000::/48")
+]
 
 class GeoOriginService:
     _tor_nodes = None
@@ -41,6 +95,36 @@ class GeoOriginService:
             "asn": "AS51852", "connection_type": "Bulletproof VPS"
         }
     }
+
+    @classmethod
+    def is_reserved_or_special_use_ip(cls, ip_str: Optional[str]) -> bool:
+        """
+        Determines if an IP address belongs to RFC special-purpose, private,
+        documentation, or non-routable address space per RFC 6890 / RFC 5737 / RFC 3849.
+        
+        Why stdlib is_private alone is insufficient:
+        Python stdlib ipaddress.IPv4Address.is_private does not capture all special-use
+        ranges across Python minor versions (e.g. 240.0.0.0/4 future use, 0.0.0.0/8,
+        255.255.255.255/32, 224.0.0.0/4 multicast, 198.18.0.0/15 benchmark, 192.88.99.0/24 6to4,
+        and version-dependent behavior on 100.64.0.0/10 or 192.0.2.0/24). An explicit
+        network membership list guarantees deterministic hermetic evaluation.
+        """
+        if not ip_str or not isinstance(ip_str, str):
+            return True
+        clean = ip_str.strip()
+        if not clean or clean.lower() == "unknown":
+            return True
+        try:
+            ip_obj = ipaddress.ip_address(clean)
+            if (ip_obj.is_private or ip_obj.is_loopback or ip_obj.is_link_local
+                    or ip_obj.is_multicast or ip_obj.is_reserved or ip_obj.is_unspecified):
+                return True
+            for net in SPECIAL_USE_NETWORKS:
+                if ip_obj in net:
+                    return True
+            return False
+        except ValueError:
+            return True
 
     @classmethod
     def _load_tor_nodes(cls) -> set:
@@ -89,11 +173,15 @@ class GeoOriginService:
 
     @classmethod
     def is_tor_exit_node(cls, ip: str) -> bool:
+        if cls.is_reserved_or_special_use_ip(ip):
+            return False
         nodes = cls._load_tor_nodes()
         return ip in nodes
 
     @classmethod
     def is_vpn(cls, ip_str: str) -> Tuple[bool, Optional[str]]:
+        if cls.is_reserved_or_special_use_ip(ip_str):
+            return False, None
         try:
             ip_obj = ipaddress.ip_address(ip_str.strip())
             for network, prov_name in cls._load_vpn_subnets():
@@ -110,6 +198,22 @@ class GeoOriginService:
         and deterministic offline resolver.
         """
         clean_ip = ip.strip() if ip else "127.0.0.1"
+
+        # 1. Special-use / Reserved IP Guard (EXT-003)
+        # Prevents synthetic fallback from fabricating false geographic attribution / ASNs
+        # for RFC 1918, RFC 5737 (TEST-NETs), CGNAT, documentation, or loopback IPs.
+        if cls.is_reserved_or_special_use_ip(clean_ip):
+            return {
+                "ip": clean_ip,
+                "country": "Reserved",
+                "country_code": "XX",
+                "city": "Reserved",
+                "latitude": 0.0,
+                "longitude": 0.0,
+                "isp": "Reserved / Internal Test IP",
+                "asn": "N/A",
+                "connection_type": "Special-Purpose / Reserved"
+            }
 
         if clean_ip in cls.KNOWN_IP_GEO:
             res = cls.KNOWN_IP_GEO[clean_ip].copy()
@@ -158,7 +262,25 @@ class GeoOriginService:
             }
 
         ip = earliest_hop["from_ip"]
+        is_reserved = cls.is_reserved_or_special_use_ip(ip)
         geo = cls.lookup_ip_geo(ip)
+
+        if is_reserved:
+            return {
+                "probable_origin_ip": ip,
+                "geolocation": geo,
+                "anonymization": {
+                    "tor_exit_node": False,
+                    "vpn_detected": False,
+                    "vpn_provider": None,
+                    "hosting_provider": False,
+                    "hosting_details": None,
+                    "open_relay": False,
+                    "risk_summary": "Special-Purpose / Reserved IP"
+                },
+                "confidence": 0.15,
+                "confidence_factors": ["Origin IP belongs to reserved / documentation address space (non-routable)"]
+            }
         
         # Check anonymization
         is_tor = cls.is_tor_exit_node(ip)

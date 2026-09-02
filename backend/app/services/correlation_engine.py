@@ -157,7 +157,7 @@ class CorrelationEngine:
             g.add_edge(email_id, ip_id, relationship="SENT_FROM")
 
             asn = geo.get("asn")
-            if asn:
+            if asn and asn != "N/A":
                 infra_id = f"infra:{asn}"
                 g.add_node(infra_id, id=infra_id, type="Infrastructure", label=f"{asn} ({geo.get('isp', '')})")
                 g.add_edge(ip_id, infra_id, relationship="HOSTED_BY")

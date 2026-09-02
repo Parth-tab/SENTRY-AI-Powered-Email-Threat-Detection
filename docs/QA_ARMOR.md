@@ -82,10 +82,24 @@ This document serves as the authoritative, battle-tested defense ledger for SENT
 > **Question:** *Does the test suite include property-based generative testing (Hypothesis) for arbitrary malformed MIME inputs?*
 >
 > **Authoritative Response:**
-> The current 43-test suite utilizes deterministic adversarial fixtures (Unicode homoglyphs, zero-width spaces, RTLO, truncated headers). Generative property-based fuzzing via Hypothesis is on the v1.2.0 test infrastructure roadmap.
+> The current 156-test suite across 23 modules utilizes deterministic adversarial fixtures (Unicode homoglyphs, zero-width spaces, RTLO, truncated headers, and 22-network RFC special-use IP matrices). Generative property-based fuzzing via Hypothesis is on the test infrastructure roadmap.
 
 ### 10. Air-Gapped Single-Page Static API Documentation (C5 — Doc Auditor)
 > **Question:** *Is there a single-page API reference (Swagger / Redoc export) bundled as a static PDF or HTML doc for air-gapped field teams?*
 >
 > **Authoritative Response:**
 > OpenAPI documentation is generated locally by FastAPI at `/docs` and `/redoc` on the running appliance without internet access. Exporting an offline bundled PDF companion is scheduled for the documentation release package.
+
+### 11. Self-Spoof Anti-Self-DoS Recommendation Guard
+> **Question:** *If an attacker spoofs an internal executive domain, won't SENTRY's countermeasure engine recommend blocking the organization's own domain at the email perimeter?*
+>
+> **Authoritative Response:**
+> **SENTRY is the system that refuses to tell you to block your own domain.** When internal domain spoofing is detected (`from_domain == recipient_domain`), SENTRY derives the internal boundary dynamically without manual configuration. It structurally refuses to emit naive domain blocks, advising DNS-level DMARC `p=reject`, perimeter SEG anti-spoofing drop filters for claimed internal senders, and blocking external `Reply-To` diversion channels — completely preventing self-inflicted Denial-of-Service.
+
+### 12. Authentication Failure Severity Floor Transparency
+> **Question:** *Does enforcing a 0.85 CRITICAL severity floor on hard DMARC/SPF authentication failures mask the underlying machine learning score?*
+>
+> **Authoritative Response:**
+> **No. SENTRY preserves complete algorithmic honesty.** When the 0.85 authentication floor is triggered, SENTRY preserves both `score_pre_floor` and `floor_applied` in all API schemas and renders:
+> `CRITICAL THREAT (0.85 [Enforced Floor; Model: 0.51])`
+> in every forensic PDF dossier. Unauthenticated domain spoofing is an organizational security policy violation, not an ML probability guess — and SENTRY transparently presents both the policy enforcement and the model assessment. Furthermore, across 6,777 unique historical ham emails (6,951 files), the floor caused **0 false positive elevations (0.00% FP rate)** because unsigned mail evaluates to `dmarc: none` rather than hard cryptographic failure.

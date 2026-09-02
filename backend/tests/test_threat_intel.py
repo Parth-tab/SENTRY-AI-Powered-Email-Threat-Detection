@@ -23,3 +23,17 @@ async def test_threat_intel_parallel_aggregation():
     )
     assert res["total_matches"] >= 2
     assert res["corroboration_score"] >= 0.70
+
+@pytest.mark.asyncio
+async def test_threat_intel_skips_reserved_and_special_use_ips():
+    """EXT-003: Asserts ThreatIntelService ignores reserved IPs and avoids false IOC queries."""
+    matches = await ThreatIntelService.check_threatfox("192.0.2.1", "clean-domain.example")
+    assert matches == []
+
+    res = await ThreatIntelService.evaluate_threat_intelligence(
+        ip="192.0.2.1",
+        domain="clean-domain.example",
+        urls=[]
+    )
+    assert res["total_matches"] == 0
+    assert res["corroboration_score"] == 0.0

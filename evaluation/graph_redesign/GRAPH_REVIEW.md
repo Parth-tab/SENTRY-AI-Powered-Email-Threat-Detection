@@ -1,7 +1,7 @@
 # SENTRY Graph Redesign — Phase 5: The Panel Review (GRAPH_REVIEW.md)
 
 **Feature Arc:** Campaign Graph Redesign (`GRAPH-003`, `GRAPH-004`, `GRAPH-005`, `BP-004`)  
-**State Ledger:** [`evaluation/graph_redesign/state.json`](file:///E:/SENTRY/evaluation/graph_redesign/state.json)  
+**State Ledger:** [`evaluation/graph_redesign/state.json`](state.json)  
 **Golden Verification Harness:** 21 / 21 Golden Gates Green (`tools/verify_sentry.py --start`)  
 **Active Branch:** `feat/graph-redesign-phase5-the-panel`  
 **Panel Status:** **5/5 PERSONAS CONVENED — ALL CONCURRING: CERTIFIED PASS**  

@@ -67,6 +67,25 @@ class ThreatClassifier:
             rule_score += 0.50
             rule_reasons.append("Executive title impersonation sent from public freemail provider (BEC)")
 
+        # Reply-To domain mismatch (fraud diversion lure)
+        if "reply_to_domain_mismatch" in anomalies:
+            rule_score += 0.40
+            rule_reasons.append("Reply-To domain differs from authenticated From sender domain (diversion lure)")
+
+        # Domain spoofing / hard authentication failure
+        spf_res = auth.get("spf", {}).get("result")
+        dmarc_res = auth.get("dmarc", {}).get("result")
+        if auth.get("is_spoofed") or (dmarc_res == "fail" and spf_res in ["fail", "softfail"]):
+            rule_score += 0.50
+            rule_reasons.append(f"Domain authentication failure (DMARC={dmarc_res}, SPF={spf_res})")
+
+        # Advance-fee / lottery scam indicators (EXT-001)
+        adv_matches = content_res.get("linguistic_features", {}).get("advance_fee_matches", [])
+        pii_matches = content_res.get("linguistic_features", {}).get("pii_matches", [])
+        if len(adv_matches) >= 2 and ("reply_to_domain_mismatch" in anomalies or len(pii_matches) > 0 or content_res.get("financial_score", 0) >= 0.3):
+            rule_score += 0.55
+            rule_reasons.append("Advance-fee fraud / lottery prize lure with external response routing or PII collection")
+
         # Timestamp sequence anomaly / clock skew forgery
         if any("timestamp" in a or "clock_skew" in a for a in anomalies):
             rule_score += 0.35
@@ -128,6 +147,16 @@ class ThreatClassifier:
             overall_threat_score = 0.30 * rule_score + 0.50 * ml_score + 0.20 * transformer_score
 
         overall_threat_score = round(max(0.01, min(0.99, overall_threat_score)), 2)
+        score_pre_floor = overall_threat_score
+        floor_applied = False
+
+        # Authentication Failure Severity Floor (EXT-002 / T-3):
+        # When DMARC fails and SPF fails or softfails:
+        # Enforce minimum composite threat score floor of 0.85 (CRITICAL)
+        if dmarc_res == "fail" and spf_res in ["fail", "softfail"]:
+            if overall_threat_score < 0.85:
+                floor_applied = True
+                overall_threat_score = 0.85
 
         # Determine Threat Level
         if overall_threat_score >= 0.85:
@@ -139,8 +168,13 @@ class ThreatClassifier:
         else:
             threat_level = "LOW"
 
-        # Determine Primary Classification
-        if (content_res.get("financial_score", 0) > 0.3 and (content_res.get("authority_score", 0) > 0.3 or content_res.get("urgency_score", 0) > 0.3)) or "freemail_executive_impersonation" in anomalies:
+        # Determine Primary Classification & Subtype (EXT-001)
+        classification_subtype = None
+        if len(adv_matches) >= 2 and ("reply_to_domain_mismatch" in anomalies or len(pii_matches) > 0 or content_res.get("financial_score", 0) >= 0.3):
+            primary_classification = "phishing"
+            classification_subtype = "ADVANCE-FEE FRAUD"
+            cls_confidence = 0.95
+        elif (content_res.get("financial_score", 0) > 0.3 and (content_res.get("authority_score", 0) > 0.3 or content_res.get("urgency_score", 0) > 0.3)) or "freemail_executive_impersonation" in anomalies:
             primary_classification = "bec"
             cls_confidence = 0.94
         elif domain_res.get("is_lookalike") or content_res.get("credential_score", 0) > 0.3 or content_res.get("has_mismatched_links") or content_res.get("has_dangerous_attachment"):
@@ -156,16 +190,49 @@ class ThreatClassifier:
             primary_classification = "legitimate"
             cls_confidence = 0.95
 
-        # Recommendations formulation
+        # Extract sender, recipient, and reply-to domains for countermeasure routing (EXT-008 & EXT-005)
+        sender_email = email_data.get("sender", "")
+        sender_domain = email_data.get("sender_domain") or (sender_email.split("@")[-1].lower() if "@" in sender_email else "")
+        sender_domain = str(sender_domain).lower()
+
+        recipient_email = email_data.get("recipient", "")
+        recipient_domain = recipient_email.split("@")[-1].lower() if "@" in recipient_email else ""
+
+        reply_to_header = email_data.get("headers", {}).get("reply-to") or email_data.get("reply_to") or ""
+        reply_to_domain = ""
+        if reply_to_header:
+            from email.utils import parseaddr
+            _, r_email = parseaddr(str(reply_to_header))
+            if "@" in r_email:
+                reply_to_domain = r_email.split("@")[-1].lower()
+
+        is_spoofed = auth.get("is_spoofed") or (dmarc_res == "fail" and spf_res in ["fail", "softfail"])
+        is_self_spoof = bool(sender_domain and recipient_domain and sender_domain == recipient_domain and is_spoofed)
+
+        # Recommendations formulation (EXT-008 & EXT-005)
         recommendations = []
         if threat_level in ["CRITICAL", "HIGH"]:
-            if domain_res.get("domain"):
-                recommendations.append(f"Block sender domain '{domain_res.get('domain')}' across perimeter email gateway (SEG).")
-            if origin_res.get("probable_origin_ip") and origin_res.get("probable_origin_ip") != "Unknown":
-                recommendations.append(f"Add IP {origin_res.get('probable_origin_ip')} to firewall drop list.")
-            if primary_classification == "bec":
+            if is_self_spoof:
+                # Self-spoof countermeasure logic (EXT-008): NEVER recommend blocking internal domain
+                recommendations.append(f"Enforce strict DMARC 'p=reject' / 'p=quarantine' policy for internal domain '{sender_domain}' at DNS layer.")
+                recommendations.append(f"Configure Perimeter Secure Email Gateway (SEG) anti-spoofing filter to reject external inbound mail claiming internal sender '@{sender_domain}'.")
+                if reply_to_domain and reply_to_domain != sender_domain:
+                    recommendations.append(f"Block external diversion Reply-To domain '{reply_to_domain}' across perimeter email gateway (SEG).")
+            else:
+                if domain_res.get("domain"):
+                    recommendations.append(f"Block sender domain '{domain_res.get('domain')}' across perimeter email gateway (SEG).")
+                if reply_to_domain and reply_to_domain != domain_res.get("domain"):
+                    recommendations.append(f"Block external Reply-To domain '{reply_to_domain}' across perimeter email gateway (SEG).")
+
+            origin_ip = origin_res.get("probable_origin_ip")
+            if origin_ip and origin_ip not in ["Unknown", "Reserved"]:
+                recommendations.append(f"Add IP {origin_ip} to firewall drop list.")
+
+            if classification_subtype == "ADVANCE-FEE FRAUD":
+                recommendations.append("Alert user to advance-fee lottery / prize fraud scheme; do not provide banking details or remit funds.")
+            elif primary_classification == "bec":
                 recommendations.append("Initiate out-of-band phone verification for any referenced financial or wire instructions.")
-            if primary_classification == "phishing":
+            elif primary_classification == "phishing":
                 recommendations.append("Revoke active user sessions and mandate credential reset if any user clicked links.")
             recommendations.append("Preserve RFC 3227 evidentiary chain of custody for cyber cell law enforcement escalation.")
         elif threat_level == "MEDIUM":
@@ -176,8 +243,11 @@ class ThreatClassifier:
 
         return {
             "overall_threat_score": overall_threat_score,
+            "score_pre_floor": score_pre_floor,
+            "floor_applied": floor_applied,
             "threat_level": threat_level,
             "primary_classification": primary_classification,
+            "classification_subtype": classification_subtype,
             "classification_confidence": cls_confidence,
             "model_contributions": {
                 "rule_engine": round(rule_score, 2),

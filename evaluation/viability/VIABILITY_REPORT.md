@@ -1,7 +1,7 @@
 # SENTRY VIABILITY AUDIT REPORT
 **Session Type:** Independent Viability & Diligence Audit  
 **Governing Standard:** Protected Branch Protocol • Read-Only Live Path • Experimental Isolated Panels  
-**State File:** [`evaluation/viability/state.json`](file:///E:/SENTRY/evaluation/viability/state.json)  
+**State File:** [`evaluation/viability/state.json`](state.json)  
 **Timestamp:** 2026-08-30T01:00:00Z  
 
 ---
@@ -25,10 +25,10 @@
 ## 2. Experimental Findings by Panel
 
 ### 2.1 Panel L: Production Engineering Experiments
-- **Scale-Out Topology Status:** Neo4j and Redis/Celery are un-invoked diagram-ware. Neo4j is never imported in live graph logic ([`backend/app/services/correlation_engine.py:L1-60`](file:///E:/SENTRY/backend/app/services/correlation_engine.py#L1-60)); Celery tasks are defined but never dispatched by FastAPI routes ([`backend/app/services/celery_app.py:L1-46`](file:///E:/SENTRY/backend/app/services/celery_app.py#L1-46)). The certified, working path is 100% in-process async SQLite + NetworkX.
-- **Production Build Sim (`frontend/dist` on port 4000):** Requests hit `404 File not found` because `API_BASE` defaults to relative path `""` ([`frontend/src/services/api.ts:L9-14`](file:///E:/SENTRY/frontend/src/services/api.ts#L9-14)). Direct cross-origin calls to `:8000` are blocked by CORS ([`backend/app/main.py:L89-101`](file:///E:/SENTRY/backend/app/main.py#L89-101)).
-- **Auth Surface Map:** 24 total endpoints; 0 JWT/Token gated; 8 writable endpoints accessible unauthenticated on `0.0.0.0` ([`logs/auth_receipts.json`](file:///E:/SENTRY/evaluation/viability/panel_L.json)).
-- **Load & Concurrency Benchmark:** 2,000 synthetic emails ingested in 38.65s (51.69 emails/sec); p50 = 55.86ms, p95 = 517.42ms, p99 = 2,220.26ms; 0 SQLite lock contention errors; WebSocket stream delivered 1,999 push events ([`logs/load_test_results.json`](file:///E:/SENTRY/evaluation/viability/panel_L.json)).
+- **Scale-Out Topology Status:** Neo4j and Redis/Celery are un-invoked diagram-ware. Neo4j is never imported in live graph logic ([`backend/app/services/correlation_engine.py:L1-60`](../../backend/app/services/correlation_engine.py#L1-60)); Celery tasks are defined but never dispatched by FastAPI routes ([`backend/app/services/celery_app.py:L1-46`](../../backend/app/services/celery_app.py#L1-46)). The certified, working path is 100% in-process async SQLite + NetworkX.
+- **Production Build Sim (`frontend/dist` on port 4000):** Requests hit `404 File not found` because `API_BASE` defaults to relative path `""` ([`frontend/src/services/api.ts:L9-14`](../../frontend/src/services/api.ts#L9-14)). Direct cross-origin calls to `:8000` are blocked by CORS ([`backend/app/main.py:L89-101`](../../backend/app/main.py#L89-101)).
+- **Auth Surface Map:** 24 total endpoints; 0 JWT/Token gated; 8 writable endpoints accessible unauthenticated on `0.0.0.0` ([`logs/auth_receipts.json`](panel_L.json)).
+- **Load & Concurrency Benchmark:** 2,000 synthetic emails ingested in 38.65s (51.69 emails/sec); p50 = 55.86ms, p95 = 517.42ms, p99 = 2,220.26ms; 0 SQLite lock contention errors; WebSocket stream delivered 1,999 push events ([`logs/load_test_results.json`](panel_L.json)).
 
 ### 2.2 Panel P: Product & Market Fit
 - **Day-2 Friction:** 500 emails/day requires 4.1 to 6.2 hours of analyst drag-and-drop toil without automated IMAP/Graph connectors.
@@ -37,7 +37,7 @@
 - **Positioning Fix:** Replace "AI-Powered" with "Calibrated Machine Learning & Evidentiary Email Forensics".
 
 ### 2.3 Panel V: Investor Diligence & Legal
-- **License Tree:** 100 Python packages audited; 0 GPL/AGPL copyleft dependencies ([`logs/license_audit.json`](file:///E:/SENTRY/evaluation/viability/panel_V.json)).
+- **License Tree:** 100 Python packages audited; 0 GPL/AGPL copyleft dependencies ([`logs/license_audit.json`](panel_V.json)).
 - **MaxMind EULA:** Missing mandatory attribution notice and link in UI footer.
 - **Bank Brand Exposure:** `sample_emails/` uses real trademarks (SBI, HDFC, ICICI, RBI); must sanitize to fictional names.
 - **Brand Conflict:** Rename from `SENTRY` to avoid sentry.io trademark collision.
@@ -76,9 +76,9 @@ The **MRWS** is the smallest honest unit of software that solves the core proble
 
 While hostile audits correctly identify that SENTRY is not an inline cloud SEG like Abnormal or Proofpoint, **they miss why SENTRY is uniquely valuable:**
 
-1. **Evidentiary Standard in an Era of AI Hallucinations:** Most modern cybersecurity vendors offer opaque black-box LLM summaries that cannot be used as courtroom evidence or regulatory proof. SENTRY's RFC 3227 sequential SHA-256 hash chains, immutable destruction receipts ([`backend/app/api/v1/stats.py:L185-196`](file:///E:/SENTRY/backend/app/api/v1/stats.py#L185-196)), and deterministic header forensics produce audit-grade PDF dossiers that stand up to legal scrutiny.
-2. **Proven Air-Gapped Performance:** The single-node appliance processes 51.7 emails per second with a p50 latency of 55ms on commodity hardware with zero external cloud dependencies ([`logs/load_test_results.json`](file:///E:/SENTRY/evaluation/viability/panel_L.json)). In defense, government intelligence, and critical infrastructure environments where data cannot leave the building, SENTRY operates with zero external telemetry leaks.
-3. **Engineering Integrity as a Moat:** The repository's 19/19 automated golden verification harness ([`tools/verify_sentry.py`](file:///E:/SENTRY/tools/verify_sentry.py)) and 72-test suite ([`backend/tests`](file:///E:/SENTRY/backend/tests)) ensure that every release is mathematically verifiable and regression-proof.
+1. **Evidentiary Standard in an Era of AI Hallucinations:** Most modern cybersecurity vendors offer opaque black-box LLM summaries that cannot be used as courtroom evidence or regulatory proof. SENTRY's RFC 3227 sequential SHA-256 hash chains, immutable destruction receipts ([`backend/app/api/v1/stats.py:L185-196`](../../backend/app/api/v1/stats.py#L185-196)), and deterministic header forensics produce audit-grade PDF dossiers that stand up to legal scrutiny.
+2. **Proven Air-Gapped Performance:** The single-node appliance processes 51.7 emails per second with a p50 latency of 55ms on commodity hardware with zero external cloud dependencies ([`logs/load_test_results.json`](panel_L.json)). In defense, government intelligence, and critical infrastructure environments where data cannot leave the building, SENTRY operates with zero external telemetry leaks.
+3. **Engineering Integrity as a Moat:** The repository's 19/19 automated golden verification harness ([`tools/verify_sentry.py`](../../tools/verify_sentry.py)) and 72-test suite ([`backend/tests`](../../backend/tests)) ensure that every release is mathematically verifiable and regression-proof.
 
 By closing the 5 blocker gaps in MRWS (token auth, IMAP ingest, production build proxy, Alembic migrations, brand sanitization), SENTRY becomes the definitive open evidentiary forensic workstation for modern incident response teams.
 
@@ -89,8 +89,8 @@ By closing the 5 blocker gaps in MRWS (token auth, IMAP ingest, production build
 
 ### 5.1 SY-1 Errata: Scale-Out Topology Verdict
 The determination that the scale-out topology (Postgres/Neo4j/Redis/Celery) is un-invoked diagram-ware was established through exhaustive static code-path analysis:
-- [`backend/app/api/v1/campaigns.py`](file:///E:/SENTRY/backend/app/api/v1/campaigns.py) and [`backend/app/services/correlation_engine.py`](file:///E:/SENTRY/backend/app/services/correlation_engine.py) interact exclusively with in-memory `networkx.MultiDiGraph`.
-- [`backend/app/services/celery_app.py`](file:///E:/SENTRY/backend/app/services/celery_app.py) defines `analyze_email_task`, but zero FastAPI router handlers in [`backend/app/api/v1/`](file:///E:/SENTRY/backend/app/api/v1/) dispatch background jobs to Celery.
+- [`backend/app/api/v1/campaigns.py`](../../backend/app/api/v1/campaigns.py) and [`backend/app/services/correlation_engine.py`](../../backend/app/services/correlation_engine.py) interact exclusively with in-memory `networkx.MultiDiGraph`.
+- [`backend/app/services/celery_app.py`](../../backend/app/services/celery_app.py) defines `analyze_email_task`, but zero FastAPI router handlers in [`backend/app/api/v1/`](../../backend/app/api/v1) dispatch background jobs to Celery.
 - A physical multi-container live boot was not conducted during audit; this finding is based on static verification of the unlinked live call paths.
 
 ### 5.2 Memory Metric Calibration & Caveat
