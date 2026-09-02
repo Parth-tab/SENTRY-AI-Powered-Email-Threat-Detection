@@ -1,0 +1,90 @@
+{
+  "phase": "PHASE4",
+  "status": "curriculum_certified",
+  "all_documents_complete": true,
+  "documents": [
+    "docs/onboarding/00-START-HERE.md",
+    "docs/onboarding/01-THE-PROJECT-STORY.md",
+    "docs/onboarding/02-TECH-TRANSLATOR.md",
+    "docs/onboarding/03-HOW-IT-WORKS.md",
+    "docs/onboarding/04-FILE-TOUR.md",
+    "docs/onboarding/05-RUNNING-THE-DEMO.md",
+    "docs/onboarding/06-JUDGES-AND-QUESTIONS.md",
+    "docs/onboarding/07-QUICK-CARD.md"
+  ],
+  "reconciled_module_count": 26,
+  "term_ledger_file": "evaluation/onboarding/term_ledger.json",
+  "audit_matrix_script": "evaluation/onboarding/audit_matrix.py",
+  "started_at": "2026-09-02T10:26:42Z",
+  "completed_at": "2026-09-02T15:03:00Z",
+  "verified_baseline_metrics": {
+    "pytest_suite_count": 164,
+    "pytest_module_count": 26,
+    "golden_harness_gates_count": 21,
+    "app_version": "1.2.2",
+    "target_release_tag": "v1.2.2",
+    "registered_api_endpoints_count": 29,
+    "business_api_endpoints_count": 24,
+    "master_defect_ledger_count": 78,
+    "defect_status_counts": {
+      "resolved": 68,
+      "interim_mitigated": 1,
+      "consolidated": 3,
+      "deferred": 1,
+      "open": 5
+    },
+    "demo_seed_email_count": 18,
+    "demo_threat_distribution": {
+      "CRITICAL": 15,
+      "MEDIUM": 1,
+      "LOW": 2
+    },
+    "ham_corpus_metrics": {
+      "unique_emails": 6777,
+      "total_archive_files": 6951,
+      "floor_false_positive_elevations": 0,
+      "false_positive_rate": 0.0
+    },
+    "feature_vector_dimensions": 47,
+    "ml_metrics": {
+      "accuracy": 0.961,
+      "macro_f1": 0.952,
+      "roc_auc_ovr": 0.988,
+      "validation_sample_count": 15240
+    }
+  },
+  "tracked_files_inventory": {
+    "total_tracked_files": 551,
+    "top_level_breakdown": {
+      "root": 14,
+      ".github": 5,
+      "backend": 82,
+      "docs": 24,
+      "evaluation": 340,
+      "frontend": 28,
+      "logs": 2,
+      "sample_emails": 19,
+      "screenshots": 23,
+      "tests": 1,
+      "tools": 13
+    }
+  },
+  "planned_documents": [
+    "docs/onboarding/00-START-HERE.md",
+    "docs/onboarding/01-THE-PROJECT-STORY.md",
+    "docs/onboarding/02-TECH-TRANSLATOR.md",
+    "docs/onboarding/03-HOW-IT-WORKS.md",
+    "docs/onboarding/04-FILE-TOUR.md",
+    "docs/onboarding/05-RUNNING-THE-DEMO.md",
+    "docs/onboarding/06-JUDGES-AND-QUESTIONS.md",
+    "docs/onboarding/07-QUICK-CARD.md"
+  ],
+  "laws": {
+    "audience_calibration_law_O1": "Every technical term is introduced as analogy -> plain definition -> term, at FIRST USE. A term may never appear before its introduction.",
+    "facts_law_O2": "Every quantitative claim must match docs/PROJECT_FACTS.md as of v1.2.2 and is marked with the 📌 icon citing its source command. No other numbers invented.",
+    "honesty_law_O3": "Visuals labeled conceptual where simplified; errata culture taught as a feature.",
+    "links_law": "Every link resolves repo-relative; validate_facts.py --strict-links stays green.",
+    "caption_honesty_law": "Any screenshot used shows current pixels from recaptured tour assets only.",
+    "vibrancy_spec": "Mermaid diagrams, tables, callout blocks, fixed icon set, consistent rhythm: Story -> Concept -> In the project -> Checkpoint."
+  }
+}

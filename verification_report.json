@@ -1,6 +1,6 @@
 {
-  "started": "2026-08-30T13:34:04.140866+00:00",
-  "finished": "2026-08-30T13:34:34.884497+00:00",
+  "started": "2026-09-02T15:00:26.679002+00:00",
+  "finished": "2026-09-02T15:02:09.594737+00:00",
   "exit_code": 0,
   "verdict": "PASS",
   "note": "",
@@ -73,7 +73,7 @@
     {
       "name": "ui.graph_legibility",
       "status": "PASS",
-      "detail": "Cluster min_dist=40.1px (>=26px); Supernodes=12 nodes; filter-awareness validated; corpus invariants 15/17 preserved"
+      "detail": "Cluster min_dist=36.7px (>=26px); Supernodes=12 nodes; filter-awareness validated; corpus invariants 15/17 preserved"
     },
     {
       "name": "ui.ingest_upload_e2e",
@@ -119,12 +119,13 @@
   "console_errors": [],
   "failed_http_responses": [],
   "websockets_opened": [
-    "ws://127.0.0.1:3000/?token=pn-pLMddlCnF",
+    "ws://127.0.0.1:3000/?token=TsCYW8gxKXMS",
     "ws://127.0.0.1:8000/api/v1/dashboard/live",
     "ws://127.0.0.1:8000/api/v1/dashboard/live"
   ],
   "screenshots": [
     "screenshots\\verify\\01_dashboard.png",
+    "screenshots\\verify\\01_dashboard_FAIL.png",
     "screenshots\\verify\\02_email_detail.png",
     "screenshots\\verify\\03_map.png",
     "screenshots\\verify\\04_graph.png",
