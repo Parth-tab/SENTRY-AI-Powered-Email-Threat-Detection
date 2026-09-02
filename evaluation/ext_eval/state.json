@@ -33,7 +33,8 @@
     "P4_2_recommendation_formatting": "Verified all recommendations render cleanly as independent items without delimiter run-on.",
     "P4_self_spoof_countermeasures": "Recipient-derived internal domain logic ensures SENTRY never outputs self-DoS rules ('Block sender domain <own_domain>') on spoofed internal messages.",
     "P5_1_derivation_table": "Master defect ledger derives 68 objects: 58 resolved + 1 interim + 3 consolidated + 1 deferred + 5 open.",
-    "P5_2_tour_recapture": "8/8 tour assets recaptured fresh via tools/capture_tour.py with 100% caption honesty."
+    "P5_2_tour_recapture": "8/8 tour assets recaptured fresh via tools/capture_tour.py with 100% caption honesty.",
+    "MV_3_pytest_warnings_classification": "The +5 warnings observed in full pytest battery originate from bleach.sanitizer.NoCssSanitizerWarning during HTML body extraction across the five new master email pipeline tests in test_master_verification_email.py; these are expected upstream library notices from CSS sanitizer deprecation and do not indicate runtime defects."
   },
   "phase6_receipts": {
     "panel_review_document": "evaluation/ext_eval/EXT_REVIEW.md",

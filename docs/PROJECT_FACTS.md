@@ -17,7 +17,7 @@ The following metrics are dynamically extracted and validated by `tools/validate
 
 <!-- fact: TEST_SUITE_COUNT -->
 <!-- derivation: python -m pytest --collect-only -q -->
-- **Test Suite Count [derived]:** `TEST_SUITE_COUNT: 161` passing unit and integration tests across 24 modules (`backend/tests`).
+- **Test Suite Count [derived]:** `TEST_SUITE_COUNT: 164` passing unit and integration tests across 24 modules (`backend/tests`).
 
 <!-- fact: GOLDEN_GATES_COUNT -->
 <!-- derivation: python tools/verify_sentry.py --start -->
