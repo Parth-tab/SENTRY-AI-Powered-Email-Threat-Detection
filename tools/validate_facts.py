@@ -115,16 +115,27 @@ def compute_defect_ledger() -> dict:
 
 def get_highest_git_release_tag() -> str:
     """Retrieves the highest semantic version release tag from git history."""
-    try:
-        res = subprocess.run(["git", "tag", "-l"], cwd=str(REPO_ROOT), capture_output=True, text=True, check=True)
+    def _parse_tags():
+        res = subprocess.run(["git", "tag", "-l"], cwd=str(REPO_ROOT), capture_output=True, text=True)
+        if res.returncode != 0:
+            return []
         tags = [t.strip() for t in res.stdout.splitlines() if t.strip()]
         version_tags = []
         for t in tags:
             m = re.match(r"^v?(\d+)\.(\d+)\.(\d+)$", t)
             if m:
                 version_tags.append((tuple(map(int, m.groups())), t))
+        version_tags.sort(key=lambda x: x[0])
+        return version_tags
+
+    try:
+        version_tags = _parse_tags()
+        if not version_tags:
+            # Self-healing: if clone is shallow or tags were not fetched, fetch tags from remote
+            subprocess.run(["git", "fetch", "--tags", "--quiet"], cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=10)
+            version_tags = _parse_tags()
+
         if version_tags:
-            version_tags.sort(key=lambda x: x[0])
             return version_tags[-1][1]
     except Exception:
         pass
