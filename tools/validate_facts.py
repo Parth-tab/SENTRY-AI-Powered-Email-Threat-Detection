@@ -113,29 +113,79 @@ def compute_defect_ledger() -> dict:
     }
 
 
-def compute_app_version() -> dict:
-    """Computes version strings across backend and frontend."""
-    backend_ver = "unknown"
-    if CONFIG_PY_PATH.exists():
+def get_highest_git_release_tag() -> str:
+    """Retrieves the highest semantic version release tag from git history."""
+    try:
+        res = subprocess.run(["git", "tag", "-l"], cwd=str(REPO_ROOT), capture_output=True, text=True, check=True)
+        tags = [t.strip() for t in res.stdout.splitlines() if t.strip()]
+        version_tags = []
+        for t in tags:
+            m = re.match(r"^v?(\d+)\.(\d+)\.(\d+)$", t)
+            if m:
+                version_tags.append((tuple(map(int, m.groups())), t))
+        if version_tags:
+            version_tags.sort(key=lambda x: x[0])
+            return version_tags[-1][1]
+    except Exception:
+        pass
+    return "unknown"
+
+
+def compute_app_version(override_backend: str = None, override_frontend: str = None) -> dict:
+    """Computes version strings across backend, frontend, and git tags."""
+    backend_ver = override_backend
+    if backend_ver is None and CONFIG_PY_PATH.exists():
         txt = CONFIG_PY_PATH.read_text(encoding="utf-8")
         m = re.search(r'VERSION:\s*str\s*=\s*["\']([^"\']+)["\']', txt)
         if m:
             backend_ver = m.group(1)
 
-    frontend_ver = "unknown"
-    if PACKAGE_JSON_PATH.exists():
+    frontend_ver = override_frontend
+    if frontend_ver is None and PACKAGE_JSON_PATH.exists():
         try:
             pkg = json.loads(PACKAGE_JSON_PATH.read_text(encoding="utf-8"))
             frontend_ver = pkg.get("version", "unknown")
         except Exception:
             pass
 
+    backend_ver = backend_ver or "unknown"
+    frontend_ver = frontend_ver or "unknown"
+
+    highest_tag = get_highest_git_release_tag()
+    highest_tag_ver = highest_tag.lstrip("v") if highest_tag != "unknown" else "unknown"
+
+    # Documented pre-tag staging override (for in-flight release rehearsal workflows)
+    pre_tag_staging = os.environ.get("SENTRY_PRE_TAG_STAGING") == "1"
+
+    # Legitimacy check: declared version must equal highest git tag or staging override
+    is_legitimate = (backend_ver == highest_tag_ver) or pre_tag_staging
+
     return {
         "backend": backend_ver,
         "frontend": frontend_ver,
         "unified": backend_ver == frontend_ver,
-        "version": backend_ver
+        "version": backend_ver,
+        "highest_tag": highest_tag,
+        "highest_tag_version": highest_tag_ver,
+        "legitimate": is_legitimate,
+        "pre_tag_staging": pre_tag_staging
     }
+
+
+def verify_version_legitimacy(version_data: dict) -> tuple[bool, str]:
+    """Validates that declared version is unified and backed by git release tags."""
+    if not version_data.get("unified"):
+        return False, f"Version mismatch: backend={version_data.get('backend')} vs frontend={version_data.get('frontend')}"
+
+    if not version_data.get("legitimate"):
+        return False, (
+            f"VERSION LEGITIMACY DRIFT: Declared version '{version_data.get('version')}' is unbacked by git tags "
+            f"(highest tag: '{version_data.get('highest_tag')}'). Unauthorized version bump detected without "
+            f"corresponding release tag or documented pre-tag staging state."
+        )
+
+    tag_desc = f"backed by git tag {version_data.get('highest_tag')}" if not version_data.get("pre_tag_staging") else "documented pre-tag staging state"
+    return True, f"Backend and frontend versions aligned at v{version_data.get('version')} ({tag_desc})."
 
 
 def compute_api_endpoints_count() -> int:
@@ -374,13 +424,13 @@ def main():
     else:
         print("[PASS] All repository markdown links resolve cleanly with zero portability errors.")
 
-    # 5. Version Uniformity
-    print("\n[5/5] Checking backend/frontend version uniformity...")
-    if not version_data["unified"]:
-        print(f"[FAIL] Version mismatch: backend={version_data['backend']} vs frontend={version_data['frontend']}")
+    # 5. Version Uniformity & Tag Legitimacy Gate (MV-1)
+    print("\n[5/5] Checking backend/frontend version uniformity and git tag legitimacy...")
+    valid, msg = verify_version_legitimacy(version_data)
+    if not valid:
+        print(f"[FAIL] {msg}")
         sys.exit(1)
-    else:
-        print(f"[PASS] Backend and frontend versions aligned at v{version_data['version']}.")
+    print(f"[PASS] {msg}")
 
     print("\n" + "=" * 70)
     print("VERDICT: ALL 5 FACT STAGES VERIFIED AND TRUTHFUL (Exit Code 0)")
