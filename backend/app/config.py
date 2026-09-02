@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "SENTRY - Forensic Email Threat Intelligence Platform"
-    VERSION: str = "1.1.0"
+    VERSION: str = "1.2.1"
     API_V1_STR: str = "/api/v1"
     ENVIRONMENT: str = "demo"
     DEBUG: bool = True

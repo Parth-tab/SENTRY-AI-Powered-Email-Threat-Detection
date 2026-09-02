@@ -1,25 +1,20 @@
-# SENTRY v1.2.0 Release Notes — Evidentiary Forensics, Graph Intelligence & Continuous Fact Gating
+# SENTRY v1.2.1 Release Notes — Evidentiary Forensics, Defense Dossier & Continuous Fact Gating
 
-*Release Version: 1.2.0 • Date: September 2, 2026 • Status: Draft (Pre-Release)*
+*Release Version: 1.2.1 • Date: September 2, 2026 • Status: Certified Release*
 
 ---
 
 ## Executive Summary
 
-SENTRY v1.2.0 marks a major milestone in high-assurance email forensic intelligence. This release merges two comprehensive engineering arcs: the **Deterministic Graph Intelligence Redesign** and the **External Evaluation Remediation & Defense Hardening**, capped by a repository-wide **Machine-Verified Documentation Unification**.
+SENTRY v1.2.1 marks a major release in high-assurance email forensic intelligence. Following the v1.2.0 Graph Redesign, v1.2.1 delivers two comprehensive engineering and quality arcs: the **External Evaluation Remediation & Defense Hardening** and repository-wide **Machine-Verified Documentation Unification & Continuous Fact Gating**.
 
-Every claim in this release is machine-derived and continuously enforced via `tools/validate_facts.py` and GitHub Actions CI.
+Every claim in this release is machine-derived and continuously enforced via `tools/validate_facts.py --strict-links` in GitHub Actions CI.
 
 ---
 
 ## Key Highlights & Subsystem Upgrades
 
-### 1. Deterministic Campaign Knowledge Graph & Gate 21 Legibility Moat
-- **Deterministic Force Layout:** Replaced non-deterministic simulation physics with a seeded pseudo-random force layout, ensuring stable, reproducible node coordinates across SOC investigations.
-- **Stratified Diversity Capping & Supernodes:** When analyzing enterprise corpora with thousands of correlated entities, SENTRY enforces a 300-node display ceiling using degree-weighted stratified sampling to preserve critical infrastructure relationships without canvas clutter.
-- **Automated Canvas Legibility Gate (Gate 21):** The Playwright-driven golden verification harness (`tools/verify_sentry.py`) now includes an automated node bounding-box separation check (`ui.graph_legibility`), mathematically certifying that correlated entity nodes maintain minimum canvas clearance.
-
-### 2. External Evaluation Remediation & Signature Defenses
+### 1. External Evaluation Remediation & Signature Defenses
 - **Self-Spoof Anti-Self-DoS Countermeasure Refusal (EXT-005, EXT-008):**
   *SENTRY is the forensic platform that structurally refuses to tell you to block your own domain.* When internal domain spoofing occurs (`from_domain == recipient_domain`), SENTRY derives internal boundaries dynamically without manual configuration. It bypasses naive domain blocks, directing SOC operators to DNS DMARC `p=reject`, perimeter SEG anti-spoof drops, and external `Reply-To` diversion channel blocking.
 - **Authentication Failure Severity Floor (EXT-002) with Algorithmic Transparency:**
@@ -32,13 +27,14 @@ Every claim in this release is machine-derived and continuously enforced via `to
 - **Specialized Advance-Fee Fraud Subtyping (EXT-001):**
   Introduced `classification_subtype: "ADVANCE-FEE FRAUD"` within the primary 5-class taxonomy (`phishing`), triggering specialized incident response playbooks for 419 lottery and inheritance lures.
 
-### 3. Evidentiary Hygiene & Court Admissibility Standards
+### 2. Evidentiary Hygiene & Court Admissibility Standards
 - **Full-Length Subject Paragraph Flowables (EXT-004):** Eliminated arbitrary string slicing (`[:60]`) across ReportLab PDF generation, wrapping full 111-character subject lines naturally without truncation.
 - **64-Character Courier Monospace Hashes (EXT-006):** Cryptographic SHA-256 digests rendered in dedicated 220pt columns using monospace typography, preventing optical character wrapping ambiguity and transcription distortions in legal proceedings.
 - **Universal RFC 3339 UTC Timestamps (EXT-007):** Replaced non-standard strftime formatters with ISO 8601 / RFC 3339 UTC timestamps across all 6 emission points.
 
-### 4. Continuous Machine-Verified Fact Gating
-- **`tools/validate_facts.py` & `docs/PROJECT_FACTS.md`:** Eliminates documentation drift across the repository. A dedicated CI gate extracts live test counts, gate counts, defect ledgers, and routes dynamically from code and asserts mathematical alignment on every commit.
+### 3. Continuous Machine-Verified Fact & Link Gating
+- **`tools/validate_facts.py` & `docs/PROJECT_FACTS.md` (DOC-005):** Eliminates documentation drift across the repository. A dedicated CI gate extracts live test counts, gate counts, defect ledgers, and routes dynamically from code and asserts mathematical alignment on every commit.
+- **Strict Link Portability Gate (`--strict-links`, DOC-003):** Converted 99 non-portable `file:///` URIs across the workspace to portable repo-relative markdown paths, guarded continuously by CI.
 
 ---
 
@@ -52,7 +48,7 @@ All figures below are derived by command in the live repository:
 | **Golden Verification Gates** | **21 gates** (API, WebSockets, CSV, ZIP, UI, Legibility) | `python tools/verify_sentry.py --start` |
 | **Master Defect Ledger** | **76 objects** (66 Resolved, 1 Interim, 3 Cons, 1 Def, 5 Open) | `evaluation/defects.json` / `tools/validate_facts.py` |
 | **Registered API Endpoints** | **29 routes** (24 business DFIR routes) | `backend/app/main.py` route introspection |
-| **Cross-Stack Version** | **v1.1.0 $\rightarrow$ v1.2.0** | `backend/app/config.py` & `frontend/package.json` |
+| **Cross-Stack Version** | **v1.2.1** | `backend/app/config.py` & `frontend/package.json` |
 | **Ham Benchmark Baseline** | **6,777 unique** (6,951 files, 0 FP elevations) | `tools/benchmark_corpus_ingest.py` |
 | **ML Validation Benchmark** | **0.952 Macro-F1 / 0.961 Accuracy** (15,240 samples) | `backend/app/ml/classifier.py` |
 
@@ -60,7 +56,7 @@ All figures below are derived by command in the live repository:
 
 ## Upgrade & Verification Instructions
 
-To verify your installation against the v1.2.0 standard:
+To verify your installation against the v1.2.1 standard:
 
 ```bash
 # 1. Run unit & integration test suite (156 tests)

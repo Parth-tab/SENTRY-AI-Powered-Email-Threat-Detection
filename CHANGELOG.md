@@ -7,10 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.2.0] - 2026-09-02
+## [1.2.1] - 2026-09-02
 
 ### Added
-- **Deterministic Force-Directed Graph Engine & Gate 21 Legibility Verification (`ui.graph_legibility`):** Upgraded campaign network graph with deterministic pseudo-random force simulation layout, stratified degree-weighted sampling cap, supernode clustering, and automated canvas node bounding-box separation legibility check in golden harness (`Gate 21`).
 - **Fraud Subtype Classification Layer (`EXT-001`):** Added specialized advance-fee fraud subtyping (`classification_subtype: "ADVANCE-FEE FRAUD"`) within the primary 5-class taxonomy, triggering dedicated Nigerian 419 / advance-fee incident response playbooks.
 - **22-Network RFC Special-Use & Reserved IP Boundary Guard (`EXT-003`):** Pre-compiled CIDR subnet boundary guarding 22 private, documentation, and CGNAT IP ranges (RFC 5737 `192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24`, RFC 6598 `100.64.0.0/10`, RFC 1918) against external geolocation leakage or false infrastructure attribution.
 - **Machine-Verified Fact & Link Validator (`DOC-005`):** Created `tools/validate_facts.py` and `docs/PROJECT_FACTS.md` providing dynamic zero-constant verification of test suite counts (156 tests across 23 modules), golden gates (21 gates), master defect ledgers (76 objects), route counts (29 endpoints), cross-stack version uniformity, and repository link integrity with CI gating.
@@ -29,6 +28,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - **Defect Ledger Unification (`DOC-001`):** Integrated external evaluation items (`EXT-001..009`) into master registry (`evaluation/defects.json`), reconciling arithmetic to 76 total items (66 resolved, 1 interim mitigated, 3 consolidated, 1 deferred, 5 open).
 - **Documentation Unification:** Synchronized all public documentation, PR templates, and QA armor with machine-verified facts from `docs/PROJECT_FACTS.md`.
+
+## [1.2.0] - 2026-08-30
+
+### Added
+- **Deterministic Campaign Knowledge Graph & Gate 21 Legibility Verification (`GRAPH-003`, `GRAPH-004`, `GRAPH-005`, `BP-004`):** Upgraded campaign network graph with deterministic pseudo-random force simulation layout, stratified degree-weighted sampling cap (300 nodes), supernode clustering, and automated canvas node bounding-box separation legibility check in golden harness (`Gate 21`).
 
 ## [1.1.0] - 2026-08-30
 
